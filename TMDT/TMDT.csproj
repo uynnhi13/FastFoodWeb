@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -148,6 +149,50 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Style\css\bootstrap.min.css" />
+    <Content Include="Scripts\Style\css\fontawesome.min.css" />
+    <Content Include="Scripts\Style\css\fullcalendar.min.css" />
+    <Content Include="Scripts\Style\css\tooplate.css" />
+    <Content Include="Scripts\Style\img\dash-bg-01.jpg" />
+    <Content Include="Scripts\Style\img\dash-bg-02.jpg" />
+    <Content Include="Scripts\Style\img\dash-bg-03.jpg" />
+    <Content Include="Scripts\Style\img\product-image.jpg" />
+    <Content Include="Scripts\Style\img\profile-image.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\index.html" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="Scripts\Style\js\bootstrap.min.js" />
+    <Content Include="Scripts\Style\js\Chart.min.js" />
+    <Content Include="Scripts\Style\js\fullcalendar.min.js" />
+    <Content Include="Scripts\Style\js\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\Style\js\moment.min.js" />
+    <Content Include="Scripts\Style\js\tooplate-scripts.js" />
+    <Content Include="Scripts\Style\js\utils.js" />
+    <Content Include="Scripts\Style\webfonts\fa-brands-400.svg" />
+    <Content Include="Scripts\Style\webfonts\fa-regular-400.svg" />
+    <Content Include="Scripts\Style\webfonts\fa-solid-900.svg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -162,11 +207,25 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Scripts\Style\jquery-ui-datepicker\package.json" />
+    <Content Include="Scripts\Style\webfonts\fa-brands-400.eot" />
+    <Content Include="Scripts\Style\webfonts\fa-brands-400.ttf" />
+    <Content Include="Scripts\Style\webfonts\fa-brands-400.woff" />
+    <Content Include="Scripts\Style\webfonts\fa-brands-400.woff2" />
+    <Content Include="Scripts\Style\webfonts\fa-regular-400.eot" />
+    <Content Include="Scripts\Style\webfonts\fa-regular-400.ttf" />
+    <Content Include="Scripts\Style\webfonts\fa-regular-400.woff" />
+    <Content Include="Scripts\Style\webfonts\fa-regular-400.woff2" />
+    <Content Include="Scripts\Style\webfonts\fa-solid-900.eot" />
+    <Content Include="Scripts\Style\webfonts\fa-solid-900.ttf" />
+    <Content Include="Scripts\Style\webfonts\fa-solid-900.woff" />
+    <Content Include="Scripts\Style\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
