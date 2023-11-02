@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<body>
+    <!-- login area start -->
+    <div class="login-register-area pt-100px pb-100px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                    <div class="login-register-wrapper">
+                            <a style="text-align:center" href="#lg1">
+                                <h2 class="title">Đăng Ký</h2>
+                            </a>
+                        <div class="tab-content">
+                            <div>
+                                @using (Html.BeginForm("DangKy", "NguoiDung"))
+                                {
+                                    @Html.ValidationSummary(true)
+                                    <div class="login-form-container">
+                                        <div class="login-register-form">
+                                            <div class="form-group">
+                                                <label for="fullName">Họ và Tên: </label>
+                                                @Html.TextBox("fullName", null, new { @class = "form-control", @id = "name", required = "required" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="numberPhone">Số điện thoại: </label>
+                                                @Html.TextBox("numberPhone", null, new { @class = "form-control", @id = "numberPhone", required = "required" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="gmail">Gmail: </label>
+                                                @Html.TextBox("gmail", null, new { @class = "form-control", @id = "gmail", required = "required" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password: </label>
+                                                @Html.TextBox("password", null, new { @class = "form-control", @id = "password", required = "required" })
+                                            </div>
+                                            <div class="button-box">
+                                                <button type="submit"><span>Đăng Ký</span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login area end -->
+</body>
+
+</html>
+
