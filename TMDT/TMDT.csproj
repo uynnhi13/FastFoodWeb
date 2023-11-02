@@ -208,7 +208,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\Style\jquery-ui-datepicker\package.json" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.ttf" />
