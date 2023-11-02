@@ -1,0 +1,1189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="priority" Type="bit" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="userID" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="roleUser" Type="int" Nullable="false" />
+          <Property Name="passWord" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameType" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Combo">
+          <Key>
+            <PropertyRef Name="comboID" />
+          </Key>
+          <Property Name="comboID" Type="int" Nullable="false" />
+          <Property Name="nameCombo" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="sale" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ComboDetail">
+          <Key>
+            <PropertyRef Name="comboID" />
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="comboID" Type="int" Nullable="false" />
+          <Property Name="cateID" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="sizeUP" Type="bit" />
+        </EntityType>
+        <EntityType Name="Condition">
+          <Key>
+            <PropertyRef Name="conditionID" />
+          </Key>
+          <Property Name="conditionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameCon" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="positionID" Type="int" Nullable="false" />
+          <Property Name="imgEP" Type="nvarchar" MaxLength="1000" />
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" />
+          <Property Name="locationID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="invoiceID" />
+          </Key>
+          <Property Name="invoiceID" Type="int" Nullable="false" />
+          <Property Name="dateArrival" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="potal" Type="money" Nullable="false" />
+          <Property Name="supplier" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InvoiceDetails">
+          <Key>
+            <PropertyRef Name="invoiceID" />
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="invoiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ingID" Type="int" Nullable="false" />
+          <Property Name="quatity" Type="float" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="ingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ingName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+          <Property Name="unitID" Type="int" Nullable="false" />
+          <Property Name="quantityMin" Type="float" Nullable="false" />
+          <Property Name="arrivalDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="locationID" />
+          </Key>
+          <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="StreetAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="Ward" Type="nvarchar" MaxLength="50" />
+          <Property Name="District" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="int" Nullable="false" />
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="datetime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="500" />
+          <Property Name="conditionID" Type="int" Nullable="false" />
+          <Property Name="total" Type="money" Nullable="false" />
+          <Property Name="employeeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="comboID" />
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="comboID" Type="int" Nullable="false" />
+          <Property Name="orderID" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="int" Nullable="false" />
+          <Property Name="posName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="SalaryRange" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="cateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="image" Type="nvarchar" MaxLength="1500" Nullable="false" />
+          <Property Name="typeID" Type="int" Nullable="false" />
+          <Property Name="priceUp" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="ingID" />
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="ingID" Type="int" Nullable="false" />
+          <Property Name="cateID" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="unitID" />
+          </Key>
+          <Property Name="unitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameU" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="numberPhone" />
+          </Key>
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="gmail" Type="varchar" MaxLength="200" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="fullName" Type="nvarchar" MaxLength="200" />
+          <Property Name="bDay" Type="datetime2" Precision="7" />
+          <Property Name="gender" Type="bit" />
+          <Property Name="addressID" Type="int" />
+          <Property Name="permission" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Address_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="numberPhone" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComboDetail_Combo">
+          <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+          <End Role="ComboDetail" Type="Self.ComboDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combo">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="ComboDetail">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComboDetail_FoodAndDrink">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ComboDetail" Type="Self.ComboDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="ComboDetail">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_location">
+          <End Role="location" Type="Self.location" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="positionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodAndDrink_ProductType">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingredient_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unitID" />
+            </Principal>
+            <Dependent Role="Ingredient">
+              <PropertyRef Name="unitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Condition">
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Condition">
+              <PropertyRef Name="conditionID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="conditionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="numberPhone" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="numberPhone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Combo">
+          <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combo">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseInvoiceDetails_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingID" />
+            </Principal>
+            <Dependent Role="InvoiceDetails">
+              <PropertyRef Name="ingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseInvoiceDetails_PurchaseInvoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="invoiceID" />
+            </Principal>
+            <Dependent Role="InvoiceDetails">
+              <PropertyRef Name="invoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipe_FoodAndDrink">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipe_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="ingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddProductAndCombo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
+          <Parameter Name="price" Type="money" Mode="In" />
+          <Parameter Name="image" Type="nvarchar" Mode="In" />
+          <Parameter Name="typeID" Type="int" Mode="In" />
+          <Parameter Name="priceUp" Type="money" Mode="In" />
+        </Function>
+        <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Condition" EntityType="Self.Condition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComboDetail_Combo" Association="Self.FK_ComboDetail_Combo">
+            <End Role="Combo" EntitySet="Combo" />
+            <End Role="ComboDetail" EntitySet="ComboDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComboDetail_FoodAndDrink" Association="Self.FK_ComboDetail_FoodAndDrink">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ComboDetail" EntitySet="ComboDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_location" Association="Self.FK_Employees_location">
+            <End Role="location" EntitySet="location" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Position" Association="Self.FK_Employees_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodAndDrink_ProductType" Association="Self.FK_FoodAndDrink_ProductType">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingredient_Unit" Association="Self.FK_Ingredient_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Ingredient" EntitySet="Ingredient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Condition" Association="Self.FK_Order_Condition">
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Employees" Association="Self.FK_Order_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Combo" Association="Self.FK_OrderDetail_Combo">
+            <End Role="Combo" EntitySet="Combo" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseInvoiceDetails_Ingredient" Association="Self.FK_PurchaseInvoiceDetails_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseInvoiceDetails_PurchaseInvoice" Association="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipe_FoodAndDrink" Association="Self.FK_Recipe_FoodAndDrink">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipe_Ingredient" Association="Self.FK_Recipe_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="priority" Type="Boolean" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
+        </EntityType>
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roleUser" Type="Int32" Nullable="false" />
+          <Property Name="passWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="typeID" />
+          </Key>
+          <Property Name="typeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameType" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_FoodAndDrink_ProductType" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Combo">
+          <Key>
+            <PropertyRef Name="comboID" />
+          </Key>
+          <Property Name="comboID" Type="Int32" Nullable="false" />
+          <Property Name="nameCombo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="sale" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="ComboDetail">
+          <Key>
+            <PropertyRef Name="comboID" />
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="comboID" Type="Int32" Nullable="false" />
+          <Property Name="cateID" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="sizeUP" Type="Boolean" />
+          <NavigationProperty Name="Combo" Relationship="Self.FK_ComboDetail_Combo" FromRole="ComboDetail" ToRole="Combo" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ComboDetail_FoodAndDrink" FromRole="ComboDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Condition">
+          <Key>
+            <PropertyRef Name="conditionID" />
+          </Key>
+          <Property Name="conditionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameCon" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Condition" FromRole="Condition" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="positionID" Type="Int32" Nullable="false" />
+          <Property Name="imgEP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="locationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="location" Relationship="Self.FK_Employees_location" FromRole="Employees" ToRole="location" />
+          <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employees" FromRole="Employees" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="invoiceID" />
+          </Key>
+          <Property Name="invoiceID" Type="Int32" Nullable="false" />
+          <Property Name="dateArrival" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="potal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="supplier" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice" FromRole="Invoice" ToRole="InvoiceDetails" />
+        </EntityType>
+        <EntityType Name="InvoiceDetails">
+          <Key>
+            <PropertyRef Name="invoiceID" />
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="invoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ingID" Type="Int32" Nullable="false" />
+          <Property Name="quatity" Type="Double" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice" FromRole="InvoiceDetails" ToRole="Invoice" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="InvoiceDetails" ToRole="Ingredient" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="ingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ingName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <Property Name="unitID" Type="Int32" Nullable="false" />
+          <Property Name="quantityMin" Type="Double" Nullable="false" />
+          <Property Name="arrivalDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="Ingredient" ToRole="InvoiceDetails" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK_Ingredient_Unit" FromRole="Ingredient" ToRole="Unit" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Ingredient" FromRole="Ingredient" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="locationID" />
+          </Key>
+          <Property Name="locationID" Type="Int32" Nullable="false" />
+          <Property Name="StreetAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ward" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_location" FromRole="location" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" />
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="datetime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="conditionID" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="employeeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="comboID" />
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="comboID" Type="Int32" Nullable="false" />
+          <Property Name="orderID" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Combo" Relationship="Self.FK_OrderDetail_Combo" FromRole="OrderDetail" ToRole="Combo" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" />
+          <Property Name="posName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SalaryRange" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Position" FromRole="Position" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="cateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="typeID" Type="Int32" Nullable="false" />
+          <Property Name="priceUp" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_FoodAndDrink_ProductType" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_FoodAndDrink" FromRole="Product" ToRole="ComboDetail" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_FoodAndDrink" FromRole="Product" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="ingID" />
+            <PropertyRef Name="cateID" />
+          </Key>
+          <Property Name="ingID" Type="Int32" Nullable="false" />
+          <Property Name="cateID" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_Recipe_Ingredient" FromRole="Recipe" ToRole="Ingredient" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Recipe_FoodAndDrink" FromRole="Recipe" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="unitID" />
+          </Key>
+          <Property Name="unitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameU" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_Ingredient_Unit" FromRole="Unit" ToRole="Ingredient" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="numberPhone" />
+          </Key>
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gmail" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="bDay" Type="DateTime" Precision="7" />
+          <Property Name="gender" Type="Boolean" />
+          <Property Name="addressID" Type="Int32" />
+          <Property Name="permission" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Address_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="numberPhone" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodAndDrink_ProductType">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="typeID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="typeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComboDetail_Combo">
+          <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+          <End Role="ComboDetail" Type="Self.ComboDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combo">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="ComboDetail">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Combo">
+          <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combo">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComboDetail_FoodAndDrink">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ComboDetail" Type="Self.ComboDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="ComboDetail">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Condition">
+          <End Role="Condition" Type="Self.Condition" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Condition">
+              <PropertyRef Name="conditionID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="conditionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_location">
+          <End Role="location" Type="Self.location" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="location">
+              <PropertyRef Name="locationID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="locationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="positionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseInvoiceDetails_PurchaseInvoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="invoiceID" />
+            </Principal>
+            <Dependent Role="InvoiceDetails">
+              <PropertyRef Name="invoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseInvoiceDetails_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingID" />
+            </Principal>
+            <Dependent Role="InvoiceDetails">
+              <PropertyRef Name="ingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingredient_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unitID" />
+            </Principal>
+            <Dependent Role="Ingredient">
+              <PropertyRef Name="unitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipe_Ingredient">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ingID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="ingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="numberPhone" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="numberPhone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recipe_FoodAndDrink">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="cateID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="cateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TMDTThucAnNhanhEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Address" EntityType="Self.Address" />
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Combo" EntityType="Self.Combo" />
+          <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
+          <EntitySet Name="Condition" EntityType="Self.Condition" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" />
+          <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
+          <EntitySet Name="location" EntityType="Self.location" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Position" EntityType="Self.Position" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Recipe" EntityType="Self.Recipe" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodAndDrink_ProductType" Association="Self.FK_FoodAndDrink_ProductType">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComboDetail_Combo" Association="Self.FK_ComboDetail_Combo">
+            <End Role="Combo" EntitySet="Combo" />
+            <End Role="ComboDetail" EntitySet="ComboDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Combo" Association="Self.FK_OrderDetail_Combo">
+            <End Role="Combo" EntitySet="Combo" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComboDetail_FoodAndDrink" Association="Self.FK_ComboDetail_FoodAndDrink">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ComboDetail" EntitySet="ComboDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Condition" Association="Self.FK_Order_Condition">
+            <End Role="Condition" EntitySet="Condition" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_location" Association="Self.FK_Employees_location">
+            <End Role="location" EntitySet="location" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Position" Association="Self.FK_Employees_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Employees" Association="Self.FK_Order_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseInvoiceDetails_PurchaseInvoice" Association="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseInvoiceDetails_Ingredient" Association="Self.FK_PurchaseInvoiceDetails_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingredient_Unit" Association="Self.FK_Ingredient_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Ingredient" EntitySet="Ingredient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipe_Ingredient" Association="Self.FK_Recipe_Ingredient">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recipe_FoodAndDrink" Association="Self.FK_Recipe_FoodAndDrink">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <FunctionImport Name="AddProductAndCombo">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Decimal" />
+            <Parameter Name="image" Mode="In" Type="String" />
+            <Parameter Name="typeID" Mode="In" Type="Int32" />
+            <Parameter Name="priceUp" Mode="In" Type="Decimal" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TMDTThucAnNhanhModelStoreContainer" CdmEntityContainer="TMDTThucAnNhanhEntities">
+          <EntitySetMapping Name="Address">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+                <ScalarProperty Name="address1" ColumnName="address" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminUser">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.AdminUser">
+              <MappingFragment StoreEntitySet="AdminUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="nameUser" ColumnName="nameUser" />
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
+                <ScalarProperty Name="passWord" ColumnName="passWord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="nameType" ColumnName="nameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Combo">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Combo">
+              <MappingFragment StoreEntitySet="Combo">
+                <ScalarProperty Name="comboID" ColumnName="comboID" />
+                <ScalarProperty Name="nameCombo" ColumnName="nameCombo" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="sale" ColumnName="sale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComboDetail">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.ComboDetail">
+              <MappingFragment StoreEntitySet="ComboDetail">
+                <ScalarProperty Name="comboID" ColumnName="comboID" />
+                <ScalarProperty Name="cateID" ColumnName="cateID" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="sizeUP" ColumnName="sizeUP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Condition">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Condition">
+              <MappingFragment StoreEntitySet="Condition">
+                <ScalarProperty Name="conditionID" ColumnName="conditionID" />
+                <ScalarProperty Name="nameCon" ColumnName="nameCon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="positionID" ColumnName="positionID" />
+                <ScalarProperty Name="imgEP" ColumnName="imgEP" />
+                <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+                <ScalarProperty Name="locationID" ColumnName="locationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoice">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+                <ScalarProperty Name="dateArrival" ColumnName="dateArrival" />
+                <ScalarProperty Name="potal" ColumnName="potal" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvoiceDetails">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.InvoiceDetails">
+              <MappingFragment StoreEntitySet="InvoiceDetails">
+                <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
+                <ScalarProperty Name="ingID" ColumnName="ingID" />
+                <ScalarProperty Name="quatity" ColumnName="quatity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredient">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="ingID" ColumnName="ingID" />
+                <ScalarProperty Name="ingName" ColumnName="ingName" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unitID" ColumnName="unitID" />
+                <ScalarProperty Name="quantityMin" ColumnName="quantityMin" />
+                <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="location">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="Ward" ColumnName="Ward" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="conditionID" ColumnName="conditionID" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetail">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="comboID" ColumnName="comboID" />
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Position">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="posName" ColumnName="posName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SalaryRange" ColumnName="SalaryRange" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="cateID" ColumnName="cateID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="typeID" ColumnName="typeID" />
+                <ScalarProperty Name="priceUp" ColumnName="priceUp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="ingID" ColumnName="ingID" />
+                <ScalarProperty Name="cateID" ColumnName="cateID" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unit">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="unitID" ColumnName="unitID" />
+                <ScalarProperty Name="nameU" ColumnName="nameU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+                <ScalarProperty Name="gmail" ColumnName="gmail" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="fullName" ColumnName="fullName" />
+                <ScalarProperty Name="bDay" ColumnName="bDay" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="permission" ColumnName="permission" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddProductAndCombo" FunctionName="TMDTThucAnNhanhModel.Store.AddProductAndCombo" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

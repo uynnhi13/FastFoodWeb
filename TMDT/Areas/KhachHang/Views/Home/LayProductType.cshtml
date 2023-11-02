@@ -1,0 +1,16 @@
+﻿@model IEnumerable<TMDT.Data.Category>
+
+<div class="tab-slider nav-center nav-center-2">
+    <ul class="product-tab-nav nav justify-content-center align-items-center">
+        @foreach (var item in Model)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("LocSanPham","Home",new {id=item.typeID})">
+                        <span>
+                            @item.nameType
+                        </span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
