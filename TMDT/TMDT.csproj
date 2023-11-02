@@ -130,10 +130,12 @@
     <Compile Include="App_Start\BundleConfig2.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
+
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\Address.cs">
@@ -347,6 +349,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+
     <Content Include="Areas\KhachHang\Views\web.config" />
     <Content Include="Areas\KhachHang\Views\Shared\_LayoutVL.cshtml" />
     <Content Include="Areas\KhachHang\Views\Home\Index.cshtml" />
@@ -416,6 +419,7 @@
     <Content Include="Areas\KhachHang\Views\Home\ChiTietSP.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangNhap.cshtml" />
+
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -486,7 +490,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Scripts\Style\jquery-ui-datepicker\package.json" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.ttf" />
