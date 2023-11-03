@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ComboDetail
+    public partial class Recipe
     {
-        public int comboID { get; set; }
+        public int ingID { get; set; }
         public int cateID { get; set; }
-        public int quantity { get; set; }
-        public Nullable<bool> sizeUP { get; set; }
+        public double quantity { get; set; }
     
-        public virtual Combo Combo { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
         public virtual Product Product { get; set; }
     }
 }

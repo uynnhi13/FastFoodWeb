@@ -7,19 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class InvoiceDetail
+    public partial class Address
     {
-        public int invoiceID { get; set; }
-        public int ingID { get; set; }
-        public double quatity { get; set; }
-        public decimal price { get; set; }
+        public int addressID { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string numberPhone { get; set; }
+        public string address1 { get; set; }
+        public bool priority { get; set; }
+        public string note { get; set; }
+        public string userID { get; set; }
     
-        public virtual Invoice Invoice { get; set; }
-        public virtual Ingredient Ingredient { get; set; }
+        public virtual User User { get; set; }
     }
 }

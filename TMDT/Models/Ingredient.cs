@@ -7,32 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Ingredient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Ingredient()
         {
-            this.Addresses = new HashSet<Address>();
-            this.Orders = new HashSet<Order>();
+            this.InvoiceDetails = new HashSet<InvoiceDetails>();
+            this.Recipe = new HashSet<Recipe>();
         }
     
-        public string numberPhone { get; set; }
-        public string gmail { get; set; }
-        public string password { get; set; }
-        public string fullName { get; set; }
-        public Nullable<System.DateTime> bDay { get; set; }
-        public Nullable<bool> gender { get; set; }
-        public Nullable<int> addressID { get; set; }
-        public bool permission { get; set; }
+        public int ingID { get; set; }
+        public string ingName { get; set; }
+        public double quantity { get; set; }
+        public int unitID { get; set; }
+        public double quantityMin { get; set; }
+        public System.DateTime arrivalDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
     }
 }

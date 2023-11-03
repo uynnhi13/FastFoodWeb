@@ -7,31 +7,32 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public User()
         {
-            this.OrderDetails = new HashSet<OrderDetail>();
+            this.Address = new HashSet<Address>();
+            this.Order = new HashSet<Order>();
         }
     
-        public int orderID { get; set; }
         public string numberPhone { get; set; }
-        public System.DateTime datetime { get; set; }
-        public string note { get; set; }
-        public int conditionID { get; set; }
-        public decimal total { get; set; }
-        public int employeeID { get; set; }
+        public string gmail { get; set; }
+        public string password { get; set; }
+        public string fullName { get; set; }
+        public Nullable<System.DateTime> bDay { get; set; }
+        public Nullable<bool> gender { get; set; }
+        public Nullable<int> addressID { get; set; }
+        public bool permission { get; set; }
     
-        public virtual Condition Condition { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<Address> Address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

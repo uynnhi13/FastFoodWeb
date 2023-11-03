@@ -186,8 +186,8 @@
                             </a>
                             <!-- Single Wedge End -->
                             @{
-                                var user = Session["TaiKhoan"] as TMDT.Data.User;
-                                if  (user != null)
+                                var user = Session["TaiKhoan"] as TMDT.Models.User;
+                                if (user != null)
                                 {
                                     <div class="header-bottom-set dropdown">
                                         <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">
@@ -196,17 +196,20 @@
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li><a class="dropdown-item" href="my-account.html">My account</a></li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                            <li><a class="dropdown-item" href="login.html">Sign Out</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Sign Out</a></li>
                                         </ul>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="header-bottom-set dropdown">
-                                        <a href="@Url.Action("DangNhap","NguoiDung")" class="header-action-btn">
-                                            Đăng Nhập
-                                        </a>
-                                        
+                                        <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">
+                                            <i class="pe-7s-users"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangNhap","NguoiDung")">Đăng Nhập</li>
+                                        </ul>
                                     </div>
                                 }
                             }
@@ -864,6 +867,8 @@
     <script src="assets/js/plugins/plugins.min.js"></script> -->
     <!-- Main Js -->
     <script src="~/Areas/KhachHang/assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

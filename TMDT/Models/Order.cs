@@ -7,31 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
+        public Order()
         {
-            this.Orders = new HashSet<Order>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
-        public int EmployeeID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public int positionID { get; set; }
-        public string imgEP { get; set; }
+        public int orderID { get; set; }
         public string numberPhone { get; set; }
-        public int locationID { get; set; }
+        public System.DateTime datetime { get; set; }
+        public string note { get; set; }
+        public int conditionID { get; set; }
+        public decimal total { get; set; }
+        public int employeeID { get; set; }
     
-        public virtual location location { get; set; }
-        public virtual Position Position { get; set; }
+        public virtual Condition Condition { get; set; }
+        public virtual Employees Employees { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using TMDT.Data;
+using TMDT.Models;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -13,20 +13,20 @@ namespace TMDT.Areas.KhachHang.Controllers
         // GET: KhachHangVangLai/Home
         public ActionResult Index()
         {
-            var lstProduct = db.Products.ToList();
+            var lstProduct = db.Product.ToList();
             return View(lstProduct);
         }
 
         public ActionResult LayProductType()
         {
-            var lstType = db.Categories.ToList();
+            var lstType = db.Category.ToList();
             return PartialView(lstType);
         }
 
         public ActionResult LocSanPham(int id)
         {
             //Lấy sản phẩm theo id Type
-            var lstProductType = db.Products.Where(Product => Product.typeID == id).ToList();
+            var lstProductType = db.Product.Where(Product => Product.typeID == id).ToList();
 
             //Trả về view để render các sản phẩm trên
             return View("Index", lstProductType);
@@ -34,7 +34,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
         public ActionResult ChiTietSP(int id)
         {
-            var sp = db.Products.FirstOrDefault(s => s.cateID == id);
+            var sp = db.Product.FirstOrDefault(s => s.cateID == id);
             return View(sp);
         }
     }
