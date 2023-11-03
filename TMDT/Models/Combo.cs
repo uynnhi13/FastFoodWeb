@@ -17,8 +17,8 @@ namespace TMDT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Combo()
         {
-            this.ComboDetails = new HashSet<ComboDetail>();
-            this.OrderDetails = new HashSet<OrderDetail>();
+            this.ComboDetail = new HashSet<ComboDetail>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
         public int comboID { get; set; }
@@ -27,8 +27,8 @@ namespace TMDT.Models
         public int sale { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ComboDetail> ComboDetails { get; set; }
+        public virtual ICollection<ComboDetail> ComboDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace TMDT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ingredient()
         {
-            this.InvoiceDetails = new HashSet<InvoiceDetail>();
-            this.Recipes = new HashSet<Recipe>();
+            this.InvoiceDetails = new HashSet<InvoiceDetails>();
+            this.Recipe = new HashSet<Recipe>();
         }
     
         public int ingID { get; set; }
@@ -29,9 +29,9 @@ namespace TMDT.Models
         public System.DateTime arrivalDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual ICollection<InvoiceDetails> InvoiceDetails { get; set; }
         public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Recipe> Recipes { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
     }
 }

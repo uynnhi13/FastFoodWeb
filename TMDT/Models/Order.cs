@@ -17,7 +17,7 @@ namespace TMDT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
-            this.OrderDetails = new HashSet<OrderDetail>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
         public int orderID { get; set; }
@@ -29,9 +29,9 @@ namespace TMDT.Models
         public int employeeID { get; set; }
     
         public virtual Condition Condition { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Employees Employees { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }
