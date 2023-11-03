@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    TMDTThucAnNhanhEntities database = new TMDTThucAnNhanhEntities();
+}
+
+
+@model TMDT.Models.Employees
+@using TMDT.Models;
+<div class="card mb-4">
+
+    <div class="card-body table-responsive">
+        <table >
+            <thead>
+                @*//Phần render*@
+                <tr>
+
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Position</th>
+                    <th>Phone number</th>
+                    <th>Email</th>
+                    <th>Location</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{ var tte = database.Employees.ToList();
+                    foreach (var item in tte)
+                    {
+                        <tr>
+                            <td>@item.LastName</td>
+                            <td>@item.EmployeeID</td>
+                            <td>@item.Position</td>
+                            <td>@item.numberPhone</td>
+                            <td>@item.Email</td>
+                            <td>@item.location</td>
+                            <td>
+                                <a href="~/NhanVien/DetailCus/@item.EmployeeID" class="btn btn-info btn-sm edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -132,10 +132,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\KhachHang\Controllers\GioHangController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,6 +173,7 @@
     <Compile Include="Models\location.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MatHangMua.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -475,6 +476,10 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\KhachHang\Views\GioHang\HienThiGioHang.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Account.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -544,7 +549,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Scripts\Style\jquery-ui-datepicker\package.json" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.ttf" />
