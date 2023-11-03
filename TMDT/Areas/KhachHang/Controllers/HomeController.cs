@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using TMDT.Data;
+using TMDT.Models;
+
 
 namespace TMDT.Areas.KhachHang.Controllers
 {

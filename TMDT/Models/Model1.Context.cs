@@ -12,6 +12,8 @@ namespace TMDT.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
@@ -45,5 +47,30 @@ namespace TMDT.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
+    
+        public virtual int AddProductAndCombo(string name, Nullable<decimal> price, string image, Nullable<int> typeID, Nullable<decimal> priceUp)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("price", price) :
+                new ObjectParameter("price", typeof(decimal));
+    
+            var imageParameter = image != null ?
+                new ObjectParameter("image", image) :
+                new ObjectParameter("image", typeof(string));
+    
+            var typeIDParameter = typeID.HasValue ?
+                new ObjectParameter("typeID", typeID) :
+                new ObjectParameter("typeID", typeof(int));
+    
+            var priceUpParameter = priceUp.HasValue ?
+                new ObjectParameter("priceUp", priceUp) :
+                new ObjectParameter("priceUp", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductAndCombo", nameParameter, priceParameter, imageParameter, typeIDParameter, priceUpParameter);
+        }
     }
 }
