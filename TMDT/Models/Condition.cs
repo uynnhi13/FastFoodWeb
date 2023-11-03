@@ -17,13 +17,13 @@ namespace TMDT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Condition()
         {
-            this.Order = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int conditionID { get; set; }
         public string nameCon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

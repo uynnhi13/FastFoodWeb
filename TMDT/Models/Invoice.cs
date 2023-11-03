@@ -17,7 +17,7 @@ namespace TMDT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Invoice()
         {
-            this.InvoiceDetails = new HashSet<InvoiceDetails>();
+            this.InvoiceDetails = new HashSet<InvoiceDetail>();
         }
     
         public int invoiceID { get; set; }
@@ -26,6 +26,6 @@ namespace TMDT.Models
         public string supplier { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
     }
 }

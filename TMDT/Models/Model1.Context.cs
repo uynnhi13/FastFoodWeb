@@ -27,24 +27,24 @@ namespace TMDT.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Address { get; set; }
-        public virtual DbSet<AdminUser> AdminUser { get; set; }
-        public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<Combo> Combo { get; set; }
-        public virtual DbSet<ComboDetail> ComboDetail { get; set; }
-        public virtual DbSet<Condition> Condition { get; set; }
-        public virtual DbSet<Employees> Employees { get; set; }
-        public virtual DbSet<Invoice> Invoice { get; set; }
-        public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
-        public virtual DbSet<Ingredient> Ingredient { get; set; }
-        public virtual DbSet<location> location { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
-        public virtual DbSet<Position> Position { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<Recipe> Recipe { get; set; }
-        public virtual DbSet<Unit> Unit { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<AdminUser> AdminUsers { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Combo> Comboes { get; set; }
+        public virtual DbSet<ComboDetail> ComboDetails { get; set; }
+        public virtual DbSet<Condition> Conditions { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+        public virtual DbSet<Ingredient> Ingredients { get; set; }
+        public virtual DbSet<location> locations { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
+        public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Recipe> Recipes { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual int AddProductAndCombo(string name, Nullable<decimal> price, string image, Nullable<int> typeID, Nullable<decimal> priceUp)
         {

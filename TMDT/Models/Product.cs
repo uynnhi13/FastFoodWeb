@@ -17,8 +17,8 @@ namespace TMDT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.ComboDetail = new HashSet<ComboDetail>();
-            this.Recipe = new HashSet<Recipe>();
+            this.ComboDetails = new HashSet<ComboDetail>();
+            this.Recipes = new HashSet<Recipe>();
         }
     
         public int cateID { get; set; }
@@ -30,8 +30,8 @@ namespace TMDT.Models
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ComboDetail> ComboDetail { get; set; }
+        public virtual ICollection<ComboDetail> ComboDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Recipe> Recipe { get; set; }
+        public virtual ICollection<Recipe> Recipes { get; set; }
     }
 }
