@@ -583,7 +583,7 @@
           <Property Name="arrivalDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="Ingredient" ToRole="InvoiceDetails" />
           <NavigationProperty Name="Unit" Relationship="Self.FK_Ingredient_Unit" FromRole="Ingredient" ToRole="Unit" />
-          <NavigationProperty Name="Recipes" Relationship="Self.FK_Recipe_Ingredient" FromRole="Ingredient" ToRole="Recipe" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Ingredient" FromRole="Ingredient" ToRole="Recipe" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -791,7 +791,7 @@
         </Association>
         <Association Name="FK_PurchaseInvoiceDetails_PurchaseInvoice">
           <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetail" Multiplicity="*" />
+          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Invoice">
               <PropertyRef Name="invoiceID" />
@@ -874,24 +874,24 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TMDTThucAnNhanhEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Addresses" EntityType="Self.Address" />
-          <EntitySet Name="AdminUsers" EntityType="Self.AdminUser" />
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Comboes" EntityType="Self.Combo" />
-          <EntitySet Name="ComboDetails" EntityType="Self.ComboDetail" />
-          <EntitySet Name="Conditions" EntityType="Self.Condition" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
-          <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetail" />
-          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
-          <EntitySet Name="locations" EntityType="Self.location" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-          <EntitySet Name="Positions" EntityType="Self.Position" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
-          <EntitySet Name="Units" EntityType="Self.Unit" />
-          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Address" EntityType="Self.Address" />
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Combo" EntityType="Self.Combo" />
+          <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
+          <EntitySet Name="Condition" EntityType="Self.Condition" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" />
+          <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
+          <EntitySet Name="location" EntityType="Self.location" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" />
+          <EntitySet Name="Position" EntityType="Self.Position" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="Recipe" EntityType="Self.Recipe" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" />
+          <EntitySet Name="User" EntityType="Self.User" />
           <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
             <End Role="User" EntitySet="User" />
             <End Role="Address" EntitySet="Address" />
@@ -929,7 +929,7 @@
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseInvoiceDetails_PurchaseInvoice" Association="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice">
-            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="Invoice" EntitySet="Invoice" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseInvoiceDetails_Ingredient" Association="Self.FK_PurchaseInvoiceDetails_Ingredient">
@@ -937,8 +937,8 @@
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Ingredient_Unit" Association="Self.FK_Ingredient_Unit">
-            <End Role="Unit" EntitySet="Units" />
-            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Ingredient" EntitySet="Ingredient" />
           </AssociationSet>
           <AssociationSet Name="FK_Recipe_Ingredient" Association="Self.FK_Recipe_Ingredient">
             <End Role="Ingredient" EntitySet="Ingredient" />
@@ -1044,7 +1044,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Invoices">
+          <EntitySetMapping Name="Invoice">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
                 <ScalarProperty Name="invoiceID" ColumnName="invoiceID" />
@@ -1064,7 +1064,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ingredients">
+          <EntitySetMapping Name="Ingredient">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Ingredient">
               <MappingFragment StoreEntitySet="Ingredient">
                 <ScalarProperty Name="ingID" ColumnName="ingID" />
@@ -1076,7 +1076,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="locations">
+          <EntitySetMapping Name="location">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.location">
               <MappingFragment StoreEntitySet="location">
                 <ScalarProperty Name="locationID" ColumnName="locationID" />
