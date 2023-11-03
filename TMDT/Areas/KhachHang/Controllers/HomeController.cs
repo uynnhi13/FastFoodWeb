@@ -10,23 +10,24 @@ namespace TMDT.Areas.KhachHang.Controllers
     public class HomeController : Controller
     {
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
         // GET: KhachHangVangLai/Home
         public ActionResult Index()
         {
-            var lstProduct = db.Products.ToList();
+            var lstProduct = db.Product.ToList();
             return View(lstProduct);
         }
 
         public ActionResult LayProductType()
         {
-            var lstType = db.Categories.ToList();
+            var lstType = db.Category.ToList();
             return PartialView(lstType);
         }
 
         public ActionResult LocSanPham(int id)
         {
             //Lấy sản phẩm theo id Type
-            var lstProductType = db.Products.Where(Product => Product.typeID == id).ToList();
+            var lstProductType = db.Product.Where(Product => Product.typeID == id).ToList();
 
             //Trả về view để render các sản phẩm trên
             return View("Index", lstProductType);
@@ -34,7 +35,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
         public ActionResult ChiTietSP(int id)
         {
-            var sp = db.Products.FirstOrDefault(s => s.cateID == id);
+            var sp = db.Product.FirstOrDefault(s => s.cateID == id);
             return View(sp);
         }
     }

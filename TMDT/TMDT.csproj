@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
@@ -208,9 +209,126 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Address.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdminUser.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Combo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ComboDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Condition.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\C__EFMigrationsHistory.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employees.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ingredient.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Invoice.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InvoiceDetails.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\location.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Position.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Recipe.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Unit.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Data\css\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Data\css\fontawesome.min.css" />
+    <Content Include="Areas\Admin\Data\css\fullcalendar.min.css" />
+    <Content Include="Areas\Admin\Data\css\tooplate.css" />
+    <Content Include="Areas\Admin\Data\img\dash-bg-01.jpg" />
+    <Content Include="Areas\Admin\Data\img\dash-bg-02.jpg" />
+    <Content Include="Areas\Admin\Data\img\dash-bg-03.jpg" />
+    <Content Include="Areas\Admin\Data\img\product-image.jpg" />
+    <Content Include="Areas\Admin\Data\img\profile-image.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\index.html" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="Areas\Admin\Data\js\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Data\js\Chart.min.js" />
+    <Content Include="Areas\Admin\Data\js\fullcalendar.min.js" />
+    <Content Include="Areas\Admin\Data\js\jquery-3.3.1.min.js" />
+    <Content Include="Areas\Admin\Data\js\moment.min.js" />
+    <Content Include="Areas\Admin\Data\js\tooplate-scripts.js" />
+    <Content Include="Areas\Admin\Data\js\utils.js" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\KhachHang\assets\css\plugins\animate.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\images\ui-icons_444444_256x240.png" />
     <Content Include="Areas\KhachHang\assets\css\plugins\images\ui-icons_555555_256x240.png" />
@@ -345,6 +463,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\KhachHang\Views\web.config" />
@@ -405,7 +533,6 @@
     <Content Include="Areas\KhachHang\assets\scss\_shop.scss" />
     <Content Include="Areas\KhachHang\assets\scss\_variabls.scss" />
     <Content Include="Areas\KhachHang\Views\Home\LayProductType.cshtml" />
-    <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\KhachHang\Views\Home\ChiTietSP.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangNhap.cshtml" />
@@ -416,6 +543,16 @@
     <Content Include="Data\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\Shared\_AdminPage.cshtml" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\package.json" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -502,11 +639,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\KhachHang\Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

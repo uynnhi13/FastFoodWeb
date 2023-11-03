@@ -31,12 +31,12 @@ namespace TMDT.Areas.KhachHang.Controllers
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
 
-                var kiemTraUser = db.Users.FirstOrDefault(k => k.numberPhone == user.numberPhone);
+                var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
                 if (kiemTraUser != null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
                 if (ModelState.IsValid)
                 {
-                    db.Users.Add(user);
+                    db.User.Add(user);
                     db.SaveChanges();
                 }
                 else
@@ -63,7 +63,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 if (ModelState.IsValid)
                 {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
-                    var kiemtra = db.Users.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
+                    var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
                     if (kiemtra != null)
                     {
                         ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
