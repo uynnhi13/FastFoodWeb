@@ -7,22 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Address
+    public partial class ComboDetail
     {
-        public int addressID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string numberPhone { get; set; }
-        public string address1 { get; set; }
-        public bool priority { get; set; }
-        public string note { get; set; }
-        public string userID { get; set; }
+        public int comboID { get; set; }
+        public int cateID { get; set; }
+        public int quantity { get; set; }
+        public Nullable<bool> sizeUP { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual Combo Combo { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

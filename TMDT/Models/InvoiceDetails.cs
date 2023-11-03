@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class InvoiceDetail
+    public partial class InvoiceDetails
     {
         public int invoiceID { get; set; }
         public int ingID { get; set; }

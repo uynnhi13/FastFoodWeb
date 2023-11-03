@@ -7,31 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Ingredient
+    public partial class Unit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ingredient()
+        public Unit()
         {
-            this.InvoiceDetails = new HashSet<InvoiceDetail>();
-            this.Recipes = new HashSet<Recipe>();
+            this.Ingredient = new HashSet<Ingredient>();
         }
     
-        public int ingID { get; set; }
-        public string ingName { get; set; }
-        public double quantity { get; set; }
         public int unitID { get; set; }
-        public double quantityMin { get; set; }
-        public System.DateTime arrivalDate { get; set; }
+        public string nameU { get; set; }
     
-        public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Recipe> Recipes { get; set; }
+        public virtual ICollection<Ingredient> Ingredient { get; set; }
     }
 }

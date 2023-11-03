@@ -7,31 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Combo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public Combo()
         {
-            this.OrderDetails = new HashSet<OrderDetail>();
+            this.ComboDetail = new HashSet<ComboDetail>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
-        public int orderID { get; set; }
-        public string numberPhone { get; set; }
-        public System.DateTime datetime { get; set; }
-        public string note { get; set; }
-        public int conditionID { get; set; }
-        public decimal total { get; set; }
-        public int employeeID { get; set; }
+        public int comboID { get; set; }
+        public string nameCombo { get; set; }
+        public decimal price { get; set; }
+        public int sale { get; set; }
     
-        public virtual Condition Condition { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<ComboDetail> ComboDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }
