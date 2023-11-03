@@ -17,7 +17,7 @@ namespace TMDT.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Position()
         {
-            this.Employees = new HashSet<Employees>();
+            this.Employees = new HashSet<Employee>();
         }
     
         public int PositionID { get; set; }
@@ -26,6 +26,6 @@ namespace TMDT.Data
         public decimal SalaryRange { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employees> Employees { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

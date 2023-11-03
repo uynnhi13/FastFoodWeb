@@ -12,7 +12,7 @@ namespace TMDT.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class InvoiceDetails
+    public partial class InvoiceDetail
     {
         public int invoiceID { get; set; }
         public int ingID { get; set; }

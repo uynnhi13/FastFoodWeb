@@ -12,12 +12,12 @@ namespace TMDT.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class Employees
+    public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employees()
+        public Employee()
         {
-            this.Order = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
         }
     
         public int EmployeeID { get; set; }
@@ -32,6 +32,6 @@ namespace TMDT.Data
         public virtual location location { get; set; }
         public virtual Position Position { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

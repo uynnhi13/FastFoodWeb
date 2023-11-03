@@ -17,8 +17,8 @@ namespace TMDT.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Address = new HashSet<Address>();
-            this.Order = new HashSet<Order>();
+            this.Addresses = new HashSet<Address>();
+            this.Orders = new HashSet<Order>();
         }
     
         public string numberPhone { get; set; }
@@ -31,8 +31,8 @@ namespace TMDT.Data
         public bool permission { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Address> Address { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

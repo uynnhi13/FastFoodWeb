@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="Data\Condition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\Employees.cs">
+    <Compile Include="Data\Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\Ingredient.cs">
@@ -163,7 +164,7 @@
     <Compile Include="Data\Invoice.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\InvoiceDetails.cs">
+    <Compile Include="Data\InvoiceDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\location.cs">
@@ -211,6 +212,65 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Content\css\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Content\css\fontawesome.min.css" />
+    <Content Include="Areas\Admin\Content\css\fullcalendar.min.css" />
+    <Content Include="Areas\Admin\Content\css\tooplate.css" />
+    <Content Include="Areas\Admin\Content\img\dash-bg-01.jpg" />
+    <Content Include="Areas\Admin\Content\img\dash-bg-02.jpg" />
+    <Content Include="Areas\Admin\Content\img\dash-bg-03.jpg" />
+    <Content Include="Areas\Admin\Content\img\product-image.jpg" />
+    <Content Include="Areas\Admin\Content\img\profile-image.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\index.html" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\package.json" />
+    <Content Include="Areas\Admin\Content\js\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Content\js\Chart.min.js" />
+    <Content Include="Areas\Admin\Content\js\fullcalendar.min.js" />
+    <Content Include="Areas\Admin\Content\js\jquery-3.3.1.min.js" />
+    <Content Include="Areas\Admin\Content\js\moment.min.js" />
+    <Content Include="Areas\Admin\Content\js\tooplate-scripts.js" />
+    <Content Include="Areas\Admin\Content\js\utils.js" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.woff2" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.woff2" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Admin\Views\Share\_LayoutAdminPage.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\KhachHang\assets\css\plugins\animate.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\images\ui-icons_444444_256x240.png" />
     <Content Include="Areas\KhachHang\assets\css\plugins\images\ui-icons_555555_256x240.png" />
@@ -405,10 +465,10 @@
     <Content Include="Areas\KhachHang\assets\scss\_shop.scss" />
     <Content Include="Areas\KhachHang\assets\scss\_variabls.scss" />
     <Content Include="Areas\KhachHang\Views\Home\LayProductType.cshtml" />
-    <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\KhachHang\Views\Home\ChiTietSP.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangNhap.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <EntityDeploy Include="Data\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -502,9 +562,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\KhachHang\Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

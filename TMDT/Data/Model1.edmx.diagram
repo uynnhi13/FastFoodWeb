@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="64a4d4f78d2d468c914d72e01d2766a5" Name="Diagram1">
+      <Diagram DiagramId="94ac47b0701b493dab885aea5347840a" Name="Diagram1">
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Address" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.AdminUser" Width="1.5" PointX="8.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Category" Width="1.5" PointX="5.75" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Combo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.ComboDetail" Width="1.5" PointX="11.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Condition" Width="1.5" PointX="3.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Employees" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Employee" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Invoice" Width="1.5" PointX="8" PointY="18.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.InvoiceDetails" Width="1.5" PointX="10.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.InvoiceDetail" Width="1.5" PointX="10.25" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Ingredient" Width="1.5" PointX="8" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.location" Width="1.5" PointX="1.5" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Order" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
