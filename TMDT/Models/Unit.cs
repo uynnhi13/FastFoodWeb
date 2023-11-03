@@ -7,23 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Condition
+    public partial class Unit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Condition()
+        public Unit()
         {
-            this.Order = new HashSet<Order>();
+            this.Ingredient = new HashSet<Ingredient>();
         }
     
-        public int conditionID { get; set; }
-        public string nameCon { get; set; }
+        public int unitID { get; set; }
+        public string nameU { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Ingredient> Ingredient { get; set; }
     }
 }

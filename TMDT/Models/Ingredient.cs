@@ -7,30 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Ingredient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Ingredient()
         {
-            this.ComboDetail = new HashSet<ComboDetail>();
+            this.InvoiceDetails = new HashSet<InvoiceDetails>();
             this.Recipe = new HashSet<Recipe>();
         }
     
-        public int cateID { get; set; }
-        public string name { get; set; }
-        public decimal price { get; set; }
-        public string image { get; set; }
-        public int typeID { get; set; }
-        public decimal priceUp { get; set; }
+        public int ingID { get; set; }
+        public string ingName { get; set; }
+        public double quantity { get; set; }
+        public int unitID { get; set; }
+        public double quantityMin { get; set; }
+        public System.DateTime arrivalDate { get; set; }
     
-        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ComboDetail> ComboDetail { get; set; }
+        public virtual ICollection<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipe> Recipe { get; set; }
     }

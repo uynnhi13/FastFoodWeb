@@ -7,23 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Unit
+    public partial class Invoice
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Unit()
+        public Invoice()
         {
-            this.Ingredient = new HashSet<Ingredient>();
+            this.InvoiceDetails = new HashSet<InvoiceDetails>();
         }
     
-        public int unitID { get; set; }
-        public string nameU { get; set; }
+        public int invoiceID { get; set; }
+        public System.DateTime dateArrival { get; set; }
+        public decimal potal { get; set; }
+        public string supplier { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ingredient> Ingredient { get; set; }
+        public virtual ICollection<InvoiceDetails> InvoiceDetails { get; set; }
     }
 }

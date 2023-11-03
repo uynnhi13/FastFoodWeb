@@ -7,25 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Invoice
+    public partial class Order
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Invoice()
+        public Order()
         {
-            this.InvoiceDetails = new HashSet<InvoiceDetails>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
-        public int invoiceID { get; set; }
-        public System.DateTime dateArrival { get; set; }
-        public decimal potal { get; set; }
-        public string supplier { get; set; }
+        public int orderID { get; set; }
+        public string numberPhone { get; set; }
+        public System.DateTime datetime { get; set; }
+        public string note { get; set; }
+        public int conditionID { get; set; }
+        public decimal total { get; set; }
+        public int employeeID { get; set; }
     
+        public virtual Condition Condition { get; set; }
+        public virtual Employees Employees { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

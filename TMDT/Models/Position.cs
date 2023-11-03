@@ -7,23 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Position
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public Position()
         {
-            this.Product = new HashSet<Product>();
+            this.Employees = new HashSet<Employees>();
         }
     
-        public int typeID { get; set; }
-        public string nameType { get; set; }
+        public int PositionID { get; set; }
+        public string posName { get; set; }
+        public string Description { get; set; }
+        public decimal SalaryRange { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<Employees> Employees { get; set; }
     }
 }
