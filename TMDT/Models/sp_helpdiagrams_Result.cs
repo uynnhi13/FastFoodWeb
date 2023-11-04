@@ -7,19 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class InvoiceDetails
+    public partial class sp_helpdiagrams_Result
     {
-        public int invoiceID { get; set; }
-        public int ingID { get; set; }
-        public double quatity { get; set; }
-        public decimal price { get; set; }
-    
-        public virtual Invoice Invoice { get; set; }
-        public virtual Ingredient Ingredient { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

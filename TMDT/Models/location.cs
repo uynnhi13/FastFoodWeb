@@ -7,23 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Condition
+    public partial class location
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Condition()
+        public location()
         {
-            this.Order = new HashSet<Order>();
+            this.Employees = new HashSet<Employees>();
         }
     
-        public int conditionID { get; set; }
-        public string nameCon { get; set; }
+        public int locationID { get; set; }
+        public string StreetAddress { get; set; }
+        public string Ward { get; set; }
+        public string District { get; set; }
+        public string City { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Employees> Employees { get; set; }
     }
 }

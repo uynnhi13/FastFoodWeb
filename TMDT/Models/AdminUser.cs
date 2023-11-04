@@ -7,18 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Recipe
+    public partial class AdminUser
     {
-        public int ingID { get; set; }
-        public int cateID { get; set; }
-        public double quantity { get; set; }
-    
-        public virtual Ingredient Ingredient { get; set; }
-        public virtual Product Product { get; set; }
+        public int ID { get; set; }
+        public string nameUser { get; set; }
+        public int roleUser { get; set; }
+        public string passWord { get; set; }
     }
 }

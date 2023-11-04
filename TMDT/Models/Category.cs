@@ -7,31 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Order()
+        public Category()
         {
-            this.OrderDetail = new HashSet<OrderDetail>();
+            this.Product = new HashSet<Product>();
         }
     
-        public int orderID { get; set; }
-        public string numberPhone { get; set; }
-        public System.DateTime datetime { get; set; }
-        public string note { get; set; }
-        public int conditionID { get; set; }
-        public decimal total { get; set; }
-        public int employeeID { get; set; }
+        public int typeID { get; set; }
+        public string nameType { get; set; }
     
-        public virtual Condition Condition { get; set; }
-        public virtual Employees Employees { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

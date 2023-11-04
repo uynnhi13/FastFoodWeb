@@ -7,25 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Position
+    public partial class Combo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Position()
+        public Combo()
         {
-            this.Employees = new HashSet<Employees>();
+            this.ComboDetail = new HashSet<ComboDetail>();
+            this.OrderDetail = new HashSet<OrderDetail>();
         }
     
-        public int PositionID { get; set; }
-        public string posName { get; set; }
-        public string Description { get; set; }
-        public decimal SalaryRange { get; set; }
+        public int comboID { get; set; }
+        public string nameCombo { get; set; }
+        public decimal price { get; set; }
+        public int sale { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employees> Employees { get; set; }
+        public virtual ICollection<ComboDetail> ComboDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

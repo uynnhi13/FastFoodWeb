@@ -7,18 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int comboID { get; set; }
-        public int orderID { get; set; }
-        public int quantity { get; set; }
-    
-        public virtual Combo Combo { get; set; }
-        public virtual Order Order { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

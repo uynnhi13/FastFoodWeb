@@ -1,11 +1,11 @@
-﻿
+﻿@using TMDT.Models;
+@model IEnumerable<Product>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
 }
 
-@using TMDT.Data
-@model IEnumerable<Product>
 
 @* Slide Trang Chủ *@
 <!-- Hero/Intro Slider Start -->
@@ -145,7 +145,7 @@
                 <!-- Tab Start -->
                 @* Danh mục sản phẩm *@
                 @Html.Action("LayProductType", "Home")
-               
+
                 <!-- Tab End -->
             </div>
             <!-- Section Title End -->

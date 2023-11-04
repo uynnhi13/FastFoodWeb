@@ -7,16 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TMDT.Data
+namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class AdminUser
+    public partial class OrderDetail
     {
-        public int ID { get; set; }
-        public string nameUser { get; set; }
-        public int roleUser { get; set; }
-        public string passWord { get; set; }
+        public int comboID { get; set; }
+        public int orderID { get; set; }
+        public int quantity { get; set; }
+    
+        public virtual Combo Combo { get; set; }
+        public virtual Order Order { get; set; }
     }
 }
