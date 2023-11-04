@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\KhachHang\Controllers\GioHangController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
@@ -202,6 +203,15 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Recipe.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Unit.cs">
@@ -290,8 +300,16 @@
     <Content Include="Areas\KhachHang\assets\css\vendor\font.awesome.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\pe-icon-7-stroke.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\vendor.min.css" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.eot" />
     <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.svg" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.ttf" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.woff" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.woff2" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\FontAwesome.otf" />
+    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.eot" />
     <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.svg" />
+    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.ttf" />
+    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.woff" />
     <Content Include="Areas\KhachHang\assets\images\404\404.jpg" />
     <Content Include="Areas\KhachHang\assets\images\about-image\intro-bg.jpg" />
     <Content Include="Areas\KhachHang\assets\images\about-image\srevice-left-img.png" />
@@ -388,37 +406,6 @@
     <Content Include="Areas\KhachHang\assets\js\vendor\modernizr-3.11.2.min.js" />
     <Content Include="Areas\KhachHang\assets\js\vendor\vendor.min.js" />
     <Content Include="Areas\KhachHang\assets\php\mail.php" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\KhachHang\Views\web.config" />
-    <Content Include="Areas\KhachHang\Views\Shared\_LayoutVL.cshtml" />
-    <Content Include="Areas\KhachHang\Views\Home\Index.cshtml" />
-    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.eot" />
-    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.ttf" />
-    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.woff" />
-    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.woff2" />
-    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\FontAwesome.otf" />
-    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.eot" />
-    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.ttf" />
-    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.woff" />
     <Content Include="Areas\KhachHang\assets\scss\component\_banner.scss" />
     <Content Include="Areas\KhachHang\assets\scss\component\_blog.scss" />
     <Content Include="Areas\KhachHang\assets\scss\component\_brand-slider.scss" />
@@ -465,10 +452,34 @@
     <Content Include="Areas\KhachHang\assets\scss\_search-modal.scss" />
     <Content Include="Areas\KhachHang\assets\scss\_shop.scss" />
     <Content Include="Areas\KhachHang\assets\scss\_variabls.scss" />
-    <Content Include="Areas\KhachHang\Views\Home\LayProductType.cshtml" />
     <Content Include="Areas\KhachHang\Views\Home\ChiTietSP.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Home\Index.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Home\LayProductType.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangNhap.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Shared\_LayoutVL.cshtml" />
+    <Content Include="Areas\KhachHang\Views\web.config" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\KhachHang\Views\GioHang\HienThiGioHang.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -563,7 +574,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\KhachHang\Data\" />
     <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
