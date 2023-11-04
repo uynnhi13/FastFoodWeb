@@ -6,132 +6,111 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
 using TMDT.Models;
-
 
 namespace TMDT.Areas.Admin.Controllers
 {
-    public class IngredientsController : Controller
+    public class UnitController : Controller
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
 
-        // GET: Admin/Ingredients
-        public ActionResult Index(int? page)
+        // GET: Admin/Unit
+        public ActionResult Index()
         {
-            int pageSize = 5;
-            int pageNum = 1;
-
-            var ingredient = db.Ingredient.Include(i => i.Unit);
-            return View(ingredient);
+            return View(db.Unit.ToList());
         }
 
-        // GET: Admin/Ingredients/Details/5
+        // GET: Admin/Unit/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ingredient ingredient = db.Ingredient.Find(id);
-            if (ingredient == null)
+            Unit unit = db.Unit.Find(id);
+            if (unit == null)
             {
                 return HttpNotFound();
             }
-            return View(ingredient);
+            return View(unit);
         }
 
-        // GET: Admin/Ingredients/Create
+        // GET: Admin/Unit/Create
         public ActionResult Create()
         {
-            ViewBag.unitID = new SelectList(db.Unit, "unitID", "nameU");
             return View();
         }
 
-        // POST: Admin/Ingredients/Create
+        // POST: Admin/Unit/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ingID,ingName,quantity,unitID,quantityMin,arrivalDate")] Ingredient ingredient)
+        public ActionResult Create([Bind(Include = "unitID,nameU")] Unit unit)
         {
-            if (ingredient is null) {
-                throw new ArgumentNullException(nameof(ingredient));
-            }
-
             if (ModelState.IsValid)
             {
-                if( ingredient.quantity == null ) ingredient.quantity = 0;
-                if (ingredient.quantityMin == null) ingredient.quantityMin = 0;
-                ingredient.arrivalDate = DateTime.Now;
-
-                Ingredient ingre = new Ingredient();
-                ingre = ingredient;
-
-                db.Ingredient.Add(ingre);
+                db.Unit.Add(unit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.unitID = new SelectList(db.Unit, "unitID", "nameU", ingredient.unitID);
-            return View(ingredient);
+            return View(unit);
         }
 
-        // GET: Admin/Ingredients/Edit/5
+        // GET: Admin/Unit/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ingredient ingredient = db.Ingredient.Find(id);
-            if (ingredient == null)
+            Unit unit = db.Unit.Find(id);
+            if (unit == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.unitID = new SelectList(db.Unit, "unitID", "nameU", ingredient.unitID);
-            return View(ingredient);
+            return View(unit);
         }
 
-        // POST: Admin/Ingredients/Edit/5
+        // POST: Admin/Unit/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ingID,ingName,quantity,unitID,quantityMin,arrivalDate")] Ingredient ingredient)
+        public ActionResult Edit([Bind(Include = "unitID,nameU")] Unit unit)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ingredient).State = EntityState.Modified;
+                db.Entry(unit).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.unitID = new SelectList(db.Unit, "unitID", "nameU", ingredient.unitID);
-            return View(ingredient);
+            return View(unit);
         }
 
-        // GET: Admin/Ingredients/Delete/5
+        // GET: Admin/Unit/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ingredient ingredient = db.Ingredient.Find(id);
-            if (ingredient == null)
+            Unit unit = db.Unit.Find(id);
+            if (unit == null)
             {
                 return HttpNotFound();
             }
-            return View(ingredient);
+            return View(unit);
         }
 
-        // POST: Admin/Ingredients/Delete/5
+        // POST: Admin/Unit/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ingredient ingredient = db.Ingredient.Find(id);
-            db.Ingredient.Remove(ingredient);
+            Unit unit = db.Unit.Find(id);
+            db.Unit.Remove(unit);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

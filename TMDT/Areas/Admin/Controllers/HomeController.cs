@@ -14,9 +14,5 @@ namespace TMDT.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Indexe()
-        {
-            return View();
-        }
     }
 }

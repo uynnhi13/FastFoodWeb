@@ -50,11 +50,12 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
-                                        Reports
+                                        Sản phẩm
                                     </a>
+
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Daily Report</a>
-                                        <a class="dropdown-item" href="#">Weekly Report</a>
+                                        @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
+                                        @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
                                         <a class="dropdown-item" href="#">Yearly Report</a>
                                     </div>
                                 </li>
@@ -90,9 +91,10 @@
                 </div>
             </div>
             <!-- row -->
-            <div class="row tm-content-row tm-mt-big">
+            <div class="row tm-content-row tm-mt-big ">
                 @RenderBody()
             </div>
+        </div>
     </div>
     <script src="~/Areas/Admin/Data/js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
@@ -134,5 +136,6 @@
             });
         })
     </script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

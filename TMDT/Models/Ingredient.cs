@@ -23,9 +23,9 @@ namespace TMDT.Models
     
         public int ingID { get; set; }
         public string ingName { get; set; }
-        public double quantity { get; set; }
+        public double? quantity { get; set; }
         public int unitID { get; set; }
-        public double quantityMin { get; set; }
+        public double? quantityMin { get; set; }
         public System.DateTime arrivalDate { get; set; }
     
         public virtual Unit Unit { get; set; }
