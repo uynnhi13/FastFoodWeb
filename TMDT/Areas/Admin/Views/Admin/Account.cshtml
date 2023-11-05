@@ -1,53 +1,66 @@
-﻿
+﻿@model IEnumerable<TMDT.Models.Employees>
+
 @{
     ViewBag.Title = "Account";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
-    TMDTThucAnNhanhEntities database = new TMDTThucAnNhanhEntities();
 }
 
-
-@model TMDT.Models.Employees
-@using TMDT.Models;
+<br />
+<br />
 <div class="card mb-4">
+    <h2 style="padding:10px">Quản lý tài khoản nhân viên</h2>
+    <p style="padding:10px">
+        @Html.ActionLink("Thêm mới", "AddnewNV")
+    </p>
+    <table class="table ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.positionID)
+            </th>
 
-    <div class="card-body table-responsive">
-        <table >
-            <thead>
-                @*//Phần render*@
-                <tr>
+            <th></th>
+        </tr>
 
-                    <th>Name</th>
-                    <th>ID</th>
-                    <th>Position</th>
-                    <th>Phone number</th>
-                    <th>Email</th>
-                    <th>Location</th>
+        @foreach (var item in Model)
+        {
+            <tr>
 
-                </tr>
-            </thead>
-            <tbody>
-                @{ var tte = database.Employees.ToList();
-                    foreach (var item in tte)
-                    {
-                        <tr>
-                            <td>@item.LastName</td>
-                            <td>@item.EmployeeID</td>
-                            <td>@item.Position</td>
-                            <td>@item.numberPhone</td>
-                            <td>@item.Email</td>
-                            <td>@item.location</td>
-                            <td>
-                                <a href="~/NhanVien/DetailCus/@item.EmployeeID" class="btn btn-info btn-sm edit">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.positionID)
+                </td>
 
-                        </tr>
-                    }
-                }
+                <td>
+                   
+                    @Html.ActionLink("Chi tiết", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Xóa", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
 
-            </tbody>
-        </table>
-    </div>
+    </table>
+
 </div>
-
