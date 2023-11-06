@@ -83,5 +83,10 @@ namespace TMDT.Areas.KhachHang.Controllers
             Session["TaiKhoan"] = null;
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult UserInfo()
+        {
+            var user = (User)Session["TaiKhoan"];
+            return View(user);
+        }
     }
 }
