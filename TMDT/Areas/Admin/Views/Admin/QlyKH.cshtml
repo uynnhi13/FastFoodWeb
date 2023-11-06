@@ -1,0 +1,98 @@
+﻿@model IEnumerable<TMDT.Models.User>
+@{
+    ViewBag.Title = "QlyKH";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<br />
+<br />
+<div class="card mb-4">
+    <h2 style="padding:10px">Quản lý khách hàng </h2>
+    <div id="searchBrand"
+         class="add-inline-form main-content rounded-3 border border-2 py-4 px-3 mb-3">
+        <div class="table-header mb-3 row">
+            <div class="col">
+                <h5 class="title">Tìm kiếm khách hàng</h5>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-clr-normal"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#searchCollapse"
+                        aria-expanded="false"
+                        aria-controls="searchCollapse">
+                    <i class="fa-solid fa-caret-down"></i>
+                </button>
+            </div>
+        </div>
+        <form id="searchCollapse" class="collapse create-form">
+            <div class="row">
+                <div class="col">
+                    <input type="text"
+                           id="form6Example3"
+                           class="form-control" />
+                    <label class="form-label" for="form6Example3">Tên khách hàng</label>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div class="col-2 mt-4">
+                <button id="searchBtn"
+                        type="submit"
+                        class="btn btn-clr-normal btn-block mb-4 w-50">
+                    <i>Tìm</i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="main-content rounded-3 border border-2 py-4 px-3">
+        <div class="table-header row">
+            <div class="col-3">
+                <h5 class="title">Quản lý khách hàng</h5>
+               
+            </div>
+        </div>
+        <div >
+            
+            <div class="bg-white">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        @*//Phần render*@
+                        <tr>
+                            
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>Khác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>@user.fullName</td>
+                                    <td>@user.gender</td>
+                                    <td>@user.numberPhone</td>
+                                    
+                                    <td>
+                                        @Html.ActionLink("Vô hiệu hóa tài khoản", "DisableAccount", new { id = user.numberPhone }, new { @class = "btn btn-danger" })
+                                        @Html.ActionLink("Kích hoạt lại tài khoản", "EnableAccount", new { id = user.numberPhone }, new { @class = "btn btn-success" })
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-row gap-1">
+                                            <a href="@Url.Action("EditKH", "Admin", new {id=@user.numberPhone})" class="nav-link">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

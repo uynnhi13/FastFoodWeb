@@ -164,7 +164,7 @@
     <Compile Include="Models\Condition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee.cs">
+    <Compile Include="Models\Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ingredient.cs">
@@ -173,7 +173,7 @@
     <Compile Include="Models\Invoice.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\InvoiceDetail.cs">
+    <Compile Include="Models\InvoiceDetails.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\location.cs">
@@ -476,13 +476,6 @@
     <Content Include="Areas\KhachHang\Views\Home\ChiTietSP.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangNhap.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\KhachHang\Views\GioHang\HienThiGioHang.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
@@ -490,6 +483,14 @@
     <Content Include="Areas\Admin\Views\Admin\AddnewNV.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\DetailsNV.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\EditNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\QlyKH.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

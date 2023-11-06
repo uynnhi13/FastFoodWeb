@@ -141,7 +141,63 @@ namespace TMDT.Areas.Admin.Controllers
             database.SaveChanges();
             return RedirectToAction("Account","Admin");
         }
+        public ActionResult QlyKH()
+        {
+            var dskh = database.User;
+            return View(dskh);
 
+        }
+
+        public ActionResult DisableAccount(string id)
+        {
+            //Cập nhật lại database, thêm 1 cột IsActive trong User
+            var customer = database.User.FirstOrDefault(c => c.numberPhone == id);
+
+            if (customer == null) {
+
+                return HttpNotFound();
+            }
+
+            customer.IsActive = false;
+            database.SaveChanges();
+            return RedirectToAction("QlyKH");
+        }
+        public ActionResult EnableAccount(string id)
+        {
+
+            var customer = database.User.FirstOrDefault(c => c.numberPhone == id);
+
+            if (customer == null) {
+
+                return HttpNotFound();
+            }
+
+            customer.IsActive = true;
+            database.SaveChanges();
+            return RedirectToAction("QlyKH");
+        }
+        //public ActionResult EditKH(string id)
+        //{
+        //    var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
+        //    if (kh == null) {
+        //        return HttpNotFound();
+        //    }
+        //    return View(kh);
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditKH(User user)
+        //{
+        //    if (ModelState.IsValid) {
+
+        //        database.Entry(user).State = System.Data.Entity.EntityState.Modified;
+        //        database.SaveChanges(); 
+        //        return RedirectToAction("QlyKH");
+        //    }
+
+
+        //    return View(user);
+        //}
 
     }
 

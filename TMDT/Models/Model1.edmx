@@ -182,6 +182,7 @@
           <Property Name="gender" Type="bit" />
           <Property Name="addressID" Type="int" />
           <Property Name="permission" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -678,6 +679,7 @@
           <Property Name="gender" Type="Boolean" />
           <Property Name="addressID" Type="Int32" />
           <Property Name="permission" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
         </EntityType>
@@ -1159,6 +1161,7 @@
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="addressID" ColumnName="addressID" />
                 <ScalarProperty Name="permission" ColumnName="permission" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
