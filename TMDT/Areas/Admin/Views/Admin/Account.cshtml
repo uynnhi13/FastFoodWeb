@@ -55,8 +55,8 @@
 
                 <td>
                    
-                    @Html.ActionLink("Chi tiết", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Xóa", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Chi tiết", "DetailsNV", new { id= item.EmployeeID }) |
+                    @Html.ActionLink("Xóa", "DeleteNV", new {  id=item.EmployeeID })
                 </td>
             </tr>
         }

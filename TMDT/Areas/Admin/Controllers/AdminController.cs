@@ -97,10 +97,51 @@ namespace TMDT.Areas.Admin.Controllers
                 }
                 return RedirectToAction("Account", "Admin");
             }
-            
+           
 
         }
+        public ActionResult DetailsNV(int id)
+        {
+            var em = database.Employees.FirstOrDefault(s => s.EmployeeID == id);
+            
+            return View(em);
+        }
         
+        public ActionResult EditNV(int id)
+        {
+            var em = database.Employees.FirstOrDefault(s => s.EmployeeID == id);
+            if (em == null) {
+                return HttpNotFound();
+            }
+            return View(em);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken] 
+        public ActionResult EditNV(Employees emp)
+        {
+            if (ModelState.IsValid) {
+                
+                database.Entry(emp).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges(); // Lưu thay đổi
+
+                // Chuyển hướng đến trang danh sách nhân viên hoặc trang khác theo ý muốn
+                return RedirectToAction("Account");
+            }
+
+            
+            return View(emp);
+        }
+        public ActionResult DeleteNV(int id)
+        {
+            var em = database.Employees.FirstOrDefault(s => s.EmployeeID == id);
+            if(em == null) {
+                return HttpNotFound();
+            }
+            database.Employees.Remove(em);
+            database.SaveChanges();
+            return RedirectToAction("Account","Admin");
+        }
+
 
     }
 

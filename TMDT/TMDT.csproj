@@ -488,6 +488,8 @@
     <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Account.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\AddnewNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditNV.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
