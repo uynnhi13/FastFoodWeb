@@ -8,8 +8,6 @@
 
 
 <link href="~/Areas/KhachHang/assets/css/myInfor.css" rel="stylesheet" />
-
-
 <div class="col-sm-12 col-md-9 col-lg-9">
     <div class="container-xl px-4 mt-4">
         <div class="row">
@@ -37,9 +35,11 @@
                                     <input class="form-control" id="inputUsername" type="text" value="@Model.numberPhone" readonly>
 
                                 </div>
+
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPass">Password:</label>
-                                    <input class="form-control" id="inputPass" type="text" value="" readonly>
+                                    <input class="form-control" id="inputPass" type="text" value="@Model.password" readonly>
+                                    <button id="showPasswordButton">Show Password</button>
                                 </div>
 
 
@@ -48,12 +48,12 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputName">Họ và tên:</label>
-                                    <input class="form-control" id="inputName" type="text" value="" readonly>
+                                    <input class="form-control" id="inputName" type="text" value="@Model.fullName" readonly>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputDateOfBirth">Ngày sinh:</label>
-                                    <input class="form-control" id="inputDateOfBirth" type="text" value="" readonly>
+                                    <input class="form-control" id="inputDateOfBirth" type="text" value="@Model.bDay" readonly>
                                 </div>
 
 
@@ -64,15 +64,14 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputEmail">Email:</label>
-                                    <input class="form-control" id="inputEmail" type="email" value="" readonly>
+                                    <input class="form-control" id="inputEmail" type="email" value="@Model.gmail" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
-                                    <input class="form-control" id="inputPhone" type="text" value="" readonly>
+                                    <input class="form-control" id="inputPhone" type="text" value="@Model.numberPhone" readonly>
                                 </div>
                             </div>
-                            @*<button class="btn btn-outline-primary" type="button"> @Html.ActionLink("View Details", "EditMyInfor", new { id = Model.IDNV })</button>*@
-
+                          
                         </form>
                     </div>
                 </div>
@@ -81,78 +80,8 @@
     </div>
 </div>
 
-@*
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.numberPhone)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.numberPhone)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.gmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.gmail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.bDay)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.bDay)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.addressID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.addressID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.permission)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.permission)
-        </dd>
-
-    </dl>
-</div>*@
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Chỉnh sửa", "UserEdit",new { id=Model.numberPhone}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

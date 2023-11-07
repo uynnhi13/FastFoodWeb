@@ -83,10 +83,35 @@ namespace TMDT.Areas.KhachHang.Controllers
             Session["TaiKhoan"] = null;
             return RedirectToAction("Index", "Home");
         }
+
         public ActionResult UserInfo()
         {
             var user = (User)Session["TaiKhoan"];
-            return View(user);
+            var usi =db.User.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+            return View(usi);
         }
+
+      
+
+        public ActionResult UserEdit(string id)
+        {
+            var us = db.User.FirstOrDefault(u => u.numberPhone == id);
+            if(us==null){
+                return HttpNotFound();
+            }
+            return View(us);
+           
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserEdit(User u)
+        {
+            if (ModelState.IsValid) {
+                db.Entry(u).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("UserInfo" ,"NguoiDung");
+        }
+
     }
 }

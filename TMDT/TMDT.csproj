@@ -493,6 +493,7 @@
     <Content Include="Areas\KhachHang\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\KhachHang\Views\Shared\_LayoutPageUS.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserInfo.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\UserEdit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
