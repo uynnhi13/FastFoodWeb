@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using TMDT.Models;
 using PagedList;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data.Entity;
 
 namespace TMDT.Areas.Admin.Controllers
 {
@@ -141,10 +143,17 @@ namespace TMDT.Areas.Admin.Controllers
             database.SaveChanges();
             return RedirectToAction("Account","Admin");
         }
-        public ActionResult QlyKH()
+        [HttpGet]
+        public ActionResult QlyKH(string searchstring = "")
         {
             var dskh = database.User;
+            var lskh = database.User.Where(s => s.numberPhone.Contains(searchstring));
+            if (searchstring != null) {
+                
+                return View(lskh.ToList());
+            }
             return View(dskh);
+           
 
         }
 
@@ -176,28 +185,19 @@ namespace TMDT.Areas.Admin.Controllers
             database.SaveChanges();
             return RedirectToAction("QlyKH");
         }
-        //public ActionResult EditKH(string id)
+        //public ActionResult SearchKH()
         //{
-        //    var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
-        //    if (kh == null) {
-        //        return HttpNotFound();
-        //    }
-        //    return View(kh);
+        //    return View();
         //}
         //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditKH(User user)
+        //public ActionResult SearchKH(string searchstring )
         //{
-        //    if (ModelState.IsValid) {
 
-        //        database.Entry(user).State = System.Data.Entity.EntityState.Modified;
-        //        database.SaveChanges(); 
-        //        return RedirectToAction("QlyKH");
-        //    }
-
-
-        //    return View(user);
+        //    var ds = database.User.Include(s => s.numberPhone).Where(x => x.fullName.ToUpper().Contains(searchstring.ToUpper()));
+        //        return View(ds);
+            
         //}
+       
 
     }
 

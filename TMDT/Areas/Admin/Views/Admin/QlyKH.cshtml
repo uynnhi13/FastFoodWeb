@@ -7,41 +7,18 @@
 <br />
 <div class="card mb-4">
     <h2 style="padding:10px">Quản lý khách hàng </h2>
-    <div id="searchBrand"
-         class="add-inline-form main-content rounded-3 border border-2 py-4 px-3 mb-3">
-        <div class="table-header mb-3 row">
-            <div class="col">
-                <h5 class="title">Tìm kiếm khách hàng</h5>
-            </div>
-            <div class="col-1">
-                <button class="btn btn-clr-normal"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#searchCollapse"
-                        aria-expanded="false"
-                        aria-controls="searchCollapse">
-                    <i class="fa-solid fa-caret-down"></i>
-                </button>
-            </div>
-        </div>
-        <form id="searchCollapse" class="collapse create-form">
-            <div class="row">
-                <div class="col">
-                    <input type="text"
-                           id="form6Example3"
-                           class="form-control" />
-                    <label class="form-label" for="form6Example3">Tên khách hàng</label>
+    <div>
+        
+            @using (Html.BeginForm("QlyKH", "Admin", FormMethod.Get))
+            {
+                <div class="form-group form-inline">
+                   Search NumberPhone: @Html.TextBox("searchstring", ViewBag.CurrentFilter as String, new {@class= "form-control"})
+                   <input type="submit" class="btn btn-default" value="Search" /> 
                 </div>
-            </div>
-            <!-- Submit button -->
-            <div class="col-2 mt-4">
-                <button id="searchBtn"
-                        type="submit"
-                        class="btn btn-clr-normal btn-block mb-4 w-50">
-                    <i>Tìm</i>
-                </button>
-            </div>
-        </form>
+                
+            }
+        
+        
     </div>
 
 
@@ -96,3 +73,4 @@
             </div>
         </div>
     </div>
+</div>
