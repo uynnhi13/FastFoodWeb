@@ -82,6 +82,39 @@
 
 
 <p>
-    @Html.ActionLink("Chỉnh sửa", "UserEdit",new { id=Model.numberPhone}) |
-    @Html.ActionLink("Back to List", "Index")
+    <style>
+        .button-container {
+            text-align: right; /* Đặt nút bấm bên phải */
+            margin-top: 10px; /* Thêm khoảng cách phía trên nút bấm (tùy chọn) */
+        }
+
+        .button-style {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d19797; /* Màu nền của nút */
+            color: #fff; /* Màu chữ trắng */
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px; /* Bo tròn viền */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi khi hover */
+        }
+
+            .button-style:hover {
+                background-color: #a27070; /* Màu nền khi hover */
+                color:#71706f;
+            }
+
+          
+    </style>
+  
+
+    <div class="button-container">
+        @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "button-style" })
+       
+    </div>
+
+
+   
 </p>

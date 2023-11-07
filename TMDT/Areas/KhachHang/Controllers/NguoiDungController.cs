@@ -112,6 +112,14 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return RedirectToAction("UserInfo" ,"NguoiDung");
         }
+        public ActionResult OrderList()
+        {
+            var dh = db.Order.ToList();
+            return View(dh);
+        }
+        public ActionResult OrderDetail()
+        {
 
+        }
     }
 }
