@@ -1,0 +1,83 @@
+﻿@model TMDT.Models.Employees
+
+@{
+    ViewBag.Title = "DetailsNV";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>DetailsNV</h2>
+
+<div class="card mb-4">
+    <h4>Employees</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.positionID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.positionID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imgEP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imgEP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numberPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numberPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.locationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.locationID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditNV", new {  id = Model.EmployeeID}) |
+    @Html.ActionLink("Back to List", "Account")
+</p>

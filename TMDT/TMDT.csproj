@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -47,10 +46,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
@@ -137,22 +136,25 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IngredientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
+
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\KhachHang\Controllers\GioHangController.cs" />
+
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+
     </Compile>
     <Compile Include="Models\Address.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AdminUser.cs">
+
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs">
@@ -167,9 +169,7 @@
     <Compile Include="Models\Condition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\C__EFMigrationsHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
+
     <Compile Include="Models\Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -185,6 +185,8 @@
     <Compile Include="Models\location.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MatHangMua.cs" />
+
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -215,9 +217,7 @@
     <Compile Include="Models\Recipe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
+
     <Compile Include="Models\Unit.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -227,50 +227,65 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Data\css\bootstrap.min.css" />
-    <Content Include="Areas\Admin\Data\css\fontawesome.min.css" />
-    <Content Include="Areas\Admin\Data\css\fullcalendar.min.css" />
-    <Content Include="Areas\Admin\Data\css\tooplate.css" />
-    <Content Include="Areas\Admin\Data\img\dash-bg-01.jpg" />
-    <Content Include="Areas\Admin\Data\img\dash-bg-02.jpg" />
-    <Content Include="Areas\Admin\Data\img\dash-bg-03.jpg" />
-    <Content Include="Areas\Admin\Data\img\product-image.jpg" />
-    <Content Include="Areas\Admin\Data\img\profile-image.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\AUTHORS.txt" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\external\jquery\jquery.js" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\index.html" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.css" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.js" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.min.css" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.min.js" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.structure.css" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.structure.min.css" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.theme.css" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.theme.min.css" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\LICENSE.txt" />
-    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\package.json" />
-    <Content Include="Areas\Admin\Data\js\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Data\js\Chart.min.js" />
-    <Content Include="Areas\Admin\Data\js\fullcalendar.min.js" />
-    <Content Include="Areas\Admin\Data\js\jquery-3.3.1.min.js" />
-    <Content Include="Areas\Admin\Data\js\moment.min.js" />
-    <Content Include="Areas\Admin\Data\js\tooplate-scripts.js" />
-    <Content Include="Areas\Admin\Data\js\utils.js" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_AdminPage.cshtml" />
+    <Content Include="Areas\Admin\Content\css\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Content\css\fontawesome.min.css" />
+    <Content Include="Areas\Admin\Content\css\fullcalendar.min.css" />
+    <Content Include="Areas\Admin\Content\css\tooplate.css" />
+    <Content Include="Areas\Admin\Content\img\dash-bg-01.jpg" />
+    <Content Include="Areas\Admin\Content\img\dash-bg-02.jpg" />
+    <Content Include="Areas\Admin\Content\img\dash-bg-03.jpg" />
+    <Content Include="Areas\Admin\Content\img\product-image.jpg" />
+    <Content Include="Areas\Admin\Content\img\profile-image.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\index.html" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="Areas\Admin\Content\jquery-ui-datepicker\package.json" />
+    <Content Include="Areas\Admin\Content\js\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Content\js\Chart.min.js" />
+    <Content Include="Areas\Admin\Content\js\fullcalendar.min.js" />
+    <Content Include="Areas\Admin\Content\js\jquery-3.3.1.min.js" />
+    <Content Include="Areas\Admin\Content\js\moment.min.js" />
+    <Content Include="Areas\Admin\Content\js\tooplate-scripts.js" />
+    <Content Include="Areas\Admin\Content\js\utils.js" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.woff2" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-regular-400.woff2" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.eot" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.svg" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.ttf" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff" />
+    <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Admin\Views\Share\_LayoutAdminPage.cshtml" />
+
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\KhachHang\assets\css\plugins\animate.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\images\ui-icons_444444_256x240.png" />
@@ -396,6 +411,40 @@
     <Content Include="Areas\KhachHang\assets\js\vendor\modernizr-3.11.2.min.js" />
     <Content Include="Areas\KhachHang\assets\js\vendor\vendor.min.js" />
     <Content Include="Areas\KhachHang\assets\php\mail.php" />
+
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\KhachHang\Views\web.config" />
+    <Content Include="Areas\KhachHang\Views\Shared\_LayoutVL.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Home\Index.cshtml" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.eot" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.ttf" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.woff" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\fontawesome-webfont.woff2" />
+    <Content Include="Areas\KhachHang\assets\fonts\FontAwesome\FontAwesome.otf" />
+    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.eot" />
+    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.ttf" />
+    <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.woff" />
+
     <Content Include="Areas\KhachHang\assets\scss\component\_banner.scss" />
     <Content Include="Areas\KhachHang\assets\scss\component\_blog.scss" />
     <Content Include="Areas\KhachHang\assets\scss\component\_brand-slider.scss" />
@@ -442,34 +491,24 @@
     <Content Include="Areas\KhachHang\assets\scss\_search-modal.scss" />
     <Content Include="Areas\KhachHang\assets\scss\_shop.scss" />
     <Content Include="Areas\KhachHang\assets\scss\_variabls.scss" />
+
+    <Content Include="Areas\KhachHang\Views\Home\LayProductType.cshtml" />
+
     <Content Include="Areas\KhachHang\Views\Home\ChiTietSP.cshtml" />
     <Content Include="Areas\KhachHang\Views\Home\Index.cshtml" />
     <Content Include="Areas\KhachHang\Views\Home\LayProductType.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangKy.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DangNhap.cshtml" />
-    <Content Include="Areas\KhachHang\Views\Shared\_LayoutVL.cshtml" />
-    <Content Include="Areas\KhachHang\Views\web.config" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\PagedList.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+
+    <Content Include="Areas\KhachHang\Views\GioHang\HienThiGioHang.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Account.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\AddnewNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\QlyKH.cshtml" />
+
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -477,11 +516,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Ingredients\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Ingredients\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Ingredients\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Ingredients\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Ingredients\Index.cshtml" />
+
     <Content Include="Areas\Admin\Views\Unit\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Unit\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Unit\Details.cshtml" />
@@ -492,6 +527,11 @@
     <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Admin\DonHang.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsKH.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsDH.cshtml" />
+
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -561,7 +601,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Scripts\Style\jquery-ui-datepicker\package.json" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.ttf" />
@@ -578,8 +617,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+
     <Folder Include="Images\Combo\" />
     <Folder Include="Images\Product\" />
+
+    <Folder Include="Areas\KhachHang\Data\" />
+
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -630,10 +673,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

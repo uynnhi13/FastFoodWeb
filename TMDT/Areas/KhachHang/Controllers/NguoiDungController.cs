@@ -77,5 +77,11 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return RedirectToAction("Index","Home");
         }
+
+        public ActionResult DangXuat()
+        {
+            Session["TaiKhoan"] = null;
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
