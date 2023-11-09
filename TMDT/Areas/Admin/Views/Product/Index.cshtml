@@ -2,9 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminPage.cshtml";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
 }
-
+<br />
+<br />
 <div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
     <div class="bg-white tm-block h-100">
         <div class="row">
@@ -12,7 +13,7 @@
                 <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
             </div>
             <div class="col text-right row">
-                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary mr-3">Thêm combo</a> 
+                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary mr-3">Thêm combo</a>
                 <a href="~/Admin/Product/Create" class="btn btn-small btn-primary">Thêm nguyên liệu</a>
             </div>
         </div>
@@ -43,8 +44,7 @@
                             <td class="text-center">
                                 <img src="@item.image" class="rounded mx-auto d-block" alt="..."
                                      onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
-                                     style="fill: #868e96; height: 200px; width:200px; object-fit:over"
-                                     >
+                                     style="fill: #868e96; height: 200px; width:200px; object-fit:over">
                             </td>
                             <td class="text-center">@item.price</td>
                             <td class="text-center">@item.priceUp</td>

@@ -12,7 +12,7 @@
 
     Template 2108 Dashboard
 
-   
+
 
     -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
@@ -31,10 +31,7 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar navbar-expand-xl navbar-light bg-light">
-                        <a class="navbar-brand" href="Index">
-                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
-                            <h1 class="tm-site-title mb-0">Dashboard</h1>
-                        </a>
+                        @Html.ActionLink("Dashboard", "Index", "Admin", null, new { @Class = "tm-site-title mb-0" })
                         <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -42,29 +39,30 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="Index">
-                                        Dashboard
-                                        <span class="sr-only">(current)</span>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Sản phẩm
                                     </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
+                                        @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
+                                        @Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @Class = "dropdown-item" })
+
+                                    </div>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="products.html">Products</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    @Html.ActionLink("Accounts", "Account", "Admin", null, new { @class = "nav-link" })
+                                    @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
-                                    @Html.ActionLink("Customer", "QlyKH", "Admin", null, new { @class = "nav-link" })
+                                    @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
-                                    @Html.ActionLink("Oder", "DonHang", "Admin", null, new { @class = "nav-link" })
+                                    @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
                                 </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Test", "Index", "Product", null, new { @class = "nav-link" })
-                                </li>
+                                
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
@@ -84,11 +82,11 @@
                                         <span>Logout</span>
 
                                     </a>
-                                    
+
                                 </li>
-                                
+
                             </ul>
-                            
+
                         </div>
                     </nav>
                 </div>
@@ -112,31 +110,33 @@
 <!-- https://getbootstrap.com/ -->
 <script src="~/Areas/Admin/Content/js/tooplate-scripts.js"></script>
 <script>
-        let ctxLine,
-            ctxBar,
-            ctxPie,
-            optionsLine,
-            optionsBar,
-            optionsPie,
-            configLine,
-            configBar,
-            configPie,
-            lineChart;
-        barChart, pieChart;
-        // DOM is ready
-        $(function () {
-            updateChartOptions();
-            drawLineChart(); // Line Chart
-            drawBarChart(); // Bar Chart
-            drawPieChart(); // Pie Chart
-            drawCalendar(); // Calendar
+    let ctxLine,
+        ctxBar,
+        ctxPie,
+        optionsLine,
+        optionsBar,
+        optionsPie,
+        configLine,
+        configBar,
+        configPie,
+        lineChart;
+    barChart, pieChart;
+    // DOM is ready
+    $(function () {
+        updateChartOptions();
+        drawLineChart(); // Line Chart
+        drawBarChart(); // Bar Chart
+        drawPieChart(); // Pie Chart
+        drawCalendar(); // Calendar
 
-            $(window).resize(function () {
-                updateChartOptions();
-                updateLineChart();
-                updateBarChart();
-                reloadPage();
-            });
-        })
+        $(window).resize(function () {
+            updateChartOptions();
+            updateLineChart();
+            updateBarChart();
+            reloadPage();
+        });
+    })
 </script>
+
+    @RenderSection("scripts", required: false)
 </html>
