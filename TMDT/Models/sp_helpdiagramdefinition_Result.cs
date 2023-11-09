@@ -10,16 +10,10 @@
 namespace TMDT.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class InvoiceDetails
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int invoiceID { get; set; }
-        public int ingID { get; set; }
-        public double quatity { get; set; }
-        public decimal price { get; set; }
-    
-        public virtual Ingredient Ingredient { get; set; }
-        public virtual Invoice Invoice { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
