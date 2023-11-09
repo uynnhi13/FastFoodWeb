@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__EFMigrationsHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -49,6 +49,7 @@
           <Property Name="nameCombo" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
           <Property Name="sale" Type="int" Nullable="false" />
+          <Property Name="typeCombo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -485,8 +486,7 @@
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -538,6 +538,7 @@
           <Property Name="sale" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
+          <Property Name="typeCombo" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -1051,6 +1052,7 @@
           <EntitySetMapping Name="Combo">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Combo">
               <MappingFragment StoreEntitySet="Combo">
+                <ScalarProperty Name="typeCombo" ColumnName="typeCombo" />
                 <ScalarProperty Name="comboID" ColumnName="comboID" />
                 <ScalarProperty Name="nameCombo" ColumnName="nameCombo" />
                 <ScalarProperty Name="price" ColumnName="price" />

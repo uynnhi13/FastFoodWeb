@@ -1,0 +1,88 @@
+﻿@model IEnumerable<TMDT.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminPage.cshtml";
+}
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+            <div class="col text-right row">
+                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary mr-3">Thêm combo</a> 
+                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary">Thêm nguyên liệu</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                <thead>
+                    <tr class="tm-bg-gray">
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">Tên thực phẩm</th>
+                        <th scope="col" class="text-center">Hình ảnh</th>
+                        <th scope="col">Giá tiền</th>
+                        <th scope="col">Giá UP size</th>
+                        <th scope="col">Loại</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <input type="checkbox" aria-label="Checkbox">
+                            </th>
+                            <td class="tm-product-name">@item.name</td>
+                            <td class="text-center">
+                                <img src="@item.image" class="rounded mx-auto d-block" alt="..."
+                                     onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
+                                     style="fill: #868e96; height: 200px; width:200px; object-fit:over"
+                                     >
+                            </td>
+                            <td class="text-center">@item.price</td>
+                            <td class="text-center">@item.priceUp</td>
+                            <td class="text-center">@item.Category.nameType</td>
+                            <td>@Html.ActionLink("Edit", "Edit", new { id = item.cateID })</td>
+                            <td>@Html.ActionLink("Details", "Details", new { id = item.cateID })</td>
+                            <td>@Html.ActionLink("Delete", "Delete", new { id = item.cateID })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tm-table-mt tm-table-actions-row">
+            <div class="tm-table-actions-col-left">
+                <button class="btn btn-danger">Delete Selected Items</button>
+            </div>
+            <div class="tm-table-actions-col-right">
+                <span class="tm-pagination-label">Page</span>
+                <nav aria-label="Page navigation" class="d-inline-block">
+
+                    <br />
+
+
+                    <ul class="pagination tm-pagination">
+
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <span class="tm-dots d-block">...</span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">13</a></li>
+                        <li class="page-item"><a class="page-link" href="#">14</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
