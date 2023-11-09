@@ -8,6 +8,7 @@ using PagedList;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data.Entity;
+using System.Net;
 
 namespace TMDT.Areas.Admin.Controllers
 {
@@ -36,7 +37,7 @@ namespace TMDT.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Login(string user, string password)
         {
-            var tk = database.AdminUser.Where(s => s.nameUser == user && s.passWord == password).FirstOrDefault();
+            var tk = database.Employees.Where(s => s.Email == user && s.password == password).FirstOrDefault();
           
             if (tk == null) {
                 TempData["errorlogin"] = "Tài khoản đăng nhập không đúng";
@@ -185,18 +186,25 @@ namespace TMDT.Areas.Admin.Controllers
             database.SaveChanges();
             return RedirectToAction("QlyKH");
         }
-        //public ActionResult SearchKH()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult SearchKH(string searchstring )
-        //{
+        public ActionResult DonHang(int? id)
+        {
+            var donhang = database.Order.Include(s => s.OrderDetail);
+            return View(donhang);
+        }
 
-        //    var ds = database.User.Include(s => s.numberPhone).Where(x => x.fullName.ToUpper().Contains(searchstring.ToUpper()));
-        //        return View(ds);
-            
-        //}
+        public ActionResult XacNhanDH(int? id)
+        {
+            if (id == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order donhang = database.Order.Find(id);
+            donhang.conditionID= 2;
+            database.SaveChanges();
+            if (donhang == null) {
+                return HttpNotFound();
+            }
+            return RedirectToAction("DonHang", "Admin");
+        }
        
 
     }

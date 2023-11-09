@@ -4,9 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="feca7b4570884089823eea9c94717fc3" Name="Diagram1">
+      <Diagram DiagramId="feca7b4570884089823eea9c94717fc3" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Address" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.AdminUser" Width="1.5" PointX="8.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Category" Width="1.5" PointX="5.75" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Combo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.ComboDetail" Width="1.5" PointX="11.25" PointY="5.875" IsExpanded="true" />

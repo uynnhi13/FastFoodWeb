@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -17,15 +17,6 @@
           <Property Name="priority" Type="bit" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="userID" Type="varchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AdminUser">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nameUser" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="roleUser" Type="int" Nullable="false" />
-          <Property Name="passWord" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -72,6 +63,8 @@
           <Property Name="imgEP" Type="nvarchar" MaxLength="1000" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" />
           <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="roleUser" Type="bit" />
         </EntityType>
         <EntityType Name="Invoice">
           <Key>
@@ -385,7 +378,6 @@
         </Function>
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
@@ -467,8 +459,7 @@
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -485,15 +476,6 @@
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="userID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
-        </EntityType>
-        <EntityType Name="AdminUser">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="roleUser" Type="Int32" Nullable="false" />
-          <Property Name="passWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -549,6 +531,8 @@
           <NavigationProperty Name="location" Relationship="Self.FK_Employees_location" FromRole="Employees" ToRole="location" />
           <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employees" FromRole="Employees" ToRole="Order" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="roleUser" Type="Boolean" />
         </EntityType>
         <EntityType Name="Invoice">
           <Key>
@@ -877,7 +861,6 @@
         </Association>
         <EntityContainer Name="TMDTThucAnNhanhEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Address" EntityType="Self.Address" />
-          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Combo" EntityType="Self.Combo" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
@@ -986,16 +969,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AdminUser">
-            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.AdminUser">
-              <MappingFragment StoreEntitySet="AdminUser">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="nameUser" ColumnName="nameUser" />
-                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
-                <ScalarProperty Name="passWord" ColumnName="passWord" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -1035,6 +1008,8 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Employees">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
+                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
