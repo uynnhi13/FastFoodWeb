@@ -54,13 +54,20 @@
                                     <td>@user.numberPhone</td>
                                     
                                     <td>
-                                        @Html.ActionLink("Vô hiệu hóa tài khoản", "DisableAccount", new { id = user.numberPhone }, new { @class = "btn btn-danger" })
-                                        @Html.ActionLink("Kích hoạt lại tài khoản", "EnableAccount", new { id = user.numberPhone }, new { @class = "btn btn-success" })
+                                        @if (user.IsActive == true)
+                                        {
+                                            @Html.ActionLink("Vô hiệu hóa tài khoản", "DisableAccount", new { id = user.numberPhone }, new { @class = "btn btn-danger" })
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Kích hoạt lại tài khoản", "EnableAccount", new { id = user.numberPhone }, new { @class = "btn btn-success" })
+                                        }
+
                                     </td>
                                     <td>
                                         <div class="d-flex flex-row gap-1">
-                                            <a href="@Url.Action("EditKH", "Admin", new {id=@user.numberPhone})" class="nav-link">
-                                                <i class="fa-solid fa-pen"></i>
+                                            <a href="@Url.Action("DetailsKH", "Admin", new {id=@user.numberPhone})" class="nav-link">
+                                                Chi tiết
                                             </a>
 
                                         </div>

@@ -157,6 +157,11 @@ namespace TMDT.Areas.Admin.Controllers
            
 
         }
+        public ActionResult DetailsKH(string id)
+        {
+            var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
+            return View(kh);
+        }
 
         public ActionResult DisableAccount(string id)
         {
@@ -206,6 +211,12 @@ namespace TMDT.Areas.Admin.Controllers
             return RedirectToAction("DonHang", "Admin");
         }
        
+        public ActionResult DetailsDH(int id)
+        {
+            var dh = database.OrderDetail.Where(s => s.orderID == id);
+            return View(dh);
+
+        }
 
     }
 
