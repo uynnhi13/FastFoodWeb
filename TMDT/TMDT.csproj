@@ -158,6 +158,9 @@
     <Compile Include="Models\Condition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Contacts.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -204,6 +207,11 @@
     <Compile Include="Models\Recipe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+
     <Compile Include="Models\Unit.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
