@@ -54,9 +54,9 @@
                                     <a href="@Url.Action("Index","Home")">Trang Chủ </a>
 
                                 </li>
-                                <li><a href="about.html">Về ChuChu</a></li>
+                                <li><a href="~/Areas/KhachHang/View/About/About.cshtml">Về ChuChu</a></li>
                                 <li class="dropdown position-static">
-                                    <a href="about.html">
+                                    <a href="">
                                         Thực Đơn <i class="fa fa-angle-down"></i>
                                     </a>
                                     <ul class="mega-menu d-block">
@@ -206,7 +206,9 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a class="dropdown-item" href="my-account.html">Tài Khoản</a></li>
+                                            <li><a class="dropdown-item" @*href="~/Areas/KhachHang/Views/User/UserInfo.cshtml">My account</a>*@
+                                                   @Html.ActionLink("MyInfo","UserInfo","NguoiDung")
+                                                   </li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Đăng Xuất</a></li>
                                         </ul>

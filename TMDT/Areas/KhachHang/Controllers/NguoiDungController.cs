@@ -86,5 +86,86 @@ namespace TMDT.Areas.KhachHang.Controllers
             Session["TaiKhoan"] = null;
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult UserInfo()
+        {
+            var user = (User)Session["TaiKhoan"];
+            var usi =db.User.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+            return View(usi);
+        }
+
+      
+
+        public ActionResult UserEdit(string id)
+        {
+            var us = db.User.FirstOrDefault(u => u.numberPhone == id);
+            if(us==null){
+                return HttpNotFound();
+            }
+            return View(us);
+           
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserEdit(User u)
+        {
+            if (ModelState.IsValid) {
+                db.Entry(u).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("UserInfo" ,"NguoiDung");
+        }
+        public ActionResult OrderList()
+        {
+            var dh = db.Order.ToList();
+            return View(dh);
+        }
+        public ActionResult OrderDetail(int id )
+        {
+            var dt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
+            if( dt ==null ){
+                Response.StatusCode = 404;
+                return null;
+
+            }
+            return View(dt);
+        }
+        public ActionResult LocaDetail()
+        {
+            var user = (User)Session["TaiKhoan"];
+
+            var loc = db.Address.FirstOrDefault(u => u.userID == user.numberPhone);
+
+            return View(loc);
+            
+        }
+
+        public ActionResult LocaEdit(int id)
+        {
+            var lc = db.Address.FirstOrDefault(u => u.addressID == id);
+            if (lc == null) {
+                return HttpNotFound();
+            }
+            return View(lc);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LocaEdit(Address ad)
+        {
+            if (ModelState.IsValid) {
+
+                var aad = db.Address.FirstOrDefault();
+                aad.firstName = ad.firstName;
+                aad.lastName = ad.lastName;
+                aad.numberPhone = ad.numberPhone;
+                aad.note = ad.note;
+                aad.priority = ad.priority;
+                aad.address1 = ad.address1;
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("LocaDetail");
+        }
+
+
     }
 }
