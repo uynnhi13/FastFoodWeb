@@ -4,6 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+
       <Diagram DiagramId="feca7b4570884089823eea9c94717fc3" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Address" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Category" Width="1.5" PointX="5.75" PointY="11.125" IsExpanded="true" />
@@ -22,6 +23,7 @@
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Recipe" Width="1.5" PointX="10.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Unit" Width="1.5" PointX="5.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.User" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Address_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_FoodAndDrink_ProductType" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_ComboDetail_Combo" ManuallyRouted="false" />
@@ -31,10 +33,12 @@
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Employees_location" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Employees_Position" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_Employees" ManuallyRouted="false" />
+
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_PurchaseInvoiceDetails_PurchaseInvoice" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_PurchaseInvoiceDetails_Ingredient" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Ingredient_Unit" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Recipe_Ingredient" ManuallyRouted="false" />
+
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_OrderDetail_Order" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Recipe_FoodAndDrink" ManuallyRouted="false" />

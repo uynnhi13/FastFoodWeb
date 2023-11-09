@@ -5,11 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
 
+
 namespace TMDT.Areas.KhachHang.Controllers
 {
     public class HomeController : Controller
     {
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
         // GET: KhachHangVangLai/Home
         public ActionResult Index()
         {

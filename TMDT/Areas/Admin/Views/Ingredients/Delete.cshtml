@@ -1,0 +1,65 @@
+﻿@model TMDT.Models.Ingredient
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminPage.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Ingredient</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ingName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ingName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantityMin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantityMin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.arrivalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.arrivalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.nameU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.nameU)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

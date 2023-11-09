@@ -1,0 +1,27 @@
+﻿@model TMDT.Models.Unit
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Unit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nameU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nameU)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.unitID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

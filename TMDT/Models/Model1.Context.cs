@@ -27,21 +27,26 @@ namespace TMDT.Models
             throw new UnintentionalCodeFirstException();
         }
     
+
         public virtual DbSet<Address> Address { get; set; }
+
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Combo> Combo { get; set; }
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }
         public virtual DbSet<Condition> Condition { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
+
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public virtual DbSet<Ingredient> Ingredient { get; set; }
+
         public virtual DbSet<location> location { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Position> Position { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
+
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
     
