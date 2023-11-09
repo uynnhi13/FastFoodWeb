@@ -112,30 +112,44 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return RedirectToAction("UserInfo" ,"NguoiDung");
         }
-        public ActionResult OrderList()
-        {
-            var dh = db.Order.ToList();
-            return View(dh);
-        }
-        public ActionResult OrderDetail(int id )
-        {
-            var dt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
-            if( dt ==null ){
-                Response.StatusCode = 404;
-                return null;
-
-            }
-            return View(dt);
-        }
+      
         public ActionResult LocaDetail()
         {
             var user = (User)Session["TaiKhoan"];
 
             var loc = db.Address.FirstOrDefault(u => u.userID == user.numberPhone);
-
+            if (loc == null) {
+                // Nếu địa chỉ là null, hiển thị thông báo yêu cầu thêm địa chỉ
+                TempData["Message"] = "Bạn chưa có địa chỉ. Vui lòng thêm địa chỉ.";
+                TempData.Keep("Message"); // Giữ lại TempData cho request tiếp theo
+                return RedirectToAction("LocaAdd"); // Chuyển hướng đến action thêm địa chỉ
+            }
+          
             return View(loc);
+          
             
         }
+        public ActionResult LocaAdd()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LocaAdd(Address ad)
+        {
+            if (ModelState.IsValid) {
+
+                var user = (User)Session["TaiKhoan"];
+
+                ad.userID = user.numberPhone;
+
+                db.Address.Add(ad);
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("LocaDetail", "NguoiDung");
+        }
+
 
         public ActionResult LocaEdit(int id)
         {
@@ -163,6 +177,21 @@ namespace TMDT.Areas.KhachHang.Controllers
             return RedirectToAction("LocaDetail");
         }
 
+        public ActionResult OrderList()
+        {
+            var dh = db.Order.ToList();
+            return View(dh);
+        }
+        public ActionResult OrderDetail(int id)
+        {
+            var odt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
+            if (odt == null) {
+                Response.StatusCode = 404;
+                return null;
+
+            }
+            return View(odt);
+        }
 
     }
 }
