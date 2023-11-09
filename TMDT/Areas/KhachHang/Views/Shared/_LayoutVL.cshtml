@@ -15,7 +15,7 @@
 
 
     <!-- vendor css (Icon Font) -->
-    
+
     <link rel="stylesheet" href="~/Areas/KhachHang/assets/css/vendor/bootstrap.bundle.min.css" />
     <link rel="stylesheet" href="~/Areas/KhachHang/assets/css/vendor/pe-icon-7-stroke.css" />
     <link rel="stylesheet" href="~/Areas/KhachHang/assets/css/vendor/font.awesome.css" />
@@ -44,15 +44,15 @@
                 <div class="row">
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="index.html"><img style="width:150px" src="~/Areas/KhachHang/assets/images/logo/logochuchu.png" alt="Site Logo" /></a>
+                            <a href="@Url.Action("Index","Home")"><img style="width:150px" src="~/Areas/KhachHang/assets/images/logo/logochuchu.png" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <div class="col align-self-center d-none d-lg-block">
                         <div class="main-menu">
                             <ul>
                                 <li class="dropdown">
-                                    <a href="~/Areas/KhachHang/Views/Home/Index.cshtml">Trang Chủ </a>
-                                   
+                                    <a href="@Url.Action("Index","Home")">Trang Chủ </a>
+
                                 </li>
                                 <li><a href="~/Areas/KhachHang/View/About/About.cshtml">Về ChuChu</a></li>
                                 <li class="dropdown position-static">
@@ -199,7 +199,7 @@
                             <!-- Single Wedge End -->
                             @{
                                 var user = Session["TaiKhoan"] as TMDT.Models.User;
-                                if  (user != null)
+                                if (user != null)
                                 {
                                     <div class="header-bottom-set dropdown">
                                         <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">
@@ -210,17 +210,20 @@
                                                    @Html.ActionLink("MyInfo","UserInfo","NguoiDung")
                                                    </li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                            <li><a class="dropdown-item" href="login.html">Sign Out</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Đăng Xuất</a></li>
                                         </ul>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="header-bottom-set dropdown">
-                                        <a href="@Url.Action("DangNhap","NguoiDung")" class="header-action-btn">
-                                            Đăng Nhập
-                                        </a>
-                                        
+                                        <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">
+                                            <i class="pe-7s-users"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a class="dropdown-item" href="@Url.Action("DangNhap","NguoiDung")">Đăng Nhập</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
+                                        </ul>
                                     </div>
                                 }
                             }
@@ -229,12 +232,7 @@
                                 <i class="pe-7s-like"></i>
                             </a>
                             <!-- Single Wedge End -->
-                            <a href="#offcanvas-cart"
-                               class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
-                                <i class="pe-7s-shopbag"></i>
-                                <span class="header-action-num">01</span>
-                                <!-- <span class="cart-amount">€30.00</span> -->
-                            </a>
+                            @Html.Action("GioHangThuGon", "GioHang")
                             <a href="#offcanvas-mobile-menu"
                                class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                 <i class="pe-7s-menu"></i>
@@ -302,58 +300,6 @@
     </div>
     <!-- OffCanvas Wishlist End -->
     <!-- OffCanvas Cart Start -->
-    <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
-        <div class="inner">
-            <div class="head">
-                <span class="title">Cart</span>
-                <button class="offcanvas-close">×</button>
-            </div>
-
-            <div class="body customScroll">
-                <ul class="minicart-product-list">
-                    <li>
-                        <a href="single-product.html" class="image">
-                            <img src="assets/images/product-image/1.jpg"
-                                 alt="Cart product Image">
-                        </a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Hand-Made Garlic Mortar</a>
-                            <span class="quantity-price">1 x <span class="amount">$18.86</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image">
-                            <img src="assets/images/product-image/2.jpg"
-                                 alt="Cart product Image">
-                        </a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Handmade Ceramic Pottery</a>
-                            <span class="quantity-price">1 x <span class="amount">$43.28</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="single-product.html" class="image">
-                            <img src="assets/images/product-image/3.jpg"
-                                 alt="Cart product Image">
-                        </a>
-                        <div class="content">
-                            <a href="single-product.html" class="title">Hand Painted Bowls</a>
-                            <span class="quantity-price">1 x <span class="amount">$37.34</span></span>
-                            <a href="#" class="remove">×</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="foot">
-                <div class="buttons mt-30px">
-                    <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                    <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- OffCanvas Cart End -->
     <!-- OffCanvas Menu Start -->
     <div id="offcanvas-mobile-menu" class="offcanvas offcanvas-mobile-menu">
@@ -503,7 +449,7 @@
 
 
 
-    
+
     <!-- Footer Area Start -->
     <div class="footer-area">
         <div class="footer-container">
@@ -627,7 +573,7 @@
                         <div class="row flex-md-row-reverse align-items-center">
                             <div class="col-md-6 text-center text-md-end">
                                 <div class="payment-mth">
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-6 text-center text-md-start">
@@ -832,6 +778,12 @@
     <script src="assets/js/plugins/plugins.min.js"></script> -->
     <!-- Main Js -->
     <script src="~/Areas/KhachHang/assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Thông qua CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

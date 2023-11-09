@@ -12,7 +12,12 @@
                     <div class="login-register-wrapper">
                         <a class="active" style="text-align:center" href="#lg1">
                             <h2>Đăng Nhập</h2>
-                            <h2 style="color: red;">@ViewBag.ThongBao</h2>
+                            @if (!string.IsNullOrEmpty(ViewBag.ThongBao))
+                            {
+                                <div class="alert alert-danger">
+                                    @ViewBag.ThongBao
+                                </div>
+                            }
                         </a>
                         <div class="tab-content">
                             <div id="lg1" class="tab-pane active">
