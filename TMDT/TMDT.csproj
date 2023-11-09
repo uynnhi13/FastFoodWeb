@@ -496,7 +496,7 @@
     </Content>
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaDetail.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaEdit.cshtml" />
-    <Content Include="Areas\KhachHang\Views\GioHang\GioHangThuGon.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaAdd.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
