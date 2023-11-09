@@ -117,9 +117,52 @@ namespace TMDT.Areas.KhachHang.Controllers
             var dh = db.Order.ToList();
             return View(dh);
         }
-        public ActionResult OrderDetail()
+        public ActionResult OrderDetail(int id )
         {
+            var dt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
+            if( dt ==null ){
+                Response.StatusCode = 404;
+                return null;
 
+            }
+            return View(dt);
         }
+        public ActionResult LocaDetail()
+        {
+            var user = (User)Session["TaiKhoan"];
+
+            var loc = db.Address.FirstOrDefault(u => u.userID == user.numberPhone);
+
+            return View(loc);
+            
+        }
+
+        public ActionResult LocaEdit(int id)
+        {
+            var lc = db.Address.FirstOrDefault(u => u.addressID == id);
+            if (lc == null) {
+                return HttpNotFound();
+            }
+            return View(lc);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LocaEdit(Address ad)
+        {
+            if (ModelState.IsValid) {
+
+                var aad = db.Address.FirstOrDefault();
+                aad.firstName = ad.firstName;
+                aad.lastName = ad.lastName;
+                aad.numberPhone = ad.numberPhone;
+                aad.note = ad.note;
+                aad.priority = ad.priority;
+                aad.address1 = ad.address1;
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("LocaDetail");
+        }
+
+
     }
 }

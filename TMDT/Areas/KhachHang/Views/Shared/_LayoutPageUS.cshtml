@@ -35,8 +35,8 @@
     <link rel="stylesheet" href="~/Areas/KhachHang/assets/css/Style1.css" />
 
 </head>
-
 <body>
+   
     <!-- Header Area Start -->
     <header>
         <div class="header-main sticky-nav ">
@@ -513,31 +513,45 @@
     </div>
     <!-- breadcrumb-area end -->
     <!-- account area start -->
+    <style>
+        
+        .nav.flex-column.dashboard-list li {
+            list-style: none;
+            padding: 10px;
+            background-color: #fbbebe;
+            border-radius: 4px;
+            color:#db2727;
+            text-align: center;
+            transition: background-color 0.3s;
+            cursor: pointer; /* Thêm dòng này để biểu thị rằng nút có thể nhấn */
+        }
+
+            .nav.flex-column.dashboard-list li:hover {
+                background-color: #da9898;
+                color: #000000;
+            }
+    </style>
     <div class="account-dashboard pt-100px pb-100px">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-3 col-lg-3">
                     <!-- Nav tabs -->
-                    <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
-                        <ul role="tablist" class="nav flex-column dashboard-list">
-                            <li><a href="#dashboard" data-bs-toggle="tab" class="nav-link active">Thông tin cá nhân</a></li>
-                            <li> <a href="#orders" data-bs-toggle="tab" class="nav-link">Orders</a></li>
-                            <li><a href="#downloads" data-bs-toggle="tab" class="nav-link">Downloads</a></li>
-                            <li><a href="#address" data-bs-toggle="tab" class="nav-link">Addresses</a></li>
-                            <li>
-                                <a href="#account-details" data-bs-toggle="tab" class="nav-link">Account details</a>
-                            </li>
-                            <li><a href="login.html" class="nav-link">logout</a></li>
+                    <div class="dashboard_tab_button">
+                        <ul class="nav flex-column dashboard-list">
+                            <li>@Html.ActionLink("Thông tin cá nhân ", "UserInfo", "null", new { })</li>
+                            <li>@Html.ActionLink("Đơn hàng ", "OrderList", null, new { })</li>
+                            <li>@Html.ActionLink("Thay đổi địa chỉ ", "LocaDetail", null,new { }) </li>
+
                         </ul>
                     </div>
                 </div>
-      
-                    @RenderBody()
-                
+
+                @RenderBody()
+
             </div>
         </div>
     </div>
-    
+
     <!-- account area start -->
     <!-- Footer Area Start -->
     <div class="footer-area">
