@@ -66,16 +66,19 @@ namespace TMDT.Areas.KhachHang.Controllers
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
                     if (kiemtra != null)
                     {
-                        ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
                         ViewBag.TaiKhoan = Session["TaiKhoan"];
                     }
-                    else
-                        ViewBag.ThongBao = "Số điện thoại hoặc mật khẩu không đúng";
+                    else {
+                        ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                        // Chuyển hướng người dùng trở lại trang đăng nhập
+                        return View();
+                    }
+                        
                 }
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DangXuat()
