@@ -1,9 +1,10 @@
 ﻿@using TMDT.Models;
-@model IEnumerable<Product>
+@model IEnumerable<Combo>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
 }
 
 
@@ -50,12 +51,12 @@
                     <img src="~/Areas/KhachHang/assets/images/banner/BannerBur.png" alt="">
                     <div class="banner-content">
                         <span class="category">Best Seller</span>
-                        <span class="title">
-                            Doily Dream
-                            <br> & Catcher
+                        <span class="title" style="color:white">
+                            Burger
+                            <br> & Cheese
                         </span>
                         <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">
-                            Shop
+                            Order
                             Now
                         </a>
                     </div>
@@ -64,12 +65,11 @@
                     <img src="~/Areas/KhachHang/assets/images/banner/BannerPasta.png" alt="">
                     <div class="banner-content">
                         <span class="category">Best Seller</span>
-                        <span class="title">
-                            Flower Vase
-                            <br> & Poot
+                        <span class="title" style="color:white">
+                            Pasta
                         </span>
                         <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">
-                            Shop
+                            Order
                             Now
                         </a>
                     </div>
@@ -160,52 +160,108 @@
                         <div class="row">
                             @foreach (var item in Model)
                             {
-                                <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
-                                    <!-- Single Prodect -->
-                                    <div class="product">
-                                        <div class="thumb">
-                                            <a href="@Url.Action("ChiTietSP","Home",new {id=item.cateID})" class="image">
-                                                <img style="width:270px" src="~/Areas/KhachHang/assets/images/product-image/@item.image" alt="Product" />
-                                                <img style="width:270px" class="hover-image" src="~/Areas/KhachHang/assets/images/product-image/@item.image"
-                                                     alt="Product" />
-                                            </a>
-                                            <span class="badges">
-                                                <span class="new">New</span>
-                                            </span>
-                                            <div class="actions">
-                                                <a href="wishlist.html" class="action wishlist" title="Wishlist">
-                                                    <i class="pe-7s-like"></i>
+                                var detailItem = db.ComboDetail.FirstOrDefault(s => s.comboID == item.comboID);
+                                var productItem = db.Product.FirstOrDefault(s => s.cateID == detailItem.cateID);
+                                var size = detailItem.sizeUP;
+
+                                if (size == false && item.typeCombo == false)
+                                {
+                                    <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                        <!-- Single Prodect -->
+                                        <div class="product">
+                                            <div class="thumb">
+                                                <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
+                                                    <img style="width:270px" src="~/Areas/KhachHang/assets/images/product-image/@productItem.image" alt="Product" />
+                                                    <img style="width:270px" class="hover-image" src="~/Areas/KhachHang/assets/images/product-image/@productItem.image"
+                                                         alt="Product" />
                                                 </a>
-                                                <a href="#" class="action quickview" data-link-action="quickview"
-                                                   title="Quick view" data-bs-toggle="modal"
-                                                   data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
-                                                <a href="compare.html" class="action compare" title="Compare">
-                                                    <i class="pe-7s-refresh-2"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <span class="ratings">
-                                                <span class="rating-wrap">
-                                                    <span class="star" style="width: 100%"></span>
+                                                <span class="badges">
+                                                    <span class="new">New</span>
                                                 </span>
-                                                <span class="rating-num">( 5 Review )</span>
-                                            </span>
-                                            <h5 class="title">
-                                                <a href="single-product.html">
-                                                    @item.name
-                                                </a>
-                                            </h5>
-                                            <span class="price">
-                                                <span class="new">@string.Format("{0:N0}", item.price) đ</span>
-                                            </span>
+                                                <div class="actions">
+                                                    <a href="wishlist.html" class="action wishlist" title="Wishlist">
+                                                        <i class="pe-7s-like"></i>
+                                                    </a>
+                                                    <a href="#" class="action quickview" data-link-action="quickview"
+                                                       title="Quick view" data-bs-toggle="modal"
+                                                       data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
+                                                    <a href="compare.html" class="action compare" title="Compare">
+                                                        <i class="pe-7s-refresh-2"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                                <span class="ratings">
+                                                    <span class="rating-wrap">
+                                                        <span class="star" style="width: 100%"></span>
+                                                    </span>
+                                                    <span class="rating-num">( 5 Review )</span>
+                                                </span>
+                                                <h5 class="title">
+                                                    <a href="single-product.html">
+                                                        @item.nameCombo
+                                                    </a>
+                                                </h5>
+                                                <span class="price">
+                                                    <span class="new">@string.Format("{0:N0}", item.price) đ</span>
+                                                </span>
+                                            </div>
+                                            <button title="Add To Cart" class=" add-to-cart">
+                                                Add
+                                                To Cart
+                                            </button>
                                         </div>
-                                        <button title="Add To Cart" class=" add-to-cart">
-                                            Add
-                                            To Cart
-                                        </button>
                                     </div>
-                                </div>
+                                }
+                                else if (item.typeCombo == true)
+                                {
+                                    <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                        <!-- Single Prodect -->
+                                        <div class="product">
+                                            <div class="thumb">
+                                                <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
+                                                    <img style="width:270px" src="~/Areas/KhachHang/assets/images/product-image/@item.image" alt="Product" />
+                                                    <img style="width:270px" class="hover-image" src="~/Areas/KhachHang/assets/images/product-image/@item.image"
+                                                         alt="Product" />
+                                                </a>
+                                                <span class="badges">
+                                                    <span class="new">New</span>
+                                                </span>
+                                                <div class="actions">
+                                                    <a href="wishlist.html" class="action wishlist" title="Wishlist">
+                                                        <i class="pe-7s-like"></i>
+                                                    </a>
+                                                    <a href="#" class="action quickview" data-link-action="quickview"
+                                                       title="Quick view" data-bs-toggle="modal"
+                                                       data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
+                                                    <a href="compare.html" class="action compare" title="Compare">
+                                                        <i class="pe-7s-refresh-2"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                                <span class="ratings">
+                                                    <span class="rating-wrap">
+                                                        <span class="star" style="width: 100%"></span>
+                                                    </span>
+                                                    <span class="rating-num">( 5 Review )</span>
+                                                </span>
+                                                <h5 class="title">
+                                                    <a href="single-product.html">
+                                                        @item.nameCombo
+                                                    </a>
+                                                </h5>
+                                                <span class="price">
+                                                    <span class="new">@string.Format("{0:N0}", item.price) đ</span>
+                                                </span>
+                                            </div>
+                                            <button title="Add To Cart" class=" add-to-cart">
+                                                Add
+                                                To Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
                             }
                         </div>
                     </div>
@@ -215,3 +271,4 @@
     </div>
 </div>
 <!-- Product Area End -->
+

@@ -1,11 +1,17 @@
 ﻿@using TMDT.Models
-@model Product
+@model Combo
 
 @{
     ViewBag.Title = "ChiTietSP";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
     TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
-    var thongBao = ViewBag.ThongBaoThemSP;
+    var detailpro = db.ComboDetail.FirstOrDefault(s => s.comboID == Model.comboID);
+    var productID = db.Product.FirstOrDefault(s => s.cateID == detailpro.cateID);
+    string formattedPrice = string.Format("{0:N0}", Model.price);
+    string formattedPriceUp = string.Format("{0:N0}", Model.price + productID.priceUp);
+
+
+
 }
 
 <!DOCTYPE html>
@@ -22,21 +28,52 @@
                     <div class="swiper-container zoom-top">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="~/Areas/KhachHang/assets/images/product-image/@Model.image"
-                                     alt="">
+                                @if (Model.typeCombo == true)
+                                {
+                                    <img class="img-responsive m-auto" src="~/Areas/KhachHang/assets/images/product-image/@Model.image"
+                                         alt="" style="width:270px;height:307px">
+                                }
+                                else
+                                {
+                                    <img class="img-responsive m-auto" src="~/Areas/KhachHang/assets/images/product-image/@productID.image"
+                                         alt="" style="width:270px;height:307px">
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="product-details-content quickview-content ml-25px">
-                        <h2>@Model.name</h2>
-                        <div class="pricing-meta">
-                            <ul class="d-flex">
-                                <li class="price">@string.Format("{0:N0}", Model.price) đ</li>
-                                <li class="price-up"><del>@string.Format("{0:N0}", Model.priceUp) đ</del></li>
-                            </ul>
-                        </div>
+
+                        <h2 style="color:black">@Model.nameCombo</h2>
+                        
+                        @if (Model.typeCombo == true)
+                        {   <h2 style="color:black">@string.Format("{0:N0}", Model.price) đ</h2>
+                            var lstComBo = db.ComboDetail.Where(s => s.comboID == Model.comboID);
+                            foreach (var lst in lstComBo)
+                            {
+                                var proID = db.Product.FirstOrDefault(s => s.cateID == lst.cateID);
+                                <p>@detailpro.quantity x @proID.name</p>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="pricing-meta">
+                                <ul class="d-flex">
+                                    <li class="price" id="updatePrice" style="color:black">@string.Format("{0:N0}", Model.price) đ</li>
+                                </ul>
+                                <ul>
+                                    <li class="price-up">
+                                        <select id="sizeSelect">
+                                            <option value="medium">Vừa</option>
+                                            <option value="big">Lớn</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+
                         <div class="pro-details-rating-wrap">
                             <div class="rating-product">
                                 <i class="fa fa-star"></i>
@@ -45,6 +82,7 @@
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
                             </div>
+
                             <span class="read-review"><a class="reviews" href="#">( 2 Review )</a></span>
                         </div>
                         <div class="stock mt-30px">
@@ -54,20 +92,18 @@
                                 </span>
                             </span>
                         </div>
-                        <p class="mt-30px mb-0">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                            eiusmodol tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veni nostrud
-                            exercitation ullamco laboris
-                        </p>
+
                         <div class="pro-details-quality">
                             <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+                                <div class="dec qtybutton">-</div>
+                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" id="quantityInput">
+                                <div class="inc qtybutton">+</div>
                             </div>
                             <div class="pro-details-cart">
-                                <a class="add-cart" onclick="displayAlert()"
-                                   href="@Url.Action("ThemSanPhamVaoGio","GioHang",new { cateID = Model.cateID })">
+                                <button class="add-cart" data-comboid="@Model.comboID"
+                                        @*href="@Url.Action("ThemSanPhamVaoGio","GioHang",new { cateID = Model.cateID })"*@>
                                     Thêm Sản Phẩm
-                                </a>
+                                </button>
                             </div>
                             <div class="pro-details-cart">
                                 <button class="add-cart buy-button"> Buy It Now</button>
@@ -126,20 +162,82 @@
 
     <script>
         $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "/Controller/GetData", // Thay thế "Controller" bằng tên thực tế của Controller
-                dataType: "json",
-                success: function (data) {
-                    // Xử lý dữ liệu nhận được
-                    console.log(data);
-                },
-                error: function () {
-                    // Xử lý lỗi
+            $(".add-cart").click(function()
+            {
+                // Lấy phần tử select bằng ID
+                var sizeSelect = document.getElementById('sizeSelect');
+
+                // Kiểm tra xem giá trị đã được chọn chưa
+                if (sizeSelect && sizeSelect.options.length > 0)
+                    var selectedSize = sizeSelect.options[sizeSelect.selectedIndex].value;
+                else selectedSize = "Combo";
+                // Lấy giá trị được chọn trong select
+                
+                var comboID = $(this).data("comboid");
+                var quantity = $("#quantityInput").val();
+                var data = {
+                    comboID: comboID,
+                    soLuong: quantity,
+                    size: selectedSize
                 }
-            });
+                $.ajax({
+                    type: "POST",
+                    /*url: "/GioHang/ThemSanPhamVaoGio?cateID=" + cateID*/// Thay thế "Controller" bằng tên thực tế của Controller
+                    url: "/GioHang/ThemSanPhamVaoGio",
+                    data: data,
+                    success: function (data) {
+                        Swal.fire({
+                            position: 'top-middle',
+                            icon: 'success',
+                            title: 'Sản Phẩm Đã Thêm Thành Công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error: function () {
+                        // Xử lý lỗi
+                    }
+                });
+            })
         });
+
+        var CartPlusMinus = $(".cart-plus-minus");
+        CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
+        CartPlusMinus.append('<div class="inc qtybutton">+</div>');
+        $(".qtybutton").on("click", function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find("input").val();
+            if ($button.text() === "+") {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > 1) {
+                    var newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 1;
+                }
+            }
+            $button.parent().find("input").val(newVal);
+        });
+
+        document.getElementById('sizeSelect').addEventListener('change', function () {
+            var selectedSize = this.value;
+            var priceElement = document.getElementById('updatePrice');
+
+            if (selectedSize === 'medium') {
+                priceElement.textContent = '@formattedPrice' + ' đ';
+                console.log(@formattedPrice)
+            }
+            else if (selectedSize === 'big') {
+                priceElement.textContent = '@formattedPriceUp' + ' đ';
+                console.log(@formattedPriceUp)
+            }
+        });
+
+
     </script>
+
+
 }
 
 
