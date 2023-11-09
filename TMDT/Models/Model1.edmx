@@ -4,7 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -43,7 +50,6 @@
           <Property Name="price" Type="money" Nullable="false" />
           <Property Name="sale" Type="int" Nullable="false" />
           <Property Name="typeCombo" Type="bit" Nullable="false" />
-          <Property Name="image" Type="nchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -62,17 +68,6 @@
           <Property Name="conditionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nameCon" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
-        <EntityType Name="Contacts">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
-          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Timestamp" Type="datetime" />
-        </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -85,6 +80,8 @@
           <Property Name="imgEP" Type="nvarchar" MaxLength="1000" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" />
           <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="passwork" Type="varchar" MaxLength="50" />
+          <Property Name="roleUser" Type="bit" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -195,6 +192,7 @@
           <Property Name="gender" Type="bit" />
           <Property Name="addressID" Type="int" />
           <Property Name="permission" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -388,7 +386,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
         <Function Name="AddProductAndCombo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="price" Type="money" Mode="In" />
@@ -396,15 +393,14 @@
           <Parameter Name="typeID" Type="int" Mode="In" />
           <Parameter Name="priceUp" Type="money" Mode="In" />
         </Function>
-
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
+          <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Condition" EntityType="Self.Condition" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
@@ -482,10 +478,18 @@
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -528,7 +532,6 @@
           <Property Name="typeCombo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
-          <Property Name="image" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -550,17 +553,6 @@
           <Property Name="nameCon" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Condition" FromRole="Condition" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Contacts">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Timestamp" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -573,6 +565,8 @@
           <Property Name="imgEP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="locationID" Type="Int32" Nullable="false" />
+          <Property Name="passwork" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="roleUser" Type="Boolean" />
           <NavigationProperty Name="location" Relationship="Self.FK_Employees_location" FromRole="Employees" ToRole="location" />
           <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employees" FromRole="Employees" ToRole="Order" />
@@ -706,6 +700,7 @@
           <Property Name="gender" Type="Boolean" />
           <Property Name="addressID" Type="Int32" />
           <Property Name="permission" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
         </EntityType>
@@ -902,13 +897,13 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TMDTThucAnNhanhEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
           <EntitySet Name="Address" EntityType="Self.Address" />
           <EntitySet Name="AdminUser" EntityType="Self.AdminUser" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Combo" EntityType="Self.Combo" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
           <EntitySet Name="Condition" EntityType="Self.Condition" />
-          <EntitySet Name="Contacts" EntityType="Self.Contacts" />
           <EntitySet Name="Employees" EntityType="Self.Employees" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" />
@@ -985,7 +980,6 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
-
           <FunctionImport Name="AddProductAndCombo">
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="price" Mode="In" Type="Decimal" />
@@ -993,7 +987,6 @@
             <Parameter Name="typeID" Mode="In" Type="Int32" />
             <Parameter Name="priceUp" Mode="In" Type="Decimal" />
           </FunctionImport>
-
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1001,6 +994,14 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TMDTThucAnNhanhModelStoreContainer" CdmEntityContainer="TMDTThucAnNhanhEntities">
+          <EntitySetMapping Name="C__EFMigrationsHistory">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.C__EFMigrationsHistory">
+              <MappingFragment StoreEntitySet="__EFMigrationsHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Address">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -1036,7 +1037,6 @@
           <EntitySetMapping Name="Combo">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Combo">
               <MappingFragment StoreEntitySet="Combo">
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="comboID" ColumnName="comboID" />
                 <ScalarProperty Name="nameCombo" ColumnName="nameCombo" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -1063,18 +1063,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Contacts">
-            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Contacts">
-              <MappingFragment StoreEntitySet="Contacts">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Employees">
               <MappingFragment StoreEntitySet="Employees">
@@ -1086,6 +1074,8 @@
                 <ScalarProperty Name="imgEP" ColumnName="imgEP" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="passwork" ColumnName="passwork" />
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1204,12 +1194,11 @@
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="addressID" ColumnName="addressID" />
                 <ScalarProperty Name="permission" ColumnName="permission" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
           <FunctionImportMapping FunctionImportName="AddProductAndCombo" FunctionName="TMDTThucAnNhanhModel.Store.AddProductAndCombo" />
-
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

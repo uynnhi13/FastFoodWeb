@@ -12,6 +12,8 @@ namespace TMDT.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
@@ -25,13 +27,13 @@ namespace TMDT.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<AdminUser> AdminUser { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Combo> Combo { get; set; }
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }
         public virtual DbSet<Condition> Condition { get; set; }
-        public virtual DbSet<Contacts> Contacts { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
@@ -44,7 +46,6 @@ namespace TMDT.Models
         public virtual DbSet<Recipe> Recipe { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
-
     
         public virtual int AddProductAndCombo(string name, Nullable<decimal> price, string image, Nullable<int> typeID, Nullable<decimal> priceUp)
         {
@@ -70,4 +71,5 @@ namespace TMDT.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductAndCombo", nameParameter, priceParameter, imageParameter, typeIDParameter, priceUpParameter);
         }
-
+    }
+}
