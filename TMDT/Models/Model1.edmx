@@ -62,6 +62,17 @@
           <Property Name="conditionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nameCon" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" />
+        </EntityType>
         <EntityType Name="Employees">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -377,6 +388,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+
         <Function Name="AddProductAndCombo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="price" Type="money" Mode="In" />
@@ -384,6 +396,7 @@
           <Parameter Name="typeID" Type="int" Mode="In" />
           <Parameter Name="priceUp" Type="money" Mode="In" />
         </Function>
+
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
@@ -391,6 +404,7 @@
           <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Condition" EntityType="Self.Condition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
@@ -535,6 +549,17 @@
           <Property Name="conditionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nameCon" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Condition" FromRole="Condition" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -883,6 +908,7 @@
           <EntitySet Name="Combo" EntityType="Self.Combo" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
           <EntitySet Name="Condition" EntityType="Self.Condition" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" />
           <EntitySet Name="Employees" EntityType="Self.Employees" />
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" />
@@ -959,6 +985,7 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
+
           <FunctionImport Name="AddProductAndCombo">
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="price" Mode="In" Type="Decimal" />
@@ -966,6 +993,7 @@
             <Parameter Name="typeID" Mode="In" Type="Int32" />
             <Parameter Name="priceUp" Mode="In" Type="Decimal" />
           </FunctionImport>
+
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1032,6 +1060,18 @@
               <MappingFragment StoreEntitySet="Condition">
                 <ScalarProperty Name="conditionID" ColumnName="conditionID" />
                 <ScalarProperty Name="nameCon" ColumnName="nameCon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Contacts">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1167,7 +1207,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <FunctionImportMapping FunctionImportName="AddProductAndCombo" FunctionName="TMDTThucAnNhanhModel.Store.AddProductAndCombo" />
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
