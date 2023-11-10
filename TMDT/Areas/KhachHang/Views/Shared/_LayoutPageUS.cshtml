@@ -208,7 +208,7 @@
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li><a class="dropdown-item" href="UserInfo">My account</a></li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                            <li><a class="dropdown-item" href="login.html">Sign Out</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Sign Out</a></li>
                                         </ul>
                                     </div>
                                 }
@@ -540,7 +540,7 @@
                         <ul class="nav flex-column dashboard-list">
                             <li>@Html.ActionLink("Thông tin cá nhân ", "UserInfo", "null", new { })</li>
                             <li>@Html.ActionLink("Đơn hàng ", "OrderList", null, new { })</li>
-                            <li>@Html.ActionLink("Thay đổi địa chỉ ", "LocaDetail", null,new { }) </li>
+                            <li>@Html.ActionLink("Địa chỉ ", "LocaDetail", null,new { }) </li>
 
                         </ul>
                     </div>
