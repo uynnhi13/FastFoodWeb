@@ -10,15 +10,10 @@
 namespace TMDT.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Contacts
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Message { get; set; }
-        public Nullable<System.DateTime> Timestamp { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
