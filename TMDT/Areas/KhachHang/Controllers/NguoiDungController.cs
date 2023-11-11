@@ -87,6 +87,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //Start THÔNG TIN USER//
         public ActionResult UserInfo()
         {
             var user = (User)Session["TaiKhoan"];
@@ -115,6 +116,8 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return RedirectToAction("UserInfo" ,"NguoiDung");
         }
+        //End THÔNG TIN USER//
+        //Start Order//
         public ActionResult OrderList()
         {
             var dh = db.Order.ToList();
@@ -130,6 +133,62 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return View(dt);
         }
+        //End Order//
+
+        //Start địa chỉ//
+        public ActionResult LocaList()
+        {
+            var user = (User)Session["TaiKhoan"];
+            var userPhone = user.numberPhone;
+            var userAddresses = db.Address.Where(a => a.userID.Equals(userPhone)).ToList();
+            if (userAddresses.Any()) {
+                return View(userAddresses); // Trả về danh sách địa chỉ nếu có
+            }
+            else {
+                // Xử lý trường hợp không có địa chỉ nào được tìm thấy
+                TempData["Message"] = "Bạn chưa có địa chỉ. Vui lòng thêm địa chỉ.";
+                TempData.Keep("Message"); // Giữ lại TempData cho request tiếp theo
+                return RedirectToAction("LocaAdd"); // Chuyển hướng đến action thêm địa chỉ
+            }
+
+        }
+        public ActionResult LocaAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LocaAdd(Address ad)
+        {
+            if (ModelState.IsValid) {
+
+                var user = (User)Session["TaiKhoan"];
+                var addres = db.Address.FirstOrDefault();
+
+                if (ad.priority) {
+                    var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
+
+                    foreach (var item in lsAad) {
+                        if (item.priority) {
+                            addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                            addres.priority = false;
+                            
+                        }
+                    }
+
+                }
+
+                db.SaveChanges();
+
+
+
+                ad.userID = user.numberPhone;
+                db.Address.Add(ad);
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("LocaList", "NguoiDung");
+        }
+
         public ActionResult LocaDetail()
         {
             var user = (User)Session["TaiKhoan"];
@@ -145,26 +204,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View(loc);
 
         }
-        public ActionResult LocaAdd()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LocaAdd(Address ad)
-        {
-            if (ModelState.IsValid) {
-
-                var user = (User)Session["TaiKhoan"];
-
-                ad.userID = user.numberPhone;
-
-                db.Address.Add(ad);
-                db.SaveChanges();// LUU THAY DOI
-            }
-            return RedirectToAction("LocaDetail", "NguoiDung");
-        }
-
+       
         public ActionResult LocaEdit(int id)
         {
             var lc = db.Address.FirstOrDefault(u => u.addressID == id);
@@ -178,18 +218,39 @@ namespace TMDT.Areas.KhachHang.Controllers
         public ActionResult LocaEdit(Address ad)
         {
             if (ModelState.IsValid) {
+                var user = (User)Session["TaiKhoan"];
 
-                var aad = db.Address.FirstOrDefault();
+                var addres = db.Address.FirstOrDefault();
+
+                if (ad.priority) {
+                    var lsAad = db.Address.Where(w=>w.userID == user.numberPhone);
+
+                    foreach(var item in lsAad) {
+                        if (item.priority) {
+                            addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                            addres.priority = false;
+                      
+                        } 
+                    }
+                    
+                }
+
+                db.SaveChanges();
+
+                var aad = db.Address.FirstOrDefault(s => s.addressID == ad.addressID);
+
                 aad.firstName = ad.firstName;
                 aad.lastName = ad.lastName;
                 aad.numberPhone = ad.numberPhone;
                 aad.note = ad.note;
                 aad.priority = ad.priority;
                 aad.address1 = ad.address1;
+
                 db.SaveChanges();// LUU THAY DOI
             }
-            return RedirectToAction("LocaDetail");
+            return RedirectToAction("LocaList");
         }
+       
 
 
     }

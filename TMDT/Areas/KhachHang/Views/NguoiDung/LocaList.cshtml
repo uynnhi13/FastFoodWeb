@@ -1,0 +1,109 @@
+﻿@model IEnumerable<TMDT.Models.Address>
+@using TMDT.Models;
+@{
+    ViewBag.Title = "LocaList";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link href="~/Areas/KhachHang/assets/css/StyleSheet2.css" />
+<div class="col-sm-12 col-md-9 col-lg-9">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <h5 class="card-title">Địa chỉ</h5>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
+
+                    <div>
+
+                        @Html.ActionLink("Create New", "LocaAdd", "NguoiDung", new { @class = "btn btn-primary" })
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="table-responsive">
+                        <table class="table project-list-table table-nowrap align-middle table-borderless">
+                            <thead>
+                                <tr>
+
+                                    <th scope="col">  Họ </th>
+                                    <th scope="col"> Tên</th>
+                                    <th scope="col">  Số Điện Thoại</th>
+                                    <th scope="col"> Địa chỉ</th>
+                                    <th scope="col"> Mức độ ưu tiên</th>
+                                    <th scope="col"> Mail</th>
+                                    <th scope="col"> Note</th>
+                                    <th scope="col" style="width: 100px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.firstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.lastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.numberPhone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.address1)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.priority)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.User.gmail)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.note)
+                                    </td>
+                                    <td>
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item">
+
+                                                @Html.ActionLink(" ", "LocaEdit", "NguoiDung", new { @class = "bx bx-pencil font-size-18" })
+                                            </li>
+                                            <li class="list-inline-item">
+
+                                                @Html.ActionLink(" ", "LocaDel", "NguoiDung", new { @class = "bx bx-trash-alt font-size-18" })
+                                            </li>
+                                            <li class="list-inline-item">
+                                                @Html.ActionLink(" ", "LocaDetail", "NguoiDung", new { @class = "bx bx-trash-alt font-size-18" })
+
+                                            </li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+                                }                              
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+

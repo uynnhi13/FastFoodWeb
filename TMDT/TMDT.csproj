@@ -290,6 +290,7 @@
     <Content Include="Areas\KhachHang\assets\css\plugins\venobox.css" />
     <Content Include="Areas\KhachHang\assets\css\style.min.css" />
     <Content Include="Areas\KhachHang\assets\css\Style1.css" />
+    <Content Include="Areas\KhachHang\assets\css\StyleSheet2.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\bootstrap.bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\font.awesome.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\pe-icon-7-stroke.css" />
@@ -493,6 +494,7 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaAdd.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaDetail.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaEdit.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaList.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
