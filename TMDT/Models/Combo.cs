@@ -25,6 +25,7 @@ namespace TMDT.Models
         public string nameCombo { get; set; }
         public decimal price { get; set; }
         public int sale { get; set; }
+
         public bool typeCombo { get; set; }
         public string image { get; set; }
     
