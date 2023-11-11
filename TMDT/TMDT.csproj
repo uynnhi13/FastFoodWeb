@@ -173,6 +173,7 @@
     <Compile Include="Models\Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ingre.cs" />
     <Compile Include="Models\Ingredient.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -478,7 +479,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Admin\Views\Ingredients\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Ingredients\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Index.cshtml" />
@@ -492,6 +492,9 @@
     <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\CreateRecipe.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\addRecipeInProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\createRecipeInProduct.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

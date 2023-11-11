@@ -22,6 +22,7 @@
     <link href="~/Areas/Admin/Data/css/bootstrap.min.css" rel="stylesheet" />
     <!-- https://getbootstrap.com/ -->
     <link href="~/Areas/Admin/Data/css/tooplate.css" rel="stylesheet" />
+    <link rel="stylesheet" href="sweetalert2.min.css">
 </head>
 
 <body id="reportsPage">
@@ -57,7 +58,7 @@
                                         @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
                                         @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
                                         @Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @Class = "dropdown-item" })
-                                        
+
                                     </div>
                                 </li>
                                 <li class="nav-item">
@@ -137,6 +138,7 @@
             });
         })
     </script>
-    @RenderSection("scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -50,6 +50,7 @@
           <Property Name="price" Type="money" Nullable="false" />
           <Property Name="sale" Type="int" Nullable="false" />
           <Property Name="typeCombo" Type="bit" Nullable="false" />
+          <Property Name="image" Type="nvarchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -80,6 +81,8 @@
           <Property Name="imgEP" Type="nvarchar" MaxLength="1000" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" />
           <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="roleUser" Type="bit" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -132,6 +135,7 @@
           <Property Name="conditionID" Type="int" Nullable="false" />
           <Property Name="total" Type="money" Nullable="false" />
           <Property Name="employeeID" Type="int" Nullable="false" />
+          <Property Name="fullAddress" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -200,6 +204,7 @@
           <Property Name="gender" Type="bit" />
           <Property Name="addressID" Type="int" />
           <Property Name="permission" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -400,6 +405,13 @@
           <Parameter Name="typeID" Type="int" Mode="In" />
           <Parameter Name="priceUp" Type="money" Mode="In" />
         </Function>
+        <Function Name="createRecipe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductPrice" Type="money" Mode="In" />
+          <Parameter Name="ProductPriceUp" Type="money" Mode="In" />
+          <Parameter Name="ProductImage" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductTypeID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
           <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
@@ -539,6 +551,7 @@
           <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
           <Property Name="typeCombo" Type="Boolean" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -575,6 +588,8 @@
           <NavigationProperty Name="location" Relationship="Self.FK_Employees_location" FromRole="Employees" ToRole="location" />
           <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employees" FromRole="Employees" ToRole="Order" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="roleUser" Type="Boolean" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
@@ -638,6 +653,7 @@
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+          <Property Name="fullAddress" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -717,6 +733,7 @@
           <Property Name="permission" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -1002,6 +1019,13 @@
             <Parameter Name="typeID" Mode="In" Type="Int32" />
             <Parameter Name="priceUp" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <FunctionImport Name="createRecipe">
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="ProductPrice" Mode="In" Type="Decimal" />
+            <Parameter Name="ProductPriceUp" Mode="In" Type="Decimal" />
+            <Parameter Name="ProductImage" Mode="In" Type="String" />
+            <Parameter Name="ProductTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1052,6 +1076,7 @@
           <EntitySetMapping Name="Combo">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Combo">
               <MappingFragment StoreEntitySet="Combo">
+                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="typeCombo" ColumnName="typeCombo" />
                 <ScalarProperty Name="comboID" ColumnName="comboID" />
                 <ScalarProperty Name="nameCombo" ColumnName="nameCombo" />
@@ -1081,6 +1106,8 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Employees">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
+                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -1138,6 +1165,7 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="fullAddress" ColumnName="fullAddress" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="datetime" ColumnName="datetime" />
@@ -1210,6 +1238,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="gmail" ColumnName="gmail" />
                 <ScalarProperty Name="password" ColumnName="password" />
@@ -1222,6 +1251,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddProductAndCombo" FunctionName="TMDTThucAnNhanhModel.Store.AddProductAndCombo" />
+          <FunctionImportMapping FunctionImportName="createRecipe" FunctionName="TMDTThucAnNhanhModel.Store.createRecipe" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

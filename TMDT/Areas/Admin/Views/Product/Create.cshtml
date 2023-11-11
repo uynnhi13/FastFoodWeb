@@ -26,8 +26,12 @@
                 }
             }
         </div>
-        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "tm-ed" +
-            "it-product-form", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new
+        {
+            @class = "tm-ed" +
+            "it-product-form",
+            enctype = "multipart/form-data"
+        }))
         {
             <div class="row mt-4 tm-edit-product-row">
                 <div class="col-xl-7 col-lg-7 col-md-12">
@@ -63,9 +67,10 @@
                         <div class="form-group">
                             <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Loại sản phẩm</label>
                             <div class="col-md-10">
-                                <select class = "custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" name="typeID">
+                                <select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" name="typeID">
                                     <option>Select category</option>
-                                    @foreach(var item in db.Category.ToList()){
+                                    @foreach (var item in db.Category.ToList())
+                                    {
                                         <option value="@item.typeID">@item.nameType</option>
                                     }
                                 </select>
@@ -96,7 +101,7 @@
 
 </div>
 
-@section scripts{
+@section Scripts{
 
     <script>
         $(document).ready(function () {

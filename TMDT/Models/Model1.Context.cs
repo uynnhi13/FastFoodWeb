@@ -14,7 +14,10 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Data;
+
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
         public TMDTThucAnNhanhEntities()
@@ -72,5 +75,102 @@ namespace TMDT.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductAndCombo", nameParameter, priceParameter, imageParameter, typeIDParameter, priceUpParameter);
         }
+
+        public virtual void createRecipe(string productName, Nullable<decimal> productPrice, Nullable<decimal> productPriceUp, string productImage, Nullable<int> productTypeID, List<ingre> IngredientsList)
+        {
+            // table type
+            var contextAdapter = (IObjectContextAdapter)this;
+            var objectContext = contextAdapter.ObjectContext;
+
+            var Ingredients = new DataTable("IngredientsList");
+            Ingredients.Columns.Add("id", typeof(int));
+            Ingredients.Columns.Add("quantity", typeof(decimal));
+
+            /*foreach (var user in userList)
+            {
+                userTable.Rows.Add(user.id, user.name, user.password);
+            }*/
+
+            foreach (var item in IngredientsList) {
+                DataRow row = Ingredients.NewRow();
+                row["id"] = item.id;
+                row["quantity"] = item.quantity;
+                Ingredients.Rows.Add(row);
+            }
+
+            using (var context = new TMDTThucAnNhanhEntities()) // Thay YourDbContext bằng tên DbContext thực tế của bạn
+            {
+                SqlParameter productNamePara = new SqlParameter("@ProductName", productName);
+                SqlParameter productPricePara = new SqlParameter("@ProductPrice", productPrice);
+                SqlParameter productPriceUpPara = new SqlParameter("@ProductPriceUp", productPriceUp);
+                SqlParameter productImagePara = new SqlParameter("@ProductImage", productImage);
+                SqlParameter productTypeIDPara = new SqlParameter("@ProductTypeID", productTypeID);
+
+                SqlParameter IngredientsListPara = new SqlParameter("@IngredientsList", SqlDbType.Structured) {
+                    TypeName = "dbo.IngredientsList",
+                    Value = Ingredients
+                };
+
+                context.Database.ExecuteSqlCommand("EXEC createRecipe @ProductName, @ProductPrice, @ProductPriceUp, @ProductImage, @ProductTypeID, @IngredientsList",
+                productNamePara, productPricePara, productPriceUpPara, productImagePara, productTypeIDPara, IngredientsListPara);
+            }
+        }
+
+        /*public virtual int createRecipe(string productName, Nullable<decimal> productPrice, Nullable<decimal> productPriceUp, string productImage, Nullable<int> productTypeID, List<ingre> IngredientsList)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            var productPriceParameter = productPrice.HasValue ?
+                new ObjectParameter("ProductPrice", productPrice) :
+                new ObjectParameter("ProductPrice", typeof(decimal));
+    
+            var productPriceUpParameter = productPriceUp.HasValue ?
+                new ObjectParameter("ProductPriceUp", productPriceUp) :
+                new ObjectParameter("ProductPriceUp", typeof(decimal));
+    
+            var productImageParameter = productImage != null ?
+                new ObjectParameter("ProductImage", productImage) :
+                new ObjectParameter("ProductImage", typeof(string));
+    
+            var productTypeIDParameter = productTypeID.HasValue ?
+                new ObjectParameter("ProductTypeID", productTypeID) :
+                new ObjectParameter("ProductTypeID", typeof(int));
+
+            var IngredientsListParameter = IngredientsList.Count != 0 ?
+                new ObjectParameter("IngredientsList", IngredientsList) :
+                null;
+
+            var contextAdapter = (IObjectContextAdapter)this;
+            var objectContext = contextAdapter.ObjectContext;
+
+            var Ingredients = new DataTable("IngredientsList");
+            Ingredients.Columns.Add("id", typeof(int));
+            Ingredients.Columns.Add("quantity", typeof(decimal));
+
+            foreach (var user in IngredientsList) {
+                Ingredients.Rows.Add(user.id, user.quantity);
+            }
+
+            *//*foreach (var user in userList) {
+                DataRow row = userTable.NewRow();
+                row["id"] = user.id;
+                row["name"] = user.name;
+                row["password"] = user.password;
+                userTable.Rows.Add(row);
+            }*//*
+            SqlParameter userParam;
+
+            using (var context = new TMDTThucAnNhanhEntities()) // Thay YourDbContext bằng tên DbContext thực tế của bạn
+            {
+                userParam = new SqlParameter("@IngredientsList", SqlDbType.Structured) {
+                    TypeName = "dbo.IngredientsList",
+                    Value = Ingredients
+                };
+            }
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createRecipe", productNameParameter, productPriceParameter, productPriceUpParameter, productImageParameter, productTypeIDParameter, Ingredients);
+        }*/
     }
 }
