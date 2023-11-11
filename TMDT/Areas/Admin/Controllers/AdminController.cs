@@ -20,6 +20,7 @@ namespace TMDT.Areas.Admin.Controllers
         
         public ActionResult Index()
         {
+            //session = null thi chuyen den trang dang nhap
             if (Session["user"] == null) {
                 return RedirectToAction("Login", "Admin");
             }
@@ -217,7 +218,45 @@ namespace TMDT.Areas.Admin.Controllers
             return View(dh);
 
         }
+       public ActionResult Mypro()
+        {
+            var searchU = (Employees)Session["user"];
+            if (searchU!=null) {
+                var emUser = database.Employees.FirstOrDefault(s => s.EmployeeID == searchU.EmployeeID);
+                return View(emUser);
+            }
+            else {
+                return View();
+            }
 
+        }
+        public ActionResult EditMypro()
+        {
+            var searchU = (Employees)Session["user"];
+            if (searchU != null) {
+                var emUser = database.Employees.FirstOrDefault(s => s.EmployeeID == searchU.EmployeeID);
+                return View(emUser);
+            }
+            else {
+                return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult EditMypro(Employees em)
+        {
+            if ( ModelState.IsValid) {
+                var a = database.Employees.FirstOrDefault(f=>f.EmployeeID == em.EmployeeID);
+            
+                a.FirstName = em.FirstName;
+                a.LastName = em.LastName;
+                a.numberPhone = em.numberPhone;
+                a.Email = em.Email;
+               
+                database.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("MyPro");
+        }
     }
+
 
 }
