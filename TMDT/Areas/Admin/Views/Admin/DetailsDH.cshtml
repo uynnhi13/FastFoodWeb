@@ -32,10 +32,12 @@
             </th>
 
 
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Order.numberPhone)
-                </th>*@
-            <th></th>
+            <th>
+                    @Html.DisplayNameFor(model => model.Order.Employees.FirstName) 
+                    @Html.DisplayNameFor(model => model.Order.Employees.LastName)
+
+                
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -62,9 +64,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Order.User.fullName)
                 </td>
-                @*<td>
-                        <img src="@item.Combo.price" alt="Alternate Text" />
-                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Employees.FirstName)
+                    @Html.DisplayFor(modelItem => item.Order.Employees.LastName)
+                </td>
                 
             </tr>
         }
