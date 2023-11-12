@@ -19,6 +19,7 @@ namespace TMDT.Models
         {
             this.Address = new HashSet<Address>();
             this.Order = new HashSet<Order>();
+            this.WishList = new HashSet<WishList>();
         }
     
         public string numberPhone { get; set; }
@@ -35,5 +36,7 @@ namespace TMDT.Models
         public virtual ICollection<Address> Address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WishList> WishList { get; set; }
     }
 }

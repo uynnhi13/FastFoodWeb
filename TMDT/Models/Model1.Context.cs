@@ -14,9 +14,9 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Collections.Generic;
-    using System.Data.SqlClient;
     using System.Data;
+    using System.Data.SqlClient;
+    using System.Collections.Generic;
 
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
@@ -30,28 +30,27 @@ namespace TMDT.Models
             throw new UnintentionalCodeFirstException();
         }
     
-
+        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<Address> Address { get; set; }
-
+        public virtual DbSet<AdminUser> AdminUser { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Combo> Combo { get; set; }
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }
         public virtual DbSet<Condition> Condition { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
-
+        public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
-        public virtual DbSet<Ingredient> Ingredient { get; set; }
-
         public virtual DbSet<location> location { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Position> Position { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
-
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<WishList> WishList { get; set; }
     
         public virtual int AddProductAndCombo(string name, Nullable<decimal> price, string image, Nullable<int> typeID, Nullable<decimal> priceUp)
         {
@@ -117,62 +116,5 @@ namespace TMDT.Models
                 productNamePara, productPricePara, productPriceUpPara, productImagePara, productTypeIDPara, IngredientsListPara);
             }
         }
-
-        /*public virtual int createRecipe(string productName, Nullable<decimal> productPrice, Nullable<decimal> productPriceUp, string productImage, Nullable<int> productTypeID, List<ingre> IngredientsList)
-        {
-            var productNameParameter = productName != null ?
-                new ObjectParameter("ProductName", productName) :
-                new ObjectParameter("ProductName", typeof(string));
-    
-            var productPriceParameter = productPrice.HasValue ?
-                new ObjectParameter("ProductPrice", productPrice) :
-                new ObjectParameter("ProductPrice", typeof(decimal));
-    
-            var productPriceUpParameter = productPriceUp.HasValue ?
-                new ObjectParameter("ProductPriceUp", productPriceUp) :
-                new ObjectParameter("ProductPriceUp", typeof(decimal));
-    
-            var productImageParameter = productImage != null ?
-                new ObjectParameter("ProductImage", productImage) :
-                new ObjectParameter("ProductImage", typeof(string));
-    
-            var productTypeIDParameter = productTypeID.HasValue ?
-                new ObjectParameter("ProductTypeID", productTypeID) :
-                new ObjectParameter("ProductTypeID", typeof(int));
-
-            var IngredientsListParameter = IngredientsList.Count != 0 ?
-                new ObjectParameter("IngredientsList", IngredientsList) :
-                null;
-
-            var contextAdapter = (IObjectContextAdapter)this;
-            var objectContext = contextAdapter.ObjectContext;
-
-            var Ingredients = new DataTable("IngredientsList");
-            Ingredients.Columns.Add("id", typeof(int));
-            Ingredients.Columns.Add("quantity", typeof(decimal));
-
-            foreach (var user in IngredientsList) {
-                Ingredients.Rows.Add(user.id, user.quantity);
-            }
-
-            *//*foreach (var user in userList) {
-                DataRow row = userTable.NewRow();
-                row["id"] = user.id;
-                row["name"] = user.name;
-                row["password"] = user.password;
-                userTable.Rows.Add(row);
-            }*//*
-            SqlParameter userParam;
-
-            using (var context = new TMDTThucAnNhanhEntities()) // Thay YourDbContext bằng tên DbContext thực tế của bạn
-            {
-                userParam = new SqlParameter("@IngredientsList", SqlDbType.Structured) {
-                    TypeName = "dbo.IngredientsList",
-                    Value = Ingredients
-                };
-            }
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createRecipe", productNameParameter, productPriceParameter, productPriceUpParameter, productImageParameter, productTypeIDParameter, Ingredients);
-        }*/
     }
 }

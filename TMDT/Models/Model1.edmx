@@ -4,8 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-
+      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -19,7 +25,15 @@
           <Property Name="note" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="userID" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
-
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="roleUser" Type="int" Nullable="false" />
+          <Property Name="passWord" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="typeID" />
@@ -35,7 +49,6 @@
           <Property Name="nameCombo" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
           <Property Name="sale" Type="int" Nullable="false" />
-
           <Property Name="typeCombo" Type="bit" Nullable="false" />
           <Property Name="image" Type="nvarchar" MaxLength="1500" />
         </EntityType>
@@ -71,6 +84,17 @@
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="roleUser" Type="bit" />
         </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="ingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ingName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="quantity" Type="float" Nullable="false" />
+          <Property Name="unitID" Type="int" Nullable="false" />
+          <Property Name="quantityMin" Type="float" Nullable="false" />
+          <Property Name="arrivalDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="Invoice">
           <Key>
             <PropertyRef Name="invoiceID" />
@@ -90,7 +114,6 @@
           <Property Name="quatity" Type="float" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
         </EntityType>
-
         <EntityType Name="location">
           <Key>
             <PropertyRef Name="locationID" />
@@ -152,7 +175,16 @@
           <Property Name="cateID" Type="int" Nullable="false" />
           <Property Name="quantity" Type="float" Nullable="false" />
         </EntityType>
-
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Unit">
           <Key>
             <PropertyRef Name="unitID" />
@@ -173,6 +205,15 @@
           <Property Name="addressID" Type="int" />
           <Property Name="permission" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="WishList">
+          <Key>
+            <PropertyRef Name="numberPhone" />
+            <PropertyRef Name="comboID" />
+          </Key>
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="comboID" Type="int" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -366,6 +407,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WishList_Combo">
+          <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combo">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishList_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="numberPhone" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="numberPhone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="AddProductAndCombo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="name" Type="nvarchar" Mode="In" />
           <Parameter Name="price" Type="money" Mode="In" />
@@ -381,28 +446,27 @@
           <Parameter Name="ProductTypeID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
-
+          <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
-
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Condition" EntityType="Self.Condition" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
-
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
-
           <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
-
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WishList" EntityType="Self.WishList" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
             <End Role="User" EntitySet="User" />
             <End Role="Address" EntitySet="Address" />
@@ -467,12 +531,27 @@
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
+          <AssociationSet Name="FK_WishList_Combo" Association="Self.FK_WishList_Combo">
+            <End Role="Combo" EntitySet="Combo" />
+            <End Role="WishList" EntitySet="WishList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_User" Association="Self.FK_WishList_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="WishList" EntitySet="WishList" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-
+        <EntityType Name="C__EFMigrationsHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -487,7 +566,15 @@
           <Property Name="userID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
         </EntityType>
-
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roleUser" Type="Int32" Nullable="false" />
+          <Property Name="passWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="typeID" />
@@ -504,11 +591,11 @@
           <Property Name="nameCombo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="sale" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
-          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
-
           <Property Name="typeCombo" Type="Boolean" Nullable="false" />
           <Property Name="image" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
+          <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
+          <NavigationProperty Name="WishList" Relationship="Self.FK_WishList_Combo" FromRole="Combo" ToRole="WishList" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -542,11 +629,25 @@
           <Property Name="imgEP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="locationID" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="roleUser" Type="Boolean" />
           <NavigationProperty Name="location" Relationship="Self.FK_Employees_location" FromRole="Employees" ToRole="location" />
           <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employees" FromRole="Employees" ToRole="Order" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="roleUser" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ingID" />
+          </Key>
+          <Property Name="ingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ingName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantity" Type="Double" Nullable="false" />
+          <Property Name="unitID" Type="Int32" Nullable="false" />
+          <Property Name="quantityMin" Type="Double" Nullable="false" />
+          <Property Name="arrivalDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK_Ingredient_Unit" FromRole="Ingredient" ToRole="Unit" />
+          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="Ingredient" ToRole="InvoiceDetails" />
+          <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Ingredient" FromRole="Ingredient" ToRole="Recipe" />
         </EntityType>
         <EntityType Name="Invoice">
           <Key>
@@ -567,24 +668,8 @@
           <Property Name="ingID" Type="Int32" Nullable="false" />
           <Property Name="quatity" Type="Double" Nullable="false" />
           <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-
-          <NavigationProperty Name="Invoice" Relationship="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice" FromRole="InvoiceDetails" ToRole="Invoice" />
           <NavigationProperty Name="Ingredient" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="InvoiceDetails" ToRole="Ingredient" />
-        </EntityType>
-        <EntityType Name="Ingredient">
-          <Key>
-            <PropertyRef Name="ingID" />
-          </Key>
-          <Property Name="ingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ingName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="quantity" Type="Double" Nullable="false" />
-          <Property Name="unitID" Type="Int32" Nullable="false" />
-          <Property Name="quantityMin" Type="Double" Nullable="false" />
-          <Property Name="arrivalDate" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="Ingredient" ToRole="InvoiceDetails" />
-          <NavigationProperty Name="Unit" Relationship="Self.FK_Ingredient_Unit" FromRole="Ingredient" ToRole="Unit" />
-          <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Ingredient" FromRole="Ingredient" ToRole="Recipe" />
-
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice" FromRole="InvoiceDetails" ToRole="Invoice" />
         </EntityType>
         <EntityType Name="location">
           <Key>
@@ -608,11 +693,11 @@
           <Property Name="conditionID" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="employeeID" Type="Int32" Nullable="false" />
+          <Property Name="fullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
-          <Property Name="fullAddress" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -660,7 +745,16 @@
           <NavigationProperty Name="Ingredient" Relationship="Self.FK_Recipe_Ingredient" FromRole="Recipe" ToRole="Ingredient" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Recipe_FoodAndDrink" FromRole="Recipe" ToRole="Product" />
         </EntityType>
-
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Unit">
           <Key>
             <PropertyRef Name="unitID" />
@@ -681,12 +775,21 @@
           <Property Name="gender" Type="Boolean" />
           <Property Name="addressID" Type="Int32" />
           <Property Name="permission" Type="Boolean" Nullable="false" />
-
           <Property Name="IsActive" Type="Boolean" />
-
           <NavigationProperty Name="Address" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
-          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="WishList" Relationship="Self.FK_WishList_User" FromRole="User" ToRole="WishList" />
+        </EntityType>
+        <EntityType Name="WishList">
+          <Key>
+            <PropertyRef Name="numberPhone" />
+            <PropertyRef Name="comboID" />
+          </Key>
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="comboID" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Combo" Relationship="Self.FK_WishList_Combo" FromRole="WishList" ToRole="Combo" />
+          <NavigationProperty Name="User" Relationship="Self.FK_WishList_User" FromRole="WishList" ToRole="User" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -732,6 +835,18 @@
               <PropertyRef Name="comboID" />
             </Principal>
             <Dependent Role="OrderDetail">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishList_Combo">
+          <End Role="Combo" Type="Self.Combo" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combo">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="WishList">
               <PropertyRef Name="comboID" />
             </Dependent>
           </ReferentialConstraint>
@@ -796,17 +911,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
-        <Association Name="FK_PurchaseInvoiceDetails_PurchaseInvoice">
-          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
-          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+        <Association Name="FK_Ingredient_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="invoiceID" />
+            <Principal Role="Unit">
+              <PropertyRef Name="unitID" />
             </Principal>
-            <Dependent Role="InvoiceDetails">
-              <PropertyRef Name="invoiceID" />
-
+            <Dependent Role="Ingredient">
+              <PropertyRef Name="unitID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -822,20 +935,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
-        <Association Name="FK_Ingredient_Unit">
-          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
-          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unit">
-              <PropertyRef Name="unitID" />
-            </Principal>
-            <Dependent Role="Ingredient">
-              <PropertyRef Name="unitID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-
         <Association Name="FK_Recipe_Ingredient">
           <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
           <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
@@ -848,7 +947,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
+        <Association Name="FK_PurchaseInvoiceDetails_PurchaseInvoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceDetails" Type="Self.InvoiceDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="invoiceID" />
+            </Principal>
+            <Dependent Role="InvoiceDetails">
+              <PropertyRef Name="invoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Order_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -885,30 +995,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WishList_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="WishList" Type="Self.WishList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="numberPhone" />
+            </Principal>
+            <Dependent Role="WishList">
+              <PropertyRef Name="numberPhone" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TMDTThucAnNhanhEntities" annotation:LazyLoadingEnabled="true">
-
+          <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
           <EntitySet Name="Address" EntityType="Self.Address" />
-
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Combo" EntityType="Self.Combo" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
           <EntitySet Name="Condition" EntityType="Self.Condition" />
           <EntitySet Name="Employees" EntityType="Self.Employees" />
-
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" />
-          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
-
           <EntitySet Name="location" EntityType="Self.location" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" />
           <EntitySet Name="Position" EntityType="Self.Position" />
           <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="Recipe" EntityType="Self.Recipe" />
-
-
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Unit" EntityType="Self.Unit" />
           <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="WishList" EntityType="Self.WishList" />
           <AssociationSet Name="FK_Address_User" Association="Self.FK_Address_User">
             <End Role="User" EntitySet="User" />
             <End Role="Address" EntitySet="Address" />
@@ -924,6 +1044,10 @@
           <AssociationSet Name="FK_OrderDetail_Combo" Association="Self.FK_OrderDetail_Combo">
             <End Role="Combo" EntitySet="Combo" />
             <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_Combo" Association="Self.FK_WishList_Combo">
+            <End Role="Combo" EntitySet="Combo" />
+            <End Role="WishList" EntitySet="WishList" />
           </AssociationSet>
           <AssociationSet Name="FK_ComboDetail_FoodAndDrink" Association="Self.FK_ComboDetail_FoodAndDrink">
             <End Role="Product" EntitySet="Product" />
@@ -945,27 +1069,22 @@
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-
-          <AssociationSet Name="FK_PurchaseInvoiceDetails_PurchaseInvoice" Association="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice">
-            <End Role="Invoice" EntitySet="Invoice" />
-            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
-
+          <AssociationSet Name="FK_Ingredient_Unit" Association="Self.FK_Ingredient_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Ingredient" EntitySet="Ingredient" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseInvoiceDetails_Ingredient" Association="Self.FK_PurchaseInvoiceDetails_Ingredient">
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
-
-          <AssociationSet Name="FK_Ingredient_Unit" Association="Self.FK_Ingredient_Unit">
-            <End Role="Unit" EntitySet="Unit" />
-            <End Role="Ingredient" EntitySet="Ingredient" />
-          </AssociationSet>
-
           <AssociationSet Name="FK_Recipe_Ingredient" Association="Self.FK_Recipe_Ingredient">
             <End Role="Ingredient" EntitySet="Ingredient" />
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
-
+          <AssociationSet Name="FK_PurchaseInvoiceDetails_PurchaseInvoice" Association="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
             <End Role="User" EntitySet="User" />
             <End Role="Order" EntitySet="Order" />
@@ -977,6 +1096,10 @@
           <AssociationSet Name="FK_Recipe_FoodAndDrink" Association="Self.FK_Recipe_FoodAndDrink">
             <End Role="Product" EntitySet="Product" />
             <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishList_User" Association="Self.FK_WishList_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="WishList" EntitySet="WishList" />
           </AssociationSet>
           <FunctionImport Name="AddProductAndCombo">
             <Parameter Name="name" Mode="In" Type="String" />
@@ -999,7 +1122,14 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TMDTThucAnNhanhModelStoreContainer" CdmEntityContainer="TMDTThucAnNhanhEntities">
-
+          <EntitySetMapping Name="C__EFMigrationsHistory">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.C__EFMigrationsHistory">
+              <MappingFragment StoreEntitySet="__EFMigrationsHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Address">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Address">
               <MappingFragment StoreEntitySet="Address">
@@ -1014,7 +1144,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
+          <EntitySetMapping Name="AdminUser">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.AdminUser">
+              <MappingFragment StoreEntitySet="AdminUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="nameUser" ColumnName="nameUser" />
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
+                <ScalarProperty Name="passWord" ColumnName="passWord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -1026,13 +1165,12 @@
           <EntitySetMapping Name="Combo">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Combo">
               <MappingFragment StoreEntitySet="Combo">
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="typeCombo" ColumnName="typeCombo" />
-
                 <ScalarProperty Name="comboID" ColumnName="comboID" />
                 <ScalarProperty Name="nameCombo" ColumnName="nameCombo" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="sale" ColumnName="sale" />
+                <ScalarProperty Name="typeCombo" ColumnName="typeCombo" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1057,8 +1195,6 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Employees">
               <MappingFragment StoreEntitySet="Employees">
-                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
-                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -1067,10 +1203,23 @@
                 <ScalarProperty Name="imgEP" ColumnName="imgEP" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
+          <EntitySetMapping Name="Ingredient">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="ingID" ColumnName="ingID" />
+                <ScalarProperty Name="ingName" ColumnName="ingName" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unitID" ColumnName="unitID" />
+                <ScalarProperty Name="quantityMin" ColumnName="quantityMin" />
+                <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Invoice">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
@@ -1091,20 +1240,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
-          <EntitySetMapping Name="Ingredient">
-            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Ingredient">
-              <MappingFragment StoreEntitySet="Ingredient">
-                <ScalarProperty Name="ingID" ColumnName="ingID" />
-                <ScalarProperty Name="ingName" ColumnName="ingName" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="unitID" ColumnName="unitID" />
-                <ScalarProperty Name="quantityMin" ColumnName="quantityMin" />
-                <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-
           <EntitySetMapping Name="location">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.location">
               <MappingFragment StoreEntitySet="location">
@@ -1119,7 +1254,6 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="fullAddress" ColumnName="fullAddress" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="datetime" ColumnName="datetime" />
@@ -1127,6 +1261,7 @@
                 <ScalarProperty Name="conditionID" ColumnName="conditionID" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="fullAddress" ColumnName="fullAddress" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1170,7 +1305,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1182,7 +1316,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-
           <EntitySetMapping Name="Unit">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Unit">
               <MappingFragment StoreEntitySet="Unit">
@@ -1194,7 +1327,6 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="gmail" ColumnName="gmail" />
                 <ScalarProperty Name="password" ColumnName="password" />
@@ -1203,9 +1335,16 @@
                 <ScalarProperty Name="gender" ColumnName="gender" />
                 <ScalarProperty Name="addressID" ColumnName="addressID" />
                 <ScalarProperty Name="permission" ColumnName="permission" />
-
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WishList">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.WishList">
+              <MappingFragment StoreEntitySet="WishList">
+                <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
+                <ScalarProperty Name="comboID" ColumnName="comboID" />
+                <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

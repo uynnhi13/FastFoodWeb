@@ -12,14 +12,13 @@ namespace TMDT.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class InvoiceDetails
+    public partial class WishList
     {
-        public int invoiceID { get; set; }
-        public int ingID { get; set; }
-        public double quatity { get; set; }
+        public string numberPhone { get; set; }
+        public int comboID { get; set; }
         public decimal price { get; set; }
     
-        public virtual Ingredient Ingredient { get; set; }
-        public virtual Invoice Invoice { get; set; }
+        public virtual Combo Combo { get; set; }
+        public virtual User User { get; set; }
     }
 }
