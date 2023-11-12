@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -20,8 +17,7 @@ namespace TMDT.Areas.KhachHang.Controllers
         [HttpPost]
         public ActionResult DangKy(User user)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 if (string.IsNullOrEmpty(user.fullName))
                     ModelState.AddModelError(string.Empty, "Họ tên không được để trống");
                 if (string.IsNullOrEmpty(user.numberPhone))
@@ -34,8 +30,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
                 if (kiemTraUser != null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
-                if (ModelState.IsValid)
-                {
+                if (ModelState.IsValid) {
                     db.User.Add(user);
                     db.SaveChanges();
                 }
@@ -54,18 +49,15 @@ namespace TMDT.Areas.KhachHang.Controllers
         [HttpPost]
         public ActionResult DangNhap(User user)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 if (string.IsNullOrEmpty(user.numberPhone))
                     ModelState.AddModelError(string.Empty, "Số điện thoại không được để trống");
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
-                if (ModelState.IsValid)
-                {
+                if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
-                    if (kiemtra != null)
-                    {
+                    if (kiemtra != null) {
                         ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
@@ -75,7 +67,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         ViewBag.ThongBao = "Số điện thoại hoặc mật khẩu không đúng";
                 }
             }
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DangXuat()

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -24,13 +22,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Product/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = db.Product.Find(id);
-            if (product == null)
-            {
+            if (product == null) {
                 return HttpNotFound();
             }
             return View(product);
@@ -77,19 +73,17 @@ namespace TMDT.Areas.Admin.Controllers
                 ViewBag.notification = false;
                 return View("Create");
             }
-            
+
         }
 
         // GET: Admin/Product/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = db.Product.Find(id);
-            if (product == null)
-            {
+            if (product == null) {
                 return HttpNotFound();
             }
             ViewBag.typeID = new SelectList(db.Category, "typeID", "nameType", product.typeID);
@@ -103,8 +97,7 @@ namespace TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "cateID,name,price,image,typeID,priceUp")] Product product)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -116,13 +109,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Product/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = db.Product.Find(id);
-            if (product == null)
-            {
+            if (product == null) {
                 return HttpNotFound();
             }
             return View(product);
@@ -141,8 +132,7 @@ namespace TMDT.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);

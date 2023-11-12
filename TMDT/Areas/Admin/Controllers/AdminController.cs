@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
-using PagedList;
-using System.IO;
-using System.Data.SqlClient;
-using System.Data.Entity;
-using System.Net;
 
 namespace TMDT.Areas.Admin.Controllers
 {
@@ -17,7 +13,7 @@ namespace TMDT.Areas.Admin.Controllers
         TMDTThucAnNhanhEntities database = new TMDTThucAnNhanhEntities();
         // GET: Admin/Admin
 
-        
+
         public ActionResult Index()
         {
             if (Session["user"] == null) {
@@ -38,14 +34,14 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult Login(string user, string password)
         {
             var tk = database.Employees.Where(s => s.Email == user && s.password == password).FirstOrDefault();
-          
+
             if (tk == null) {
                 TempData["errorlogin"] = "Tài khoản đăng nhập không đúng";
                 return View();
             }
             else {
                 Session["user"] = tk;
-                return RedirectToAction("Index","Admin");
+                return RedirectToAction("Index", "Admin");
             }
 
         }
@@ -65,14 +61,14 @@ namespace TMDT.Areas.Admin.Controllers
             var dsnv = database.Employees;
             return View(dsnv);
         }
-        
+
         public ActionResult AddnewNV()
         {
             ViewBag.PositionID = new SelectList(database.Position.ToList(), "PositionID", "posName");
             return View();
         }
         [HttpPost]
-       public ActionResult AddnewNV(Employees em, HttpPostedFileBase Hinhanhnv)
+        public ActionResult AddnewNV(Employees em, HttpPostedFileBase Hinhanhnv)
         {
             ViewBag.PositionID = new SelectList(database.Position.ToList(), "PositionID", "posName");
             if (Hinhanhnv == null) {
@@ -100,16 +96,16 @@ namespace TMDT.Areas.Admin.Controllers
                 }
                 return RedirectToAction("Account", "Admin");
             }
-           
+
 
         }
         public ActionResult DetailsNV(int id)
         {
             var em = database.Employees.FirstOrDefault(s => s.EmployeeID == id);
-            
+
             return View(em);
         }
-        
+
         public ActionResult EditNV(int id)
         {
             var em = database.Employees.FirstOrDefault(s => s.EmployeeID == id);
@@ -119,11 +115,11 @@ namespace TMDT.Areas.Admin.Controllers
             return View(em);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         public ActionResult EditNV(Employees emp)
         {
             if (ModelState.IsValid) {
-                
+
                 database.Entry(emp).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges(); // Lưu thay đổi
 
@@ -131,18 +127,18 @@ namespace TMDT.Areas.Admin.Controllers
                 return RedirectToAction("Account");
             }
 
-            
+
             return View(emp);
         }
         public ActionResult DeleteNV(int id)
         {
             var em = database.Employees.FirstOrDefault(s => s.EmployeeID == id);
-            if(em == null) {
+            if (em == null) {
                 return HttpNotFound();
             }
             database.Employees.Remove(em);
             database.SaveChanges();
-            return RedirectToAction("Account","Admin");
+            return RedirectToAction("Account", "Admin");
         }
         [HttpGet]
         public ActionResult QlyKH(string searchstring = "")
@@ -150,11 +146,11 @@ namespace TMDT.Areas.Admin.Controllers
             var dskh = database.User;
             var lskh = database.User.Where(s => s.numberPhone.Contains(searchstring));
             if (searchstring != null) {
-                
+
                 return View(lskh.ToList());
             }
             return View(dskh);
-           
+
 
         }
         public ActionResult DetailsKH(string id)
@@ -203,14 +199,14 @@ namespace TMDT.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Order donhang = database.Order.Find(id);
-            donhang.conditionID= 2;
+            donhang.conditionID = 2;
             database.SaveChanges();
             if (donhang == null) {
                 return HttpNotFound();
             }
             return RedirectToAction("DonHang", "Admin");
         }
-       
+
         public ActionResult DetailsDH(int id)
         {
             var dh = database.OrderDetail.Where(s => s.orderID == id);

@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
-using Antlr.Runtime.Misc;
-using Newtonsoft.Json.Linq;
-using PagedList;
 using TMDT.Models;
 
 
@@ -32,13 +27,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Ingredients/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ingredient ingredient = db.Ingredient.Find(id);
-            if (ingredient == null)
-            {
+            if (ingredient == null) {
                 return HttpNotFound();
             }
             return View(ingredient);
@@ -62,9 +55,8 @@ namespace TMDT.Areas.Admin.Controllers
                 throw new ArgumentNullException(nameof(ingredient));
             }
 
-            if (ModelState.IsValid)
-            {
-                if( ingredient.quantity == null ) ingredient.quantity = 0;
+            if (ModelState.IsValid) {
+                if (ingredient.quantity == null) ingredient.quantity = 0;
                 if (ingredient.quantityMin == null) ingredient.quantityMin = 0;
                 ingredient.arrivalDate = DateTime.Now;
 
@@ -108,7 +100,7 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult addRecipeInProduct(string name , List<ingre> lsIngredient)
+        public ActionResult addRecipeInProduct(string name, List<ingre> lsIngredient)
         {
 
             return RedirectToAction("index");
@@ -117,7 +109,7 @@ namespace TMDT.Areas.Admin.Controllers
         {
             var lsIngredient = new List<ingre>();
             lsIngredient = LayIngre();
-             
+
             if (lsIngredient.Count == 0) {
                 ViewBag.message = "Chưa chọn món";
                 return RedirectToAction("CreateRecipe");
@@ -137,12 +129,12 @@ namespace TMDT.Areas.Admin.Controllers
                     HinhAnh.SaveAs(PathImg);
 
                     // Màu sắc điện thoại
-                     
+
                     string img = "/Images/Product/" + (string)HinhAnh.FileName;
 
                     List<ingre> lsDeci = LayIngre();
 
-                    db.createRecipe(product.name, product.price,product.priceUp, img, product.typeID,lsDeci);
+                    db.createRecipe(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
 
 
@@ -159,7 +151,7 @@ namespace TMDT.Areas.Admin.Controllers
                 ViewBag.notification = false;
                 return RedirectToAction("CreateRecipe");
             }
-            
+
         }
 
         [HttpPost]
@@ -180,7 +172,7 @@ namespace TMDT.Areas.Admin.Controllers
             return Json(list);
         }
 
-        
+
         public List<ingre> LayIngre()
         {
             List<ingre> lstingre = Session["ingre"] as List<ingre>;
@@ -198,9 +190,9 @@ namespace TMDT.Areas.Admin.Controllers
             var test = new ingre();
             test = lstingre.FirstOrDefault(f => f.id == _ingre.id);
 
-            if(test == null) lstingre.Add(_ingre);
+            if (test == null) lstingre.Add(_ingre);
             else {
-                for(int i = 0; i < lstingre.Count; i++)
+                for (int i = 0; i < lstingre.Count; i++)
                     if (lstingre[i].id == _ingre.id) {
                         lstingre[i].quantity = _ingre.quantity;
                     }
@@ -212,26 +204,24 @@ namespace TMDT.Areas.Admin.Controllers
                 lstingre = new List<ingre>();
                 Session["ingre"] = lstingre;
             }
-            
+
         }
         public void deleteIngre(int id)
         {
             List<ingre> lstingre = LayIngre();
             var ing = lstingre.FirstOrDefault(f => f.id == id);
-            if(ing != null) lstingre.Remove(ing);
+            if (ing != null) lstingre.Remove(ing);
             Session["ingre"] = lstingre;
         }
 
         // GET: Admin/Ingredients/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ingredient ingredient = db.Ingredient.Find(id);
-            if (ingredient == null)
-            {
+            if (ingredient == null) {
                 return HttpNotFound();
             }
             ViewBag.unitID = new SelectList(db.Unit, "unitID", "nameU", ingredient.unitID);
@@ -245,8 +235,7 @@ namespace TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ingID,ingName,quantity,unitID,quantityMin,arrivalDate")] Ingredient ingredient)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Entry(ingredient).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -257,8 +246,7 @@ namespace TMDT.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);

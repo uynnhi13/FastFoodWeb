@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -9,15 +7,14 @@ namespace TMDT.Areas.KhachHang.Controllers
 {
     public class GioHangController : Controller
     {
-        
+
         // GET: KhachHang/GioHang
         public List<MatHangMua> LayGioHang()
         {
             List<MatHangMua> gioHang = Session["GioHang"] as List<MatHangMua>;
 
             //Nếu giỏ hàng chưa tồn tại thì tạo mới và đưa vào session
-            if (gioHang == null)
-            {
+            if (gioHang == null) {
                 gioHang = new List<MatHangMua>();
                 Session["GioHang"] = gioHang;
             }
@@ -32,14 +29,13 @@ namespace TMDT.Areas.KhachHang.Controllers
             //Kiểm tra xem có tồn tại mặt hàng trong giỏ hay chưa
             //Nếu có thì tăng số lượng lên 1, ngược lại thì thêm vào giỏ
             MatHangMua sanPham = gioHang.FirstOrDefault(s => s.cateID == cateID);
-            if(sanPham==null) //Sản phẩm chưa có trong giỏ
+            if (sanPham == null) //Sản phẩm chưa có trong giỏ
             {
                 sanPham = new MatHangMua(cateID);
                 gioHang.Add(sanPham);
                 ViewBag.ThongBaoThemSP = "Thêm Sản Phẩm Thành Công";
-            }    
-            else
-            {
+            }
+            else {
                 sanPham.soLuong++; //sản phẩm đã có trong giỏ thì tăng số lượng lên 1
             }
             return RedirectToAction("ChiTietSP", "Home", new { id = cateID });
@@ -68,8 +64,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             List<MatHangMua> gioHang = LayGioHang();
 
             //Nếu giỏ hàng trống thì trả về trang ban đầu
-            if(gioHang==null || gioHang.Count == 0)
-            {
+            if (gioHang == null || gioHang.Count == 0) {
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.TongSL = TinhTongSL();

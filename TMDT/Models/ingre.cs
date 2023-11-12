@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace TMDT.Models
+﻿namespace TMDT.Models
 {
     public class ingre
     {
-        public int id {  get; set; }
+        public int id { get; set; }
         public double quantity { get; set; }
 
 
