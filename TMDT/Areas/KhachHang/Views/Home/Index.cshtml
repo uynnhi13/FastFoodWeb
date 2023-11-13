@@ -206,9 +206,8 @@
                                                     <span class="new">@string.Format("{0:N0}", item.price) đ</span>
                                                 </span>
                                             </div>
-                                            <button title="Add To Cart" class=" add-to-cart">
-                                                Add
-                                                To Cart
+                                            <button title="Add To Cart" class="add-to-cart" data-comboid="@item.comboID" data-type="@item.typeCombo">
+                                                Thêm Sản Phẩm
                                             </button>
                                         </div>
                                     </div>
@@ -255,9 +254,8 @@
                                                     <span class="new">@string.Format("{0:N0}", item.price) đ</span>
                                                 </span>
                                             </div>
-                                            <button title="Add To Cart" class=" add-to-cart">
-                                                Add
-                                                To Cart
+                                            <button title="Add To Cart" class="add-to-cart" data-comboid="@item.comboID" data-type="@item.typeCombo">
+                                                Thêm Sản Phẩm
                                             </button>
                                         </div>
                                     </div>
@@ -272,3 +270,49 @@
 </div>
 <!-- Product Area End -->
 
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $(".add-to-cart").click(function()
+            {
+               
+                var comboID = $(this).data("comboid");
+                var typeCombo = $(this).data("type");
+                console.log(typeCombo);
+                if (typeCombo == true) {
+                    size = "Combo";
+                }
+                else {
+                    size = "medium";
+                }
+                var data = {
+                    comboID: comboID,
+                    soLuong: 1,
+                    size: size
+                }
+                $.ajax({
+                    type: "POST",
+                    /*url: "/GioHang/ThemSanPhamVaoGio?cateID=" + cateID*/// Thay thế "Controller" bằng tên thực tế của Controller
+                    url: "/GioHang/ThemSanPhamVaoGio",
+                    data: data,
+                    success: function (data) {
+                        Swal.fire({
+                            position: 'top-middle',
+                            icon: 'success',
+                            title: 'Sản Phẩm Đã Thêm Thành Công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error: function () {
+                        // Xử lý lỗi
+                    }
+                });
+            })
+        });
+
+    </script>
+
+
+}
