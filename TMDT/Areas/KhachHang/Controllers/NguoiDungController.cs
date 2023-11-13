@@ -117,23 +117,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return RedirectToAction("UserInfo" ,"NguoiDung");
         }
         //End THÔNG TIN USER//
-        //Start Order//
-        public ActionResult OrderList()
-        {
-            var dh = db.Order.ToList();
-            return View(dh);
-        }
-        public ActionResult OrderDetail(int id )
-        {
-            var dt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
-            if( dt ==null ){
-                Response.StatusCode = 404;
-                return null;
-
-            }
-            return View(dt);
-        }
-        //End Order//
+      
 
         //Start địa chỉ//
         public ActionResult LocaList()
@@ -250,8 +234,38 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return RedirectToAction("LocaList");
         }
-       
+        public ActionResult DeleteAddress(int id)
 
+        {
+       
+            var address = db.Address.FirstOrDefault(a => a.addressID == id);
+
+            if (address != null) {
+                db.Address.Remove(address);
+                db.SaveChanges();
+              
+            }
+         
+            
+            return RedirectToAction("LocaList");
+        }
+        //Start Order//
+        public ActionResult OrderList()
+        {
+            var dh = db.Order.ToList();
+            return View(dh);
+        }
+        public ActionResult OrderDetail(int id)
+        {
+            var dt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
+            if (dt == null) {
+                Response.StatusCode = 404;
+                return null;
+
+            }
+            return View(dt);
+        }
+        //End Order//
 
     }
 }
