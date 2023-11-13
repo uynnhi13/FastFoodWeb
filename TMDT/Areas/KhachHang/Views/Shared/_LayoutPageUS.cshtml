@@ -208,7 +208,7 @@
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li><a class="dropdown-item" href="UserInfo">My account</a></li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                            <li><a class="dropdown-item" href="login.html">Sign Out</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Sign Out</a></li>
                                         </ul>
                                     </div>
                                 }
@@ -494,24 +494,7 @@
             </div>
         </div>
     </div>
-    <!-- OffCanvas Menu End -->
-    <!-- breadcrumb-area start -->
-    <div class="breadcrumb-area">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-12 text-center">
-                    <h2 class="breadcrumb-title">Single Product</h2>
-                    <!-- breadcrumb-list start -->
-                    <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">Product</li>
-                    </ul>
-                    <!-- breadcrumb-list end -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- breadcrumb-area end -->
+ 
     <!-- account area start -->
     <style>
         
@@ -540,7 +523,7 @@
                         <ul class="nav flex-column dashboard-list">
                             <li>@Html.ActionLink("Thông tin cá nhân ", "UserInfo", "null", new { })</li>
                             <li>@Html.ActionLink("Đơn hàng ", "OrderList", null, new { })</li>
-                            <li>@Html.ActionLink("Thay đổi địa chỉ ", "LocaDetail", null,new { }) </li>
+                            <li>@Html.ActionLink("Địa chỉ ", "LocaList", null,new { }) </li>
 
                         </ul>
                     </div>

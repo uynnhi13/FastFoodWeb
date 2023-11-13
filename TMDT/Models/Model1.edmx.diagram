@@ -24,10 +24,12 @@
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Unit" Width="1.5" PointX="5.75" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.User" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Address_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_FoodAndDrink_ProductType" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_ComboDetail_Combo" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_OrderDetail_Combo" ManuallyRouted="false" />
+        <AssociationConnector Association="TMDTThucAnNhanhModel.FK_WishList_Combo" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_ComboDetail_FoodAndDrink" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_Condition" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Employees_location" ManuallyRouted="false" />
@@ -40,6 +42,7 @@
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_OrderDetail_Order" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Recipe_FoodAndDrink" ManuallyRouted="false" />
+        <AssociationConnector Association="TMDTThucAnNhanhModel.FK_WishList_User" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

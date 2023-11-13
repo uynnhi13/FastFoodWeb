@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<TMDT.Models.Order>
-
+@using TMDT.Models
 @{
     ViewBag.Title = "OrderList";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
@@ -7,14 +7,13 @@
 
 <div class="col-sm-12 col-md-9 col-lg-9">
     <h2>OrderList</h2>
+    
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.numberPhone)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.datetime)
-            </th>
+          
             <th>
                 @Html.DisplayNameFor(model => model.note)
             </th>
@@ -24,9 +23,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.total)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.employeeID)
-            </th>
+          
             <th></th>
         </tr>
 
@@ -36,25 +33,21 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.numberPhone)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.datetime)
-                </td>
+                
                 <td>
                     @Html.DisplayFor(modelItem => item.note)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.conditionID)
+                    @Html.DisplayFor(modelItem => item.Condition.nameCon)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.total)
                 </td>
+               
                 <td>
-                    @Html.DisplayFor(modelItem => item.employeeID)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.orderID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.orderID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.orderID })
+                  
+                    @Html.ActionLink("Details", "OrderDetail", new { id = item.orderID }) 
+                  
                 </td>
             </tr>
         }
