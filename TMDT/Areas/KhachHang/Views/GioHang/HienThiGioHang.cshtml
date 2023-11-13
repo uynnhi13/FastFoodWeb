@@ -106,7 +106,7 @@
                                     <a href="@Url.Action("Index","Home")">Tiếp Tục Mua Hàng</a>
                                 </div>
                                 <div class="cart-clear">
-                                    <button>Đặt Hàng</button>
+                                    <button onclick="DatHangFunction()">Đặt Hàng</button>
                                     <a href="@Url.Action("XoaGioHang","GioHang")">Xóa tất cả sản phẩm</a>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
 
                     } else {
                         // Xóa sản phẩm thất bại, xử lý lỗi nếu cần
-                        window.location.href = '@Url.Action("Index","Home")';
+                        window.location.href = '@Url.Action("GioHangTrong", "GioHang")';
                     }
                 },
                 error: function () {
@@ -180,7 +180,40 @@
             });
         }
 
-        
+        function DatHangFunction() {
+            console.log('Đã Vào Đặt Hàng');
+            $.ajax({
+                type: "POST",
+                url: "/GioHang/DatHang",
+                success: function (data) {
+                    // Xử lý dữ liệu trả về sau khi đặt hàng thành công
+                    if (data.success) {
+                        alert("Đặt hàng thành công!");
+                    } else {
+                        Swal.fire({
+                            title: "Bạn Chưa Đăng Nhập, Bạn có Muốn Đăng Nhập không?",
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: "Đăng Nhập",
+                            denyButtonText: `Tiếp tục đặt hàng`
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                window.location.href = "@Url.Action("DangNhap","NguoiDung")";
+                            } else if (result.isDenied) {
+                                 window.location.href = "@Url.Action("ThongTinDatHang", "GioHang")";
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    // Xử lý lỗi khi gọi Ajax
+                    alert("Đã xảy ra lỗi khi đặt hàng.");
+                }
+            })
+
+        }
+
     </script>
 }
 

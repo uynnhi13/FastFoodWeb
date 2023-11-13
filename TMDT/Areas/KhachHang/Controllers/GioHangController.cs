@@ -23,6 +23,11 @@ namespace TMDT.Areas.KhachHang.Controllers
             return gioHang;
         }
 
+        public ActionResult GioHangTrong()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult ThemSanPhamVaoGio(int comboID, int soLuong, string size)
         {
@@ -90,7 +95,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             //Nếu giỏ hàng trống thì trả về trang ban đầu
             if (gioHang == null || gioHang.Count == 0) {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("GioHangTrong", "GioHang");
             }
             ViewBag.TongSL = TinhTongSL();
             ViewBag.TongTien = TinhTongTien();
@@ -109,7 +114,7 @@ namespace TMDT.Areas.KhachHang.Controllers
         public ActionResult XoaGioHang()
         {
             Session["GioHang"] = null;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("GioHangTrong", "GioHang");
         }
 
 
@@ -139,5 +144,66 @@ namespace TMDT.Areas.KhachHang.Controllers
             return Json(new { success = false });
         }
 
+        
+
+        [HttpPost]
+        public JsonResult DatHang()
+        {
+            if (Session["TaiKhoan"] == null) {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true });
+        }
+
+        public ActionResult ThongTinDatHang()
+        {
+            List<MatHangMua> gioHang = LayGioHang();
+            ViewBag.TongSL = TinhTongSL();
+            ViewBag.TongTien = TinhTongTien();
+            return View(gioHang);
+        }
+
+        public ActionResult DongYDatHang(FormCollection form)
+        {
+            List<MatHangMua> gioHang = LayGioHang();
+            Order donHang = new Order();
+            var number = form["numberPhone"];
+            var userCheck = db.User.FirstOrDefault(s => s.numberPhone == number);
+            if (userCheck == null) {
+                userCheck = new User();
+                userCheck.numberPhone = number;
+                db.User.Add(userCheck);
+            }
+            donHang.recipient = form["recipient"];
+            donHang.numberPhone = form["numberPhone"];
+            donHang.fullAddress = form["fullAddress"];
+            donHang.datetime = DateTime.Now;
+            donHang.note = form["message"];
+            donHang.conditionID = 1;
+            donHang.total = (decimal)TinhTongTien();
+
+            db.Order.Add(donHang);
+            db.SaveChanges();
+
+            //Thêm chi tiết cho từng sản phẩm
+            foreach(var sanpham in gioHang) {
+                OrderDetail chiTiet = new OrderDetail();
+                chiTiet.orderID = donHang.orderID;
+                chiTiet.comboID = sanpham.ComboID;
+                chiTiet.quantity = sanpham.soLuong;
+                db.OrderDetail.Add(chiTiet);
+            }
+            db.SaveChanges();
+
+            //Xóa giỏ hàng
+            Session["GioHang"] = null;
+
+            return RedirectToAction("DatHangThanhCong");
+        }
+
+        public ActionResult DatHangThanhCong()
+        {
+            return View();
+        }
     }
 }
