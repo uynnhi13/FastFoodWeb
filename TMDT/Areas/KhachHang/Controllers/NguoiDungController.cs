@@ -252,18 +252,21 @@ namespace TMDT.Areas.KhachHang.Controllers
         //Start Order//
         public ActionResult OrderList()
         {
-            var dh = db.Order.ToList();
-            return View(dh);
+        
+            var user = (User)Session["TaiKhoan"];
+            var userPhone = user.numberPhone;
+            var order = db.Order.Where(a => a.numberPhone.Equals(userPhone)).ToList();
+            return View(order);
+         
         }
-        public ActionResult OrderDetail(int id)
+        public ActionResult OrderDetail()
         {
-            var dt = db.OrderDetail.FirstOrDefault(u => u.orderID == id);
-            if (dt == null) {
-                Response.StatusCode = 404;
-                return null;
+          
+            var user = (User)Session["TaiKhoan"];
 
-            }
-            return View(dt);
+            var ordt = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+
+            return View(ordt);
         }
         //End Order//
 

@@ -482,7 +482,6 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserInfo.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserEdit.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\OrderList.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\OrderDetail.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -496,6 +495,7 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaEdit.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaList.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DeleteAddress.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\OrderDetail.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
