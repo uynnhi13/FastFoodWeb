@@ -26,7 +26,7 @@ namespace TMDT.Models
         public string note { get; set; }
         public int conditionID { get; set; }
         public decimal total { get; set; }
-        public int employeeID { get; set; }
+        public Nullable<int> employeeID { get; set; }
     
         public virtual Condition Condition { get; set; }
         public virtual Employees Employees { get; set; }

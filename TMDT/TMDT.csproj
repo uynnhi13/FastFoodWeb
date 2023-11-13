@@ -511,6 +511,8 @@
     <Content Include="Areas\Admin\Views\Ingredients\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -518,8 +520,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

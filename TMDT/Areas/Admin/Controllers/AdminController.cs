@@ -204,11 +204,18 @@ namespace TMDT.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Order donhang = database.Order.Find(id);
-            donhang.conditionID= 2;
+           
+            donhang.conditionID = 2;
+            if (donhang.employeeID == null) {
+                var searchU = (Employees)Session["user"];
+                donhang.employeeID = searchU.EmployeeID;
+               
+            }
             database.SaveChanges();
             if (donhang == null) {
                 return HttpNotFound();
             }
+
             return RedirectToAction("DonHang", "Admin");
         }
        
