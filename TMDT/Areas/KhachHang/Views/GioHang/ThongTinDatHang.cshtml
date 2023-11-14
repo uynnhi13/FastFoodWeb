@@ -1,0 +1,206 @@
+﻿@using TMDT.Models
+@model List<MatHangMua>
+@{
+    ViewBag.Title = "DatHang";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+}
+
+<body>
+    <div class="checkout-area pt-100px pb-100px">
+        <div class="container">
+            <div class="row">
+                @{
+                    var user = Session["TaiKhoan"] as TMDT.Models.User;
+                    if (user == null)
+                    {
+                        <div class="col-lg-7">
+                            @using (Html.BeginForm("DongYDatHang", "GioHang", FormMethod.Post))
+                            {
+                                <div class="billing-info-wrap">
+                                    <h3>Thông Tin Đặt Hàng</h3>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <label>Tên Người Nhận:</label>
+                                                <input type="text" name="recipient" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <label>Số Điện Thoại: </label>
+                                                <input type="text" name="numberPhone" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <label>Địa chỉ: </label>
+                                                <input type="text" name="fullAddress" />
+                                            </div>
+                                        </div>
+                                        <div class="additional-info-wrap">
+                                            <div class="additional-info">
+                                                <label>Ghi Chú</label>
+                                                <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
+                                                          name="message"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-select mb-4">
+                                                <label>Phương thức thanh toán: </label>
+                                                <select>
+                                                    <option>Nhận tại Cửa hàng</option>
+                                                    <option>VNPay</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="submit" style="background-color:darkred; padding:10px; border-radius: 5px;color:white">Đặt Hàng</button>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        var lstAddress = db.Address.Where(s => s.numberPhone == user.numberPhone);
+                        var addPriority = db.Address.FirstOrDefault(s => s.numberPhone == user.numberPhone && s.priority == true);
+                        <div class="billing-info-wrap">
+                            <h3>Thông Tin Đặt Hàng</h3>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @user.fullName
+                                    @user.numberPhone
+                                    @user.gmail
+                                    @if (addPriority == null)
+                                    {
+
+                                    }
+                                </div>
+                                <div class="additional-info-wrap">
+                                    <div class="additional-info">
+                                        <label>Ghi Chú</label>
+                                        <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
+                                                  name="message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="billing-select mb-4">
+                                        <label>Phương thức thanh toán: </label>
+                                        <select>
+                                            <option>Nhận tại Cửa hàng</option>
+                                            <option>VNPay</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="col-lg-5 mt-md-30px mt-lm-30px ">
+                    <div class="your-order-area">
+                        <h3>Đơn Hàng</h3>
+                        <div class="your-order-wrap gray-bg-4">
+                            <div class="your-order-product-info">
+                                <div class="your-order-top">
+                                    <ul>
+                                        <li>Product</li>
+                                        <li>Total</li>
+                                    </ul>
+                                </div>
+                                @foreach (var item in Model)
+                                {
+                                    var thanhTien = item.price * item.soLuong;
+                                    <div class="your-order-middle">
+                                        <ul>
+                                            <li>
+                                                <span class="order-middle-left">@item.name X @item.soLuong</span> <span class="order-price">@string.Format("{0:N0}", thanhTien) </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                }
+                                <div class="your-order-bottom">
+                                    <ul>
+                                        <li class="your-order-shipping">Shipping</li>
+                                        <li>Free shipping</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-total">
+                                    <ul>
+                                        <li class="order-total">Total</li>
+                                        <li>@ViewBag.TongTien</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <div class="payment-accordion element-mrg">
+                                    <div id="faq" class="panel-group">
+                                        <div class="panel panel-default single-my-account m-0">
+                                            <div class="panel-heading my-account-title">
+                                                <h4 class="panel-title">
+                                                    <a data-bs-toggle="collapse"
+                                                       href="#my-account-1" class="collapsed"
+                                                       aria-expanded="true">Direct bank transfer</a>
+                                                </h4>
+                                            </div>
+                                            <div id="my-account-1" class="panel-collapse collapse show"
+                                                 data-bs-parent="#faq">
+
+                                                <div class="panel-body">
+                                                    <p>
+                                                        Please send a check to Store Name, Store Street, Store Town,
+                                                        Store State / County, Store Postcode.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default single-my-account m-0">
+                                            <div class="panel-heading my-account-title">
+                                                <h4 class="panel-title">
+                                                    <a data-bs-toggle="collapse"
+                                                       href="#my-account-2" aria-expanded="false"
+                                                       class="collapsed">Check payments</a>
+                                                </h4>
+                                            </div>
+                                            <div id="my-account-2" class="panel-collapse collapse"
+                                                 data-bs-parent="#faq">
+
+                                                <div class="panel-body">
+                                                    <p>
+                                                        Please send a check to Store Name, Store Street, Store Town,
+                                                        Store State / County, Store Postcode.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default single-my-account m-0">
+                                            <div class="panel-heading my-account-title">
+                                                <h4 class="panel-title">
+                                                    <a data-bs-toggle="collapse"
+                                                       href="#my-account-3">Cash on delivery</a>
+                                                </h4>
+                                            </div>
+                                            <div id="my-account-3" class="panel-collapse collapse"
+                                                 data-bs-parent="#faq">
+
+                                                <div class="panel-body">
+                                                    <p>
+                                                        Please send a check to Store Name, Store Street, Store Town,
+                                                        Store State / County, Store Postcode.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
