@@ -32,12 +32,21 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
 
                 var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
-                if (kiemTraUser != null)
+                if (kiemTraUser != null & kiemTraUser.password !=null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
+                
                 if (ModelState.IsValid)
                 {
-                    db.User.Add(user);
-                    db.SaveChanges();
+                    if (kiemTraUser != null & kiemTraUser.password == null) {
+                        kiemTraUser.gmail = user.gmail;
+                        kiemTraUser.fullName = user.fullName;
+                        kiemTraUser.password = user.password;
+                        db.SaveChanges();
+                    }
+                    else {
+                        db.User.Add(user);
+                        db.SaveChanges();
+                    }
                 }
                 else
                     return View();
@@ -186,9 +195,8 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
 
             return View(loc);
-
         }
-       
+
         public ActionResult LocaEdit(int id)
         {
             var lc = db.Address.FirstOrDefault(u => u.addressID == id);

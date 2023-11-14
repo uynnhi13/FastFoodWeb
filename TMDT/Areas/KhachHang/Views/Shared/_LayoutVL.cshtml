@@ -206,10 +206,12 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a class="dropdown-item" @*href="~/Areas/KhachHang/Views/User/UserInfo.cshtml">My account</a>*@
-                                                   @Html.ActionLink("MyInfo","UserInfo","NguoiDung")
-                                                   </li>
+                                            <li>
+                                                <a class="dropdown-item" @*href="~/Areas/KhachHang/Views/User/UserInfo.cshtml">My account</a>*@
+                                                   @Html.ActionLink("MyInfo", "UserInfo", "NguoiDung")
+                                            </li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Đăng Xuất</a></li>
                                         </ul>
                                     </div>
