@@ -249,16 +249,63 @@ namespace TMDT.Areas.KhachHang.Controllers
             
             return RedirectToAction("LocaList");
         }
+
+
         //Start Order//
-        public ActionResult OrderList()
+        /* [HttpGet]
+         public ActionResult OrderList(Condition cd, int searchstring = "")
+
+         {
+
+             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
+
+             var user = (User)Session["TaiKhoan"];
+             var userPhone = user.numberPhone;
+
+             var lskh = db.Order.Where(p => p.numberPhone.Contains(searchstring) || );
+
+             if (searchstring != null) {
+
+                 return View(lskh).ToList());
+             }
+
+         // hàm tìm condition
+             var orderse = db.Order.Where(a => a.numberPhone.Equals(userPhone) && a.conditionID == cd.conditionID).ToList();
+             var order = db.Order.Where(s => s.numberPhone.Equals(userPhone)).ToList();
+
+             if (orderse.Count != 0) {
+
+                 return View("OrderList", orderse.ToList());
+
+             }
+
+             return View("OrderList", order);
+         }*/
+
+        [HttpGet]
+        public ActionResult OrderList(Condition cd, string searchstring = "")
         {
-        
+            ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
+
             var user = (User)Session["TaiKhoan"];
             var userPhone = user.numberPhone;
-            var order = db.Order.Where(a => a.numberPhone.Equals(userPhone)).ToList();
-            return View(order);
-         
+
+            var orderQuery = db.Order.Where(o => o.numberPhone.Equals(userPhone));
+
+            if (!string.IsNullOrEmpty(searchstring)) {
+                orderQuery = orderQuery.Where(o =>  o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
+            }
+
+            if (cd != null && cd.conditionID != 0) {
+                orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
+            }
+
+            var orders = orderQuery.ToList();
+
+            return View(orders);
         }
+
+
         public ActionResult OrderDetail()
         {
           
@@ -267,7 +314,10 @@ namespace TMDT.Areas.KhachHang.Controllers
             var ordt = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
 
             return View(ordt);
+
         }
+        
+      
         //End Order//
 
     }

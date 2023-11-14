@@ -4991,16 +4991,13 @@ Pages - My Account
 
     .dashboard_tab_button li .nav-link {
         font-weight: 500;
-        color: #fff;
-        background-color: #000000;
+        color: #0000008a;
         font-size: 16px;
         text-transform: uppercase;
         display: block;
     }
 
-        .dashboard_tab_button li .nav-link.active {
-            background-color: #eaaa85;
-        }
+
 
 .dashboard_content h4 {
     font-size: 24px;

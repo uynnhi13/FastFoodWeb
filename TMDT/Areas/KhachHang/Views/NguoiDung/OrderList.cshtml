@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<TMDT.Models.Order>
 @using TMDT.Models
+
+
 @{
     ViewBag.Title = "OrderList";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
@@ -7,51 +9,71 @@
 
 <div class="col-sm-12 col-md-9 col-lg-9">
     <h2>OrderList</h2>
-    
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.numberPhone)
-            </th>
-          
-            <th>
-                @Html.DisplayNameFor(model => model.note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.conditionID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.total)
-            </th>
-          
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
+    @using (Html.BeginForm("OrderList", "NguoiDung", FormMethod.Get))
+    {
+
+        @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new { onchange = "this.form.submit();" })
+
+    <div class="form-group form-inline">
+        Search NumberPhone: @Html.TextBox("searchstring", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+        <input type="submit" class="btn btn-default" value="Search" />
+    </div>
+    }
+    <div>
+
+
+
+
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.numberPhone)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.note)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Condition.nameCon)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.total)
-                </td>
-               
-                <td>
-                  
-                    @Html.ActionLink("Details", "OrderDetail", new { id = item.orderID }) 
-                  
-                </td>
-            </tr>
-        }
+                <th>
+                    @Html.DisplayNameFor(model => model.numberPhone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.orderID)
+                </th>
 
-    </table>
-</div>
-  
+                <th>
+                    @Html.DisplayNameFor(model => model.note)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.conditionID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.total)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.numberPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.orderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.note)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Condition.nameCon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total)
+                    </td>
+
+                    <td>
+
+                        @Html.ActionLink("Details", "OrderDetail", new { id = item.orderID })
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+

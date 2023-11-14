@@ -289,7 +289,7 @@
     <Content Include="Areas\KhachHang\assets\css\plugins\swiper-bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\venobox.css" />
     <Content Include="Areas\KhachHang\assets\css\style.min.css" />
-    <Content Include="Areas\KhachHang\assets\css\Style1.css" />
+    <Content Include="Areas\KhachHang\assets\css\Style11.css" />
     <Content Include="Areas\KhachHang\assets\css\StyleSheet2.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\bootstrap.bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\font.awesome.css" />
