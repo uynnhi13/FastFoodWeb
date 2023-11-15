@@ -23,13 +23,16 @@ namespace TMDT.Areas.Admin.Controllers
             //session = null thi chuyen den trang dang nhap
             if (Session["user"] == null) {
                 return RedirectToAction("Login", "Admin");
+              
             }
             else {
+               
                 return View();
             }
 
-            //return View();
+
         }
+        
         public ActionResult Login()
         {
             return View();
@@ -222,6 +225,27 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult DetailsDH(int id)
         {
             var dh = database.OrderDetail.Where(s => s.orderID == id);
+
+            var lsProduct = new List<Combo>();
+            var lsCombo = new List<Combo>();
+
+            foreach (var item in dh) {
+                var lsCombotam = database.Combo.FirstOrDefault(l => l.comboID == item.comboID);
+
+                if (lsCombotam.typeCombo == false) {
+                    var combo = database.Combo.FirstOrDefault(f => f.comboID == item.comboID);
+                    lsProduct.Add(combo);
+                }
+                else {
+                    var combo = database.Combo.FirstOrDefault(f=>f.comboID == item.comboID);
+                    lsCombo.Add(combo);
+                }
+            }
+            ViewBag.LsProduct = lsProduct;
+            ViewBag.LsCombo = lsCombo;
+
+
+
             return View(dh);
 
         }
@@ -263,6 +287,18 @@ namespace TMDT.Areas.Admin.Controllers
             }
             return RedirectToAction("MyPro");
         }
+        public ActionResult ThongKe()
+        {
+            return View();
+        }
+        public ActionResult ThongKeAccKH()
+        {
+            var listU = database.User.Where(u => u.IsActive == true).ToList();
+            int item = listU.Count;
+            return PartialView(item);
+        }
+        
+
     }
 
 

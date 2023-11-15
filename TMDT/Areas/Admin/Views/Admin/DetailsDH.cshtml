@@ -1,78 +1,171 @@
 ﻿@model IEnumerable<TMDT.Models.OrderDetail>
-
+@using TMDT.Models 
 @{
     ViewBag.Title = "DetailsDH";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    List<Combo> lsProduct = ViewBag.LsProduct;
+    List<Combo> lsCombo = ViewBag.LsCombo;
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
 }
 
 <h2>DetailsDH</h2>
 
 <div class="card mb-4">
-    <table class="table">
-        <tr>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Combo.nameCombo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Combo.price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Combo.sale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order.total)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Order.User.numberPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order.User.fullName)
-            </th>
-
-
-            <th>
-                    @Html.DisplayNameFor(model => model.Order.Employees.FirstName) 
+    @using (Html.BeginForm("DetailsDH", "Admin", FormMethod.Get, new { @class = "tm-login-form" }))
+    {
+        <div class="col-md-2">
+            <a class="btn btn-success btn-sm print-file" title="In" onclick="myApp.printTable()" style="margin: 0 0 8px -15px">
+                <i class="fas fa-print"></i> In dữ liệu
+            </a>
+        </div>
+        <table id="datatablesSimple" class="table">
+            <tr>
+                <th>Tên khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Số điện thoại</th>
+                <th>Tổng tiền</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Order.Employees.FirstName)
                     @Html.DisplayNameFor(model => model.Order.Employees.LastName)
 
-                
-            </th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order.User.fullName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order.datetime)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order.User.numberPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order.total)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order.Employees.FirstName)
+                        @Html.DisplayFor(modelItem => item.Order.Employees.LastName)
+                    </td>
+
+                </tr>
+            }
             <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Combo.nameCombo)
-                </td>
-               
-                <td>
-                    @Html.DisplayFor(modelItem => item.Combo.price)
+                <th>
+                    Hình ảnh
+                </th>
+                <th>
+                    Tên
+                </th>
+                <th>
+                    Loại
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Combo.sale)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order.total)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order.User.numberPhone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order.User.fullName)
-                </td>
+                </th>
+                <th>
+                    Giá
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order.Employees.FirstName)
-                    @Html.DisplayFor(modelItem => item.Order.Employees.LastName)
-                </td>
-                
+                </th>
+
+
+
+
             </tr>
+            @**@
+            @foreach (var item in (List<Combo>)ViewBag.LsProduct)
+            {
+                var cd = db.ComboDetail.FirstOrDefault(s => s.comboID == item.comboID);
+                var product = db.Product.FirstOrDefault(l => l.cateID == cd.cateID);
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => product.image)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => product.Category.nameType)
+                    </td>
+                    <td>
+                        @if (cd.sizeUP == false)
+                        {
+                            Html.DisplayFor(modelItem => product.price);
+
+                        }
+                        else
+                        {
+                            Html.DisplayFor(modelItem => product.price + product.priceUp);
+                        }
+
+
+                    </td>
+
+
+
+
+
+                </tr>
+            }
+
+            <tr>
+                <th>
+                    Tên Combo
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Giảm giá
+                </th>
+
+            </tr>
+
+            @foreach (var item in (List<Combo>)ViewBag.LsCombo)
+            {
+                var cd = db.Combo.FirstOrDefault(s => s.comboID == item.comboID);
+                var combo = db.Combo.FirstOrDefault(l => l.typeCombo == cd.typeCombo);
+                var price = combo.price - (combo.price * (decimal)(combo.sale / 100));
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => combo.nameCombo)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => price )
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => combo.sale)
+                    </td>
+
+
+
+                </tr>
+            }
+
+
+        </table>
+    }
+    </div>
+    
+    <script>
+        //In dữ liệu
+        var myApp = new function () {
+            this.printTable = function () {
+                var tab = document.getElementById('datatablesSimple');
+                var win = window.open('', '', 'height=800px,width=1200px');
+                win.document.write(tab.outerHTML);
+                win.document.close();
+                win.print();
+            }
         }
-
-    </table>
-
-</div>
+    </script>
