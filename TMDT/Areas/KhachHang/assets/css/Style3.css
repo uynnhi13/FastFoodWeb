@@ -3517,14 +3517,37 @@ body.offcanvas-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    margin: 0 0 50px;
+  
+    margin: 0 15px 0 0;
+    background: #ffb8b873;
+    box-shadow: 2px 4px rgb(255 144 144 / 50%);
+    padding: 20px;
+    margin-bottom: 20px;
 }
+    .description-review-bottom .single-review .rating-product{
+        display: flex;
+    }
+    .description-review-bottom .single-review .rating-product .star::before {
+        font-family: 'Font Awesome 5 Free';
+        content: '\f005'; /* Unicode của biểu tượng sao đầy đủ */
+        font-size: 20px;
+        display: inline-block;
+    }
+    .description-review-bottom .single-review .rating-product .empty-star::before {
+        font-family: 'Font Awesome 5 Free';
+        content: '\f006'; /* Unicode của biểu tượng sao rỗng */
+        font-size: 20px;
+        display: inline-block;
+    }
 
     .description-review-bottom .single-review .review-img {
         -webkit-box-flex: 0;
         -ms-flex: 0 0 90px;
         flex: 0 0 90px;
         margin: 0 15px 0 0;
+        background: #ffb8b873;
+        box-shadow: 2px 4px rgb(255 144 144 / 50%);
+        padding: 20px;
     }
 
 @media only screen and (max-width: 767px) {
@@ -5051,7 +5074,8 @@ Pages - My Account
 }
 
     .table_page table thead {
-        background: #f2f2f2;
+        background: #ffcfcf;
+        
     }
 
         .table_page table thead tr th {

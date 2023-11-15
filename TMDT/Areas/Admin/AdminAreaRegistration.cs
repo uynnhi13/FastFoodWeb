@@ -2,17 +2,15 @@
 
 namespace TMDT.Areas.Admin
 {
-    public class AdminAreaRegistration : AreaRegistration 
+    public class AdminAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
-        {
-            get 
-            {
+        public override string AreaName {
+            get {
                 return "Admin";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "Admin_default",

@@ -147,6 +147,9 @@
     <Compile Include="Models\Address.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminUser.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -303,8 +306,7 @@
     <Content Include="Areas\KhachHang\assets\css\plugins\swiper-bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\venobox.css" />
     <Content Include="Areas\KhachHang\assets\css\style.min.css" />
-    <Content Include="Areas\KhachHang\assets\css\Style11.css" />
-    <Content Include="Areas\KhachHang\assets\css\StyleSheet2.css" />
+    <Content Include="Areas\KhachHang\assets\css\Style3.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\bootstrap.bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\font.awesome.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\pe-icon-7-stroke.css" />
@@ -495,23 +497,10 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserInfo.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserEdit.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\OrderList.cshtml" />
-
-    <Content Include="Areas\KhachHang\Views\NguoiDung\OrderDetail.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaDetail.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaEdit.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\GioHangThuGon.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\GioHangTrong.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\ThongTinDatHang.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\DatHangThanhCong.cshtml" />
-
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
-
     <Content Include="Areas\KhachHang\Views\GioHang\GioHangThuGon.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaAdd.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaDetail.cshtml" />
@@ -519,7 +508,15 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaList.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DeleteAddress.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\OrderDetail.cshtml" />
-
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\KhachHang\Views\NguoiDung\Review.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\ReviewView.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

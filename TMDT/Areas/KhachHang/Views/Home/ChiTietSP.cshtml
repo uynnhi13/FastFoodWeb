@@ -46,33 +46,33 @@
                     <div class="product-details-content quickview-content ml-25px">
 
                         <h2 style="color:black">@Model.nameCombo</h2>
-                        
-                        @if (Model.typeCombo == true)
-                        {   <h2 style="color:black">@string.Format("{0:N0}", Model.price) đ</h2>
-                            var lstComBo = db.ComboDetail.Where(s => s.comboID == Model.comboID);
-                            foreach (var lst in lstComBo)
-                            {
-                                var proID = db.Product.FirstOrDefault(s => s.cateID == lst.cateID);
-                                <p>@detailpro.quantity x @proID.name</p>
-                            }
 
-                        }
-                        else
+                        @if (Model.typeCombo == true)
+                        {<h2 style="color:black">@string.Format("{0:N0}", Model.price) đ</h2>
+                        var lstComBo = db.ComboDetail.Where(s => s.comboID == Model.comboID);
+                        foreach (var lst in lstComBo)
                         {
-                            <div class="pricing-meta">
-                                <ul class="d-flex">
-                                    <li class="price" id="updatePrice" style="color:black">@string.Format("{0:N0}", Model.price) đ</li>
-                                </ul>
-                                <ul>
-                                    <li class="price-up">
-                                        <select id="sizeSelect">
-                                            <option value="medium">Vừa</option>
-                                            <option value="big">Lớn</option>
-                                        </select>
-                                    </li>
-                                </ul>
-                            </div>
+                            var proID = db.Product.FirstOrDefault(s => s.cateID == lst.cateID);
+                            <p>@detailpro.quantity x @proID.name</p>
                         }
+
+                    }
+                    else
+                    {
+                        <div class="pricing-meta">
+                            <ul class="d-flex">
+                                <li class="price" id="updatePrice" style="color:black">@string.Format("{0:N0}", Model.price) đ</li>
+                            </ul>
+                            <ul>
+                                <li class="price-up">
+                                    <select id="sizeSelect">
+                                        <option value="medium">Vừa</option>
+                                        <option value="big">Lớn</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
+                    }
 
                         <div class="pro-details-rating-wrap">
                             <div class="rating-product">
@@ -152,8 +152,12 @@
                     </div>
                 </div>
             </div>
+            <div>
+                @Html.Action("ReviewView", "NguoiDung")
+            </div>
         </div>
     </div>
+   
 </body>
 
 </html>

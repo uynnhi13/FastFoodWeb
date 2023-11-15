@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__EFMigrationsHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -24,6 +24,15 @@
           <Property Name="priority" Type="bit" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="userID" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nameUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="roleUser" Type="int" Nullable="false" />
+          <Property Name="passWord" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -119,15 +128,17 @@
           <Key>
             <PropertyRef Name="orderID" />
           </Key>
-          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="numberPhone" Type="varchar" MaxLength="20" />
+          <Property Name="orderID" Type="int" Nullable="false" />
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="datetime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="conditionID" Type="int" Nullable="false" />
           <Property Name="total" Type="money" Nullable="false" />
-          <Property Name="employeeID" Type="int" />
+          <Property Name="employeeID" Type="int" Nullable="false" />
           <Property Name="fullAddress" Type="nvarchar" MaxLength="500" />
-          <Property Name="recipient" Type="nvarchar" MaxLength="100" />
+          <Property Name="recipient" Type="nvarchar" MaxLength="50" />
+          <Property Name="star" Type="int" />
+          <Property Name="comment" Type="nvarchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -304,7 +315,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -316,7 +327,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -430,7 +441,6 @@
           <Parameter Name="typeID" Type="int" Mode="In" />
           <Parameter Name="priceUp" Type="money" Mode="In" />
         </Function>
-
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -462,10 +472,10 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
           <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Combo" EntityType="Self.Combo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" Schema="dbo" store:Type="Tables" />
@@ -557,8 +567,7 @@
             <End Role="WishList" EntitySet="WishList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -583,6 +592,15 @@
           <Property Name="userID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
         </EntityType>
+        <EntityType Name="AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roleUser" Type="Int32" Nullable="false" />
+          <Property Name="passWord" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="typeID" />
@@ -603,9 +621,7 @@
           <Property Name="image" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
-
           <NavigationProperty Name="WishList" Relationship="Self.FK_WishList_Combo" FromRole="Combo" ToRole="WishList" />
-
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -696,19 +712,21 @@
           <Key>
             <PropertyRef Name="orderID" />
           </Key>
-          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="orderID" Type="Int32" Nullable="false" />
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="datetime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="conditionID" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="employeeID" Type="Int32" />
+          <Property Name="employeeID" Type="Int32" Nullable="false" />
           <Property Name="fullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="recipient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="recipient" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+          <Property Name="star" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -911,7 +929,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -971,7 +989,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -1021,6 +1039,7 @@
         <EntityContainer Name="TMDTThucAnNhanhEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__EFMigrationsHistory" EntityType="Self.C__EFMigrationsHistory" />
           <EntitySet Name="Address" EntityType="Self.Address" />
+          <EntitySet Name="AdminUser" EntityType="Self.AdminUser" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Combo" EntityType="Self.Combo" />
           <EntitySet Name="ComboDetail" EntityType="Self.ComboDetail" />
@@ -1118,7 +1137,6 @@
             <Parameter Name="typeID" Mode="In" Type="Int32" />
             <Parameter Name="priceUp" Mode="In" Type="Decimal" />
           </FunctionImport>
-
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -1149,7 +1167,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -1187,6 +1204,16 @@
                 <ScalarProperty Name="priority" ColumnName="priority" />
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminUser">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.AdminUser">
+              <MappingFragment StoreEntitySet="AdminUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="nameUser" ColumnName="nameUser" />
+                <ScalarProperty Name="roleUser" ColumnName="roleUser" />
+                <ScalarProperty Name="passWord" ColumnName="passWord" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1290,6 +1317,8 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="star" ColumnName="star" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="datetime" ColumnName="datetime" />
@@ -1386,7 +1415,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddProductAndCombo" FunctionName="TMDTThucAnNhanhModel.Store.AddProductAndCombo" />
-
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="TMDTThucAnNhanhModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="TMDTThucAnNhanhModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="TMDTThucAnNhanhModel.Store.sp_dropdiagram" />
@@ -1411,7 +1439,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="TMDTThucAnNhanhModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="TMDTThucAnNhanhModel.Store.sp_upgraddiagrams" />
-
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

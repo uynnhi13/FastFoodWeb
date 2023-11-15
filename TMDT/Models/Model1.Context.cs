@@ -29,6 +29,7 @@ namespace TMDT.Models
     
         public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<AdminUser> AdminUser { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Combo> Combo { get; set; }
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }

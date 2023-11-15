@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -20,8 +17,7 @@ namespace TMDT.Areas.KhachHang.Controllers
         [HttpPost]
         public ActionResult DangKy(User user)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 if (string.IsNullOrEmpty(user.fullName))
                     ModelState.AddModelError(string.Empty, "Họ tên không được để trống");
                 if (string.IsNullOrEmpty(user.numberPhone))
@@ -32,11 +28,10 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
 
                 var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
-                if (kiemTraUser != null & kiemTraUser.password !=null)
+                if (kiemTraUser != null & kiemTraUser.password != null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
-                
-                if (ModelState.IsValid)
-                {
+
+                if (ModelState.IsValid) {
                     if (kiemTraUser != null & kiemTraUser.password == null) {
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
@@ -63,18 +58,15 @@ namespace TMDT.Areas.KhachHang.Controllers
         [HttpPost]
         public ActionResult DangNhap(User user)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 if (string.IsNullOrEmpty(user.numberPhone))
                     ModelState.AddModelError(string.Empty, "Số điện thoại không được để trống");
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
-                if (ModelState.IsValid)
-                {
+                if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
-                    if (kiemtra != null)
-                    {
+                    if (kiemtra != null) {
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
                         ViewBag.TaiKhoan = Session["TaiKhoan"];
@@ -84,7 +76,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         // Chuyển hướng người dùng trở lại trang đăng nhập
                         return View();
                     }
-                        
+
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -100,20 +92,20 @@ namespace TMDT.Areas.KhachHang.Controllers
         public ActionResult UserInfo()
         {
             var user = (User)Session["TaiKhoan"];
-            var usi =db.User.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+            var usi = db.User.FirstOrDefault(u => u.numberPhone == user.numberPhone);
             return View(usi);
         }
 
-      
+
 
         public ActionResult UserEdit(string id)
         {
             var us = db.User.FirstOrDefault(u => u.numberPhone == id);
-            if(us==null){
+            if (us == null) {
                 return HttpNotFound();
             }
             return View(us);
-           
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -123,10 +115,10 @@ namespace TMDT.Areas.KhachHang.Controllers
                 db.Entry(u).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();// LUU THAY DOI
             }
-            return RedirectToAction("UserInfo" ,"NguoiDung");
+            return RedirectToAction("UserInfo", "NguoiDung");
         }
         //End THÔNG TIN USER//
-      
+
 
         //Start địa chỉ//
         public ActionResult LocaList()
@@ -165,7 +157,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         if (item.priority) {
                             addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
                             addres.priority = false;
-                            
+
                         }
                     }
 
@@ -215,16 +207,16 @@ namespace TMDT.Areas.KhachHang.Controllers
                 var addres = db.Address.FirstOrDefault();
 
                 if (ad.priority) {
-                    var lsAad = db.Address.Where(w=>w.userID == user.numberPhone);
+                    var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
 
-                    foreach(var item in lsAad) {
+                    foreach (var item in lsAad) {
                         if (item.priority) {
                             addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
                             addres.priority = false;
-                      
-                        } 
+
+                        }
                     }
-                    
+
                 }
 
                 db.SaveChanges();
@@ -245,50 +237,18 @@ namespace TMDT.Areas.KhachHang.Controllers
         public ActionResult DeleteAddress(int id)
 
         {
-       
+
             var address = db.Address.FirstOrDefault(a => a.addressID == id);
 
             if (address != null) {
                 db.Address.Remove(address);
                 db.SaveChanges();
-              
+
             }
-         
-            
+
+
             return RedirectToAction("LocaList");
         }
-
-
-        //Start Order//
-        /* [HttpGet]
-         public ActionResult OrderList(Condition cd, int searchstring = "")
-
-         {
-
-             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
-
-             var user = (User)Session["TaiKhoan"];
-             var userPhone = user.numberPhone;
-
-             var lskh = db.Order.Where(p => p.numberPhone.Contains(searchstring) || );
-
-             if (searchstring != null) {
-
-                 return View(lskh).ToList());
-             }
-
-         // hàm tìm condition
-             var orderse = db.Order.Where(a => a.numberPhone.Equals(userPhone) && a.conditionID == cd.conditionID).ToList();
-             var order = db.Order.Where(s => s.numberPhone.Equals(userPhone)).ToList();
-
-             if (orderse.Count != 0) {
-
-                 return View("OrderList", orderse.ToList());
-
-             }
-
-             return View("OrderList", order);
-         }*/
 
         [HttpGet]
         public ActionResult OrderList(Condition cd, string searchstring = "")
@@ -299,24 +259,67 @@ namespace TMDT.Areas.KhachHang.Controllers
             var userPhone = user.numberPhone;
 
             var orderQuery = db.Order.Where(o => o.numberPhone.Equals(userPhone));
-
+            // hàm tìm kím 
             if (!string.IsNullOrEmpty(searchstring)) {
-                orderQuery = orderQuery.Where(o =>  o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
+                orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
             }
-
+            // hàm dropdown theo condition 
             if (cd != null && cd.conditionID != 0) {
                 orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
             }
 
-            var orders = orderQuery.ToList();
+            // hàm hiển thị khi đơn hàng đã giao 
+            bool showButton = cd.conditionID == 3; // Kiểm tra điều kiện để xác định có hiển thị button hay không
+            ViewBag.ShowReviewButton = showButton;
 
+            if (showButton) {
+                orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
+            }
+
+            // hiển thị tổng
+            var orders = orderQuery.ToList();
+           
             return View(orders);
         }
+
+        public ActionResult Review()
+        {
+            var user = (User)Session["TaiKhoan"];
+
+            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+
+            return View(review);
+        }
+        [HttpPost]
+        public ActionResult SubmitReview(Order o )
+        {
+
+            var user = (User)Session["TaiKhoan"];
+            // Lấy đơn hàng từ cơ sở dữ liệu
+            var order = db.Order.FirstOrDefault(u => u.orderID == o.orderID);
+            order.star = o.star;
+            order.comment = o.comment;
+
+            // Lưu đánh giá vào cơ sở dữ liệu
+            db.SaveChanges();
+            // Chuyển hướng người dùng đến trang xem đánh giá sau khi đã đánh giá
+            return RedirectToAction("OrderList", "NguoiDung");
+        }
+        public ActionResult ReviewView()
+        {
+            var revi = db.Order.ToList();
+            return PartialView(revi);
+
+        }
+
+
+
+
 
 
         public ActionResult OrderDetail()
         {
-          
+
             var user = (User)Session["TaiKhoan"];
 
             var ordt = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
@@ -324,8 +327,8 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View(ordt);
 
         }
-        
-      
+
+
         //End Order//
 
 

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using log4net;
 using TMDT.Models;
 using static TMDT.Models.Payments.VNPayLibrary;
-using log4net;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -15,12 +12,12 @@ namespace TMDT.Areas.KhachHang.Controllers
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
+
         protected void Page_Load(int typePaymentVN, int maDH)
         {
 
         }
-        
+
         //Thanh Toán VNPay
         // GET: KhachHang/ShoppingCart
         public ActionResult UrlPayMentVN(int typePaymentVN, int maDH)
@@ -40,14 +37,14 @@ namespace TMDT.Areas.KhachHang.Controllers
             vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
-            vnpay.AddRequestData("vnp_Amount", (donHang.total*100).ToString()); //Số tiền thanh toán. Số tiền không mang các ký tự phân tách thập phân, phần nghìn, ký tự tiền tệ. Để gửi số tiền thanh toán là 100,000 VND (một trăm nghìn VNĐ) thì merchant cần nhân thêm 100 lần (khử phần thập phân), sau đó gửi sang VNPAY là: 10000000
-            if (typePaymentVN==1) {
+            vnpay.AddRequestData("vnp_Amount", (donHang.total * 100).ToString()); //Số tiền thanh toán. Số tiền không mang các ký tự phân tách thập phân, phần nghìn, ký tự tiền tệ. Để gửi số tiền thanh toán là 100,000 VND (một trăm nghìn VNĐ) thì merchant cần nhân thêm 100 lần (khử phần thập phân), sau đó gửi sang VNPAY là: 10000000
+            if (typePaymentVN == 1) {
                 vnpay.AddRequestData("vnp_BankCode", "VNPAYQR");
             }
             else if (typePaymentVN == 2) {
                 vnpay.AddRequestData("vnp_BankCode", "VNBANK");
             }
-            else if (typePaymentVN==3) {
+            else if (typePaymentVN == 3) {
                 vnpay.AddRequestData("vnp_BankCode", "INTCARD");
             }
 
@@ -59,7 +56,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
 
             vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
-            vnpay.AddRequestData("vnp_TxnRef",donHang.orderID.ToString()); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
+            vnpay.AddRequestData("vnp_TxnRef", donHang.orderID.ToString()); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
 
             //Add Params of 2.1.0 Version
             //Billing

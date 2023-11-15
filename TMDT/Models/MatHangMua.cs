@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace TMDT.Models
 {
@@ -37,7 +35,7 @@ namespace TMDT.Models
                 this.size = "Combo";
                 this.price = sanPham.price;
             }
-                
+
             else {
                 var details = db.ComboDetail.Single(s => s.comboID == this.ComboID);
                 var products = db.Product.Single(s => s.cateID == details.cateID);

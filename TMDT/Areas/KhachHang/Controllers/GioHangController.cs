@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -36,7 +35,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             //Kiểm tra xem có tồn tại mặt hàng trong giỏ hay chưa
             //Nếu có thì tăng số lượng lên 1, ngược lại thì thêm vào giỏ
-            MatHangMua sanPham = gioHang.FirstOrDefault(s => s.ComboID == comboID&&s.size==size);
+            MatHangMua sanPham = gioHang.FirstOrDefault(s => s.ComboID == comboID && s.size == size);
 
             if (sanPham == null) //Sản phẩm chưa có trong giỏ
             {
@@ -76,7 +75,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return tongTien;
         }
         [HttpPost]
-        public ActionResult CapNhatMatHang(int comboID,string size, int soLuong)
+        public ActionResult CapNhatMatHang(int comboID, string size, int soLuong)
         {
             List<MatHangMua> gioHang = LayGioHang();
             var sanPham = gioHang.FirstOrDefault(s => s.ComboID == comboID && s.size == size);
@@ -86,7 +85,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             double thanhTien = sanPham.soLuong * (double)sanPham.price;
             int tongSL = TinhTongSL();
             double tongTien = TinhTongTien();
-            return Json(new { success = true, tongSL = tongSL, tongTien = tongTien, thanhTien=thanhTien });
+            return Json(new { success = true, tongSL = tongSL, tongTien = tongTien, thanhTien = thanhTien });
         }
 
         public ActionResult HienThiGioHang()
@@ -144,7 +143,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return Json(new { success = false });
         }
 
-        
+
 
         [HttpPost]
         public JsonResult DatHang()
@@ -186,7 +185,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             db.SaveChanges();
 
             //Thêm chi tiết cho từng sản phẩm
-            foreach(var sanpham in gioHang) {
+            foreach (var sanpham in gioHang) {
                 OrderDetail chiTiet = new OrderDetail();
                 chiTiet.orderID = donHang.orderID;
                 chiTiet.comboID = sanpham.ComboID;
