@@ -200,6 +200,22 @@ namespace TMDT.Areas.Admin.Controllers
             var donhang = database.Order.Include(s => s.OrderDetail);
             return View(donhang);
         }
+        [HttpPost]
+        public ActionResult DonHang(DateTime? startdate, DateTime? enddate)
+        {
+            IQueryable<Order> orders = database.Order;
+           
+            if (startdate != null && enddate != null) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate && o.conditionID == 2);
+                return View(orders.ToList());
+            }
+            else {
+                var donhang = database.Order.Include(s => s.OrderDetail);
+                return View(donhang);
+            }
+            
+        }
 
         public ActionResult XacNhanDH(int? id)
         {
@@ -222,6 +238,7 @@ namespace TMDT.Areas.Admin.Controllers
             return RedirectToAction("DonHang", "Admin");
         }
        
+
         public ActionResult DetailsDH(int id)
         {
             var dh = database.OrderDetail.Where(s => s.orderID == id);
