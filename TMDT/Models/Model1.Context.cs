@@ -14,8 +14,9 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data;
     using System.Data.SqlClient;
+    using System.Data;
+    using System.Web.Mvc;
     using System.Collections.Generic;
 
     public partial class TMDTThucAnNhanhEntities : DbContext
@@ -115,6 +116,11 @@ namespace TMDT.Models
                 context.Database.ExecuteSqlCommand("EXEC createRecipe @ProductName, @ProductPrice, @ProductPriceUp, @ProductImage, @ProductTypeID, @IngredientsList",
                 productNamePara, productPricePara, productPriceUpPara, productImagePara, productTypeIDPara, IngredientsListPara);
             }
+        }
+
+        internal object SqlQuery<T>(string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

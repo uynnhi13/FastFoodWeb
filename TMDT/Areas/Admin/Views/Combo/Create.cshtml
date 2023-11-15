@@ -1,0 +1,199 @@
+﻿@model IEnumerable<itemProduct>
+@using TMDT.Models
+@{
+    ViewBag.Title = "create";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    int i = 0;
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+}
+
+
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+        </div>
+        <div class="">
+            @using (Html.BeginForm("Create", "Combo", FormMethod.Post, new { @class = "tm-edit-product-form", enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row mt-4 tm-edit-product-row">
+                            <div class="col-8">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Tên combo</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="nameCombo" value="" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Thành tiền</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="price" value="" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giảm giá</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="sale" value="" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                                <div class="tm-product-img-dummy mx-auto">
+                                    <img src="#" id="myImage" class="rounded mx-auto d-block" alt="Alternate Text"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over" />
+                                </div>
+                                <div class="custom-file mt-3 mb-3">
+                                    <input type="file" name="HinhAnh" id="imageInput" style="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <thead>
+                                <tr class="tm-bg-gray">
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">Tên thực phẩm</th>
+                                    <th scope="col" class="text-center">số lượng</th>
+                                    <th scope="col" class="text-center">Up size</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="col-product">
+                                        <td>
+                                            <input type="hidden" name="cateID" id="cateID" value="@item.producID" />
+                                        </td>
+                                        <th scope="row">
+                                            <input type="checkbox" name="checkbox" aria-label="Checkbox">
+                                        </th>
+                                        <td class="tm-product-name">
+                                            <p id="name-product">@item.productName</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="">
+                                                <input type="text" name="quantity" class="form-control validate col" value="@item.quantity"/>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (item.upSize)
+                                            {
+                                                <input type="checkbox" name="sizeUp" checked disabled />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="sizeUp" disabled />
+                                            }
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#imageInput").change(function () {
+                const file = this.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    $("#myImage").attr("src", reader.result);
+                };
+            });
+
+            $('#btnTao').click(function () {
+
+                $('tr.col-product').each(function (index, value) {
+                    var inputValue = $(this).find('input[name="quantity"]').val();
+                    if (inputValue.trim() != "" ) {
+                        $(this).find('input[type="checkbox"]').prop('checked', true);
+                        var quantityValue = $(this).find('input[name="quantity"]').val();
+                        var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+                        console.log("Quantity Value:", quantityValue);
+                        console.log("ingID Value:", ingID);
+                    } else {
+                        $(this).find('input[type="checkbox"]').prop('checked', false);
+                        var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+                        console.log("ingID Value:", ingID);
+                    }
+                });
+
+            })
+
+            $('input[name="quantity"]').change(function () {
+                // Kiểm tra trạng thái của checkbox
+                var item = $(this).val();
+                var quantityValue;
+                var ingID;
+                if (item !== null && item.trim() !== "") {
+
+                    $(this).closest('tr').find('input[type="checkbox"]').prop('checked', true);
+                    var quantityValue = $(this).closest('tr').find('input[name="quantity"]').val();
+                    var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+
+                    console.log('quantity: ' + quantityValue + ' id : ' + ingID);
+
+                    addRecipe(parseInt(ingID), parseFloat(quantityValue));
+
+                } else {
+                    $(this).closest('tr').find('input[type="checkbox"]').prop('checked', false);
+                }
+
+            });
+
+            function addRecipe(_id, _quantity) {
+                $.ajax({
+                    url: "/Ingredients/CrRecipe",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ id: _id, quantity: _quantity }),
+                    success: function (data) {
+                        console.log('--------------')
+                        var dataArray = Object.values(data);
+                        if (dataArray === null) {
+                            window.location.href = '@Url.Action("CreateRecipe", "Ingredients")'; // Chuyển hướng tới trang khác nếu data là null
+                        } else {
+                            for (let x in dataArray) {
+                                console.log(dataArray[x].id);
+                                console.log(dataArray[x].quantity);
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+        });
+
+    </script>
+}

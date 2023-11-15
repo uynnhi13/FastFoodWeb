@@ -91,7 +91,6 @@ namespace TMDT.Areas.Admin.Controllers
             var ingredient = db.Ingredient.Include(i => i.Unit);
             return View(ingredient);
         }
-
         public ActionResult addRecipeInProduct()
         {
             var lsIngredient = new List<ingre>();

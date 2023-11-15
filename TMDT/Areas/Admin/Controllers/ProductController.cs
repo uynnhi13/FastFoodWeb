@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -106,6 +107,119 @@ namespace TMDT.Areas.Admin.Controllers
             return View(product);
         }
 
+        public ActionResult CreateComboDetailt()
+        {
+            bool test = false;
+
+            if (db.ComboDetail.ToList().Count > 0) {
+                foreach (var item in db.Product) {
+                    if (db.Recipe.FirstOrDefault(f => f.cateID == item.cateID) != null) {
+                        test = true;
+                        break;
+                    }
+                }
+            }
+
+            ViewBag.test = test;
+
+            var lsProduct = db.Product.ToList();
+
+            ViewBag.lstProduct = lsProduct;
+            ViewBag.lstComboDetail = new List<Product>();
+
+            return View(lsProduct);
+        }
+
+        [HttpPost]
+        public JsonResult deleteProduct(int cateID)
+        {
+
+            var lsitemCombo = new List<itemProduct>();
+            lsitemCombo = LayCombo();
+
+            if (lsitemCombo.FirstOrDefault(f => f.producID == cateID) != null) {
+
+                lsitemCombo.Remove(lsitemCombo.FirstOrDefault(f => f.producID == cateID));
+                Session["combo"] = lsitemCombo;
+
+            }
+
+            return Json(lsitemCombo);
+        }
+
+        [HttpPost]
+        public JsonResult uppSize(int cateID,bool sizeUp)
+        {
+            var lsitemCombo = new List<itemProduct>();
+            lsitemCombo = LayCombo();
+
+            if (lsitemCombo.FirstOrDefault(f=>f.producID == cateID) != null) {
+                
+                lsitemCombo.FirstOrDefault(f => f.producID == cateID).upSize = sizeUp;
+                Session["combo"] = lsitemCombo;
+            
+            }
+
+            return Json(lsitemCombo);
+        }
+
+        [HttpPost]
+        public JsonResult CrCombo(int cateID,string name, int quantity, bool sizeUp)
+        {
+            itemProduct ing = new itemProduct(cateID,name, quantity, sizeUp);
+            if (quantity != 0) {
+                addCombo(ing);
+            }
+            else {
+                deleteCombo(cateID);
+            }
+
+            var lsitemCombo = new List<itemProduct>();
+            lsitemCombo = LayCombo();
+
+            return Json(lsitemCombo);
+        }
+
+        public List<itemProduct> LayCombo()
+        {
+            List<itemProduct> lstCombo = Session["combo"] as List<itemProduct>;
+
+            //Nếu giỏ hàng chưa tồn tại thì tạo mới và đưa vào session
+            if (lstCombo == null) {
+                lstCombo = new List<itemProduct>();
+                Session["combo"] = lstCombo;
+            }
+            return lstCombo;
+        }
+        public void addCombo(itemProduct _itemCombo)
+        {
+            List<itemProduct> lstCombo = LayCombo();
+            var test = new itemProduct();
+            test = lstCombo.FirstOrDefault(f => f.producID == _itemCombo.producID);
+
+            if (test == null) lstCombo.Add(_itemCombo);
+            else {
+                for (int i = 0; i < lstCombo.Count; i++)
+                    if (lstCombo[i].producID == _itemCombo.producID) {
+                        lstCombo[i].quantity = _itemCombo.quantity;
+                    }
+            }
+
+            Session["combo"] = lstCombo;
+            //Nếu giỏ hàng chưa tồn tại thì tạo mới và đưa vào session
+            if (lstCombo == null) {
+                lstCombo = new List<itemProduct>();
+                Session["combo"] = lstCombo;
+            }
+        }
+
+        public void deleteCombo(int id)
+        {
+            List<itemProduct> lstCombo = LayCombo();
+            var ing = lstCombo.FirstOrDefault(f => f.producID == id);
+            if (ing != null) lstCombo.Remove(ing);
+            Session["combo"] = lstCombo;
+        }
         // GET: Admin/Product/Delete/5
         public ActionResult Delete(int? id)
         {
