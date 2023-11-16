@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TMDT.Models.Unit>
+
+@{
+    ViewBag.Title = "Index"; Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+            <div class="col-md-4 col-sm-12 text-right">
+                <a href="~/Admin/Unit/Create" class="btn btn-small btn-primary">Thêm đơn vị đo</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                <thead>
+                    <tr class="tm-bg-gray">
+                        <th scope="col">Đơn vị đo</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="tm-product-name">@item.nameU</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

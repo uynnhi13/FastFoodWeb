@@ -1,0 +1,66 @@
+﻿@model IEnumerable<TMDT.Models.Employees>
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<br />
+<br />
+<div class="card mb-4">
+    <h2 style="padding:10px">Quản lý tài khoản nhân viên</h2>
+    <p style="padding:10px">
+        @Html.ActionLink("Thêm mới", "AddnewNV")
+    </p>
+    <table class="table ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.positionID)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.positionID)
+                </td>
+
+                <td>
+                   
+                    @Html.ActionLink("Chi tiết", "DetailsNV", new { id= item.EmployeeID }) |
+                    @Html.ActionLink("Xóa", "DeleteNV", new {  id=item.EmployeeID })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

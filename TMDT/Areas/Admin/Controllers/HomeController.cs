@@ -1,13 +1,14 @@
 ﻿using System.Web.Mvc;
 
-namespace TMDT.Controllers
+namespace TMDT.Areas.Admin.Controllers
 {
-    public class AdminController : Controller
+    public class HomeController : Controller
     {
-        // GET: Admin
+        // GET: Admin/Home
         public ActionResult Index()
         {
             return View();
         }
+
     }
 }

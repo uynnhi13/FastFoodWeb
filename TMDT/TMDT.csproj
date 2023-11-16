@@ -55,6 +55,12 @@
       <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -133,13 +139,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ComboController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\IngredientsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\GioHangController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\ShoppingCartController.cs" />
     <Compile Include="Areas\KhachHang\KhachHangAreaRegistration.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -162,9 +172,13 @@
     <Compile Include="Models\Condition.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__EFMigrationsHistory.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ingre.cs" />
     <Compile Include="Models\Ingredient.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -174,24 +188,25 @@
     <Compile Include="Models\InvoiceDetails.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\itemProduct.cs" />
     <Compile Include="Models\location.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MatHangMua.cs" />
     <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Model1.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -222,6 +237,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WishList.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,6 +302,47 @@
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.ttf" />
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff" />
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Admin\Data\css\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Data\css\fontawesome.min.css" />
+    <Content Include="Areas\Admin\Data\css\fullcalendar.min.css" />
+    <Content Include="Areas\Admin\Data\css\tooplate.css" />
+    <Content Include="Areas\Admin\Data\img\dash-bg-01.jpg" />
+    <Content Include="Areas\Admin\Data\img\dash-bg-02.jpg" />
+    <Content Include="Areas\Admin\Data\img\dash-bg-03.jpg" />
+    <Content Include="Areas\Admin\Data\img\product-image.jpg" />
+    <Content Include="Areas\Admin\Data\img\profile-image.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\index.html" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="Areas\Admin\Data\js\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Data\js\Chart.min.js" />
+    <Content Include="Areas\Admin\Data\js\fullcalendar.min.js" />
+    <Content Include="Areas\Admin\Data\js\jquery-3.3.1.min.js" />
+    <Content Include="Areas\Admin\Data\js\moment.min.js" />
+    <Content Include="Areas\Admin\Data\js\tooplate-scripts.js" />
+    <Content Include="Areas\Admin\Data\js\utils.js" />
     <Content Include="Areas\Admin\Views\Share\_LayoutAdminPage.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\KhachHang\assets\css\myInfor.css" />
@@ -329,9 +388,9 @@
     <Content Include="Areas\KhachHang\assets\images\banner\4.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\5.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\6.jpg" />
+    <Content Include="Areas\KhachHang\assets\images\banner\7.jpg" />
+    <Content Include="Areas\KhachHang\assets\images\banner\8.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\9.jpg" />
-    <Content Include="Areas\KhachHang\assets\images\banner\BannerBur.png" />
-    <Content Include="Areas\KhachHang\assets\images\banner\BannerPasta.png" />
     <Content Include="Areas\KhachHang\assets\images\banner\menu-banner-1.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\menu-banner-2.png" />
     <Content Include="Areas\KhachHang\assets\images\banner\sticker-bg.png" />
@@ -580,7 +639,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Scripts\Style\jquery-ui-datepicker\package.json" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.eot" />
     <Content Include="Scripts\Style\webfonts\fa-brands-400.ttf" />
@@ -615,6 +673,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

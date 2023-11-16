@@ -1,0 +1,74 @@
+﻿@model IEnumerable<TMDT.Models.OrderDetail>
+
+@{
+    ViewBag.Title = "DetailsDH";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>DetailsDH</h2>
+
+<div class="card mb-4">
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Combo.nameCombo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Combo.price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Combo.sale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.total)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Order.User.numberPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order.User.fullName)
+            </th>
+
+
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Order.numberPhone)
+                </th>*@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Combo.nameCombo)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.Combo.price)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Combo.sale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.User.numberPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.User.fullName)
+                </td>
+                @*<td>
+                        <img src="@item.Combo.price" alt="Alternate Text" />
+                    </td>*@
+                
+            </tr>
+        }
+
+    </table>
+
+</div>
