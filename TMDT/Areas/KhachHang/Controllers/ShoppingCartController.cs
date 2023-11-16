@@ -10,6 +10,7 @@ namespace TMDT.Areas.KhachHang.Controllers
     public class ShoppingCartController : Controller
     {
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
         private static readonly ILog log =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -67,5 +68,6 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             return View();
         }
+
     }
 }
