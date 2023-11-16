@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,16 +20,16 @@ namespace TMDT.Areas.Admin.Controllers
             //session = null thi chuyen den trang dang nhap
             if (Session["user"] == null) {
                 return RedirectToAction("Login", "Admin");
-              
+
             }
             else {
-               
+
                 return View();
             }
 
 
         }
-        
+
         public ActionResult Login()
         {
             return View();
@@ -200,7 +201,7 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult DonHang(DateTime? startdate, DateTime? enddate)
         {
             IQueryable<Order> orders = database.Order;
-           
+
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
                 orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
@@ -210,7 +211,7 @@ namespace TMDT.Areas.Admin.Controllers
                 var donhang = database.Order.Include(s => s.OrderDetail);
                 return View(donhang);
             }
-            
+
         }
 
         public ActionResult XacNhanDH(int? id)
@@ -220,12 +221,12 @@ namespace TMDT.Areas.Admin.Controllers
             }
             Order donhang = database.Order.Find(id);
 
-           
+
             donhang.conditionID = 2;
             if (donhang.employeeID == null) {
                 var searchU = (Employees)Session["user"];
                 donhang.employeeID = searchU.EmployeeID;
-               
+
             }
             database.SaveChanges();
             if (donhang == null) {
@@ -234,7 +235,7 @@ namespace TMDT.Areas.Admin.Controllers
 
             return RedirectToAction("DonHang", "Admin");
         }
-       public ActionResult Dagiao(int? id)
+        public ActionResult Dagiao(int? id)
         {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -271,7 +272,7 @@ namespace TMDT.Areas.Admin.Controllers
                     lsProduct.Add(combo);
                 }
                 else {
-                    var combo = database.Combo.FirstOrDefault(f=>f.comboID == item.comboID);
+                    var combo = database.Combo.FirstOrDefault(f => f.comboID == item.comboID);
                     lsCombo.Add(combo);
                 }
             }
@@ -283,10 +284,10 @@ namespace TMDT.Areas.Admin.Controllers
             return View(dh);
 
         }
-       public ActionResult Mypro()
+        public ActionResult Mypro()
         {
             var searchU = (Employees)Session["user"];
-            if (searchU!=null) {
+            if (searchU != null) {
                 var emUser = database.Employees.FirstOrDefault(s => s.EmployeeID == searchU.EmployeeID);
                 return View(emUser);
             }
@@ -309,14 +310,14 @@ namespace TMDT.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult EditMypro(Employees em)
         {
-            if ( ModelState.IsValid) {
-                var a = database.Employees.FirstOrDefault(f=>f.EmployeeID == em.EmployeeID);
-            
+            if (ModelState.IsValid) {
+                var a = database.Employees.FirstOrDefault(f => f.EmployeeID == em.EmployeeID);
+
                 a.FirstName = em.FirstName;
                 a.LastName = em.LastName;
                 a.numberPhone = em.numberPhone;
                 a.Email = em.Email;
-               
+
                 database.SaveChanges();// LUU THAY DOI
             }
             return RedirectToAction("MyPro");
@@ -331,7 +332,7 @@ namespace TMDT.Areas.Admin.Controllers
             int item = listU.Count;
             return PartialView(item);
         }
-        
+
 
     }
 

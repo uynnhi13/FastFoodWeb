@@ -23,15 +23,15 @@ namespace TMDT.Areas.Admin.Controllers
             var lsView = new List<Combo>();
 
             lsView.AddRange(lsCombo);
-            foreach(var item in lsProduct) {
-                if(lsComboDetail.FirstOrDefault(f=>f.comboID == item.comboID && f.sizeUP == false) != null)
+            foreach (var item in lsProduct) {
+                if (lsComboDetail.FirstOrDefault(f => f.comboID == item.comboID && f.sizeUP == false) != null)
                     lsView.Add(item);
             }
 
             return View(lsView);
         }
 
-        
+
         [HttpPost]
         public JsonResult getCombo(int cateID)
         {
@@ -177,25 +177,25 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult uppSize(int cateID,bool sizeUp)
+        public JsonResult uppSize(int cateID, bool sizeUp)
         {
             var lsitemCombo = new List<itemProduct>();
             lsitemCombo = LayCombo();
 
-            if (lsitemCombo.FirstOrDefault(f=>f.producID == cateID) != null) {
-                
+            if (lsitemCombo.FirstOrDefault(f => f.producID == cateID) != null) {
+
                 lsitemCombo.FirstOrDefault(f => f.producID == cateID).upSize = sizeUp;
                 Session["combo"] = lsitemCombo;
-            
+
             }
 
             return Json(lsitemCombo);
         }
 
         [HttpPost]
-        public JsonResult CrCombo(int cateID,string name, int quantity, bool sizeUp)
+        public JsonResult CrCombo(int cateID, string name, int quantity, bool sizeUp)
         {
-            itemProduct ing = new itemProduct(cateID,name, quantity, sizeUp);
+            itemProduct ing = new itemProduct(cateID, name, quantity, sizeUp);
             if (quantity != 0) {
                 addCombo(ing);
             }

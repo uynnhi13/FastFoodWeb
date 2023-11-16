@@ -27,7 +27,7 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult listIngredient(int? id)
         {
             var ingredient = db.Recipe.Where(w => w.cateID == id);
-            return View("Index",ingredient);
+            return View("Index", ingredient);
         }
 
         // GET: Admin/Ingredients/Details/5
