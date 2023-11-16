@@ -16,8 +16,37 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Index()
         {
-            var product = db.Product.Include(p => p.Category);
-            return View(product.ToList());
+            var allProduct = db.Combo.ToList();
+            var lsCombo = allProduct.Where(w => w.typeCombo == true);
+            var lsProduct = allProduct.Where(w => w.typeCombo == false);
+            var lsComboDetail = db.ComboDetail.ToList();
+            var lsView = new List<Combo>();
+
+            lsView.AddRange(lsCombo);
+            foreach(var item in lsProduct) {
+                if(lsComboDetail.FirstOrDefault(f=>f.comboID == item.comboID && f.sizeUP == false) != null)
+                    lsView.Add(item);
+            }
+
+            return View(lsView);
+        }
+
+        
+        [HttpPost]
+        public JsonResult getCombo(int cateID)
+        {
+
+            var lsitemCombo = new List<itemProduct>();
+            lsitemCombo = LayCombo();
+
+            if (lsitemCombo.FirstOrDefault(f => f.producID == cateID) != null) {
+
+                lsitemCombo.Remove(lsitemCombo.FirstOrDefault(f => f.producID == cateID));
+                Session["combo"] = lsitemCombo;
+
+            }
+
+            return Json(lsitemCombo);
         }
 
         // GET: Admin/Product/Details/5
