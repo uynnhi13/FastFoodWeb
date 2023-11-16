@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -251,7 +252,7 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
         [HttpGet]
-        public ActionResult OrderList(Condition cd, string searchstring = "")
+        public ActionResult OrderList(DateTime? startdate, DateTime? enddate, Condition cd, string searchstring = "")
         {
             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
 
@@ -275,11 +276,20 @@ namespace TMDT.Areas.KhachHang.Controllers
             if (showButton) {
                 orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
             }
+        
+            //
+            if (startdate != null && enddate != null) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orderQuery = orderQuery.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
+                return View(orderQuery.ToList());
+            }
+           
+
 
             // hiển thị tổng
-            var orders = orderQuery.ToList();
+            var hienthi = orderQuery.ToList();
            
-            return View(orders);
+            return View(hienthi);
         }
 
         public ActionResult Review()

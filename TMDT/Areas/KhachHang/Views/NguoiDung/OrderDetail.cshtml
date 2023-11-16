@@ -4,6 +4,12 @@
     ViewBag.Title = "OrderDetail";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
+@{  
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
+    var lstp = db.OrderDetail.Where(s => s.orderID == Model.orderID);
+
+  }
 
 <div class="col-sm-12 col-md-9 col-lg-9">
     <h2>Chi tiết đơn hàng</h2>
@@ -59,9 +65,22 @@
             <dd>
                 @Html.DisplayFor(model => model.User.gmail)
             </dd>
-            
+
 
         </dl>
+        <table>
+            <tr>
+                <th>san pham</th>
+                <th> soluong</th>
+                
+            </tr>
+            @foreach(var item in lstp)
+            {
+                var pro = db.Combo.FirstOrDefault(s=>s.comboID==item.comboID);
+                <td> @pro.nameCombo</td>
+                <td>@item.quantity</td>
+            }
+        </table>
     </div>
 
 
