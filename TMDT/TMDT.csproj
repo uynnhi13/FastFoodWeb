@@ -571,6 +571,13 @@
     <Content Include="Areas\Admin\Views\Ingredients\addRecipeInProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\createRecipeInProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\DetailsDH.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
+    
+    <Content Include="Areas\Admin\Views\Admin\ThongKe.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ThongKeAccKH.cshtml" />
+
     <Content Include="Areas\Admin\Views\Admin\DetailsKH.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\DonHang.cshtml" />
     <Content Include="Areas\Admin\Data\jquery-ui-datepicker\package.json" />
@@ -579,6 +586,7 @@
     <Content Include="Areas\Admin\Views\Combo\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Index.cshtml" />
+
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

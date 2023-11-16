@@ -19,13 +19,16 @@ namespace TMDT.Areas.Admin.Controllers
             //session = null thi chuyen den trang dang nhap
             if (Session["user"] == null) {
                 return RedirectToAction("Login", "Admin");
+              
             }
             else {
+               
                 return View();
             }
 
-            //return View();
+
         }
+        
         public ActionResult Login()
         {
             return View();
@@ -193,6 +196,22 @@ namespace TMDT.Areas.Admin.Controllers
             var donhang = database.Order.Include(s => s.OrderDetail);
             return View(donhang);
         }
+        [HttpPost]
+        public ActionResult DonHang(DateTime? startdate, DateTime? enddate)
+        {
+            IQueryable<Order> orders = database.Order;
+           
+            if (startdate != null && enddate != null) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
+                return View(orders.ToList());
+            }
+            else {
+                var donhang = database.Order.Include(s => s.OrderDetail);
+                return View(donhang);
+            }
+            
+        }
 
         public ActionResult XacNhanDH(int? id)
         {
@@ -200,17 +219,67 @@ namespace TMDT.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Order donhang = database.Order.Find(id);
+
+           
             donhang.conditionID = 2;
+            if (donhang.employeeID == null) {
+                var searchU = (Employees)Session["user"];
+                donhang.employeeID = searchU.EmployeeID;
+               
+            }
             database.SaveChanges();
             if (donhang == null) {
                 return HttpNotFound();
             }
+
+            return RedirectToAction("DonHang", "Admin");
+        }
+       public ActionResult Dagiao(int? id)
+        {
+            if (id == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order donhang = database.Order.Find(id);
+
+            donhang.conditionID = 3;
+            //if (donhang.employeeID == null) {
+            //    var searchU = (Employees)Session["user"];
+            //    donhang.employeeID = searchU.EmployeeID;
+
+            //}
+
+            database.SaveChanges();
+            if (donhang == null) {
+                return HttpNotFound();
+            }
+
             return RedirectToAction("DonHang", "Admin");
         }
 
         public ActionResult DetailsDH(int id)
         {
             var dh = database.OrderDetail.Where(s => s.orderID == id);
+
+            var lsProduct = new List<Combo>();
+            var lsCombo = new List<Combo>();
+
+            foreach (var item in dh) {
+                var lsCombotam = database.Combo.FirstOrDefault(l => l.comboID == item.comboID);
+
+                if (lsCombotam.typeCombo == false) {
+                    var combo = database.Combo.FirstOrDefault(f => f.comboID == item.comboID);
+                    lsProduct.Add(combo);
+                }
+                else {
+                    var combo = database.Combo.FirstOrDefault(f=>f.comboID == item.comboID);
+                    lsCombo.Add(combo);
+                }
+            }
+            ViewBag.LsProduct = lsProduct;
+            ViewBag.LsCombo = lsCombo;
+
+
+
             return View(dh);
 
         }
@@ -252,6 +321,18 @@ namespace TMDT.Areas.Admin.Controllers
             }
             return RedirectToAction("MyPro");
         }
+        public ActionResult ThongKe()
+        {
+            return View();
+        }
+        public ActionResult ThongKeAccKH()
+        {
+            var listU = database.User.Where(u => u.IsActive == true).ToList();
+            int item = listU.Count;
+            return PartialView(item);
+        }
+        
+
     }
 
 

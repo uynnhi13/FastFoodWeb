@@ -26,8 +26,9 @@
         <div class="table-header row">
             <div class="col-3">
                 <h5 class="title">Quản lý khách hàng</h5>
-               
+
             </div>
+           
         </div>
         <div >
             
@@ -41,6 +42,7 @@
                             <th>Giới tính</th>
                             <th>Điện thoại</th>
                             <th>Trạng thái</th>
+                            <th>Tổng đơn mua </th>
                             <th>Khác</th>
                         </tr>
                     </thead>
@@ -64,6 +66,7 @@
                                         }
 
                                     </td>
+                                    <td>@user.Order.Count</td>
                                     <td>
                                         <div class="d-flex flex-row gap-1">
                                             <a href="@Url.Action("DetailsKH", "Admin", new {id=@user.numberPhone})" class="nav-link">

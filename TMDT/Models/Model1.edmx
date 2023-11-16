@@ -134,10 +134,12 @@
           <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="conditionID" Type="int" Nullable="false" />
           <Property Name="total" Type="money" Nullable="false" />
+
           <Property Name="employeeID" Type="int" Nullable="false" />
           <Property Name="fullAddress" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="star" Type="int" />
           <Property Name="comment" Type="nvarchar" MaxLength="1500" />
+
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -314,7 +316,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -695,8 +697,10 @@
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="conditionID" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+
           <Property Name="employeeID" Type="Int32" Nullable="false" />
           <Property Name="fullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
@@ -905,7 +909,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
