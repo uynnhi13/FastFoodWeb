@@ -135,8 +135,6 @@
           <Property Name="recipient" Type="nvarchar" MaxLength="100" />
           <Property Name="TypePayment" Type="int" />
           <Property Name="TypePaymentVN" Type="int" />
-          <Property Name="star" Type="int" />
-          <Property Name="comment" Type="nvarchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -671,8 +669,6 @@
           <Property Name="recipient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TypePayment" Type="Int32" />
           <Property Name="TypePaymentVN" Type="Int32" />
-          <Property Name="star" Type="Int32" />
-          <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
@@ -1226,8 +1222,6 @@
                 <ScalarProperty Name="recipient" ColumnName="recipient" />
                 <ScalarProperty Name="TypePayment" ColumnName="TypePayment" />
                 <ScalarProperty Name="TypePaymentVN" ColumnName="TypePaymentVN" />
-                <ScalarProperty Name="star" ColumnName="star" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

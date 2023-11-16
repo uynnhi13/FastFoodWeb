@@ -218,20 +218,8 @@ namespace TMDT.Areas.KhachHang.Controllers
                 else {
                     donHang.TypePaymentVN = 3;
                 }
-            }
 
-            db.Order.Add(donHang);
-            db.SaveChanges();
-
-            //Thêm chi tiết cho từng sản phẩm
-            foreach(var sanpham in gioHang) {
-                OrderDetail chiTiet = new OrderDetail();
-                chiTiet.orderID = donHang.orderID;
-                chiTiet.comboID = sanpham.ComboID;
-                chiTiet.quantity = sanpham.soLuong;
-                db.OrderDetail.Add(chiTiet);
             }
-            db.SaveChanges();
 
             code = new { Success = true, Code = 1, Url = "" };
             //Xóa giỏ hàng
