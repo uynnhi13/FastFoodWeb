@@ -300,8 +300,7 @@
     <Content Include="Areas\KhachHang\assets\css\plugins\swiper-bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\venobox.css" />
     <Content Include="Areas\KhachHang\assets\css\style.min.css" />
-    <Content Include="Areas\KhachHang\assets\css\Style1.css" />
-    <Content Include="Areas\KhachHang\assets\css\StyleSheet2.css" />
+    <Content Include="Areas\KhachHang\assets\css\Style3.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\bootstrap.bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\font.awesome.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\pe-icon-7-stroke.css" />
@@ -492,9 +491,11 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserInfo.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserEdit.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\OrderList.cshtml" />
+
     <Content Include="Areas\KhachHang\Views\NguoiDung\OrderDetail.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaDetail.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaEdit.cshtml" />
+
     <Content Include="Areas\KhachHang\Views\GioHang\GioHangThuGon.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\GioHangTrong.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\ThongTinDatHang.cshtml" />
@@ -513,7 +514,12 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+
+    <Content Include="Areas\KhachHang\Views\NguoiDung\Review.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\ReviewView.cshtml" />
+
     <Content Include="Areas\KhachHang\Views\GioHang\VNPayReturn.cshtml" />
+
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
