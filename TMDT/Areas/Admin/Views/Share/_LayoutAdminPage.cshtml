@@ -31,10 +31,7 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar navbar-expand-xl navbar-light bg-light">
-                        <a class="navbar-brand" href="Index">
-                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
-                            <h1 class="tm-site-title mb-0">Dashboard</h1>
-                        </a>
+                        @Html.ActionLink("Dashboard", "Index", "Admin", null, new { @Class = "tm-site-title mb-0" })
                         <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -42,26 +39,6 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="Index">
-                                        Dashboard
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="products.html">Products</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    @Html.ActionLink("Accounts", "Account", "Admin", null, new { @class = "nav-link" })
-                                </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Customer", "QlyKH", "Admin", null, new { @class = "nav-link" })
-                                </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Oder", "DonHang", "Admin", null, new { @class = "nav-link" })
-                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
@@ -72,8 +49,43 @@
                                         @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
                                         @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
                                         @Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @Class = "dropdown-item" })
+
                                     </div>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="products.html">Products</a>
+                                </li>
+
+
+
+                                <li class="nav-item">
+                                    @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
+                                </li>
+
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <i class="far fa-user mr-2 tm-logout-icon"></i>
+                                        Sản phẩm
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Profile", "Mypro", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Đăng xuất", "Logout", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
+                                        @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
+                                        @Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @Class = "dropdown-item" })
+                                    </div>
+                                </li>
+
                             </ul>
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
@@ -86,6 +98,8 @@
                                 </li>
 
                             </ul>
+                           
+                            
 
                         </div>
                     </nav>
@@ -96,6 +110,38 @@
             </div>
         </div>
     </div>
+</body>
+<script src="~/Areas/Admin/Content/js/jquery-3.3.1.min.js"></script>
+<!-- https://jquery.com/download/ -->
+<script src="~/Areas/Admin/Content/js/moment.min.js"></script>
+<!-- https://momentjs.com/ -->
+<script src="~/Areas/Admin/Content/js/utils.js"></script>
+<script src="~/Areas/Admin/Content/js/Chart.min.js"></script>
+<!-- http://www.chartjs.org/docs/latest/ -->
+<script src="~/Areas/Admin/Content/js/fullcalendar.min.js"></script>
+<!-- https://fullcalendar.io/ -->
+<script src="~/Areas/Admin/Content/js/bootstrap.min.js"></script>
+<!-- https://getbootstrap.com/ -->
+<script src="~/Areas/Admin/Content/js/tooplate-scripts.js"></script>
+<script>
+    let ctxLine,
+        ctxBar,
+        ctxPie,
+        optionsLine,
+        optionsBar,
+        optionsPie,
+        configLine,
+        configBar,
+        configPie,
+        lineChart;
+    barChart, pieChart;
+    // DOM is ready
+    $(function () {
+        updateChartOptions();
+        drawLineChart(); // Line Chart
+        drawBarChart(); // Bar Chart
+        drawPieChart(); // Pie Chart
+        drawCalendar(); // Calendar
     <script src="~/Areas/Admin/Content/js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
     <script src="~/Areas/Admin/Content/js/moment.min.js"></script>
@@ -128,6 +174,16 @@
             drawPieChart(); // Pie Chart
             drawCalendar(); // Calendar
 
+        $(window).resize(function () {
+            updateChartOptions();
+            updateLineChart();
+            updateBarChart();
+            reloadPage();
+        });
+    })
+</script>
+
+    @RenderSection("scripts", required: false)
             $(window).resize(function () {
                 updateChartOptions();
                 updateLineChart();
