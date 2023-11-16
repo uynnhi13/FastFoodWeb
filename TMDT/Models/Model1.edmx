@@ -4,9 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-
-      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-
+    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -121,20 +119,20 @@
           <Key>
             <PropertyRef Name="orderID" />
           </Key>
-          <Property Name="orderID" Type="int" Nullable="false" />
-          <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numberPhone" Type="varchar" MaxLength="20" />
           <Property Name="datetime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="conditionID" Type="int" Nullable="false" />
           <Property Name="total" Type="money" Nullable="false" />
-          <Property Name="employeeID" Type="int" Nullable="false" />
+          <Property Name="employeeID" Type="int" />
           <Property Name="fullAddress" Type="nvarchar" MaxLength="500" />
-          <Property Name="star" Type="int" />
-          <Property Name="comment" Type="nvarchar" MaxLength="1500" />
-
           <Property Name="recipient" Type="nvarchar" MaxLength="100" />
           <Property Name="TypePayment" Type="int" />
           <Property Name="TypePaymentVN" Type="int" />
+          <Property Name="star" Type="int" />
+          <Property Name="comment" Type="nvarchar" MaxLength="1500" />
+          <Property Name="recipientsNumber" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -302,7 +300,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -314,7 +312,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -567,8 +565,6 @@
           <Property Name="image" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
-          <NavigationProperty Name="WishList" Relationship="Self.FK_WishList_Combo" FromRole="Combo" ToRole="WishList" />
-
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -657,24 +653,24 @@
           <Key>
             <PropertyRef Name="orderID" />
           </Key>
-          <Property Name="orderID" Type="Int32" Nullable="false" />
-          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="datetime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="conditionID" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="employeeID" Type="Int32" Nullable="false" />
+          <Property Name="employeeID" Type="Int32" />
           <Property Name="fullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-
           <Property Name="recipient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TypePayment" Type="Int32" />
           <Property Name="TypePaymentVN" Type="Int32" />
+          <Property Name="star" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
-          <Property Name="star" Type="Int32" />
-          <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <Property Name="recipientsNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -853,7 +849,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employees">
@@ -913,7 +909,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -1209,8 +1205,7 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="star" ColumnName="star" />
+                <ScalarProperty Name="recipientsNumber" ColumnName="recipientsNumber" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="datetime" ColumnName="datetime" />
@@ -1222,6 +1217,8 @@
                 <ScalarProperty Name="recipient" ColumnName="recipient" />
                 <ScalarProperty Name="TypePayment" ColumnName="TypePayment" />
                 <ScalarProperty Name="TypePaymentVN" ColumnName="TypePaymentVN" />
+                <ScalarProperty Name="star" ColumnName="star" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

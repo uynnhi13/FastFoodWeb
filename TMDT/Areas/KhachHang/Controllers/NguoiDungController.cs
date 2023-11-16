@@ -313,10 +313,6 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
 
-
-
-
-
         public ActionResult OrderDetail()
         {
 
