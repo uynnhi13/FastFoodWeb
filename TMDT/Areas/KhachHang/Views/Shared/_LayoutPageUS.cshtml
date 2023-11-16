@@ -36,7 +36,7 @@
 
 </head>
 <body>
-   
+
     <!-- Header Area Start -->
     <header>
         <div class="header-main sticky-nav ">
@@ -51,7 +51,7 @@
                         <div class="main-menu">
                             <ul>
                                 <li class="dropdown">
-                                    <a href="~/Areas/KhachHang/Views/Home/Index.cshtml">Trang Chủ </a>
+                                    <a href="@Url.Action("Index","Home")">Trang Chủ </a>
 
                                 </li>
                                 <li><a href="~/Areas/KhachHang/View/About/About.cshtml">Về ChuChu</a></li>
@@ -494,16 +494,16 @@
             </div>
         </div>
     </div>
- 
+
     <!-- account area start -->
     <style>
-        
+
         .nav.flex-column.dashboard-list li {
             list-style: none;
             padding: 10px;
             background-color: #fbbebe;
             border-radius: 4px;
-            color:#db2727;
+            color: #db2727;
             text-align: center;
             transition: background-color 0.3s;
             cursor: pointer; /* Thêm dòng này để biểu thị rằng nút có thể nhấn */
@@ -523,7 +523,7 @@
                         <ul class="nav flex-column dashboard-list">
                             <li>@Html.ActionLink("Thông tin cá nhân ", "UserInfo", "null", new { })</li>
                             <li>@Html.ActionLink("Đơn hàng ", "OrderList", null, new { })</li>
-                            <li>@Html.ActionLink("Địa chỉ ", "LocaList", null,new { }) </li>
+                            <li>@Html.ActionLink("Địa chỉ ", "LocaList", null, new { }) </li>
 
                         </ul>
                     </div>

@@ -29,6 +29,8 @@ namespace TMDT.Models
         public Nullable<int> employeeID { get; set; }
         public string fullAddress { get; set; }
         public string recipient { get; set; }
+        public Nullable<int> TypePayment { get; set; }
+        public Nullable<int> TypePaymentVN { get; set; }
     
         public virtual Condition Condition { get; set; }
         public virtual Employees Employees { get; set; }

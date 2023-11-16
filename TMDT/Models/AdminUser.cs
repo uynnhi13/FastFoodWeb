@@ -12,9 +12,11 @@ namespace TMDT.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class C__EFMigrationsHistory
+    public partial class AdminUser
     {
-        public string MigrationId { get; set; }
-        public string ProductVersion { get; set; }
+        public int ID { get; set; }
+        public string nameUser { get; set; }
+        public int roleUser { get; set; }
+        public string passWord { get; set; }
     }
 }

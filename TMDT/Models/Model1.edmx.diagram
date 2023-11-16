@@ -4,32 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9159ce4b0dc14d20b1d0abbb9de0de19" Name="Diagram1">
+      <Diagram DiagramId="10ce10fc5bbf47178146200890a9d239" Name="Diagram1">
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Address" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.AdminUser" Width="1.5" PointX="8.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Category" Width="1.5" PointX="5.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.AdminUser" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Category" Width="1.5" PointX="5.75" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Combo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.ComboDetail" Width="1.5" PointX="11.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.ComboDetail" Width="1.5" PointX="11.25" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Condition" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Employees" Width="1.5" PointX="3.75" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Ingredient" Width="1.5" PointX="8" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Invoice" Width="1.5" PointX="8" PointY="18.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.InvoiceDetails" Width="1.5" PointX="10.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Ingredient" Width="1.5" PointX="8" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Invoice" Width="1.5" PointX="8" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.InvoiceDetails" Width="1.5" PointX="10.25" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.location" Width="1.5" PointX="1.5" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Order" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Order" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.OrderDetail" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Position" Width="1.5" PointX="1.5" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Product" Width="1.5" PointX="8" PointY="10.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Recipe" Width="1.5" PointX="10.25" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.sysdiagrams" Width="1.5" PointX="10.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Unit" Width="1.5" PointX="5.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Product" Width="1.5" PointX="8" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Recipe" Width="1.5" PointX="10.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Unit" Width="1.5" PointX="5.75" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.User" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Address_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_FoodAndDrink_ProductType" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_ComboDetail_Combo" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_OrderDetail_Combo" ManuallyRouted="false" />
-        <AssociationConnector Association="TMDTThucAnNhanhModel.FK_WishList_Combo" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_ComboDetail_FoodAndDrink" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_Condition" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Employees_location" ManuallyRouted="false" />
@@ -42,7 +40,6 @@
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_OrderDetail_Order" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Recipe_FoodAndDrink" ManuallyRouted="false" />
-        <AssociationConnector Association="TMDTThucAnNhanhModel.FK_WishList_User" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
