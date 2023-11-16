@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -30,8 +28,8 @@ namespace TMDT.Areas.KhachHang.Controllers
             var lstProductType = db.Product.Where(Product => Product.typeID == id);
 
             var lstCombo = new List<Combo>();
-            foreach(var product in lstProductType) {
-                var combodetails = db.ComboDetail.FirstOrDefault(s => s.cateID == product.cateID && s.sizeUP==false);
+            foreach (var product in lstProductType) {
+                var combodetails = db.ComboDetail.FirstOrDefault(s => s.cateID == product.cateID && s.sizeUP == false);
                 var comboproduct = db.Combo.FirstOrDefault(s => s.comboID == combodetails.comboID);
                 lstCombo.Add(comboproduct);
             }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace TMDT
@@ -16,7 +12,7 @@ namespace TMDT
             routes.MapRoute(
                         name: "KhachHang",
                         url: "{area}/{controller}/{action=Index}/{id}",
-                        defaults: new { Areas="KhachHang", controller = "Home", action = "Index", id = UrlParameter.Optional }
+                        defaults: new { Areas = "KhachHang", controller = "Home", action = "Index", id = UrlParameter.Optional }
                         );
 
             routes.MapRoute(
@@ -25,7 +21,7 @@ namespace TMDT
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            
+
         }
     }
 }

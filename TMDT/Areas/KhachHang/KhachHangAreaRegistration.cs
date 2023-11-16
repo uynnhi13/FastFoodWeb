@@ -2,17 +2,15 @@
 
 namespace TMDT.Areas.KhachHang
 {
-    public class KhachHangAreaRegistration : AreaRegistration 
+    public class KhachHangAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
-        {
-            get 
-            {
+        public override string AreaName {
+            get {
                 return "KhachHang";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "KhachHang_default",
