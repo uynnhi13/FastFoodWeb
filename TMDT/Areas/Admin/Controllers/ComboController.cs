@@ -93,8 +93,6 @@ namespace TMDT.Areas.Admin.Controllers
                 ViewBag.notification = false;
                 return View("Create");
             }
-
-            return View(combo);
         }
 
         // GET: Admin/Combo/Edit/5

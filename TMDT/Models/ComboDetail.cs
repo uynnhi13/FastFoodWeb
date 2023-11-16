@@ -14,14 +14,7 @@ namespace TMDT.Models
     
     public partial class ComboDetail
     {
-        public ComboDetail() { }
-        public ComboDetail(int comboID, int cateID, int quantity, bool? sizeUP)
-        {
-            this.comboID = comboID;
-            this.cateID = cateID;
-            this.quantity = quantity;
-            this.sizeUP = sizeUP;
-        }
+        
 
         public int comboID { get; set; }
         public int cateID { get; set; }
@@ -30,5 +23,15 @@ namespace TMDT.Models
     
         public virtual Combo Combo { get; set; }
         public virtual Product Product { get; set; }
+
+
+        public ComboDetail() { }
+        public ComboDetail(int comboID, int cateID, int quantity, bool? sizeUP)
+        {
+            this.comboID = comboID;
+            this.cateID = cateID;
+            this.quantity = quantity;
+            this.sizeUP = sizeUP;
+        }
     }
 }
