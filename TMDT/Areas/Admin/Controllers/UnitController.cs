@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
 
@@ -23,13 +19,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Unit/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Unit unit = db.Unit.Find(id);
-            if (unit == null)
-            {
+            if (unit == null) {
                 return HttpNotFound();
             }
             return View(unit);
@@ -48,8 +42,7 @@ namespace TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "unitID,nameU")] Unit unit)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Unit.Add(unit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,13 +54,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Unit/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Unit unit = db.Unit.Find(id);
-            if (unit == null)
-            {
+            if (unit == null) {
                 return HttpNotFound();
             }
             return View(unit);
@@ -80,8 +71,7 @@ namespace TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "unitID,nameU")] Unit unit)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Entry(unit).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -92,13 +82,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Unit/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Unit unit = db.Unit.Find(id);
-            if (unit == null)
-            {
+            if (unit == null) {
                 return HttpNotFound();
             }
             return View(unit);
@@ -117,8 +105,7 @@ namespace TMDT.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);

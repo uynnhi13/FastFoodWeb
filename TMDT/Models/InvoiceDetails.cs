@@ -19,7 +19,7 @@ namespace TMDT.Models
         public double quatity { get; set; }
         public decimal price { get; set; }
     
-        public virtual Invoice Invoice { get; set; }
         public virtual Ingredient Ingredient { get; set; }
+        public virtual Invoice Invoice { get; set; }
     }
 }

@@ -1,0 +1,224 @@
+﻿@model IEnumerable<TMDT.Models.Ingredient>
+@{
+    ViewBag.Title = "CreateRecipe";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    string message = ViewBag.message as string;
+}
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+            <div class="col text-right row">
+                <a href="~/Admin/Ingredients/createRecipeInProduct" class="btn btn-small btn-primary mr-3">Tạo thực đơn</a>
+                @if ((bool)ViewBag.test)
+                {
+                    <a href="~/Admin/Ingredients/addRecipeInProduct" class="btn btn-small btn-primary">Thêm thực đơn</a>
+                }
+            </div>
+        </div>
+        <div class="message">
+            @if (message != null)
+            {
+                <p style="animation: 0.25s ease;" id="message" class=" bg-danger pt-3 pb-3 pl-3 mt-4 rounded text-light">@message</p>
+            }
+            <script>
+                $(document).ready(function () {
+                    // Thêm hiệu ứng CSS mỗi giây
+                    setTimeout(function () {
+                        $('#message').css('Height',0);
+                    }, 1000); // 1000ms = 1 giây
+                });
+            </script>
+        </div>
+        <div class="table-responsive">
+            @using (Html.BeginForm("CreateRecipe", "Ingredients", new { @class = "tm-edit-product-form",
+                    enctype = "multipart/form-data"
+                }))
+            {
+                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                    <thead>
+                        <tr class="tm-bg-gray">
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Tên thực phẩm</th>
+                            <th scope="col" class="text-center">số lượng</th>
+                            <th scope="col" class="text-center">Đơn vị tính</th>
+                            <th scope="col">&nbsp;</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="col-product">
+                                <td>
+                                    <input type="hidden" name="ingID" id="ingID" value="@item.ingID" />
+                                </td>
+                                <th scope="row">
+                                    <input type="checkbox" aria-label="Checkbox">
+                                </th>
+                                <td class="tm-product-name">@item.ingName</td>
+                                <td class="text-center">
+                                    <div class="">
+                                        <input type="text" name="quantity" class="form-control validate col" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </td>
+                                <td class="text-center">@item.Unit.nameU</td>
+                                <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+        <div class="tm-table-mt tm-table-actions-row">
+            <div class="tm-table-actions-col-left">
+                <button class="btn btn-danger">Delete Selected Items</button>
+            </div>
+            <div class="tm-table-actions-col-right">
+                <span class="tm-pagination-label">Page</span>
+                <nav aria-label="Page navigation" class="d-inline-block">
+
+                    <br />
+
+
+                    <ul class="pagination tm-pagination">
+
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <span class="tm-dots d-block">...</span>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">13</a></li>
+                        <li class="page-item"><a class="page-link" href="#">14</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script>
+    <script>
+
+        @*$(document).ready(function () {
+            $(".col-product").click(function () {
+                var checkedValues = $(this).find(".checkbox:checked").map(function () {
+                    return $(this).find(".checkbox:checked").val();
+                }).toArray();
+                console.log(checkedValues);
+                $.ajax({
+                    url: "@Url.Action("CrRecipe", "Ingredients")",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: {id:1},
+                    async: true,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr) {
+                    alert('error');
+                    }
+
+                });
+            })
+        })*@
+/*
+        $(document).ready(function () {
+            // Sự kiện khi checkbox thay đổi trạng thái
+            $('input[type="checkbox"]').change(function () {
+                // Kiểm tra trạng thái của checkbox
+                if ($(this).prop('checked')) {
+                    // Lấy giá trị của input quantity trong cùng một hàng
+                    var quantityValue = $(this).closest('tr').find('input[name="quantity"]').val();
+                    var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+                    console.log("Quantity Value:", quantityValue); console.log("ingID Value:", ingID);
+                } else {
+
+                }
+            });
+        });*/
+
+        $(document).ready(function () {
+            $('#btnTao').click(function () {
+
+                $('tr.col-product').each(function (index, value) {
+                    var inputValue = $(this).find('input[name="quantity"]').val();
+                    if (inputValue.trim() != "" ) {
+                        $(this).find('input[type="checkbox"]').prop('checked', true);
+                        var quantityValue = $(this).find('input[name="quantity"]').val();
+                        var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+                        console.log("Quantity Value:", quantityValue);
+                        console.log("ingID Value:", ingID);
+                    } else {
+                        $(this).find('input[type="checkbox"]').prop('checked', false);
+                        var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+                        console.log("ingID Value:", ingID);
+                    }
+                });
+
+            })
+
+            $('input[name="quantity"]').change(function () {
+                // Kiểm tra trạng thái của checkbox
+                var item = $(this).val();
+                var quantityValue;
+                var ingID;
+                if (item !== null && item.trim() !== "") {
+
+                    $(this).closest('tr').find('input[type="checkbox"]').prop('checked', true);
+                    var quantityValue = $(this).closest('tr').find('input[name="quantity"]').val();
+                    var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+
+                    console.log('quantity: ' + quantityValue + ' id : ' + ingID);
+
+                    addRecipe(parseInt(ingID), parseFloat(quantityValue));
+                } else {
+                    $(this).closest('tr').find('input[type="checkbox"]').prop('checked', false);
+
+                    var quantityValue = 0;
+                    var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+
+                    console.log('quantity: ' + quantityValue + ' id : ' + ingID);
+
+                    addRecipe(parseInt(ingID), parseFloat(quantityValue));
+                }
+                
+            });
+
+            function addRecipe(_id, _quantity) {
+                $.ajax({
+                    url: "/Ingredients/CrRecipe",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ id: _id, quantity: _quantity }),
+                    success: function (data) {
+                        console.log('--------------')
+                        var dataArray = Object.values(data);
+
+                        for (let x in dataArray) {
+                            console.log(dataArray[x].id);
+                            console.log(dataArray[x].quantity);
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+        });
+
+    </script>
+}
+
+
+

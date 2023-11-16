@@ -1,8 +1,8 @@
 ﻿@model TMDT.Models.Ingredient
 
 @{
-    ViewBag.Title = "Create";
-    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml" ;
+    ViewBag.Title = "Create"; 
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
 }
 <br />
 <br />
@@ -71,7 +71,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section scripts{
+@section Scripts{
     <script>
         var input = $("#flexCheckDefault");
         var quantityDiv = $(".quantity");
@@ -79,21 +79,21 @@
             if (input.prop("checked")) {
                 console.log('check');
                 var htmlToAdd = `
-                    <div class="form-group">
-                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Số lượng</label>
-                        <div class="col-md-10">
-                            <input type="text" name="quantity" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
-                            <span class="text-danger"></span>
+                        <div class="form-group">
+                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Số lượng</label>
+                            <div class="col-md-10">
+                                <input type="text" name="quantity" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                <span class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Số lượng tối thiểu</label>
-                        <div class="col-md-10">
-                            <input type="text" name="quantityMin" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
-                            <span class="text-danger"></span>
+                        <div class="form-group">
+                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Số lượng tối thiểu</label>
+                            <div class="col-md-10">
+                                <input type="text" name="quantityMin" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                <span class="text-danger"></span>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
                 quantityDiv.empty().append(htmlToAdd);
             } else {
                 console.log('uncheck');
