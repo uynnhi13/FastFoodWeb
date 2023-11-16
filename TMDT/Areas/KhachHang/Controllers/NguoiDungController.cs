@@ -28,11 +28,20 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
 
                 var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
-                if (kiemTraUser != null)
+                if (kiemTraUser != null & kiemTraUser.password != null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
+
                 if (ModelState.IsValid) {
-                    db.User.Add(user);
-                    db.SaveChanges();
+                    if (kiemTraUser != null & kiemTraUser.password == null) {
+                        kiemTraUser.gmail = user.gmail;
+                        kiemTraUser.fullName = user.fullName;
+                        kiemTraUser.password = user.password;
+                        db.SaveChanges();
+                    }
+                    else {
+                        db.User.Add(user);
+                        db.SaveChanges();
+                    }
                 }
                 else
                     return View();
@@ -58,13 +67,16 @@ namespace TMDT.Areas.KhachHang.Controllers
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
                     if (kiemtra != null) {
-                        ViewBag.ThongBao = "Chúc mừng đăng nhập thành công";
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
                         ViewBag.TaiKhoan = Session["TaiKhoan"];
                     }
-                    else
-                        ViewBag.ThongBao = "Số điện thoại hoặc mật khẩu không đúng";
+                    else {
+                        ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                        // Chuyển hướng người dùng trở lại trang đăng nhập
+                        return View();
+                    }
+
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -75,5 +87,247 @@ namespace TMDT.Areas.KhachHang.Controllers
             Session["TaiKhoan"] = null;
             return RedirectToAction("Index", "Home");
         }
+
+        //Start THÔNG TIN USER//
+        public ActionResult UserInfo()
+        {
+            var user = (User)Session["TaiKhoan"];
+            var usi = db.User.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+            return View(usi);
+        }
+
+
+
+        public ActionResult UserEdit(string id)
+        {
+            var us = db.User.FirstOrDefault(u => u.numberPhone == id);
+            if (us == null) {
+                return HttpNotFound();
+            }
+            return View(us);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserEdit(User u)
+        {
+            if (ModelState.IsValid) {
+                db.Entry(u).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("UserInfo", "NguoiDung");
+        }
+        //End THÔNG TIN USER//
+
+
+        //Start địa chỉ//
+        public ActionResult LocaList()
+        {
+            var user = (User)Session["TaiKhoan"];
+            var userPhone = user.numberPhone;
+            var userAddresses = db.Address.Where(a => a.userID.Equals(userPhone)).ToList();
+            if (userAddresses.Any()) {
+                return View(userAddresses); // Trả về danh sách địa chỉ nếu có
+            }
+            else {
+                // Xử lý trường hợp không có địa chỉ nào được tìm thấy
+                TempData["Message"] = "Bạn chưa có địa chỉ. Vui lòng thêm địa chỉ.";
+                TempData.Keep("Message"); // Giữ lại TempData cho request tiếp theo
+                return RedirectToAction("LocaAdd"); // Chuyển hướng đến action thêm địa chỉ
+            }
+
+        }
+        public ActionResult LocaAdd()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LocaAdd(Address ad)
+        {
+            if (ModelState.IsValid) {
+
+                var user = (User)Session["TaiKhoan"];
+                var addres = db.Address.FirstOrDefault();
+
+                if (ad.priority) {
+                    var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
+
+                    foreach (var item in lsAad) {
+                        if (item.priority) {
+                            addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                            addres.priority = false;
+
+                        }
+                    }
+
+                }
+
+                db.SaveChanges();
+
+
+
+                ad.userID = user.numberPhone;
+                db.Address.Add(ad);
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("LocaList", "NguoiDung");
+        }
+
+        public ActionResult LocaDetail()
+        {
+            var user = (User)Session["TaiKhoan"];
+
+            var loc = db.Address.FirstOrDefault(u => u.userID == user.numberPhone);
+            if (loc == null) {
+                // Nếu địa chỉ là null, hiển thị thông báo yêu cầu thêm địa chỉ
+                TempData["Message"] = "Bạn chưa có địa chỉ. Vui lòng thêm địa chỉ.";
+                TempData.Keep("Message"); // Giữ lại TempData cho request tiếp theo
+                return RedirectToAction("LocaAdd"); // Chuyển hướng đến action thêm địa chỉ
+            }
+
+            return View(loc);
+        }
+
+        public ActionResult LocaEdit(int id)
+        {
+            var lc = db.Address.FirstOrDefault(u => u.addressID == id);
+            if (lc == null) {
+                return HttpNotFound();
+            }
+            return View(lc);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LocaEdit(Address ad)
+        {
+            if (ModelState.IsValid) {
+                var user = (User)Session["TaiKhoan"];
+
+                var addres = db.Address.FirstOrDefault();
+
+                if (ad.priority) {
+                    var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
+
+                    foreach (var item in lsAad) {
+                        if (item.priority) {
+                            addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                            addres.priority = false;
+
+                        }
+                    }
+
+                }
+
+                db.SaveChanges();
+
+                var aad = db.Address.FirstOrDefault(s => s.addressID == ad.addressID);
+
+                aad.firstName = ad.firstName;
+                aad.lastName = ad.lastName;
+                aad.numberPhone = ad.numberPhone;
+                aad.note = ad.note;
+                aad.priority = ad.priority;
+                aad.address1 = ad.address1;
+
+                db.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("LocaList");
+        }
+        public ActionResult DeleteAddress(int id)
+
+        {
+
+            var address = db.Address.FirstOrDefault(a => a.addressID == id);
+
+            if (address != null) {
+                db.Address.Remove(address);
+                db.SaveChanges();
+
+            }
+
+
+            return RedirectToAction("LocaList");
+        }
+
+        [HttpGet]
+        public ActionResult OrderList(Condition cd, string searchstring = "")
+        {
+            ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
+
+            var user = (User)Session["TaiKhoan"];
+            var userPhone = user.numberPhone;
+
+            var orderQuery = db.Order.Where(o => o.numberPhone.Equals(userPhone));
+            // hàm tìm kím 
+            if (!string.IsNullOrEmpty(searchstring)) {
+                orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
+            }
+            // hàm dropdown theo condition 
+            if (cd != null && cd.conditionID != 0) {
+                orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
+            }
+
+            // hàm hiển thị khi đơn hàng đã giao 
+            bool showButton = cd.conditionID == 3; // Kiểm tra điều kiện để xác định có hiển thị button hay không
+            ViewBag.ShowReviewButton = showButton;
+
+            if (showButton) {
+                orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
+            }
+
+            // hiển thị tổng
+            var orders = orderQuery.ToList();
+           
+            return View(orders);
+        }
+
+        public ActionResult Review()
+        {
+            var user = (User)Session["TaiKhoan"];
+
+            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+
+            return View(review);
+        }
+        [HttpPost]
+        public ActionResult SubmitReview(Order o )
+        {
+
+            var user = (User)Session["TaiKhoan"];
+            // Lấy đơn hàng từ cơ sở dữ liệu
+            var order = db.Order.FirstOrDefault(u => u.orderID == o.orderID);
+            order.star = o.star;
+            order.comment = o.comment;
+
+            // Lưu đánh giá vào cơ sở dữ liệu
+            db.SaveChanges();
+            // Chuyển hướng người dùng đến trang xem đánh giá sau khi đã đánh giá
+            return RedirectToAction("OrderList", "NguoiDung");
+        }
+        public ActionResult ReviewView()
+        {
+            var revi = db.Order.ToList();
+            return PartialView(revi);
+
+        }
+
+
+        public ActionResult OrderDetail()
+        {
+
+            var user = (User)Session["TaiKhoan"];
+
+            var ordt = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+
+            return View(ordt);
+
+        }
+
+
+        //End Order//
+
+
+
     }
 }

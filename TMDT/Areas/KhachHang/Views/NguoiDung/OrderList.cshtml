@@ -1,0 +1,149 @@
+﻿@model IEnumerable<TMDT.Models.Order>
+@using TMDT.Models
+
+
+@{
+    ViewBag.Title = "OrderList";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+}
+
+<div class="col-sm-12 col-md-9 col-lg-9">
+    <h3>Danh sách đơn hàng</h3>
+
+    @using (Html.BeginForm("OrderList", "NguoiDung", FormMethod.Get))
+    {
+<div class="container-or">
+
+    <div class="form-group form-inline">
+        <div class="input-group">
+            @Html.TextBox("searchstring", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            <div class="input-group-append">
+                <input type="submit" class="btn btn-default" value="Tìm kiếm" />
+            </div>
+        </div>
+    </div>
+    @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new { onchange = "this.form.submit();" })
+
+
+</div>
+
+     
+    }
+
+
+
+    <div class="table_page table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Số Điện Thoại</th>
+                    <th>Mã Đơn Hàng</th>
+                    <th>Ghi Chú</th>
+                    <th>Tình trạng</th>
+                    <th>Giá</th>
+                    <th>Thông tin</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.numberPhone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.orderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.note)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Condition.nameCon)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.total)
+                        </td>
+
+                        <td>
+
+                            @Html.ActionLink("Details", "OrderDetail", new { id = item.orderID })
+
+                            @if (ViewBag.ShowReviewButton)
+                            {
+                                <!-- Hiển thị button ở đây -->
+                                <button type="button">
+                                    @Html.ActionLink("Review", "Review", new { id = item.orderID })
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <style>
+        .container-or {
+            display: flex;
+            align-items: center;
+            margin-bottom:5px;
+        }
+
+        /* Style for h2 */
+        h3 {
+            margin-right: 10px; /* Adjust the margin as needed */
+        }
+
+        /* Style for dropdown */
+        select {
+            width: 150px; /* Adjust the width as needed */
+            padding: 8px; /* Add padding for better appearance */
+            border: 1px solid #ccc; /* Add a border for better visibility */
+            border-radius: 4px; /* Add border-radius for rounded corners */
+            margin-left: auto; /* Move the select to the right */
+            background-color: #fff; /* Set background color */
+            color: #333; /* Set text color */
+            cursor: pointer; /* Set cursor style */
+            appearance: none; /* Remove default arrow icon in some browsers */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
+        }
+
+            select::-ms-expand {
+                display: none; /* Hide arrow icon in IE10 and IE11 */
+            }
+
+            /* Style for hover and focus states */
+            select:hover,
+            select:focus {
+                border-color: rgba(0, 0, 0, 0.2); /* Change border color on hover/focus */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover/focus */
+            }
+        /* Style for text input */
+        .form-group.form-inline input[type="text"] {
+            width: 200px; /* Adjust the width as needed */
+            padding: 8px; /* Add padding for better appearance */
+            border: 1px solid #ccc; /* Add a border for better visibility */
+            border-radius: 4px; /* Add border-radius for rounded corners */
+        }
+
+        /* Style for submit button */
+        .form-group.form-inline input[type="submit"] {
+            padding: 8px 16px; /* Adjust padding for better appearance */
+            background-color: #ff7b7b; /* Set background color */
+            color: #fff; /* Set text color */
+            border: none; /* Remove border */
+            border-radius: 0 4px 4px 0; /* Add border-radius for rounded corners on the right side */
+            cursor: pointer; /* Set cursor style */
+        }
+
+            /* Style for submit button on hover and focus states */
+            .form-group.form-inline input[type="submit"]:hover,
+            .form-group.form-inline input[type="submit"]:focus {
+                background-color:#f73c3c; /* Change background color on hover/focus */
+            }
+       
+    </style>
+

@@ -1,0 +1,121 @@
+﻿@model TMDT.Models.User
+@using TMDT.Models;
+@{
+    ViewBag.Title = "UserInfo";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+}
+
+
+
+<link href="~/Areas/KhachHang/assets/css/myInfor.css" rel="stylesheet" />
+<div class="col-sm-12 col-md-9 col-lg-9">
+    <div class="container-xl px-4 mt-4">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Ảnh đại diện</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img id="myImg" class="img-account-profile rounded-circle mb-2" src="~/hinh/ka-img.jpg" alt="your image">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Thông tin</div>
+                    <div class="card-body">
+                        <form>
+
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputUsername">Tên tài khoản: </label>
+                                    <input class="form-control" id="inputUsername" type="text" value="@Model.numberPhone" readonly>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputPass">Password:</label>
+                                    <input class="form-control" id="inputPass" type="text" value="@Model.password" readonly>
+                                    <button id="showPasswordButton">Show Password</button>
+                                </div>
+
+
+                            </div>
+                            <!-- Form Row        -->
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputName">Họ và tên:</label>
+                                    <input class="form-control" id="inputName" type="text" value="@Model.fullName" readonly>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputDateOfBirth">Ngày sinh:</label>
+                                    <input class="form-control" id="inputDateOfBirth" type="text" value="@Model.bDay" readonly>
+                                </div>
+
+
+                            </div>
+                            <!-- Form Group (email address)-->
+
+
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputEmail">Email:</label>
+                                    <input class="form-control" id="inputEmail" type="email" value="@Model.gmail" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputPhone">Phone number</label>
+                                    <input class="form-control" id="inputPhone" type="text" value="@Model.numberPhone" readonly>
+                                </div>
+                            </div>
+                          
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<p>
+    <style>
+        .button-container {
+            text-align: right; /* Đặt nút bấm bên phải */
+            margin-top: 10px; /* Thêm khoảng cách phía trên nút bấm (tùy chọn) */
+        }
+
+        .button-style {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d19797; /* Màu nền của nút */
+            color: #fff; /* Màu chữ trắng */
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px; /* Bo tròn viền */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi khi hover */
+        }
+
+            .button-style:hover {
+                background-color: #a27070; /* Màu nền khi hover */
+                color:#71706f;
+            }
+
+          
+    </style>
+  
+
+    <div class="button-container">
+        @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "button-style" })
+       
+    </div>
+
+
+   
+</p>

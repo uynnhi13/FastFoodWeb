@@ -6,28 +6,51 @@ namespace TMDT.Models
     public class MatHangMua
     {
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
-        public int cateID { get; set; }
+        public int ComboID { get; set; }
         public String name { get; set; }
         public String image { get; set; }
-        public double price { get; set; }
+        public decimal price { get; set; }
+        public String size { get; set; }
         public int soLuong { get; set; }
+        public bool typeCombo { get; set; }
 
         //Tính thành tiền = DonGia + SoLuong
         public double ThanhTien()
         {
-            return soLuong * price;
+            return soLuong * (double)price;
         }
 
-        public MatHangMua(int cateID)
+        public MatHangMua(int ComboID, string size)
         {
-            this.cateID = cateID;
+            this.ComboID = ComboID;
 
             //Tìm sản phẩm trong CSDL có mã id cần và gán cho mặt hàng được mua
-            var sanPham = db.Product.Single(s => s.cateID == this.cateID);
-            this.name = sanPham.name;
-            this.image = sanPham.image;
-            this.price = (Double)sanPham.price;
-            this.soLuong = 1; //Số lương mua ban đầu của sp là 1 (cho lần click đầu)
+            var sanPham = db.Combo.Single(s => s.comboID == this.ComboID);
+
+
+            this.name = sanPham.nameCombo;
+            this.typeCombo = sanPham.typeCombo;
+            if (typeCombo == true) {
+                this.image = sanPham.image;
+                this.size = "Combo";
+                this.price = sanPham.price;
+            }
+
+            else {
+                var details = db.ComboDetail.Single(s => s.comboID == this.ComboID);
+                var products = db.Product.Single(s => s.cateID == details.cateID);
+                this.image = products.image;
+                if (size == "medium") {
+                    this.size = "medium";
+                    this.price = sanPham.price;
+                }
+                else if (size == "big") {
+                    this.size = "big";
+                    this.price = sanPham.price + products.priceUp;
+                }
+            }
+            //Số lương mua ban đầu của sp là 1 (cho lần click đầu)
+            this.soLuong = 1;
         }
     }
 }

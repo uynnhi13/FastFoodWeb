@@ -1,0 +1,153 @@
+﻿@using TMDT.Models
+@model Order
+@{
+    ViewBag.Title = "VNPayReturn";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+}
+<style>
+    table {
+        width: 100%;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-top: 1px solid #dee2e6;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<body>
+    <div class="thank-you-area pt-100px ">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-8">
+                    <div class="inner_complated">
+                       
+                        <p class="dsc_cmpted">
+                            Cảm ơn bạn đã đặt hàng, đồ ăn sẽ đến với bạn ngay thôi !
+                        </p>
+                        <p>Xem chi tiết đơn hàng<a href="#" id="detailsOrder"> tại đây</a></p>
+                        <div class="btn_cmpted">
+                            <a href="@Url.Action("Index", "Home")" ; class="shop-btn" title="Go To Shop">Tiếp tục mua sắm </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="detailsOrderShow" tabindex="-1" role="dialog" aria-labelledby="detailsOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- Nội dung của modal để chỉnh sửa địa chỉ -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center">
+                        @{
+                            String textCondition = "";
+                            if (Model.conditionID == 1)
+                            {
+                                textCondition = "Chưa Xác Nhận";
+                            }
+                            else if (Model.conditionID == 2)
+                            {
+                                textCondition = "Đã Xác Nhận";
+                            }
+                            else
+                            {
+                                textCondition = "Đã Giao Hàng";
+                            }
+
+                            String TypePayment = "";
+                            if (Model.TypePayment == 1)
+                            {
+                                TypePayment = "Nhận tại cửa hàng";
+                            }
+                            else
+                            {
+                                TypePayment = "VNPay";
+                            }
+
+                            var orderDetails = db.OrderDetail.Where(s => s.orderID == Model.orderID);
+                        }
+                        <h5 style="color: red"><b>Chi Tiết Đơn Hàng</b></h5>
+                        <table>
+                            <tr>
+                                <th>Tên Người Nhận</th>
+                                <th>Số Điện Thoại</th>
+                                <th>Địa Chỉ</th>
+                                <th>Ngày Đặt</th>
+                                <th>Trạng Thái</th>
+                                <th>Phương Thức Thanh Toán</th>
+                            </tr>
+                            <tr>
+                                <td>@Model.recipient</td>
+                                <td>@Model.recipientsNumber</td>
+                                <td>@Model.fullAddress</td>
+                                <td>@Model.datetime</td>
+                                <td>@textCondition</td>
+                                <td>@TypePayment</td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th>Sản Phẩm</th>
+                                <th>Số Lượng</th>
+                            </tr>
+                            @foreach (var item in orderDetails)
+                            {
+                                var product = db.Combo.FirstOrDefault(s => s.comboID == item.comboID);
+                                <tr>
+                                    <td>@product.nameCombo</td>
+                                    <td>@item.quantity</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary close" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="quick_order ">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-12">
+                    <div class="main_quickorder text-align-center">
+                        <h3 class="title">Call Us for Quick Order</h3>
+                        <div class="cntct typewriter-effect"><span class="call_desk"><a href="tel:+01234567890" id="typewriter_num">0985010302</a></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#detailsOrder").click(function () {
+                // Hiển thị modal hoặc điều hướng đến trang chỉnh sửa địa chỉ
+                // Ví dụ sử dụng modal:
+                $('#detailsOrderShow').modal('show');
+            });
+            $('.close').click(() => {
+                $('#detailsOrderShow').modal('hide');
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,70 @@
+﻿@model TMDT.Models.Order
+@using TMDT.Models
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+}
+
+<div class="col-sm-12 col-md-9 col-lg-9">
+    <h2>Chi tiết đơn hàng</h2>
+
+    <div>
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.datetime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.datetime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.note)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.note)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.total)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.total)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Condition.nameCon)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Condition.nameCon)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Employees.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Employees.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.User.gmail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.User.gmail)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.orderID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>

@@ -5,143 +5,110 @@
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="zxx">
-
-
 <body>
 
     <!-- Cart Area Start -->
     <div class="cart-main-area pt-100px pb-100px">
         <div class="container">
-            <h3 class="cart-page-title">Your cart items</h3>
+            <h3 class="cart-page-title">Giỏ Hàng Của Bạn</h3>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <form action="#">
-                        <div class="table-content table-responsive cart-table-content">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Hình Ảnh</th>
-                                        <th>Món Ăn</th>
-                                        <th>Giá Tiền</th>
-                                        <th>Số Lượng</th>
-                                        <th>Thành Tiền</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var sp in Model)
-                                    {
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Hình Ảnh</th>
+                                    <th>Combo</th>
+                                    <th>Món Ăn</th>
+                                    <th>Giá Tiền</th>
+                                    <th>Số Lượng</th>
+                                    <th>Thành Tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var sp in Model)
+                                {
+                                        TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
                                         var tongTienSP = sp.soLuong * (Double)sp.price;
-                                        <tr>
+                                        var lstCombo = db.ComboDetail.Where(s => s.comboID == sp.ComboID);
+                                        var nameSize = "";
+                                        <tr data-comboid="@sp.ComboID" data-size="@sp.size">
                                             <td class="product-thumbnail">
-                                                <a href="#">
+                                                <a href="@Url.Action("ChiTietSP", "Home", new { id = sp.ComboID })">
                                                     <img class="img-responsive ml-15px"
                                                          src="~/Areas/KhachHang/assets/images/product-image/@sp.image" alt="" />
                                                 </a>
                                             </td>
-                                            <td class="product-name"><a href="#">@sp.name</a></td>
+                                            <td>
+                                                @if (sp.typeCombo == true)
+                                                {
+                                                    <b>@sp.name</b>
+                                                }
+                                            </td>
+                                            <td class="product-name">
+                                                @foreach (var item in lstCombo)
+                                                {
+                                                    if (item.sizeUP == false)
+                                                    {
+                                                        nameSize = "Vừa";
+                                                    }
+                                                    else
+                                                    {
+                                                        nameSize = "Lớn";
+                                                    }
+                                                    var proID = db.Product.FirstOrDefault(s => s.cateID == item.cateID);
+                                                    <p>@item.quantity x @proID.name (@nameSize) </p>
+                                                }
+                                            </td>
                                             <td class="product-price-cart"><span class="amount">@string.Format("{0:N0}", sp.price)</span></td>
                                             <td class="product-quantity">
-                                                @sp.soLuong
+                                                    <div class="cart-plus-minus">
+                                                        <div class="dec qtybutton">-</div>
+                                                        <input class="cart-plus-minus-box" type="number" min="1" name="soLuong" value="@sp.soLuong">
+                                                        <div class="inc qtybutton">+</div>
+                                                    </div>
                                             </td>
-                                            <td class="product-subtotal">@string.Format("{0:N0}", tongTienSP)</td>
-                                            <td class="product-remove">
-                                                <a href="#"><i class="fa fa-pencil"></i></a>
-                                                <a href="#"><i class="fa fa-times"></i></a>
+                                            <td class="product-subtotal" id="updateThanhTien">@string.Format("{0:N0}", tongTienSP)</td>
+                                            <td class="product-remove" data-comboid="@sp.ComboID" data-size="@sp.size">
+                                                    <a href="javascript:void(0);" onclick="XoaSanPham(@sp.ComboID, '@sp.size')"><i class="fa fa-times"></i></a>
+                                                    <a href="javascript:void(0);" onclick="CapNhatSanPham(@sp.ComboID, '@sp.size')"><i class="fa fa-pencil"></i></a>
                                             </td>
                                         </tr>
-                                    }
-                                    </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="cart-shiping-update-wrapper">
-                                    <div class="cart-shiping-update">
-                                        <a href="@Url.Action("Index","Home")">Tiếp Tục Mua Hàng</a>
-                                    </div>
-                                    <div class="cart-clear">
-                                        <a href="@Url.Action("XoaGioHang","GioHang")">Clear Shopping Cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                                }
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Tổng Số Lượng:</th>
+                                    <th id="updateSoLuong">@ViewBag.TongSL</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Thành Tiền:</th>
+                                    <th id="updateTongTien">@string.Format("{0:N0}", ViewBag.TongTien)</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-lm-30px">
-                            <div class="cart-tax">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <div class="cart-shiping-update">
+                                    <a href="@Url.Action("Index","Home")">Tiếp Tục Mua Hàng</a>
                                 </div>
-                                <div class="tax-wrapper">
-                                    <p>Enter your destination to get a shipping estimate.</p>
-                                    <div class="tax-select-wrapper">
-                                        <div class="tax-select">
-                                            <label>
-                                                * Country
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select">
-                                            <label>
-                                                * Region / State
-                                            </label>
-                                            <select class="email s-email s-wid">
-                                                <option>Bangladesh</option>
-                                                <option>Albania</option>
-                                                <option>Åland Islands</option>
-                                                <option>Afghanistan</option>
-                                                <option>Belgium</option>
-                                            </select>
-                                        </div>
-                                        <div class="tax-select mb-25px">
-                                            <label>
-                                                * Zip/Postal Code
-                                            </label>
-                                            <input type="text" />
-                                        </div>
-                                        <button class="cart-btn-2" type="submit">Get A Quote</button>
-                                    </div>
+                                <div class="cart-clear">
+                                    <button onclick="DatHangFunction()">Đặt Hàng</button>
+                                    <a href="@Url.Action("XoaGioHang","GioHang")">Xóa tất cả sản phẩm</a>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-lm-30px">
-                            <div class="discount-code-wrapper">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
-                                </div>
-                                <div class="discount-code">
-                                    <p>Enter your coupon code if you have one.</p>
-                                    <form>
-                                        <input type="text" required="" name="name" />
-                                        <button class="cart-btn-2" type="submit">Apply Coupon</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-12 mt-md-30px">
-                            <div class="grand-totall">
-                                <div class="title-wrap">
-                                    <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
-                                </div>
-                                <h5>Total products <span>$260.00</span></h5>
-                                <div class="total-shipping">
-                                    <h5>Total shipping</h5>
-                                    <ul>
-                                        <li><input type="checkbox" /> Standard <span>$20.00</span></li>
-                                        <li><input type="checkbox" /> Express <span>$30.00</span></li>
-                                    </ul>
-                                </div>
-                                <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                                <a href="checkout.html">Proceed to Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -152,5 +119,101 @@
     <!-- Cart Area End -->
 </body>
 
-</html>
+@section Scripts{
+
+    <script>
+        function XoaSanPham(comboID, size) {
+            $.ajax({
+                type: "POST",
+                url: "/GioHang/XoaSanPham",
+                data: { comboID: comboID, size: size },
+                success: function (result) {
+                    if (result.success) {
+                        // Xóa sản phẩm thành công, thực hiện cập nhật giao diện
+                        // Ví dụ: xóa dòng sản phẩm khỏi bảng giỏ hàng
+                        $(`[data-comboid="${comboID}"][data-size="${size}"]`).closest('tr').remove();
+
+                        //cập nhật tổng số lượng và tổng tiền
+                        updateSoLuong.textContent = result.tongSL.toString();
+                        updateTongTien.textContent = VND.format(result.tongTien);
+
+
+                    } else {
+                        // Xóa sản phẩm thất bại, xử lý lỗi nếu cần
+                        window.location.href = '@Url.Action("GioHangTrong", "GioHang")';
+                    }
+                },
+                error: function () {
+                    // Xử lý lỗi Ajax
+                }
+            });
+        }
+
+        const VND = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+
+        function CapNhatSanPham(comboID, size) {
+            console.log('Đã vào');
+            // Lấy giá trị soLuong từ input tương ứng với dòng được chọn
+            var soLuong = $(`tr[data-comboid="${comboID}"][data-size="${size}"] input[name="soLuong"]`).val();
+            console.log(soLuong);
+            // Gọi Ajax để gửi dữ liệu đến controller
+            $.ajax({
+                type: "POST",
+                url: "/GioHang/CapNhatMatHang", // Đường dẫn đến controller
+                data: { comboID: comboID, size: size, soLuong: soLuong },
+                success: function (result) {
+                    if (result.success) {
+                        //cập nhật tổng số lượng và tổng tiền
+                        updateSoLuong.textContent = result.tongSL.toString();
+                        updateTongTien.textContent = VND.format(result.tongTien);
+                        var updateThanhTien = $(`tr[data-comboid="${comboID}"][data-size="${size}"] .product-subtotal`);
+                        updateThanhTien.text(VND.format(result.thanhTien));
+
+                    }
+                },
+                error: function () {
+                    // Xử lý lỗi Ajax
+                }
+            });
+        }
+
+        function DatHangFunction() {
+            console.log('Đã Vào Đặt Hàng');
+            $.ajax({
+                type: "POST",
+                url: "/GioHang/DatHang",
+                success: function (data) {
+                    // Xử lý dữ liệu trả về sau khi đặt hàng thành công
+                    if (data.success) {
+                        window.location.href = "@Url.Action("ThongTinDatHang", "GioHang")";
+                    } else {
+                        Swal.fire({
+                            title: "Bạn Chưa Đăng Nhập, Bạn có Muốn Đăng Nhập không?",
+                            showDenyButton: true,
+                            showCancelButton: true,
+                            confirmButtonText: "Đăng Nhập",
+                            denyButtonText: `Tiếp tục đặt hàng`
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                window.location.href = "@Url.Action("DangNhap","NguoiDung")";
+                            } else if (result.isDenied) {
+                                 window.location.href = "@Url.Action("ThongTinDatHang", "GioHang")";
+                            }
+                        });
+                    }
+                },
+                error: function () {
+                    // Xử lý lỗi khi gọi Ajax
+                    alert("Đã xảy ra lỗi khi đặt hàng.");
+                }
+            })
+
+        }
+
+    </script>
+}
 

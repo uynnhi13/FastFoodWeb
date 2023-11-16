@@ -5,6 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
 
+
       <Diagram DiagramId="2ec2c2a25b0a4d13ac3f2912e1fb0201" Name="Diagram1">
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.C__EFMigrationsHistory" Width="1.5" PointX="5.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Address" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
@@ -27,6 +28,7 @@
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.Unit" Width="1.5" PointX="8.75" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.User" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TMDTThucAnNhanhModel.WishList" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+
 
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Address_User" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_FoodAndDrink_ProductType" ManuallyRouted="false" />
