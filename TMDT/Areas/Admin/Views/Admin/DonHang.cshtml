@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<TMDT.Models.Order>
+@using TMDT.Models
 @{
     ViewBag.Title = "DonHang";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
@@ -6,20 +7,44 @@
 <br />
 <br />
 <div class="card mb-4">
-    
-
 
     <div class="main-content rounded-3 border border-2 py-4 px-3">
+        <div class="col-3">
+            <h2 style="padding:10px">Quản lý đơn hàng </h2>
+
+            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Post))
+            {
+                <div>
+                    From Date: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                    To Date: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+
+                    <button type="submit" class="bg-white">Lọc đơn hàng</button>
+                </div>
+
+            }
+
+
+
+
+        </div>
+
+
+
+
+
+
+
         <div class="table-header row">
             <div class="col-3">
-                <h5 class="title">Quản lý khách hàng</h5>
+                <h5 class="title">Quản lý đơn hàng</h5>
 
             </div>
+
         </div>
         <div>
 
             <div class="bg-white">
-                <table class="table align-middle mb-0">
+                <table id="datatablesSimple" class="table align-middle mb-0">
                     <thead>
                         @*//Phần render*@
                         <tr>
@@ -33,52 +58,75 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach (var Oder in Model)
                         {
-                        <tr>
-                            <td>@Oder.User.fullName</td>
-                            <td>@Oder.orderID</td>
-                            <td>@Oder.datetime</td>
-                            <td>@Oder.note</td>
+                            <tr>
+                                <td>@Oder.User.fullName</td>
+                                <td>@Oder.orderID</td>
+                                <td>@Oder.datetime</td>
+                                <td>@Oder.note</td>
+                                <td>
 
-                            <td>
+                                    @{ if (Oder.conditionID == 1)
+                                        {
+                                            <h5 style="color:red">Chưa xác nhận. </h5>
+                                        }
+                                        else if (Oder.conditionID == 2)
+                                        {
+                                            <h5 style="color:green">Đã xác nhận.  </h5>
+                                        }
+                                        else if (Oder.conditionID == 3)
+                                        {
+                                            <h5 style="color:goldenrod">Đã giao.  </h5>
+                                        }
 
-                                @{ if (Oder.conditionID == 1)
-                                    {
-                                        <h5 style="color:red">Đang chờ xác nhận. </h5>
-                                    }
-                                    else if (Oder.conditionID == 2)
-                                    {
-                                        <h5 style="color:green">Đã xác nhận  </h5>
-                                    }
-                                }
-
-                            </td>
-                            <td>
-                                @{
-                                    if (Oder.conditionID == 1)
-                                    {
-
-                                        <p>
-                                            @Html.ActionLink("Xác nhận đơn hàng", "XacNhanDH", new { id = Oder.orderID })
-                                        </p>
 
                                     }
-                                }
-                            </td>
-                            
 
-                            <td>
+                                </td>
+                                <td>
+                                    @{
+                                        if (Oder.conditionID == 1)
+                                        {
 
-                                @Html.ActionLink("Chi tiết", "DetailsDH", new { id = Oder.orderID }, new { })
+                                            <p>
+                                                @Html.ActionLink("Xác nhận đơn hàng", "XacNhanDH", new
+                                                {
+                                                    id = Oder.orderID
+                                                    })
+                                            </p>
 
-                            </td>
-                        </tr>
-                         }
+                                        }
+                                    }
+                                </td>
+
+                                 <td>
+                                    @{
+                                        if (Oder.conditionID == 2)
+                                        {
+
+                                            <p>
+                                                @Html.ActionLink("Đã giao", "Dagiao", new
+                                                {
+                                                    id = Oder.orderID
+                                                    })
+                                            </p>
+
+                                        }
+                                    }
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink("Chi tiết", "DetailsDH", new { id = Oder.orderID })
+
+                                </td>
+                            </tr>
+                        }
 
 
                     </tbody>
@@ -87,3 +135,15 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    var endDateField = document.getElementById("enddate");
+    var startDateField = document.getElementById("startdate");
+
+
+    startDateField.addEventListener("change", function () {
+        endDateField.min = startDateField.value;
+        console.log(startDateField.value)
+    });
+</script>
