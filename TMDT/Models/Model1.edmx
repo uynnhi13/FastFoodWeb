@@ -138,14 +138,14 @@
           <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="conditionID" Type="int" Nullable="false" />
           <Property Name="total" Type="money" Nullable="false" />
-          <Property Name="employeeID" Type="int" />
-          <Property Name="fullAddress" Type="nvarchar" MaxLength="500" />
-          <Property Name="recipient" Type="nvarchar" MaxLength="100" />
-          <Property Name="TypePayment" Type="int" />
-          <Property Name="TypePaymentVN" Type="int" />
+
+       
+          <Property Name="employeeID" Type="int" Nullable="false" />
+          <Property Name="fullAddress" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="star" Type="int" />
           <Property Name="comment" Type="nvarchar" MaxLength="1500" />
-          <Property Name="recipientsNumber" Type="nvarchar" MaxLength="20" />
+
+
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -574,7 +574,8 @@
             <End Role="WishList" EntitySet="WishList" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -725,13 +726,11 @@
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="conditionID" Type="Int32" Nullable="false" />
           <Property Name="total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="employeeID" Type="Int32" />
-          <Property Name="fullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="recipient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TypePayment" Type="Int32" />
-          <Property Name="TypePaymentVN" Type="Int32" />
-          <Property Name="star" Type="Int32" />
-          <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+
+
+          <Property Name="employeeID" Type="Int32" Nullable="false" />
+          <Property Name="fullAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />

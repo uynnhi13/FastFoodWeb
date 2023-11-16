@@ -1,10 +1,13 @@
-﻿@model IEnumerable<TMDT.Models.Product>
-
+﻿@model List<Combo>
+@using TMDT.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+    var lsProduct = db.Product.ToList();
 }
-
+<br />
+<br />
 <div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
     <div class="bg-white tm-block h-100">
         <div class="row">
@@ -12,7 +15,7 @@
                 <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
             </div>
             <div class="col text-right row">
-                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary mr-3">Thêm combo</a> 
+                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary mr-3">Thêm combo</a>
                 <a href="~/Admin/Product/Create" class="btn btn-small btn-primary">Thêm nguyên liệu</a>
             </div>
         </div>
@@ -35,54 +38,199 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
+                        <tr id="btnModel">
+                            @Html.Hidden("comboID", item.comboID)
                             <th scope="row">
                                 <input type="checkbox" aria-label="Checkbox">
                             </th>
-                            <td class="tm-product-name">@item.name</td>
-                            <td class="text-center">
-                                <img src="@item.image" class="rounded mx-auto d-block" alt="..."
-                                     onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
-                                     style="fill: #868e96; height: 200px; width:200px; object-fit:over"
-                                     >
-                            </td>
-                            <td class="text-center">@item.price</td>
-                            <td class="text-center">@item.priceUp</td>
-                            <td class="text-center">@item.Category.nameType</td>
-                            <td>@Html.ActionLink("Edit", "Edit", new { id = item.cateID })</td>
-                            <td>@Html.ActionLink("Details", "Details", new { id = item.cateID })</td>
-                            <td>@Html.ActionLink("Delete", "Delete", new { id = item.cateID })</td>
+                            <td class="tm-product-name">@item.nameCombo</td>
+                            @if (item.typeCombo == false)
+                            {
+                                var cateID = db.ComboDetail.FirstOrDefault(f => f.comboID == item.comboID).cateID;
+                                var pro = lsProduct.FirstOrDefault(f => f.cateID == cateID);
+                                <td class="text-center">
+                                    <img src="@pro.image" class="rounded mx-auto d-block" alt="..."
+                                         onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over">
+                                </td>
+                                <td class="text-center">@pro.price.ToString("#,##0") VNĐ</td>
+                                <td class="text-center">@pro.priceUp.ToString("#,##0") VNĐ</td>
+                                <td class="text-center">@db.Category.FirstOrDefault(f => f.typeID == pro.typeID).nameType</td>
+
+                                <td>@Html.ActionLink("Edit", "Edit", "Product", new { id = cateID }, null)</td>
+                                <td>@Html.ActionLink("Công thức", "listIngredient", "Ingredients", new { id = cateID }, null)</td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <img src="@item.image" class="rounded mx-auto d-block" alt="..."
+                                         onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over">
+                                </td>
+                                <td class="text-center">@item.price.ToString("#,##0") VNĐ</td>
+                                <th scope="col">&nbsp;</th>
+                                <td class="text-center">Combo</td>
+
+                                <td>@Html.ActionLink("Edit", "Edit", "Combo", new { id = item.comboID }, null)</td>
+                                <td>@Html.ActionLink("Công thức", "Details", "Combo", new { id = item.comboID }, null)</td>
+                            }
+
+
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-
-        <div class="tm-table-mt tm-table-actions-row">
-            <div class="tm-table-actions-col-left">
-                <button class="btn btn-danger">Delete Selected Items</button>
-            </div>
-            <div class="tm-table-actions-col-right">
-                <span class="tm-pagination-label">Page</span>
-                <nav aria-label="Page navigation" class="d-inline-block">
-
-                    <br />
-
-
-                    <ul class="pagination tm-pagination">
-
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <span class="tm-dots d-block">...</span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">13</a></li>
-                        <li class="page-item"><a class="page-link" href="#">14</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.8);">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <!-- Header Modal -->
+            <div class="modal-header">
+                <h5 class="modal-title">Các món trong combo</h5>
+                <button id="btnClose" type="button" class="close btnClose" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- Nội dung Modal -->
+            <div class="modal-body">
+
+                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                    <thead>
+                        <tr class="tm-bg-gray">
+                            <th scope="col">Tên thực phẩm</th>
+                            <th scope="col" class="text-center">số lượng</th>
+                            <th scope="col" class="text-center">Up size</th>
+                        </tr>
+                    </thead>
+                    <tbody id="item_table">
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="modal-footer">
+                <button id="btnClose" type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button id="btnCreateCombo" type="button" class="btn btn-primary" data-dismiss="modal">Tạo combo</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+            $('#btnModel').click(() => {
+                $('#myModal').show();
+
+                var cateID;
+                cateID = $(this).find('tr input[name="cateID"]').val();
+
+
+            })
+            $('.btnClose').click(() => {
+                $('#myModal').hide();
+            })
+
+            function getCombo(_id) {
+                console.log('test upsize')
+                $.ajax({
+                    url: "/Product/getCombo/",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ cateID: _id}),
+                    success: function (data) {
+                        console.log('--------------')
+                        var dataArray = Object.values(data);
+
+                        $('tbody#item_table').empty();
+
+                        for (let x in dataArray) {
+                            addListCombo(dataArray[x].producID, dataArray[x].productName, dataArray[x].quantity, dataArray[x].upSize)
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+            function addListCombo(_id, _name, _quantity, _sizeUp) {
+                // Tạo một dòng tr
+                var tr = $("<tr>").addClass("col-product");
+
+                // Thêm input hidden vào tr
+                tr.append(`<input type="hidden" name="cateID" id="cateID" value="${_id}" />`);
+
+                // Thêm td cho tên sản phẩm
+                var productNameTd = $("<td>").addClass("tm-product-name").text(_name);
+                tr.append(productNameTd);
+
+                // Thêm td cho số lượng và span text-danger
+                var quantityTd = $("<td>").addClass("text-center");
+                var quantityInput = $("<input>").attr("type", "text").attr("name", "quantity").attr("value", _quantity).addClass("form-control validate col");
+                var quantitySpan = $("<span>").addClass("text-danger");
+                quantityTd.append(quantityInput, quantitySpan);
+                tr.append(quantityTd);
+
+                // Thêm td cho checkbox
+                var checkboxTd = $("<td>").addClass("text-center");
+                var checkboxInput = $("<input>").attr("type", "checkbox").attr("name", "sizeUp").prop('checked', _sizeUp);
+                checkboxTd.append(checkboxInput);
+                tr.append(checkboxTd);
+
+                //thêm button delete
+                tr.append(`<td><i class="fas fa-trash-alt tm-trash-icon" id="btnDelete"></i></td>`)
+                // Thêm dòng tr vào tbody
+                $('tbody#item_table').append(tr);
+
+                // thêm sự kiện vào
+                $("tbody#item_table input[name='sizeUp']").change(function () {
+
+                    var cateID;
+
+                    if (this.checked) {
+                        cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                        uppSize(parseInt(cateID), Boolean(this.checked))
+                    } else {
+                        cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                        uppSize(parseInt(cateID), Boolean(this.checked))
+                    }
+                });
+                //thêm sự kiện delete vào
+                $('tbody#item_table i#btnDelete').click(function () {
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger"
+                        },
+                        buttonsStyling: false
+                    });
+                    swalWithBootstrapButtons.fire({
+                        title: "bỏ chọn sản phẩm ?",
+                        text: "Bạn có muốn bỏ sản phẩm khỏi combo của mình không",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteProduct(parseInt(cateID))
+                        }
+                    });
+
+                })
+            }
+        })
+    </script>
+}

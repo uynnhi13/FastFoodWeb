@@ -16,8 +16,37 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Index()
         {
-            var product = db.Product.Include(p => p.Category);
-            return View(product.ToList());
+            var allProduct = db.Combo.ToList();
+            var lsCombo = allProduct.Where(w => w.typeCombo == true);
+            var lsProduct = allProduct.Where(w => w.typeCombo == false);
+            var lsComboDetail = db.ComboDetail.ToList();
+            var lsView = new List<Combo>();
+
+            lsView.AddRange(lsCombo);
+            foreach (var item in lsProduct) {
+                if (lsComboDetail.FirstOrDefault(f => f.comboID == item.comboID && f.sizeUP == false) != null)
+                    lsView.Add(item);
+            }
+
+            return View(lsView);
+        }
+
+
+        [HttpPost]
+        public JsonResult getCombo(int cateID)
+        {
+
+            var lsitemCombo = new List<itemProduct>();
+            lsitemCombo = LayCombo();
+
+            if (lsitemCombo.FirstOrDefault(f => f.producID == cateID) != null) {
+
+                lsitemCombo.Remove(lsitemCombo.FirstOrDefault(f => f.producID == cateID));
+                Session["combo"] = lsitemCombo;
+
+            }
+
+            return Json(lsitemCombo);
         }
 
         // GET: Admin/Product/Details/5
@@ -148,25 +177,25 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult uppSize(int cateID,bool sizeUp)
+        public JsonResult uppSize(int cateID, bool sizeUp)
         {
             var lsitemCombo = new List<itemProduct>();
             lsitemCombo = LayCombo();
 
-            if (lsitemCombo.FirstOrDefault(f=>f.producID == cateID) != null) {
-                
+            if (lsitemCombo.FirstOrDefault(f => f.producID == cateID) != null) {
+
                 lsitemCombo.FirstOrDefault(f => f.producID == cateID).upSize = sizeUp;
                 Session["combo"] = lsitemCombo;
-            
+
             }
 
             return Json(lsitemCombo);
         }
 
         [HttpPost]
-        public JsonResult CrCombo(int cateID,string name, int quantity, bool sizeUp)
+        public JsonResult CrCombo(int cateID, string name, int quantity, bool sizeUp)
         {
-            itemProduct ing = new itemProduct(cateID,name, quantity, sizeUp);
+            itemProduct ing = new itemProduct(cateID, name, quantity, sizeUp);
             if (quantity != 0) {
                 addCombo(ing);
             }

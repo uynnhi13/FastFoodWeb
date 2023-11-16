@@ -24,6 +24,12 @@ namespace TMDT.Areas.Admin.Controllers
             return View(ingredient);
         }
 
+        public ActionResult listIngredient(int? id)
+        {
+            var ingredient = db.Recipe.Where(w => w.cateID == id);
+            return View("Index", ingredient);
+        }
+
         // GET: Admin/Ingredients/Details/5
         public ActionResult Details(int? id)
         {

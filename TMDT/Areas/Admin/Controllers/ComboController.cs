@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
-using TMDT.Controllers;
 
 namespace TMDT.Areas.Admin.Controllers
 {
@@ -22,7 +20,7 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/Combo/Details/5
-        
+
         public ActionResult Create()
         {
             var lsitemCombo = new List<itemProduct>();
@@ -102,13 +100,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Combo/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Combo combo = db.Combo.Find(id);
-            if (combo == null)
-            {
+            if (combo == null) {
                 return HttpNotFound();
             }
             return View(combo);
@@ -121,8 +117,7 @@ namespace TMDT.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "comboID,nameCombo,price,sale,typeCombo,image")] Combo combo)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Entry(combo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -133,13 +128,11 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Combo/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Combo combo = db.Combo.Find(id);
-            if (combo == null)
-            {
+            if (combo == null) {
                 return HttpNotFound();
             }
             return View(combo);
@@ -158,8 +151,7 @@ namespace TMDT.Areas.Admin.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
+            if (disposing) {
                 db.Dispose();
             }
             base.Dispose(disposing);

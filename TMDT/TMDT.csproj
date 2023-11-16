@@ -140,7 +140,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ComboController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IngredientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
@@ -545,31 +544,48 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\KhachHang\Views\GioHang\HienThiGioHang.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
-    <Content Include="Areas\KhachHang\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\KhachHang\Views\Shared\_LayoutPageUS.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\UserInfo.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\UserEdit.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\OrderList.cshtml" />
-    <Content Include="Areas\KhachHang\Views\GioHang\GioHangTrong.cshtml" />
-    <Content Include="Areas\KhachHang\Views\GioHang\ThongTinDatHang.cshtml" />
-    <Content Include="Areas\KhachHang\Views\GioHang\DatHangThanhCong.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaAdd.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaList.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\DeleteAddress.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\Review.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\ReviewView.cshtml" />
-    <Content Include="Areas\KhachHang\Views\GioHang\VNPayReturn.cshtml" />
-    <Content Include="Areas\KhachHang\Views\GioHang\GioHangThuGon.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaDetail.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\LocaEdit.cshtml" />
-    <Content Include="Areas\KhachHang\Views\NguoiDung\OrderDetail.cshtml" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
+
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Account.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\AddnewNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\QlyKH.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Unit\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Unit\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Unit\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Unit\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Unit\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\CreateRecipe.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\addRecipeInProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\Ingredients\createRecipeInProduct.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsDH.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
+    
+    <Content Include="Areas\Admin\Views\Admin\ThongKe.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ThongKeAccKH.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Admin\DetailsKH.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DonHang.cshtml" />
+    <Content Include="Areas\Admin\Data\jquery-ui-datepicker\package.json" />
+    <Content Include="Areas\Admin\Views\Product\CreateComboDetailt.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Combo\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
+
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
