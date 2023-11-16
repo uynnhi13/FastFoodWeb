@@ -207,7 +207,7 @@ namespace TMDT.Areas.Admin.Controllers
            
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
-                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate && o.conditionID == 2);
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
                 return View(orders.ToList());
             }
             else {
