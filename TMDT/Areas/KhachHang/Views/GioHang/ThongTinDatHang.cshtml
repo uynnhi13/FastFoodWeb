@@ -64,37 +64,117 @@
                     }
                     else
                     {
-                        var lstAddress = db.Address.Where(s => s.numberPhone == user.numberPhone);
-                        var addPriority = db.Address.FirstOrDefault(s => s.numberPhone == user.numberPhone && s.priority == true);
-                        <div class="billing-info-wrap">
-                            <h3>Thông Tin Đặt Hàng</h3>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    @user.fullName
-                                    @user.numberPhone
-                                    @user.gmail
-                                    @if (addPriority == null)
-                                    {
+                        <div class="col-lg-7">
+                            @using (Html.BeginForm("DongYDatHang", "GioHang", FormMethod.Post))
+                            {
+                                var lstAddress = db.Address.Where(s => s.userID == user.numberPhone);
+                                var addPriority = db.Address.FirstOrDefault(s => s.userID == user.numberPhone && s.priority == true);
+                                if (addPriority == null)
+                                {
+                                    addPriority = db.Address.FirstOrDefault(s => s.userID == user.numberPhone);
+                                }
+                                <div class="billing-info-wrap">
+                                    <h3>Thông Tin Đặt Hàng</h3>
+                                    <div class="row">
+                                        @Html.Hidden("HiddenHoTen", @addPriority.lastName + " " + @addPriority.firstName)
+                                        @Html.Hidden("HiddenNumberPhone", @addPriority.numberPhone)
+                                        @Html.Hidden("HiddenAddress", @addPriority.address1)
 
-                                    }
-                                </div>
-                                <div class="additional-info-wrap">
-                                    <div class="additional-info">
-                                        <label>Ghi Chú</label>
-                                        <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
-                                                  name="message"></textarea>
+                                        <input type="hidden" id="recipient" name="recipient" />
+                                        <input type="hidden" id="numberPhone" name="numberPhone" />
+                                        <input type="hidden" id="fullAddress" name="fullAddress" />
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <b>Tên Người Nhận:</b> <p id="hoTenShow">@addPriority.lastName @addPriority.firstName</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <b>Số Điện Thoại: </b> <p id="numberPhoneShow">@addPriority.numberPhone</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <b>Địa chỉ: </b><p id="addressShow">@addPriority.address1</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <a href="#" id="editAddressLink">Chỉnh Sửa Địa Chỉ</a>
+                                        </div>
+                                        <div class="additional-info-wrap">
+                                            <div class="additional-info">
+                                                <label>Ghi Chú</label>
+                                                <textarea placeholder="Notes about your order, e.g. special notes for delivery. "
+                                                          name="message"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-select mb-4" id="drTypePayment">
+                                                <label>Hình thức thanh toán: </label>
+                                                <select name="HinhThucThanhToan">
+                                                    <option value="1" name="HinhThucThanhToan" selected>Nhận tại Cửa hàng</option>
+                                                    <option value="2" name="HinhThucThanhToan">VNPay</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12" style="margin-bottom:15px">
+                                            <div class="form-group" id="load_form_payment" style="display:none">
+                                                <h4><label>Phương thức thanh toán: </label></h4>
+                                                <h5>Cách 1: Chuyển hướng sang VNPAY chọn phương thức thanh toán</h5>
+                                                <input type="radio" name="TypePaymentVN" value="0" style="height:15px; width:10%;" checked />Cổng thanh toán VNPAYQR
+                                                <h5>Cách 2: Tách phương thức thanh toán tại site của Merchant</h5>
+                                                <input type="radio" name="TypePaymentVN" value="1" checked style="height:15px; width:10%;" />Thanh toán qua ứng dụng hỗ trợ VNPAYQR <br>
+                                                <input type="radio" name="TypePaymentVN" value="2" checked style="height:15px; width:10%;" />ATM - Tài khoản ngân hàng nội địa <br>
+                                                <input type="radio" name="TypePaymentVN" value="3" checked style="height:15px; width:10%;" />Thanh toán qua thẻ quốc tế <br>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="billing-select mb-4">
-                                        <label>Phương thức thanh toán: </label>
-                                        <select>
-                                            <option>Nhận tại Cửa hàng</option>
-                                            <option>VNPay</option>
-                                        </select>
+                                <div>
+                                    <button type="submit" id="submit" style="background-color:darkred; padding:10px; border-radius: 5px;color:white">Đặt Hàng</button>
+                                </div>
+                                <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <!-- Nội dung của modal để chỉnh sửa địa chỉ -->
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editAddressModalLabel">Chỉnh Sửa Địa Chỉ</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @{
+                                                    foreach (var diaChi in lstAddress)
+                                                    {
+                                                        <div style="border:1px solid black; border-radius:5px; padding: 5px; margin: 5px" class="editAddressItem" data-address-id="@diaChi.addressID">
+                                                            <div>
+                                                                <div>
+                                                                    <b>Tên Người Nhận:</b> <p class="hoTenSelect">@diaChi.lastName @diaChi.firstName</p>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div>
+                                                                    <b>Số Điện Thoại: </b> <p class="numberPhoneSelect">@diaChi.numberPhone</p>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div>
+                                                                    <b>Địa chỉ: </b><p class="addressSelect">@diaChi.address1</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                                                <a href="@Url.Action("LocaAdd","NguoiDung")">Thêm địa chỉ mới</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     }
                 }
@@ -202,5 +282,121 @@
         </div>
     </div>
 </body>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#editAddressLink").click(function () {
+                // Hiển thị modal hoặc điều hướng đến trang chỉnh sửa địa chỉ
+                // Ví dụ sử dụng modal:
+                $('#editAddressModal').modal('show');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Bắt sự kiện khi người dùng chọn một địa chỉ
+            $(".editAddressItem").click(function () {
+                // Lấy thông tin địa chỉ đã chọn
+                var selectedAddress = $(this);
+
+                // Lấy các giá trị từ địa chỉ đã chọn
+                var hoTen = selectedAddress.find(".hoTenSelect").text();
+                var numberPhone = selectedAddress.find(".numberPhoneSelect").text();
+                var address = selectedAddress.find(".addressSelect").text();
+
+                // Gán các giá trị vào các trường trong form
+                $("#hoTenShow").text(hoTen);
+                $("#numberPhoneShow").text(numberPhone);
+                $("#addressShow").text(address);
+
+                //Gán các giá trị vào trường ẩn trong form
+                $("#HiddenHoTen").val(hoTen);
+                $("#HiddenNumberPhone").val(numberPhone);
+                $("#HiddenAddress").val(address);
+
+                // Gán giá trị từ form ẩn vào các trường trong form sẽ gửi đi
+                $("#recipient").val($("#HiddenHoTen").val());
+                $("#numberPhone").val($("#HiddenNumberPhone").val());
+                $("#fullAddress").val($("#HiddenAddress").val());
+
+                // Đóng modal sau khi chọn địa chỉ
+                $('#editAddressModal').modal('hide');
+            });
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            console.log('HelloWorld')
+            $("#recipient").val($("#HiddenHoTen").val());
+            $("#numberPhone").val($("#HiddenNumberPhone").val());
+            $("#fullAddress").val($("#HiddenAddress").val());
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Bắt sự kiện khi người dùng thay đổi giá trị của dropdown
+            $("#drTypePayment select").change(function () {
+                var selectedValue = $(this).val();
+                // Gửi giá trị đã chọn đến Controller hoặc lưu trữ nó để sử dụng sau này
+                console.log("Giá trị đã chọn từ dropdown: " + selectedValue);
+                $('#load_form_payment').hide();
+                if (selectedValue == "2") {
+                    $('#load_form_payment').show();
+                }
+                else $('#load_form_payment').hide();
+            });
+
+            // Bắt sự kiện khi người dùng thay đổi giá trị của radio button
+            $("#load_form_payment input[name='TypePaymentVN']").change(function () {
+                var selectedValue = $(this).val();
+                // Gửi giá trị đã chọn đến Controller hoặc lưu trữ nó để sử dụng sau này
+                console.log("Giá trị đã chọn từ radio button: " + selectedValue);
+            });
+        });
+
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // Bắt sự kiện khi form được submit
+        $("form").submit(function (event) {
+            // Ngăn chặn form submit mặc định
+            event.preventDefault();
+
+            // Gửi Ajax request để submit form
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("DongYDatHang", "GioHang")", // Điều chỉnh đường dẫn và tên controller của bạn
+                data: $("form").serialize(), // Gửi dữ liệu form
+                success: function (data) {
+                    if (data.Success) {
+                        // Xử lý thành công
+                        if (data.Code === 1) {
+                            location.href = "@Url.Action("DatHangThanhCong","GioHang")";
+                        } else if (data.Code === 2) {
+                            // Code 2: Thành công và có redirect URL
+                            location.href = data.Url;
+                        }
+                    } else {
+                        // Xử lý lỗi nếu cần
+                        console.log('Bị lỗi rồi 1');
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    // Xử lý lỗi Ajax
+                    console.log('Bị lỗi rồi 2');
+                }
+            });
+        });
+    });
+    </script>
+
+
+}
 
 
