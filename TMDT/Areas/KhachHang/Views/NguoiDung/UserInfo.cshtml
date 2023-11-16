@@ -9,6 +9,7 @@
 
 <link href="~/Areas/KhachHang/assets/css/myInfor.css" rel="stylesheet" />
 <div class="col-sm-12 col-md-9 col-lg-9">
+    <h2 style="color:#ad6868">Thông tin cá nhân</h2>
     <div class="container-xl px-4 mt-4">
         <div class="row">
             <div class="col-xl-4">
@@ -71,19 +72,28 @@
                                     <input class="form-control" id="inputPhone" type="text" value="@Model.numberPhone" readonly>
                                 </div>
                             </div>
-                          
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="button-container">
+            @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "button-style" })
+
+        </div>
     </div>
+
 
 </div>
 
 
-<p>
     <style>
+     
+        .container-xl {
+            background-color: #ffb2b280;
+            padding-top: 15px;
+        }
         .button-container {
             text-align: right; /* Đặt nút bấm bên phải */
             margin-top: 10px; /* Thêm khoảng cách phía trên nút bấm (tùy chọn) */
@@ -100,22 +110,19 @@
             border-radius: 4px; /* Bo tròn viền */
             cursor: pointer;
             transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi khi hover */
+            margin-bottom:20px;
         }
 
             .button-style:hover {
                 background-color: #a27070; /* Màu nền khi hover */
                 color:#71706f;
             }
-
+    
           
     </style>
   
 
-    <div class="button-container">
-        @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "button-style" })
-       
-    </div>
 
 
-   
-</p>
+
+

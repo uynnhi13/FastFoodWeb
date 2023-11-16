@@ -139,6 +139,9 @@
           <Property Name="recipient" Type="nvarchar" MaxLength="50" />
           <Property Name="star" Type="int" />
           <Property Name="comment" Type="nvarchar" MaxLength="1500" />
+          <Property Name="TypePayment" Type="int" />
+          <Property Name="TypePaymentVN" Type="int" />
+          <Property Name="recipientNumber" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -727,6 +730,9 @@
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
           <Property Name="star" Type="Int32" />
           <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
+          <Property Name="TypePayment" Type="Int32" />
+          <Property Name="TypePaymentVN" Type="Int32" />
+          <Property Name="recipientNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -1317,6 +1323,9 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="recipientNumber" ColumnName="recipientNumber" />
+                <ScalarProperty Name="TypePaymentVN" ColumnName="TypePaymentVN" />
+                <ScalarProperty Name="TypePayment" ColumnName="TypePayment" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="star" ColumnName="star" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />

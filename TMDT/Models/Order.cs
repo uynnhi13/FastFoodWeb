@@ -31,6 +31,9 @@ namespace TMDT.Models
         public string recipient { get; set; }
         public Nullable<int> star { get; set; }
         public string comment { get; set; }
+        public Nullable<int> TypePayment { get; set; }
+        public Nullable<int> TypePaymentVN { get; set; }
+        public string recipientNumber { get; set; }
     
         public virtual Condition Condition { get; set; }
         public virtual Employees Employees { get; set; }

@@ -6,7 +6,10 @@
 }
 
 <div class="col-sm-12 col-md-9 col-lg-9">
-    <h2>Chỉnh sửa thông tin cá nhân </h2>
+    <h2 style="color: #ad6868">Chỉnh sửa thông tin cá nhân </h2>
+
+
+
     @using (Html.BeginForm("UserEdit", "NguoiDung", FormMethod.Post, new { @class = "tm-login-form" }))
     {
         @Html.AntiForgeryToken()
@@ -68,6 +71,10 @@
     }
 
     <style>
+        .col-lg-9 {
+            background-color: #ffcece;
+            padding-top:10px;
+        }
         /* Định dạng nút Save */
         .btn-primary {
             display: inline-block;
@@ -94,7 +101,7 @@
 
         .form-control {
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 10px;
             padding: 8px;
             width: 100%;
             box-sizing: border-box;

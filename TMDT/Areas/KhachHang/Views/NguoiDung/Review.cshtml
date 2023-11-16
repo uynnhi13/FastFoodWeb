@@ -4,110 +4,128 @@
     ViewBag.Title = "Review";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
+<div class="col-sm-12 col-md-9 col-lg-9">
+    
+        <div class="row">
+            <div class="col-md-6">
+                <div class="order-info">
+                    <h4>Order Information</h4>
+                  
+                    <dl class="dl-horizontal">
 
-<h2>Review</h2>
+                   
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.datetime)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.datetime)
-        </dd>
+                        <dt>Gmail</dt>
+                        <dd>@Html.DisplayFor(model => model.User.gmail)</dd>
+                        <dt>
+                            Ghi Chú
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.note)
+                        </dd>
+                        <dt>
+                            Giá
+                        </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.note)
-        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.total)
+                        </dd>
+                        <dt>
+                            Địa chỉ
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.fullAddress)
+                        </dd>
+                        <dt>
+                            Nhân viên
+                        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.note)
-        </dd>
+                        <dd>
+                            @Html.DisplayFor(model => model.Employees.FirstName)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="submit-review">
+                    <h4>Submit Review</h4>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.total)
-        </dt>
+                    @using (Html.BeginForm("SubmitReview", "NguoiDung", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.orderID) <!-- Truyền OrderId ẩn đi -->
 
-        <dd>
-            @Html.DisplayFor(model => model.total)
-        </dd>
+                        <div class="form-group">
+                            <label for="star">Đánh giá:</label>
+                            @Html.DropDownListFor(model => model.star, Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control", required = "required" })
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.fullAddress)
-        </dt>
+                        <div class="form-group">
+                            <label for="comment">Bình Luận:</label>
+                            @Html.TextAreaFor(model => model.comment, new { @class = "form-control", required = "required" })
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.fullAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.recipient)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.recipient)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.star)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.star)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.comment)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.comment)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Condition.nameCon)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Condition.nameCon)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Employees.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Employees.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.gmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.gmail)
-        </dd>
-
-    </dl>
-</div>
-
-@using (Html.BeginForm("SubmitReview", "NguoiDung", FormMethod.Post))
-{
-    @Html.HiddenFor(model => model.orderID) <!-- Truyền OrderId ẩn đi -->
-
-    <div class="form-group">
-        <label for="star">Star:</label>
-        @Html.DropDownListFor(model => model.star, Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control", required = "required" })
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="comment">Comment:</label>
-        @Html.TextAreaFor(model => model.comment, new { @class = "form-control", required = "required" })
-    </div>
+    <style>
 
-    <button type="submit" class="btn btn-primary">Submit Review
-    </button>
-}
+     
+        /* Phần Order Information */
+        .order-info {
+            background-color: #fcd8d8;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            padding:10px;
+        }
+
+            .order-info h4 {
+                color: #333;
+                font-weight: bold;
+                padding-top: 10px;
+                text-align:center;
+            }
+
+            .order-info dl {
+                margin-bottom: 0;
+            }
+
+                .order-info dl dt {
+                    font-weight: bold;
+                    margin-top: 10px;
+                }
+
+                .order-info dl dd {
+                    margin-bottom: 10px;
+                }
+
+        /* Phần Submit Review */
+        .submit-review {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #ffcdcd;
+            box-shadow: 1px 4px 3px rgb(255 136 136 / 61%); /* Thêm shadow */
+        }
+
+            .submit-review h4 {
+                color: #333;
+                font-weight: bold;
+                margin-top: 0;
+            }
+
+            .submit-review hr {
+                border-top: 1px solid #ccc;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            .submit-review .form-group {
+                margin-bottom: 20px;
+            }
+
+    </style>

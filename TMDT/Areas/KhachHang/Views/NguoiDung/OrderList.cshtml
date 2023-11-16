@@ -8,7 +8,7 @@
 }
 
 <div class="col-sm-12 col-md-9 col-lg-9">
-    <h3>Danh sách đơn hàng</h3>
+    <h3 style="color: #ad6868">Danh sách đơn hàng</h3>
 
     @using (Html.BeginForm("OrderList", "NguoiDung", FormMethod.Get))
     {
@@ -49,7 +49,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.numberPhone)
+                            @Html.DisplayFor(modelItem => item.recipientNumber)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.orderID)
