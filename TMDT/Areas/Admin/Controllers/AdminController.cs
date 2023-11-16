@@ -237,7 +237,26 @@ namespace TMDT.Areas.Admin.Controllers
 
             return RedirectToAction("DonHang", "Admin");
         }
-       
+       public ActionResult Dagiao(int? id)
+        {
+            if (id == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order donhang = database.Order.Find(id);
+
+            donhang.conditionID = 3;
+            //if (donhang.employeeID == null) {
+            //    var searchU = (Employees)Session["user"];
+            //    donhang.employeeID = searchU.EmployeeID;
+
+            //}
+            database.SaveChanges();
+            if (donhang == null) {
+                return HttpNotFound();
+            }
+
+            return RedirectToAction("DonHang", "Admin");
+        }
 
         public ActionResult DetailsDH(int id)
         {

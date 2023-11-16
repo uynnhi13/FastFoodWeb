@@ -58,6 +58,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,13 +74,16 @@
 
                                     @{ if (Oder.conditionID == 1)
                                         {
-                                            <h5 style="color:red">Đang chờ xác nhận. </h5>
+                                            <h5 style="color:red">Chưa xác nhận. </h5>
                                         }
                                         else if (Oder.conditionID == 2)
                                         {
                                             <h5 style="color:green">Đã xác nhận.  </h5>
                                         }
-
+                                        else if (Oder.conditionID == 3)
+                                        {
+                                            <h5 style="color:goldenrod">Đã giao.  </h5>
+                                        }
 
 
                                     }
@@ -101,7 +105,21 @@
                                     }
                                 </td>
 
+                                 <td>
+                                    @{
+                                        if (Oder.conditionID == 2)
+                                        {
 
+                                            <p>
+                                                @Html.ActionLink("Đã giao", "Dagiao", new
+                                                {
+                                                    id = Oder.orderID
+                                                    })
+                                            </p>
+
+                                        }
+                                    }
+                                </td>
                                 <td>
 
                                     @Html.ActionLink("Chi tiết", "DetailsDH", new { id = Oder.orderID })
