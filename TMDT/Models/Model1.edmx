@@ -119,7 +119,7 @@
           <Key>
             <PropertyRef Name="orderID" />
           </Key>
-          <Property Name="orderID" Type="int" Nullable="false" />
+          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="datetime" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="note" Type="nvarchar" MaxLength="500" />
@@ -402,13 +402,6 @@
           <Parameter Name="typeID" Type="int" Mode="In" />
           <Parameter Name="priceUp" Type="money" Mode="In" />
         </Function>
-        <Function Name="createRecipe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ProductName" Type="nvarchar" Mode="In" />
-          <Parameter Name="ProductPrice" Type="money" Mode="In" />
-          <Parameter Name="ProductPriceUp" Type="money" Mode="In" />
-          <Parameter Name="ProductImage" Type="nvarchar" Mode="In" />
-          <Parameter Name="ProductTypeID" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetNewComboID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <EntityContainer Name="TMDTThucAnNhanhModelStoreContainer">
           <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
@@ -631,7 +624,7 @@
           <Key>
             <PropertyRef Name="orderID" />
           </Key>
-          <Property Name="orderID" Type="Int32" Nullable="false" />
+          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="datetime" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -1013,13 +1006,6 @@
             <Parameter Name="typeID" Mode="In" Type="Int32" />
             <Parameter Name="priceUp" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="createRecipe">
-            <Parameter Name="ProductName" Mode="In" Type="String" />
-            <Parameter Name="ProductPrice" Mode="In" Type="Decimal" />
-            <Parameter Name="ProductPriceUp" Mode="In" Type="Decimal" />
-            <Parameter Name="ProductImage" Mode="In" Type="String" />
-            <Parameter Name="ProductTypeID" Mode="In" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1241,7 +1227,6 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddProductAndCombo" FunctionName="TMDTThucAnNhanhModel.Store.AddProductAndCombo" />
-          <FunctionImportMapping FunctionImportName="createRecipe" FunctionName="TMDTThucAnNhanhModel.Store.createRecipe" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

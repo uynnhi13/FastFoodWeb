@@ -45,7 +45,7 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult Create([Bind(Include = "nameCombo,sale")] Combo combo, HttpPostedFileBase HinhAnh)
         {
             try {
-                if ((HinhAnh != null && HinhAnh.ContentLength > 0) && ModelState.IsValid) {
+                if (HinhAnh != null && HinhAnh.ContentLength > 0) {
                     // luu file
                     string Noiluu = Server.MapPath("/Images/Product/");
                     String PathImg = Noiluu + HinhAnh.FileName;
@@ -82,11 +82,13 @@ namespace TMDT.Areas.Admin.Controllers
 
 
                     ViewBag.notification = true;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index","Product",db.Combo);
                 }
                 else {
+                    var lsitemCombo = new List<itemProduct>();
+                    lsitemCombo = LayCombo();
                     ViewBag.notification = false;
-                    return View("Create");
+                    return View("Create",lsitemCombo);
                 }
             }
             catch (Exception e) {
