@@ -5,6 +5,11 @@
     string message = ViewBag.message as string;
 }
 
+@section style{
+
+
+}
+
 <div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
     <div class="bg-white tm-block h-100">
         <div class="row">
@@ -28,15 +33,17 @@
                 $(document).ready(function () {
                     // Thêm hiệu ứng CSS mỗi giây
                     setTimeout(function () {
-                        $('#message').css('Height',0);
+                        $('#message').css('Height', 0);
                     }, 1000); // 1000ms = 1 giây
                 });
             </script>
         </div>
         <div class="table-responsive">
-            @using (Html.BeginForm("CreateRecipe", "Ingredients", new { @class = "tm-edit-product-form",
-                    enctype = "multipart/form-data"
-                }))
+            @using (Html.BeginForm("CreateRecipe", "Ingredients", new
+            {
+                @class = "tm-edit-product-form",
+                enctype = "multipart/form-data"
+            }))
             {
                 <table class="table table-hover table-striped tm-table-striped-even mt-3">
                     <thead>
@@ -101,52 +108,14 @@
         </div>
     </div>
 </div>
+
+
+
 @section Scripts{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-
-        @*$(document).ready(function () {
-            $(".col-product").click(function () {
-                var checkedValues = $(this).find(".checkbox:checked").map(function () {
-                    return $(this).find(".checkbox:checked").val();
-                }).toArray();
-                console.log(checkedValues);
-                $.ajax({
-                    url: "@Url.Action("CrRecipe", "Ingredients")",
-                    dataType: "json",
-                    type: "POST",
-                    contentType: 'application/json; charset=utf-8',
-                    data: {id:1},
-                    async: true,
-                    processData: false,
-                    cache: false,
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr) {
-                    alert('error');
-                    }
-
-                });
-            })
-        })*@
-/*
         $(document).ready(function () {
-            // Sự kiện khi checkbox thay đổi trạng thái
-            $('input[type="checkbox"]').change(function () {
-                // Kiểm tra trạng thái của checkbox
-                if ($(this).prop('checked')) {
-                    // Lấy giá trị của input quantity trong cùng một hàng
-                    var quantityValue = $(this).closest('tr').find('input[name="quantity"]').val();
-                    var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
-                    console.log("Quantity Value:", quantityValue); console.log("ingID Value:", ingID);
-                } else {
 
-                }
-            });
-        });*/
-
-        $(document).ready(function () {
             $('#btnTao').click(function () {
 
                 $('tr.col-product').each(function (index, value) {
@@ -190,7 +159,7 @@
 
                     addRecipe(parseInt(ingID), parseFloat(quantityValue));
                 }
-                
+
             });
 
             function addRecipe(_id, _quantity) {

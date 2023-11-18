@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TMDT.Models.Employees>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách nhân viên</h2>
+            </div>
+            <div class="col text-right row">
+                <a href="~/Admin/Employee/Create" class="btn btn-small btn-primary">Thêm nhân viên</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                <thead>
+                    <tr class="tm-bg-gray">
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">Họ tên</th>
+                        <th scope="col" class="text-center">Email</th>
+                        <th scope="col">Ảnh nhân viên</th>
+                        <th scope="col">SDT</th>
+                        <th scope="col">Chức vụ</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <input type="checkbox" aria-label="Checkbox">
+                            </th>
+                            <td class="tm-product-name">@item.LastName @item.FirstName</td>
+                            <td class="text-center">@item.Email</td>
+                            <td class="text-center">@item.imgEP</td>
+                            <td class="text-center">@item.numberPhone</td>
+                            <td class="text-center">@item.Position.posName</td>
+
+                            <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

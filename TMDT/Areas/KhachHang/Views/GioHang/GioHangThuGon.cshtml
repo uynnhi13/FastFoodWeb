@@ -1,9 +1,9 @@
 ﻿@using TMDT.Models
 @model List<MatHangMua>
 
-<a href="#offcanvas-cart"
+<a id="openCart" href="#offcanvas-cart"
    class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
-    <i class="pe-7s-shopbag"></i>
+    <i  class="pe-7s-shopbag"></i>
     <span class="header-action-num">@ViewBag.TongSL</span>
     <!-- <span class="cart-amount">€30.00</span> -->
 </a>
@@ -20,7 +20,7 @@
                 {
                     <li>
                         <a href="single-product.html" class="image">
-                            <img src="~/Areas/KhachHang/assets/images/product-image/@item.image"
+                            <img src="@item.image" style="height: 50px; object-fit: contain"
                                  alt="Cart product Image">
                         </a>
                         <div class="content">
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-@section Scripts{
+@section scripts{
 
     <script>
         function XoaSanPham(comboID, size) {
@@ -69,6 +69,28 @@
                 }
             });
         }
+        $(document).ready(() => {
+
+            $('#openCart').click(() => getGioHang())
+
+            function getGioHang() {
+                console.log('getGioHang')
+            $.ajax({
+                url: "/GioHang/LayGioHangMini",
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    console.log('--------------')
+                    var dataArray = Object.values(data);
+                    alert(data.comboID)
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+                });
+            }
+        })
 
 
     </script>

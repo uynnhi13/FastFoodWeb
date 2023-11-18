@@ -113,6 +113,16 @@ namespace TMDT.Areas.KhachHang.Controllers
             return PartialView(gioHang);
         }
 
+        [HttpPost]
+        public JsonResult LayGioHangMini()
+        {
+            List<MatHangMua> gioHang = LayGioHang();
+
+            ViewBag.TongSL = TinhTongSL();
+            ViewBag.TongTien = TinhTongTien();
+            return Json(gioHang);
+        }
+
         public ActionResult XoaGioHang()
         {
             Session["GioHang"] = null;
