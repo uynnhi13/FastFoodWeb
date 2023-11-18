@@ -327,14 +327,10 @@ namespace TMDT.Areas.KhachHang.Controllers
 
 
 
-        public ActionResult OrderDetail()
+        public ActionResult OrderDetail(int id)
         {
-
-            var user = (User)Session["TaiKhoan"];
-
-            var ordt = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
-
-            return View(ordt);
+            var order = db.Order.FirstOrDefault(s => s.orderID == id);
+            return View(order);
 
         }
 

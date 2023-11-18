@@ -30,10 +30,10 @@
         </div>
 
         <div>
-            From Date: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-            To Date: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            Từ: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            Đến: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
 
-            <button type="submit" class="bg-white">Lọc đơn hàng</button>
+           
         </div>
     }
 
@@ -156,6 +156,25 @@
             .form-group.form-inline input[type="submit"]:focus {
                 background-color: #f73c3c; /* Change background color on hover/focus */
             }
+
+        /* Style for date input */
+        input[type="date"] {
+            width: 150px; /* Adjust width as needed */
+            padding: 8px; /* Add padding for appearance */
+            border: 1px solid #ccc; /* Add border */
+            border-radius: 4px; /* Rounded corners */
+            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-top:10px;/* Adjust spacing */
+        }
+
+        /* Style for the container of date inputs */
+        div.date-container {
+            margin-bottom: 20px; /* Adjust spacing */
+        }
+
+
+
     </style>
 
     <script>var endDateField = document.getElementById("enddate");
