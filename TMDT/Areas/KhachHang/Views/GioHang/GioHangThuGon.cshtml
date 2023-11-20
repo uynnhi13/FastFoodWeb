@@ -3,8 +3,8 @@
 
 <a id="openCart" href="#offcanvas-cart"
    class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
-    <i  class="pe-7s-shopbag"></i>
-    <span class="header-action-num">@ViewBag.TongSL</span>
+    <i class="pe-7s-shopbag"></i>
+    <span id="soLuongGioHang" class="header-action-num">@ViewBag.TongSL</span>
     <!-- <span class="cart-amount">€30.00</span> -->
 </a>
 <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
@@ -15,7 +15,7 @@
         </div>
 
         <div class="body customScroll">
-            <ul class="minicart-product-list">
+            <ul id="lsCartMini" class="minicart-product-list">
                 @foreach (var item in Model)
                 {
                     <li>
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-@section scripts{
+@section PartialSection{
 
     <script>
         function XoaSanPham(comboID, size) {
@@ -69,30 +69,6 @@
                 }
             });
         }
-        $(document).ready(() => {
-
-            $('#openCart').click(() => getGioHang())
-
-            function getGioHang() {
-                console.log('getGioHang')
-            $.ajax({
-                url: "/GioHang/LayGioHangMini",
-                dataType: "json",
-                type: "POST",
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    console.log('--------------')
-                    var dataArray = Object.values(data);
-                    alert(data.comboID)
-                },
-                error: function (xhr) {
-                    alert('error');
-                }
-                });
-            }
-        })
-
-
     </script>
 }
 

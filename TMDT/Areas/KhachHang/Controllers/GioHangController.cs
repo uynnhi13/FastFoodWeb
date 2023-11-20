@@ -120,7 +120,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             ViewBag.TongSL = TinhTongSL();
             ViewBag.TongTien = TinhTongTien();
-            return Json(gioHang);
+            return Json(new { soluong = TinhTongSL(), tongtien = TinhTongTien(), gioHang = gioHang } , JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult XoaGioHang()

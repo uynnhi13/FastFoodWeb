@@ -206,7 +206,8 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a class="dropdown-item" href="@Url.Action("UserInfor","NguoiDung")">Tài Khoản</a>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("UserInfo","NguoiDung")">Tài Khoản</a>
                                             </li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
@@ -784,6 +785,78 @@
 
 
     @RenderSection("scripts", required: false)
+<script>
+    $(document).ready(() => {
+
+        $('.add-to-cart').each(function () {
+            // Do something with each element
+            $(this).click(() => {
+                // Your custom functionality here
+                getGioHang();
+            });
+        });
+
+        $('#openCart').click(() => {
+            getGioHang()
+        })
+
+        function getGioHang() {
+            console.log('getGioHang')
+            $.ajax({
+                url: "/GioHang/LayGioHangMini",
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    var tongtien = data.tongtien;
+                    var soluong = data.soluong;
+                    var gioHang = data.gioHang;
+
+                    $('#soLuongGioHang').text(soluong);
+
+                    deleteCart()
+
+                    $.each(gioHang, function (index, item) {
+                        addTabCart(item.image, item.soLuong, item.name, item.price, item.ComboID, item.size)
+                    });
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        }
+
+        function deleteCart() {
+            $('#lsCartMini').empty();
+        }
+
+        function addTabCart(image, soluong, name, price, ComboID, size) {
+
+            const number = price;
+
+            // Format số thành giá tiền với toLocaleString()
+            const formattedNumber = number.toLocaleString('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            });
+
+            $('#lsCartMini').append(`
+                        <li>
+                            <a href="single-product.html" class="image">
+                                <img src="${image}" style="height: 50px; object-fit: contain"
+                                     alt="Cart product Image">
+                            </a>
+                            <div class="content">
+                                <a href="single-product.html" class="title">${name}</a>
+                                <span class="quantity-price">${soluong} x ${formattedNumber}</span>
+                                <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
+                            </div>
+                        </li>`
+            )
+        }
+    })
+</script>
 </body>
 
 </html>

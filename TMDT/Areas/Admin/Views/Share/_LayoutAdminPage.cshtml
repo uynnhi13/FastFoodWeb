@@ -29,7 +29,9 @@
     <link href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css" rel="stylesheet" />
 
     <style>
-
+        .overflow-hidden {
+            overflow: hidden;
+        }
 
         #loading {
             position: absolute;
@@ -256,9 +258,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--gg map cdn-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5.1/jquery.googlemap.min.js" integrity="sha512-mTxKPggCYbMylBEGHSZqkUvemhyjRIshmudjw6fiAxjVbKMZUqqVH/ugpvnQgOU4c4C2UhrWpOXkBeXFQfr9kA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        $('body').addClass('overflow-hidden');
+
         $(document).ready(function () {
             $('#loading').hide();
+            $('body').addClass('overflow-hidden');
+            $('body').removeClass('overflow-hidden');
         })
     </script>
     @RenderSection("Scripts", required: false)
