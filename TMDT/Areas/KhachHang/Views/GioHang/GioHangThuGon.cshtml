@@ -42,33 +42,3 @@
     </div>
 </div>
 
-@section PartialSection{
-
-    <script>
-        function XoaSanPham(comboID, size) {
-            $.ajax({
-                type: "POST",
-                url: "/GioHang/XoaSanPham",
-                data: { comboID: comboID, size: size },
-                success: function (result) {
-                    if (result.success) {
-                        var update = document.getElementById('updateSoLuong');
-                        // Xóa sản phẩm thành công, thực hiện cập nhật giao diện
-                        // Ví dụ: xóa dòng sản phẩm khỏi bảng giỏ hàng
-                        $(`[data-comboid="${comboID}"]`).closest('tr').remove();
-                        @*//update.textContent = '@TongSoLuong';*@
-
-
-                    } else {
-                        // Xóa sản phẩm thất bại, xử lý lỗi nếu cần
-                        console.error(result.error);
-                    }
-                },
-                error: function () {
-                    // Xử lý lỗi Ajax
-                }
-            });
-        }
-    </script>
-}
-

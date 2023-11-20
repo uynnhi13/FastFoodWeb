@@ -786,76 +786,100 @@
 
     @RenderSection("scripts", required: false)
 <script>
-    $(document).ready(() => {
+        $(document).ready(() => {
 
-        $('.add-to-cart').each(function () {
-            // Do something with each element
-            $(this).click(() => {
-                // Your custom functionality here
-                getGioHang();
+            $('.add-to-cart').each(function () {
+                // Do something with each element
+                $(this).click(() => {
+                    // Your custom functionality here
+                    getGioHang();
+                });
             });
-        });
 
-        $('#openCart').click(() => {
-            getGioHang()
+            $('#openCart').click(() => {
+                getGioHang()
+            })
+
+            function getGioHang() {
+                console.log('getGioHang')
+                $.ajax({
+                    url: "/GioHang/LayGioHangMini",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+
+                        var tongtien = data.tongtien;
+                        var soluong = data.soluong;
+                        var gioHang = data.gioHang;
+
+                        $('#soLuongGioHang').text(soluong);
+
+                        deleteCart()
+
+                        $.each(gioHang, function (index, item) {
+                            addTabCart(item.image, item.soLuong, item.name, item.price, item.ComboID, item.size)
+                        });
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+            function deleteCart() {
+                $('#lsCartMini').empty();
+            }
+
+            function addTabCart(image, soluong, name, price, ComboID, size) {
+
+                const number = price;
+
+                // Format số thành giá tiền với toLocaleString()
+                const formattedNumber = number.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+
+                $('#lsCartMini').append(`
+                            <li>
+                                <a href="single-product.html" class="image">
+                                    <img src="${image}" style="height: 50px; object-fit: contain"
+                                         alt="Cart product Image">
+                                </a>
+                                <div class="content">
+                                    <a href="single-product.html" class="title">${name}</a>
+                                    <span class="quantity-price">${soluong} x ${formattedNumber}</span>
+                                    <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
+                                </div>
+                            </li>`
+                )
+            }
+
+            function XoaSanPham(comboID, size) {
+                $.ajax({
+                    type: "POST",
+                    url: "/GioHang/XoaSanPham",
+                    data: { comboID: comboID, size: size },
+                    success: function (result) {
+                        if (result.success) {
+                            var update = document.getElementById('updateSoLuong');
+                            // Xóa sản phẩm thành công, thực hiện cập nhật giao diện
+                            // Ví dụ: xóa dòng sản phẩm khỏi bảng giỏ hàng
+
+
+
+                        } else {
+                            // Xóa sản phẩm thất bại, xử lý lỗi nếu cần
+                            console.error(result.error);
+                        }
+                    },
+                    error: function () {
+                        // Xử lý lỗi Ajax
+                    }
+                });
+            }
         })
-
-        function getGioHang() {
-            console.log('getGioHang')
-            $.ajax({
-                url: "/GioHang/LayGioHangMini",
-                dataType: "json",
-                type: "POST",
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-
-                    var tongtien = data.tongtien;
-                    var soluong = data.soluong;
-                    var gioHang = data.gioHang;
-
-                    $('#soLuongGioHang').text(soluong);
-
-                    deleteCart()
-
-                    $.each(gioHang, function (index, item) {
-                        addTabCart(item.image, item.soLuong, item.name, item.price, item.ComboID, item.size)
-                    });
-                },
-                error: function (xhr) {
-                    alert('error');
-                }
-            });
-        }
-
-        function deleteCart() {
-            $('#lsCartMini').empty();
-        }
-
-        function addTabCart(image, soluong, name, price, ComboID, size) {
-
-            const number = price;
-
-            // Format số thành giá tiền với toLocaleString()
-            const formattedNumber = number.toLocaleString('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            });
-
-            $('#lsCartMini').append(`
-                        <li>
-                            <a href="single-product.html" class="image">
-                                <img src="${image}" style="height: 50px; object-fit: contain"
-                                     alt="Cart product Image">
-                            </a>
-                            <div class="content">
-                                <a href="single-product.html" class="title">${name}</a>
-                                <span class="quantity-price">${soluong} x ${formattedNumber}</span>
-                                <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
-                            </div>
-                        </li>`
-            )
-        }
-    })
 </script>
 </body>
 
