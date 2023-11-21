@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -91,8 +94,10 @@ namespace TMDT.Areas.Admin.Controllers
                 }
             }
 
-            ViewBag.test = test;
+            List<ingre> lstingre = new List<ingre>();
+            Session["ingre"] = lstingre;
 
+            ViewBag.test = test;
             ViewBag.unitID = new SelectList(db.Unit, "unitID", "nameU");
             var ingredient = db.Ingredient.Include(i => i.Unit);
             return View(ingredient);
@@ -139,7 +144,7 @@ namespace TMDT.Areas.Admin.Controllers
 
                     List<ingre> lsDeci = LayIngre();
 
-                    db.createRecipe(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
+                    db.createRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
 
 
@@ -158,6 +163,7 @@ namespace TMDT.Areas.Admin.Controllers
             }
 
         }
+
 
         [HttpPost]
         public JsonResult CrRecipe(int id, double quantity)

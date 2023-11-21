@@ -171,8 +171,8 @@
                                         <div class="product">
                                             <div class="thumb">
                                                 <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
-                                                    <img style="width:270px" src="~/Areas/KhachHang/assets/images/product-image/@productItem.image" alt="Product" />
-                                                    <img style="width:270px" class="hover-image" src="~/Areas/KhachHang/assets/images/product-image/@productItem.image"
+                                                    <img style="width:270px; height: 300px ; object-fit: contain" src="@productItem.image" alt="Product" />
+                                                    <img style="width: 270px; height: 300px; object-fit: contain" class="hover-image" src="@productItem.image"
                                                          alt="Product" />
                                                 </a>
                                                 <span class="badges">
@@ -219,8 +219,8 @@
                                         <div class="product">
                                             <div class="thumb">
                                                 <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
-                                                    <img style="width:270px" src="~/Areas/KhachHang/assets/images/product-image/@item.image" alt="Product" />
-                                                    <img style="width:270px" class="hover-image" src="~/Areas/KhachHang/assets/images/product-image/@item.image"
+                                                    <img style="width: 270px; height: 300px; object-fit: contain" src="@item.image" alt="Product" />
+                                                    <img style="width: 270px; height: 300px; object-fit: contain" class="hover-image" src="@item.image"
                                                          alt="Product" />
                                                 </a>
                                                 <span class="badges">

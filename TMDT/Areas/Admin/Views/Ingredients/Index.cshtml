@@ -45,7 +45,9 @@
                             <td class="text-center">@item.quantity</td>
                             <td class="text-center">@item.quantityMin</td>
                             <td class="text-center">@item.Unit.nameU</td>
-                            <td class="text-center">@item.arrivalDate</td>
+                            <td class="text-center">
+                                @item.arrivalDate.ToString("dd-MM-yyyy")
+                            </td>
                             <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                         </tr>
                     }

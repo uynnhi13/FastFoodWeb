@@ -30,13 +30,13 @@
                             <div class="swiper-slide zoom-image-hover">
                                 @if (Model.typeCombo == true)
                                 {
-                                    <img class="img-responsive m-auto" src="~/Areas/KhachHang/assets/images/product-image/@Model.image"
-                                         alt="" style="width:270px;height:307px">
+                                    <img class="@Model.image" src="@Model.image"
+                                         alt="" style=" width: 270px; height: 300px; object-fit: contain">
                                 }
                                 else
                                 {
-                                    <img class="img-responsive m-auto" src="~/Areas/KhachHang/assets/images/product-image/@productID.image"
-                                         alt="" style="width:270px;height:307px">
+                                    <img class="@productID.image" src="@productID.image"
+                                         alt="" style="width: 270px; height: 300px; object-fit: contain">
                                 }
                             </div>
                         </div>
