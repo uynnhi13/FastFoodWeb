@@ -1,0 +1,106 @@
+﻿@model TMDT.Models.Ingredient
+
+@{
+    ViewBag.Title = "Create"; 
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<br />
+<br />
+<div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
+    <div class="bg-white tm-block">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="tm-block-title d-inline-block">Add Product</h2>
+            </div>
+        </div>
+        <div class="row mt-4 tm-edit-product-row">
+            <div class="col-xl-7 col-lg-7 col-md-12">
+                @using (Html.BeginForm("Create", "Ingredients", new { @class = "tm-edit-product-form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>Ingredient</h4>
+                        <hr />
+
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Thêm số lượng thực phẩm
+                                </label>
+                            </div>
+                        </div>
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Tên nguyên liệu</label>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ingName, new { htmlAttributes = new { @class = "form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" } })
+                                @Html.ValidationMessageFor(model => model.ingName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Đơn vị</label>
+                            <div class="col-md-10">
+                                @Html.DropDownList("unitID", null, htmlAttributes: new { @class = "custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" })
+                                @Html.ValidationMessageFor(model => model.unitID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="quantity">
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts{
+    <script>
+        var input = $("#flexCheckDefault");
+        var quantityDiv = $(".quantity");
+        input.on("change", function () {
+            if (input.prop("checked")) {
+                console.log('check');
+                var htmlToAdd = `
+                        <div class="form-group">
+                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Số lượng</label>
+                            <div class="col-md-10">
+                                <input type="text" name="quantity" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Số lượng tối thiểu</label>
+                            <div class="col-md-10">
+                                <input type="text" name="quantityMin" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    `;
+                quantityDiv.empty().append(htmlToAdd);
+            } else {
+                console.log('uncheck');
+                quantityDiv.empty();
+            }
+        });
+    </script>
+
+
+}

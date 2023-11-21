@@ -12,23 +12,13 @@ namespace TMDT.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ComboDetail
+    public partial class WishList
     {
-        public ComboDetail() { }
-        public ComboDetail(int comboID, int cateID, int quantity, bool? sizeUP)
-        {
-            this.comboID = comboID;
-            this.cateID = cateID;
-            this.quantity = quantity;
-            this.sizeUP = sizeUP;
-        }
-
+        public string numberPhone { get; set; }
         public int comboID { get; set; }
-        public int cateID { get; set; }
-        public int quantity { get; set; }
-        public Nullable<bool> sizeUP { get; set; }
+        public decimal price { get; set; }
     
         public virtual Combo Combo { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

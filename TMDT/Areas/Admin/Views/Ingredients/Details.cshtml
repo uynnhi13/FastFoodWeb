@@ -1,0 +1,60 @@
+﻿@model TMDT.Models.Ingredient
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<br />
+<br />
+<h2>Details</h2>
+
+<div>
+    <h4>Ingredient</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ingName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ingName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantityMin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantityMin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.arrivalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.arrivalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.nameU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.nameU)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ingID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

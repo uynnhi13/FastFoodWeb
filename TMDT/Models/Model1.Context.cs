@@ -14,7 +14,11 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Data.SqlClient;
+    using System.Data;
+    using System.Web.Mvc;
+    using System.Collections.Generic;
+
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
         public TMDTThucAnNhanhEntities()
@@ -27,6 +31,7 @@ namespace TMDT.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<AdminUser> AdminUser { get; set; }
         public virtual DbSet<Category> Category { get; set; }
@@ -46,6 +51,7 @@ namespace TMDT.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<WishList> WishList { get; set; }
     
         public virtual int AddProductAndCombo(string name, Nullable<decimal> price, string image, Nullable<int> typeID, Nullable<decimal> priceUp)
         {

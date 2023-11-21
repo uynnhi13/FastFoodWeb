@@ -19,6 +19,7 @@ namespace TMDT.Models
         {
             this.ComboDetail = new HashSet<ComboDetail>();
             this.OrderDetail = new HashSet<OrderDetail>();
+            this.WishList = new HashSet<WishList>();
         }
     
         public int comboID { get; set; }
@@ -32,5 +33,7 @@ namespace TMDT.Models
         public virtual ICollection<ComboDetail> ComboDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WishList> WishList { get; set; }
     }
 }
