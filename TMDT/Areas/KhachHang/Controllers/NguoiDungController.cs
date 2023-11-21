@@ -26,13 +26,12 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Gmail không được để trống");
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
-
                 var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
-                if (kiemTraUser != null & kiemTraUser.password != null)
+                if (kiemTraUser != null && kiemTraUser.password != null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
 
                 if (ModelState.IsValid) {
-                    if (kiemTraUser != null & kiemTraUser.password == null) {
+                    if (kiemTraUser != null && kiemTraUser.password == null) {
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
                         kiemTraUser.password = user.password;
