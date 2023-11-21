@@ -1,10 +1,10 @@
 ﻿@using TMDT.Models
 @model List<MatHangMua>
 
-<a href="#offcanvas-cart"
+<a id="openCart" href="#offcanvas-cart"
    class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
     <i class="pe-7s-shopbag"></i>
-    <span class="header-action-num">@ViewBag.TongSL</span>
+    <span id="soLuongGioHang" class="header-action-num">@ViewBag.TongSL</span>
     <!-- <span class="cart-amount">€30.00</span> -->
 </a>
 <div id="offcanvas-cart" class="offcanvas offcanvas-cart">
@@ -15,12 +15,12 @@
         </div>
 
         <div class="body customScroll">
-            <ul class="minicart-product-list">
+            <ul id="lsCartMini" class="minicart-product-list">
                 @foreach (var item in Model)
                 {
                     <li>
                         <a href="single-product.html" class="image">
-                            <img src="~/Areas/KhachHang/assets/images/product-image/@item.image"
+                            <img src="@item.image" style="height: 50px; object-fit: contain"
                                  alt="Cart product Image">
                         </a>
                         <div class="content">
@@ -41,36 +41,4 @@
         </div>
     </div>
 </div>
-
-@section Scripts{
-
-    <script>
-        function XoaSanPham(comboID, size) {
-            $.ajax({
-                type: "POST",
-                url: "/GioHang/XoaSanPham",
-                data: { comboID: comboID, size: size },
-                success: function (result) {
-                    if (result.success) {
-                        var update = document.getElementById('updateSoLuong');
-                        // Xóa sản phẩm thành công, thực hiện cập nhật giao diện
-                        // Ví dụ: xóa dòng sản phẩm khỏi bảng giỏ hàng
-                        $(`[data-comboid="${comboID}"]`).closest('tr').remove();
-                        @*//update.textContent = '@TongSoLuong';*@
-
-
-                    } else {
-                        // Xóa sản phẩm thất bại, xử lý lỗi nếu cần
-                        console.error(result.error);
-                    }
-                },
-                error: function () {
-                    // Xử lý lỗi Ajax
-                }
-            });
-        }
-
-
-    </script>
-}
 

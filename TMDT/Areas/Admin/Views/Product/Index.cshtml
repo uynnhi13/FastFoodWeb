@@ -15,7 +15,7 @@
                 <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
             </div>
             <div class="col text-right row">
-                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary mr-3">Thêm combo</a>
+                <a href="~/Admin/Product/CreateComboDetailt" class="btn btn-small btn-primary mr-3">Thêm combo</a>
                 <a href="~/Admin/Product/Create" class="btn btn-small btn-primary">Thêm nguyên liệu</a>
             </div>
         </div>
@@ -51,7 +51,7 @@
                                 <td class="text-center">
                                     <img src="@pro.image" class="rounded mx-auto d-block" alt="..."
                                          onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
-                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over">
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:cover">
                                 </td>
                                 <td class="text-center">@pro.price.ToString("#,##0") VNĐ</td>
                                 <td class="text-center">@pro.priceUp.ToString("#,##0") VNĐ</td>
@@ -65,13 +65,13 @@
                                 <td class="text-center">
                                     <img src="@item.image" class="rounded mx-auto d-block" alt="..."
                                          onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
-                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over">
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:cover">
                                 </td>
                                 <td class="text-center">@item.price.ToString("#,##0") VNĐ</td>
                                 <th scope="col">&nbsp;</th>
                                 <td class="text-center">Combo</td>
 
-                                <td>@Html.ActionLink("Edit", "Edit", "Combo", new { id = item.comboID }, null)</td>
+                                <td>@Html.ActionLink("Edit", "Edit", "Combo", new { id = item.comboID },new {@class= "ld ld-hourglass" })</td>
                                 <td>@Html.ActionLink("Công thức", "Details", "Combo", new { id = item.comboID }, null)</td>
                             }
 

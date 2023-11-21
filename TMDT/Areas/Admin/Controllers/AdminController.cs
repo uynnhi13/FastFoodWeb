@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -333,7 +334,12 @@ namespace TMDT.Areas.Admin.Controllers
             return PartialView(item);
         }
 
-
+        public ActionResult nameLogin()
+        {
+            var searchU = new Employees();
+            searchU = (Employees)Session["user"];
+            return PartialView(searchU);
+        }
     }
 
 

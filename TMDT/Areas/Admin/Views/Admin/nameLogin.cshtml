@@ -1,0 +1,21 @@
+﻿@using TMDT.Models
+@model Employees
+
+@if (Model == null)
+{
+    <a class="nav-link dropdown-toggle" href="@Url.Action("Login","Admin")" role="button">
+        Login
+    </a>
+}
+else
+{
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+   aria-expanded="false">
+    <i class="far fa-user mr-2 tm-logout-icon"></i>
+    @Model.FirstName
+</a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        @Html.ActionLink("Tài khoản", "Mypro", "Admin", null, new { @class = "dropdown-item" })
+        @Html.ActionLink("Đăng xuất", "LogOut", "Admin", null, new { @Class = "dropdown-item" })
+    </div>
+}

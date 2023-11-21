@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
@@ -110,6 +111,16 @@ namespace TMDT.Areas.KhachHang.Controllers
             ViewBag.TongSL = TinhTongSL();
             ViewBag.TongTien = TinhTongTien();
             return PartialView(gioHang);
+        }
+
+        [HttpPost]
+        public JsonResult LayGioHangMini()
+        {
+            List<MatHangMua> gioHang = LayGioHang();
+
+            ViewBag.TongSL = TinhTongSL();
+            ViewBag.TongTien = TinhTongTien();
+            return Json(new { soluong = TinhTongSL(), tongtien = TinhTongTien(), gioHang = gioHang } , JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult XoaGioHang()
@@ -352,4 +363,4 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
     }
-}
+}  

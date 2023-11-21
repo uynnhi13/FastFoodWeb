@@ -11,16 +11,16 @@ namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class ComboDetail
     {
-        public ComboDetail() { }
-        public ComboDetail(int comboID, int cateID, int quantity, bool? sizeUP)
+        public ComboDetail(){}
+        public ComboDetail(int comboID, int producID, int quantity, bool upSize)
         {
             this.comboID = comboID;
-            this.cateID = cateID;
+            this.cateID = producID;
             this.quantity = quantity;
-            this.sizeUP = sizeUP;
+            this.sizeUP = upSize;
         }
 
         public int comboID { get; set; }

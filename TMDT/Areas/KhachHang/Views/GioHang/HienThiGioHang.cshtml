@@ -36,8 +36,8 @@
                                         <tr data-comboid="@sp.ComboID" data-size="@sp.size">
                                             <td class="product-thumbnail">
                                                 <a href="@Url.Action("ChiTietSP", "Home", new { id = sp.ComboID })">
-                                                    <img class="img-responsive ml-15px"
-                                                         src="~/Areas/KhachHang/assets/images/product-image/@sp.image" alt="" />
+                                                    <img style="width: 270px; height: 300px; object-fit: contain" class="img-responsive ml-15px"
+                                                         src="@sp.image" alt="" />
                                                 </a>
                                             </td>
                                             <td>
@@ -119,7 +119,7 @@
     <!-- Cart Area End -->
 </body>
 
-@section Scripts{
+@section scripts{
 
     <script>
         function XoaSanPham(comboID, size) {

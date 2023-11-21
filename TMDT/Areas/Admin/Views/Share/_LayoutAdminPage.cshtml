@@ -24,8 +24,141 @@
     <link rel="stylesheet" href="~/Areas/Admin/Content/css/bootstrap.min.css">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="~/Areas/Admin/Content/css/tooplate.css">
+    <!--css loading-->>
+    <link href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css" rel="stylesheet" />
+
+    <style>
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        #loading {
+            position: absolute;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+        }
+
+        .lds-roller {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+            .lds-roller div {
+                background: white;
+                animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                transform-origin: 40px 40px;
+            }
+
+                .lds-roller div:after {
+                    content: " ";
+                    display: block;
+                    position: absolute;
+                    width: 7px;
+                    height: 7px;
+                    border-radius: 50%;
+                    background: #fff;
+                    margin: -4px 0 0 -4px;
+                }
+
+                .lds-roller div:nth-child(1) {
+                    animation-delay: -0.036s;
+                }
+
+                    .lds-roller div:nth-child(1):after {
+                        top: 63px;
+                        left: 63px;
+                    }
+
+                .lds-roller div:nth-child(2) {
+                    animation-delay: -0.072s;
+                }
+
+                    .lds-roller div:nth-child(2):after {
+                        top: 68px;
+                        left: 56px;
+                    }
+
+                .lds-roller div:nth-child(3) {
+                    animation-delay: -0.108s;
+                }
+
+                    .lds-roller div:nth-child(3):after {
+                        top: 71px;
+                        left: 48px;
+                    }
+
+                .lds-roller div:nth-child(4) {
+                    animation-delay: -0.144s;
+                }
+
+                    .lds-roller div:nth-child(4):after {
+                        top: 72px;
+                        left: 40px;
+                    }
+
+                .lds-roller div:nth-child(5) {
+                    animation-delay: -0.18s;
+                }
+
+                    .lds-roller div:nth-child(5):after {
+                        top: 71px;
+                        left: 32px;
+                    }
+
+                .lds-roller div:nth-child(6) {
+                    animation-delay: -0.216s;
+                }
+
+                    .lds-roller div:nth-child(6):after {
+                        top: 68px;
+                        left: 24px;
+                    }
+
+                .lds-roller div:nth-child(7) {
+                    animation-delay: -0.252s;
+                }
+
+                    .lds-roller div:nth-child(7):after {
+                        top: 63px;
+                        left: 17px;
+                    }
+
+                .lds-roller div:nth-child(8) {
+                    animation-delay: -0.288s;
+                }
+
+                    .lds-roller div:nth-child(8):after {
+                        top: 56px;
+                        left: 12px;
+                    }
+
+        @@keyframes lds-roller {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    @RenderSection("style", required: false)
 </head>
 <body id="reportsPage">
+
+    <div id="loading">
+        <div class="lds-roller" style=""><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+
     <div class="" id="home">
         <div class="container">
             <div class="row">
@@ -39,26 +172,6 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                       aria-expanded="false">
-                                        Sản phẩm
-                                    </a>
-
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
-                                        @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
-                                        @Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @Class = "dropdown-item" })
-
-                                    </div>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="products.html">Products</a>
-                                </li>
-
-
-
                                 <li class="nav-item">
                                     @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "nav-link" })
                                 </li>
@@ -68,18 +181,17 @@
                                 <li class="nav-item">
                                     @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
                                 </li>
-
+                                <li class="nav-item">
+                                    @Html.ActionLink("Nhân viên", "Index", "Employee", null, new { @class = "nav-link" })
+                                </li>
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
-                                        <i class="far fa-user mr-2 tm-logout-icon"></i>
                                         Sản phẩm
                                     </a>
-
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @Html.ActionLink("Profile", "Mypro", "Admin", null, new { @class = "dropdown-item" })
-                                        @Html.ActionLink("Đăng xuất", "Logout", "Admin", null, new { @class = "dropdown-item" })
                                         @Html.ActionLink("Nguyên liệu", "Index", "Ingredients", null, new { @Class = "dropdown-item" })
                                         @Html.ActionLink("Đơn vị đo", "Index", "Unit", null, new { @Class = "dropdown-item" })
                                         @Html.ActionLink("Sản phẩm", "Index", "Product", null, new { @Class = "dropdown-item" })
@@ -89,18 +201,9 @@
                             </ul>
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link d-flex" href="~/Admin/LoginAdmin/Logout">
-                                        <i class="far fa-user mr-2 tm-logout-icon"></i>
-                                        <span>Logout</span>
-
-                                    </a>
-
+                                    @Html.Action("nameLogin", "Admin")
                                 </li>
-
                             </ul>
-                           
-                            
-
                         </div>
                     </nav>
                 </div>
@@ -110,39 +213,7 @@
             </div>
         </div>
     </div>
-</body>
-<script src="~/Areas/Admin/Content/js/jquery-3.3.1.min.js"></script>
-<!-- https://jquery.com/download/ -->
-<script src="~/Areas/Admin/Content/js/moment.min.js"></script>
-<!-- https://momentjs.com/ -->
-<script src="~/Areas/Admin/Content/js/utils.js"></script>
-<script src="~/Areas/Admin/Content/js/Chart.min.js"></script>
-<!-- http://www.chartjs.org/docs/latest/ -->
-<script src="~/Areas/Admin/Content/js/fullcalendar.min.js"></script>
-<!-- https://fullcalendar.io/ -->
-<script src="~/Areas/Admin/Content/js/bootstrap.min.js"></script>
-<!-- https://getbootstrap.com/ -->
-<script src="~/Areas/Admin/Content/js/tooplate-scripts.js"></script>
-<script>
-    let ctxLine,
-        ctxBar,
-        ctxPie,
-        optionsLine,
-        optionsBar,
-        optionsPie,
-        configLine,
-        configBar,
-        configPie,
-        lineChart;
-    barChart, pieChart;
-    // DOM is ready
-    $(function () {
-        updateChartOptions();
-        drawLineChart(); // Line Chart
-        drawBarChart(); // Bar Chart
-        drawPieChart(); // Pie Chart
-        drawCalendar(); // Calendar
-    <script src="~/Areas/Admin/Content/js/jquery-3.3.1.min.js"></script>
+
     <!-- https://jquery.com/download/ -->
     <script src="~/Areas/Admin/Content/js/moment.min.js"></script>
     <!-- https://momentjs.com/ -->
@@ -174,16 +245,6 @@
             drawPieChart(); // Pie Chart
             drawCalendar(); // Calendar
 
-        $(window).resize(function () {
-            updateChartOptions();
-            updateLineChart();
-            updateBarChart();
-            reloadPage();
-        });
-    })
-</script>
-
-    @RenderSection("scripts", required: false)
             $(window).resize(function () {
                 updateChartOptions();
                 updateLineChart();
@@ -197,6 +258,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--gg map cdn-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5.1/jquery.googlemap.min.js" integrity="sha512-mTxKPggCYbMylBEGHSZqkUvemhyjRIshmudjw6fiAxjVbKMZUqqVH/ugpvnQgOU4c4C2UhrWpOXkBeXFQfr9kA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $('body').addClass('overflow-hidden');
+
+        $(document).ready(function () {
+            $('#loading').hide();
+            $('body').addClass('overflow-hidden');
+            $('body').removeClass('overflow-hidden');
+        })
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
