@@ -1,5 +1,7 @@
-﻿@model IEnumerable<TMDT.Models.Order>
+﻿
 @using TMDT.Models
+@using PagedList.Mvc
+@model PagedList.PagedList<Order>
 
 
 @{
@@ -33,7 +35,7 @@
             Từ: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
             Đến: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
 
-           
+
         </div>
     }
 
@@ -95,89 +97,101 @@
         </table>
     </div>
 
+  
+    <div class="pro-pagination-style text-center mt-2 mb-0 hehe" data-aos="fade-up" data-aos-delay="200">
+        <div class="pages">
+            @Html.PagedListPager(Model, page => Url.Action("OrderList", new { page }))
+           
+        </div>
+    </div>
+
+</div>
 
 
-    <style>
-        .container-or {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
+<style>
+    .container-or {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    .pro-pagination-style{
+        float:right;
+    }
+    /* Style for h2 */
+    h3 {
+        margin-right: 10px; /* Adjust the margin as needed */
+    }
+
+    /* Style for dropdown */
+    select {
+        width: 150px; /* Adjust the width as needed */
+        padding: 8px; /* Add padding for better appearance */
+        border: 1px solid #ccc; /* Add a border for better visibility */
+        border-radius: 4px; /* Add border-radius for rounded corners */
+        margin-left: auto; /* Move the select to the right */
+        background-color: #fff; /* Set background color */
+        color: #333; /* Set text color */
+        cursor: pointer; /* Set cursor style */
+        appearance: none; /* Remove default arrow icon in some browsers */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    }
+
+        select::-ms-expand {
+            display: none; /* Hide arrow icon in IE10 and IE11 */
         }
 
-        /* Style for h2 */
-        h3 {
-            margin-right: 10px; /* Adjust the margin as needed */
+        /* Style for hover and focus states */
+        select:hover,
+        select:focus {
+            border-color: rgba(0, 0, 0, 0.2); /* Change border color on hover/focus */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover/focus */
+        }
+    /* Style for text input */
+    .form-group.form-inline input[type="text"] {
+        width: 200px; /* Adjust the width as needed */
+        padding: 8px; /* Add padding for better appearance */
+        border: 1px solid #ccc; /* Add a border for better visibility */
+        border-radius: 4px; /* Add border-radius for rounded corners */
+    }
+
+    /* Style for submit button */
+    .form-group.form-inline input[type="submit"] {
+        padding: 8px 16px; /* Adjust padding for better appearance */
+        background-color: #ff7b7b; /* Set background color */
+        color: #fff; /* Set text color */
+        border: none; /* Remove border */
+        border-radius: 0 4px 4px 0; /* Add border-radius for rounded corners on the right side */
+        cursor: pointer; /* Set cursor style */
+    }
+
+        /* Style for submit button on hover and focus states */
+        .form-group.form-inline input[type="submit"]:hover,
+        .form-group.form-inline input[type="submit"]:focus {
+            background-color: #f73c3c; /* Change background color on hover/focus */
         }
 
-        /* Style for dropdown */
-        select {
-            width: 150px; /* Adjust the width as needed */
-            padding: 8px; /* Add padding for better appearance */
-            border: 1px solid #ccc; /* Add a border for better visibility */
-            border-radius: 4px; /* Add border-radius for rounded corners */
-            margin-left: auto; /* Move the select to the right */
-            background-color: #fff; /* Set background color */
-            color: #333; /* Set text color */
-            cursor: pointer; /* Set cursor style */
-            appearance: none; /* Remove default arrow icon in some browsers */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
-        }
+    /* Style for date input */
+    input[type="date"] {
+        width: 150px; /* Adjust width as needed */
+        padding: 8px; /* Add padding for appearance */
+        border: 1px solid #ccc; /* Add border */
+        border-radius: 4px; /* Rounded corners */
+        margin-right: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px; /* Adjust spacing */
+    }
 
-            select::-ms-expand {
-                display: none; /* Hide arrow icon in IE10 and IE11 */
-            }
+    /* Style for the container of date inputs */
+    div.date-container {
+        margin-bottom: 20px; /* Adjust spacing */
+    }
+    .hehe{
+        text-align:right;
+    }
+</style>
 
-            /* Style for hover and focus states */
-            select:hover,
-            select:focus {
-                border-color: rgba(0, 0, 0, 0.2); /* Change border color on hover/focus */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow on hover/focus */
-            }
-        /* Style for text input */
-        .form-group.form-inline input[type="text"] {
-            width: 200px; /* Adjust the width as needed */
-            padding: 8px; /* Add padding for better appearance */
-            border: 1px solid #ccc; /* Add a border for better visibility */
-            border-radius: 4px; /* Add border-radius for rounded corners */
-        }
-
-        /* Style for submit button */
-        .form-group.form-inline input[type="submit"] {
-            padding: 8px 16px; /* Adjust padding for better appearance */
-            background-color: #ff7b7b; /* Set background color */
-            color: #fff; /* Set text color */
-            border: none; /* Remove border */
-            border-radius: 0 4px 4px 0; /* Add border-radius for rounded corners on the right side */
-            cursor: pointer; /* Set cursor style */
-        }
-
-            /* Style for submit button on hover and focus states */
-            .form-group.form-inline input[type="submit"]:hover,
-            .form-group.form-inline input[type="submit"]:focus {
-                background-color: #f73c3c; /* Change background color on hover/focus */
-            }
-
-        /* Style for date input */
-        input[type="date"] {
-            width: 150px; /* Adjust width as needed */
-            padding: 8px; /* Add padding for appearance */
-            border: 1px solid #ccc; /* Add border */
-            border-radius: 4px; /* Rounded corners */
-            margin-right: 10px;
-            margin-bottom: 10px;
-            margin-top:10px;/* Adjust spacing */
-        }
-
-        /* Style for the container of date inputs */
-        div.date-container {
-            margin-bottom: 20px; /* Adjust spacing */
-        }
-
-
-
-    </style>
-
-    <script>var endDateField = document.getElementById("enddate");
+<script>
+    var endDateField = document.getElementById("enddate");
     var startDateField = document.getElementById("startdate");
 
 

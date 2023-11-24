@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
+using PagedList;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -252,14 +253,12 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
         [HttpGet]
-        public ActionResult OrderList(DateTime? startdate, DateTime? enddate, Condition cd, string searchstring = "")
+        public ActionResult OrderList(DateTime? startdate, DateTime? enddate,int? page ,Condition cd, string searchstring = "")
         {
             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
 
             var user = (User)Session["TaiKhoan"];
-            var userPhone = user.numberPhone;
-
-            var orderQuery = db.Order.Where(o => o.numberPhone.Equals(userPhone));
+            var orderQuery = db.Order.Where(o => o.numberPhone==user.numberPhone);
             // hàm tìm kím 
             if (!string.IsNullOrEmpty(searchstring)) {
                 orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
@@ -283,13 +282,17 @@ namespace TMDT.Areas.KhachHang.Controllers
                 orderQuery = orderQuery.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
                 return View(orderQuery.ToList());
             }
-           
 
-
+         
             // hiển thị tổng
             var hienthi = orderQuery.ToList();
-           
-            return View(hienthi);
+
+            int pagesize = 5;
+            int pagenum = (page ?? 1);
+         
+
+
+            return View(hienthi.ToPagedList(pagenum,pagesize));
         }
 
         public ActionResult Review()
@@ -331,6 +334,8 @@ namespace TMDT.Areas.KhachHang.Controllers
         {
             var order = db.Order.FirstOrDefault(s => s.orderID == id);
             return View(order);
+
+
 
         }
 
