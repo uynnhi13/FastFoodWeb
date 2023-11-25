@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using log4net;
 using TMDT.Models;
@@ -38,7 +39,10 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             //Kiểm tra xem có tồn tại mặt hàng trong giỏ hay chưa
             //Nếu có thì tăng số lượng lên 1, ngược lại thì thêm vào giỏ
-            MatHangMua sanPham = gioHang.FirstOrDefault(s => s.ComboID == comboID && s.size == size);
+            if (size == "big") {
+                comboID = comboID + 1;
+            }
+            MatHangMua sanPham = gioHang.FirstOrDefault(s => s.ComboID == comboID);
 
             if (sanPham == null) //Sản phẩm chưa có trong giỏ
             {
@@ -180,20 +184,42 @@ namespace TMDT.Areas.KhachHang.Controllers
             var code = new { Success = false, Code = -1, Url = "" };
             List<MatHangMua> gioHang = LayGioHang();
             Order donHang = new Order();
-            
-            var user = (User)Session["TaiKhoan"];
-            if (user != null) {
-                donHang.numberPhone = user.numberPhone;
-                donHang.recipientsNumber = form["numberPhone"];
+            var number = form["numberPhone"];
+            //Kiểm tra xem khách hàng đã có tài khoản hay chưa
+            var userCheck = db.User.FirstOrDefault(s => s.numberPhone == number);
+            //Đã có tài khoản
+            if (userCheck!=null ) {
+                donHang.numberPhone = userCheck.numberPhone;
+                donHang.recipientsNumber = number;
+                //Kiểm tra thử địa chỉ đã có hay chưa
+                var lstDiaChi=db.Address.Where(s=>s.userID == number).ToList();
+                string[] parts = form["recipient"].Split(' ');
+
+                // Gán giá trị cho firstName và lastName
+                var lastName = parts[0]; // Lấy từ đầu tiên làm lastName
+                var firstName = string.Join(" ", parts.Skip(1)); // Gộp các từ còn lại thành firstName
+
+                if (lstDiaChi.Count() == 0) {
+                    Address address = new Address();
+                    address.firstName = firstName;
+                    address.lastName= lastName;
+                    address.address1 = form["fullAddress"];
+                    address.numberPhone = number;
+                    address.userID = userCheck.numberPhone;
+                    address.priority = true;
+
+                    address.note = form["message"];
+                    db.Address.Add(address);
+                    
+                }
             } else {
-                var number = form["numberPhone"];
-                var userCheck = db.User.FirstOrDefault(s => s.numberPhone == number);
+                //Chưa có tài khoản
                 if (userCheck == null) {
                     userCheck = new User();
                     userCheck.numberPhone = number;
                     db.User.Add(userCheck);
-                    donHang.numberPhone = form["numberPhone"];
-                    donHang.recipientsNumber= form["numberPhone"];
+                    donHang.numberPhone = number;
+                    donHang.recipientsNumber= number;
                 }
             }
             donHang.recipient = form["recipient"];
@@ -246,6 +272,8 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return Json(code);
         } 
+
+
 
         public ActionResult DatHangThanhCong()
         {
