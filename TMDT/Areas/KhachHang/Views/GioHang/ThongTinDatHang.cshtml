@@ -12,7 +12,12 @@
             <div class="row">
                 @{
                     var user = Session["TaiKhoan"] as TMDT.Models.User;
-                    if (user == null)
+                    var lstAddress = db.Address.Where(s => s.userID == user.numberPhone);
+                    if (user != null) {
+                        var addPriority = db.Address.FirstOrDefault(s => s.userID == user.numberPhone && s.priority == true);
+                    }
+
+                    if (user == null || lstAddress.Count() == 0)
                     {
                         <div class="col-lg-7">
                             @using (Html.BeginForm("DongYDatHang", "GioHang", FormMethod.Post))
@@ -78,7 +83,6 @@
                         <div class="col-lg-7">
                             @using (Html.BeginForm("DongYDatHang", "GioHang", FormMethod.Post))
                             {
-                                var lstAddress = db.Address.Where(s => s.userID == user.numberPhone);
                                 var addPriority = db.Address.FirstOrDefault(s => s.userID == user.numberPhone && s.priority == true);
                                 if (addPriority == null)
                                 {
