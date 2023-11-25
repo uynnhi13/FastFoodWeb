@@ -147,8 +147,6 @@ namespace TMDT.Areas.Admin.Controllers
                     db.createRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
 
-
-
                     ViewBag.notification = true;
                     return RedirectToAction("index");
                 }

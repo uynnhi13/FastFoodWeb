@@ -22,7 +22,7 @@ namespace TMDT.Models
             this.quantity = quantity;
             this.sizeUP = sizeUP;
         }
-    
+
         public int comboID { get; set; }
         public int cateID { get; set; }
         public int quantity { get; set; }

@@ -18,11 +18,11 @@
           </Key>
           <Property Name="addressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="priority" Type="bit" Nullable="false" />
-          <Property Name="note" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="userID" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
@@ -131,7 +131,8 @@
           <Property Name="comment" Type="nvarchar" MaxLength="1500" />
           <Property Name="TypePayment" Type="int" />
           <Property Name="TypePaymentVN" Type="int" />
-          <Property Name="recipientNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="recipient" Type="nvarchar" MaxLength="100" />
+          <Property Name="recipientsNumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -543,11 +544,11 @@
           </Key>
           <Property Name="addressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="address1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="priority" Type="Boolean" Nullable="false" />
-          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="userID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
         </EntityType>
@@ -679,11 +680,6 @@
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
-          <Property Name="star" Type="Int32" />
-          <Property Name="comment" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
-          <Property Name="TypePayment" Type="Int32" />
-          <Property Name="TypePaymentVN" Type="Int32" />
-          <Property Name="recipientNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -1225,11 +1221,6 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="recipientNumber" ColumnName="recipientNumber" />
-                <ScalarProperty Name="TypePaymentVN" ColumnName="TypePaymentVN" />
-                <ScalarProperty Name="TypePayment" ColumnName="TypePayment" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="star" ColumnName="star" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
                 <ScalarProperty Name="datetime" ColumnName="datetime" />

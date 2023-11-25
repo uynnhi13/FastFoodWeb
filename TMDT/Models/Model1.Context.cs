@@ -14,9 +14,9 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
-    using System.Collections.Generic;
 
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
@@ -114,6 +114,7 @@ namespace TMDT.Models
                 productNamePara, productPricePara, productPriceUpPara, productImagePara, productTypeIDPara, IngredientsListPara);
             }
         }
+
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
