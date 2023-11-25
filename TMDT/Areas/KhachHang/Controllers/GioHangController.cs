@@ -113,6 +113,16 @@ namespace TMDT.Areas.KhachHang.Controllers
             return PartialView(gioHang);
         }
 
+        [HttpPost]
+        public JsonResult LayGioHangMini()
+        {
+            List<MatHangMua> gioHang = LayGioHang();
+
+            ViewBag.TongSL = TinhTongSL();
+            ViewBag.TongTien = TinhTongTien();
+            return Json(new { soluong = TinhTongSL(), tongtien = TinhTongTien(), gioHang = gioHang } , JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult XoaGioHang()
         {
             Session["GioHang"] = null;
@@ -170,34 +180,28 @@ namespace TMDT.Areas.KhachHang.Controllers
             var code = new { Success = false, Code = -1, Url = "" };
             List<MatHangMua> gioHang = LayGioHang();
             Order donHang = new Order();
-            var number = (string)form["numberPhone"];
-            var userCheck = db.User.FirstOrDefault(s => s.numberPhone == number);
-            if (userCheck == null) {
-                userCheck = new User();
-                userCheck.numberPhone = number;
-                db.User.Add(userCheck);
+            
+            var user = (User)Session["TaiKhoan"];
+            if (user != null) {
+                donHang.numberPhone = user.numberPhone;
+                donHang.recipientsNumber = form["numberPhone"];
+            } else {
+                var number = form["numberPhone"];
+                var userCheck = db.User.FirstOrDefault(s => s.numberPhone == number);
+                if (userCheck == null) {
+                    userCheck = new User();
+                    userCheck.numberPhone = number;
+                    db.User.Add(userCheck);
+                    donHang.numberPhone = form["numberPhone"];
+                    donHang.recipientsNumber= form["numberPhone"];
+                }
             }
             donHang.recipient = form["recipient"];
-            donHang.numberPhone = form["numberPhone"];
             donHang.fullAddress = form["fullAddress"];
             donHang.datetime = DateTime.Now;
             donHang.note = form["message"];
             donHang.conditionID = 1;
             donHang.total = (decimal)TinhTongTien();
-
-            db.Order.Add(donHang);
-            db.SaveChanges();
-
-            //Thêm chi tiết cho từng sản phẩm
-            foreach (var sanpham in gioHang) {
-                OrderDetail chiTiet = new OrderDetail();
-                chiTiet.orderID = donHang.orderID;
-                chiTiet.comboID = sanpham.ComboID;
-                chiTiet.quantity = sanpham.soLuong;
-                db.OrderDetail.Add(chiTiet);
-            }
-            db.SaveChanges();
-
             var hinhThucThanhToan = form["HinhThucThanhToan"];
             if (hinhThucThanhToan == "1") {
                 donHang.TypePayment = 1;
@@ -220,8 +224,20 @@ namespace TMDT.Areas.KhachHang.Controllers
                 }
 
             }
+            db.Order.Add(donHang);
+            db.SaveChanges();
 
+            //Thêm chi tiết cho từng sản phẩm
+            foreach (var sanpham in gioHang) {
+                OrderDetail chiTiet = new OrderDetail();
+                chiTiet.orderID = donHang.orderID;
+                chiTiet.comboID = sanpham.ComboID;
+                chiTiet.quantity = sanpham.soLuong;
+                db.OrderDetail.Add(chiTiet);
+            }
+            db.SaveChanges();
             code = new { Success = true, Code = 1, Url = "" };
+            Session["Order"] = donHang;
             //Xóa giỏ hàng
             Session["GioHang"] = null;
             if (donHang.TypePaymentVN != null) {
@@ -233,7 +249,8 @@ namespace TMDT.Areas.KhachHang.Controllers
 
         public ActionResult DatHangThanhCong()
         {
-            return View();
+            var order = Session["Order"] as Order;
+            return View(order);
         }
 
         private static readonly ILog log =
@@ -289,8 +306,8 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             urlPayment = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
             //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
+            Session["Order"] = donHang;
             return urlPayment;
-
         }
 
         public ActionResult VNPayReturn()
@@ -327,7 +344,9 @@ namespace TMDT.Areas.KhachHang.Controllers
                         //Thanh toan thanh cong
                         ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
                         log.InfoFormat("Thanh toan thanh cong, OrderId={0}, VNPAY TranId={1}", orderId, vnpayTranId);
-                        ViewBag.TongTien = TinhTongTien();
+                        var order = Session["Order"] as Order;
+
+                        return View(order);
                     }
                     else {
                         //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
@@ -344,4 +363,4 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
     }
-}
+}  

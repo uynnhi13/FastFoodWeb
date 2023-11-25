@@ -1,0 +1,86 @@
+﻿@model IEnumerable<TMDT.Models.User>
+@{
+    ViewBag.Title = "QlyKH";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<br />
+<br />
+<div class="card mb-4">
+    <h2 style="padding:10px">Quản lý khách hàng </h2>
+    <div>
+        
+            @using (Html.BeginForm("QlyKH", "Admin", FormMethod.Get))
+            {
+                <div class="form-group form-inline">
+                   Search NumberPhone: @Html.TextBox("searchstring", ViewBag.CurrentFilter as String, new {@class= "form-control"})
+                   <input type="submit" class="btn btn-default" value="Search" /> 
+                </div>
+                
+            }
+        
+        
+    </div>
+
+
+    <div class="main-content rounded-3 border border-2 py-4 px-3">
+        <div class="table-header row">
+            <div class="col-3">
+                <h5 class="title">Quản lý khách hàng</h5>
+
+            </div>
+           
+        </div>
+        <div >
+            
+            <div class="bg-white">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        @*//Phần render*@
+                        <tr>
+                            
+                            <th>Họ và tên</th>
+                            <th>Giới tính</th>
+                            <th>Điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>Tổng đơn mua </th>
+                            <th>Khác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>@user.fullName</td>
+                                    <td>@user.gender</td>
+                                    <td>@user.numberPhone</td>
+                                    
+                                    <td>
+                                        @if (user.IsActive == true)
+                                        {
+                                            @Html.ActionLink("Vô hiệu hóa tài khoản", "DisableAccount", new { id = user.numberPhone }, new { @class = "btn btn-danger" })
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("Kích hoạt lại tài khoản", "EnableAccount", new { id = user.numberPhone }, new { @class = "btn btn-success" })
+                                        }
+
+                                    </td>
+                                    <td>@user.Order.Count</td>
+                                    <td>
+                                        <div class="d-flex flex-row gap-1">
+                                            <a href="@Url.Action("DetailsKH", "Admin", new {id=@user.numberPhone})" class="nav-link">
+                                                Chi tiết
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

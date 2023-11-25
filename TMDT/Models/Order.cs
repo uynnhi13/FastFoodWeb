@@ -26,9 +26,8 @@ namespace TMDT.Models
         public string note { get; set; }
         public int conditionID { get; set; }
         public decimal total { get; set; }
-        public int employeeID { get; set; }
+        public Nullable<int> employeeID { get; set; }
         public string fullAddress { get; set; }
-        public string recipient { get; set; }
         public Nullable<int> star { get; set; }
         public string comment { get; set; }
         public Nullable<int> TypePayment { get; set; }

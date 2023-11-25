@@ -1,0 +1,12 @@
+﻿@using TMDT.Models 
+@model TMDT.Models.User
+@{
+    ViewBag.Title = "ThongKe";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<div style="background: white">
+    <h2>ThongKe</h2>
+    <p>Số lượng tài khoản khách hàng chưa bị vô hiệu hóa: @Html.Action("ThongKeAccKH")</p>
+</div>
+

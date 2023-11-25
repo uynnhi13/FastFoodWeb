@@ -1,0 +1,85 @@
+﻿@model TMDT.Models.User
+
+@{
+    ViewBag.Title = "DetailsKH";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>DetailsKH</h2>
+
+<div class="card mb-4">
+    
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.gmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addressID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.addressID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.permission)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.permission)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+    </dl>
+    </>
+    <p>
+
+        @Html.ActionLink("Back to List", "QlyKH")
+    </p>
+</div>
