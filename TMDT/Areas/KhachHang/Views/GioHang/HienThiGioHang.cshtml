@@ -188,7 +188,7 @@
                 success: function (data) {
                     // Xử lý dữ liệu trả về sau khi đặt hàng thành công
                     if (data.success) {
-                        alert("Đặt hàng thành công!");
+                        window.location.href = "@Url.Action("ThongTinDatHang", "GioHang")";
                     } else {
                         Swal.fire({
                             title: "Bạn Chưa Đăng Nhập, Bạn có Muốn Đăng Nhập không?",
