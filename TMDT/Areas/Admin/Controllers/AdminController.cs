@@ -198,20 +198,22 @@ namespace TMDT.Areas.Admin.Controllers
             var donhang = database.Order.Include(s => s.OrderDetail);
             return View(donhang);
         }
-        [HttpPost]
-        public ActionResult DonHang(DateTime? startdate, DateTime? enddate)
-        {
-            IQueryable<Order> orders = database.Order;
 
+        [HttpGet]
+        public ActionResult DonHang(DateTime? startdate, DateTime? enddate, int? conditionID)
+        {
+            var orders = database.Order.ToList();
+
+            ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
-                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
-                return View(orders.ToList());
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
             }
-            else {
-                var donhang = database.Order.Include(s => s.OrderDetail);
-                return View(donhang);
+            if(conditionID != 0 && conditionID != null) {
+                orders = orders.Where(o => o.conditionID == conditionID).ToList();
             }
+            var donhang = orders.ToList();
+            return View(orders);
 
         }
 
@@ -323,16 +325,7 @@ namespace TMDT.Areas.Admin.Controllers
             }
             return RedirectToAction("MyPro");
         }
-        public ActionResult ThongKe()
-        {
-            return View();
-        }
-        public ActionResult ThongKeAccKH()
-        {
-            var listU = database.User.Where(u => u.IsActive == true).ToList();
-            int item = listU.Count;
-            return PartialView(item);
-        }
+       
 
         public ActionResult nameLogin()
         {

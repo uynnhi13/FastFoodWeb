@@ -12,13 +12,16 @@
         <div class="col-3">
             <h2 style="padding:10px">Quản lý đơn hàng </h2>
 
-            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Post))
+            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Get))
             {
                 <div>
                     From Date: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")"/>
                     To Date: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")"/>
 
                     <button type="submit" class="bg-white">Lọc đơn hàng</button>
+                </div>
+                <div>
+                    @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new { @*onchange = "this.form.submit();"*@ })
                 </div>
 
             }
