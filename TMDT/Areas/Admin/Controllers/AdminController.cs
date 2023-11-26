@@ -211,6 +211,15 @@ namespace TMDT.Areas.Admin.Controllers
             }
             if(conditionID != 0 && conditionID != null) {
                 orders = orders.Where(o => o.conditionID == conditionID).ToList();
+                if(conditionID == 3) {
+                    decimal Tong = 0;
+                    foreach (var item in orders) {
+                        Tong += item.total;
+                    }
+                    ViewBag.TongTien = Tong;
+                    
+                }
+                
             }
             var donhang = orders.ToList();
             return View(orders);
