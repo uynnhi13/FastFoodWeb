@@ -5,6 +5,15 @@
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
     TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
     var lsProduct = db.Product.ToList();
+
+    string notificationPro = "";
+    bool result = false;
+
+    if (ViewBag.result != null)
+    {
+        result = ViewBag.result;
+        notificationPro = ViewBag.notification;
+    }
 }
 <br />
 <br />
@@ -16,7 +25,7 @@
             </div>
             <div class="col text-right row">
                 <a href="~/Admin/Product/CreateComboDetailt" class="btn btn-small btn-primary mr-3">Thêm combo</a>
-                <a href="~/Admin/Product/Create" class="btn btn-small btn-primary">Thêm nguyên liệu</a>
+                <a href="~/Admin/Ingredients/createRecipe" class="btn btn-small btn-primary">Tạo món</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -38,7 +47,7 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr id="btnModel">
+                        <tr class="btnModel">
                             @Html.Hidden("comboID", item.comboID)
                             <th scope="row">
                                 <input type="checkbox" aria-label="Checkbox">
@@ -71,11 +80,9 @@
                                 <th scope="col">&nbsp;</th>
                                 <td class="text-center">Combo</td>
 
-                                <td>@Html.ActionLink("Edit", "Edit", "Combo", new { id = item.comboID },new {@class= "ld ld-hourglass" })</td>
+                                <td>@Html.ActionLink("Edit", "Edit", "Combo", new { id = item.comboID }, new { @class = "ld ld-hourglass" })</td>
                                 <td>@Html.ActionLink("Công thức", "Details", "Combo", new { id = item.comboID }, null)</td>
                             }
-
-
                         </tr>
                     }
                 </tbody>
@@ -126,17 +133,25 @@
 @section Scripts{
     <script>
         $(document).ready(() => {
-            $('#btnModel').click(() => {
+            var result = @Html.Raw(Json.Encode(result));
+            var notificationPro = '@notificationPro';
+
+            $('.btnModel').click(() => {
+                
+
                 $('#myModal').show();
 
                 var cateID;
-                cateID = $(this).find('tr input[name="cateID"]').val();
+                cateID = $(this).find('tr input[name="comboID"]').val();
 
-
+                console.log('test click product: ' + cateID)
             })
+
             $('.btnClose').click(() => {
                 $('#myModal').hide();
             })
+
+            runSweetAlert2()
 
             function getCombo(_id) {
                 console.log('test upsize')
@@ -230,6 +245,28 @@
                     });
 
                 })
+            }
+
+            function runSweetAlert2() {
+                if (result != null && notificationPro != "") {
+                    if (result) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: notificationPro,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: notificationPro,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                }
             }
         })
     </script>

@@ -14,6 +14,14 @@ namespace TMDT.Models
     
     public partial class Recipe
     {
+        public Recipe() { }
+        public Recipe(int ingID, int cateID, double quantity)
+        {
+            this.ingID = ingID;
+            this.cateID = cateID;
+            this.quantity = quantity;
+        }
+
         public int ingID { get; set; }
         public int cateID { get; set; }
         public double quantity { get; set; }

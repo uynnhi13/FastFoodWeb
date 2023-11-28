@@ -148,18 +148,29 @@ namespace TMDT.Areas.Admin.Controllers
                     db.SaveChanges();
 
 
+                    TempData["result"] = true;
+                    TempData["notification"] = "Thêm sản phẩm thành công";
 
-                    ViewBag.notification = true;
-                    return RedirectToAction("index");
+                    Session["ingre"] = null;
+
+                    return RedirectToAction("index","Product");
                 }
                 else {
-                    ViewBag.notification = false;
-                    return RedirectToAction("CreateRecipe");
+                    TempData["result"] = false;
+                    TempData["notification"] = "Thêm sản phẩm không thành công";
+
+                    Session["ingre"] = null;
+
+                    return RedirectToAction("index", "Product");
                 }
             }
-            catch (Exception e) {
-                ViewBag.notification = false;
-                return RedirectToAction("CreateRecipe");
+            catch (Exception) {
+                TempData["result"] = false;
+                TempData["notification"] = "Thêm sản phẩm không thành công";
+
+                Session["ingre"] = null;
+
+                return RedirectToAction("index", "Product");
             }
 
         }

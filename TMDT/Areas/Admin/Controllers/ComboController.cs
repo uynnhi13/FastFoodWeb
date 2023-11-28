@@ -67,11 +67,11 @@ namespace TMDT.Areas.Admin.Controllers
                     decimal sumPrice = 0;
                     foreach (var item in lsitemCombo) {
                         var product = db.Product.FirstOrDefault(f => f.cateID == item.producID);
-                        sumPrice += product.price;
+                        sumPrice += product.price * item.quantity;
                         lstComboDetail.Add(new ComboDetail(combo.comboID, item.producID, item.quantity, item.upSize));
                     }
 
-                    combo.price = sumPrice;
+                    combo.price = sumPrice * (100-combo.sale)/100;
 
                     db.Combo.Add(combo);
                     db.SaveChanges();
@@ -79,21 +79,29 @@ namespace TMDT.Areas.Admin.Controllers
                     db.ComboDetail.AddRange(lstComboDetail);
                     db.SaveChanges();
 
+                    TempData["result"] = true;
+                    TempData["notification"] = "Tạo thành công";
 
+                    Session["combo"] = null;
 
-                    ViewBag.notification = true;
-                    return RedirectToAction("Index","Product",db.Combo);
+                    return RedirectToAction("Index","Product");
                 }
                 else {
-                    var lsitemCombo = new List<itemProduct>();
-                    lsitemCombo = LayCombo();
-                    ViewBag.notification = false;
-                    return View("Create",lsitemCombo);
+                    TempData["result"] = false;
+                    TempData["notification"] = "Tạo không thành công";
+
+                    Session["combo"] = null;
+
+                    return RedirectToAction("Index", "Product");
                 }
             }
             catch (Exception e) {
-                ViewBag.notification = false;
-                return View("Create");
+                TempData["result"] = false;
+                TempData["notification"] = "Tạo không thành công";
+
+                Session["combo"] = null;
+
+                return RedirectToAction("Index", "Product");
             }
         }
 

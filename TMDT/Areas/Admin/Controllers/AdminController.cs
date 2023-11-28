@@ -222,20 +222,136 @@ namespace TMDT.Areas.Admin.Controllers
             }
             Order donhang = database.Order.Find(id);
 
+            // don hang dc tim thay
+            if (donhang != null) {
+                // chinh trang thai don hang
+                donhang.conditionID = 2;
 
-            donhang.conditionID = 2;
-            if (donhang.employeeID == null) {
-                var searchU = (Employees)Session["user"];
-                donhang.employeeID = searchU.EmployeeID;
+                if (donhang.employeeID == null) {
+                    var searchU = (Employees)Session["user"];
+                    donhang.employeeID = searchU.EmployeeID;
+
+                }
+
+                //lọc danh sách id sản phẩm kèm số lượng sản phẩm
+                var lsOrder = database.OrderDetail.Where(o => o.orderID == id).ToList();
+
+                // chua id combo and so luong trong order Detail
+                List<IngredientProduct> lsThanhPhan = new List<IngredientProduct>();
+
+                foreach (var productOrder in lsOrder) {
+                    var _thanhphan = new IngredientProduct(productOrder.comboID, productOrder.quantity);
+                    setIngredientProduct(lsThanhPhan, _thanhphan, true);
+                }
+
+                //neu co sp la combo thi chuyen sang product * tạm *
+                List<IngredientProduct> lsQuantityProduct = new List<IngredientProduct>();
+
+                //lọc danh sách conbo and non combo
+                var lsAllProductInDB = database.Combo.ToList();
+                List<Combo> lsAllProduct = lsAllProductInDB.Where(w => lsThanhPhan.Any(a => a.id == w.comboID)).ToList();
+                List<ComboDetail> lsAllComboDetail = database.ComboDetail.ToList();
+
+                var lsCombo = new List<Combo>();
+
+                foreach (var item in lsAllProduct) {
+                    if (item.typeCombo) {
+                        lsCombo.Add(item);
+                    }
+                    else {
+                        var chaneThanhPhan = lsThanhPhan.FirstOrDefault(a => a.id == item.comboID);
+                        var getIDProduct = lsAllComboDetail.FirstOrDefault(f => f.comboID == item.comboID);
+
+                        setIngredientProduct(lsQuantityProduct, new IngredientProduct(getIDProduct.cateID, chaneThanhPhan.quantity), true);
+                    }
+                }
+
+
+                //list product in combo
+                var lsQuantityProInCombo = new List<ComboDetail>();
+
+                foreach (var item in lsCombo) {
+                    var chaneThanhPhan = lsThanhPhan.FirstOrDefault(a => a.id == item.comboID);
+                    var lsProductInCombo = lsAllComboDetail.Where(f => f.comboID == item.comboID).ToList();
+
+                    var quantity = chaneThanhPhan.quantity;
+
+                    for (int i = 0; i < lsProductInCombo.Count; i++)
+                        lsProductInCombo[i].quantity *= (int)quantity;
+
+                    lsQuantityProInCombo.AddRange(lsProductInCombo);
+                }
+                //=> lsQuantityProInCombo xử lý trùng lặp
+                var lsQuantityProInComboGrouped = lsQuantityProInCombo
+                                                    .GroupBy(x => x.cateID)
+                                                    .Select(g => new ComboDetail {
+                                                        cateID = g.Key,
+                                                        quantity = g.Sum(x => x.quantity)
+                                                    }).ToList();
+
+                foreach (var item in lsQuantityProInComboGrouped) {
+                    setIngredientProduct(lsQuantityProduct, new IngredientProduct(item.cateID, item.quantity), true);
+                }
+                //=> lsQuantityProduct chua ls id product and so luong trong detail order
+
+                var lsIngredientInProduct = new List<Recipe>();
+                foreach (var item in lsQuantityProduct) {
+                    var lsRecipe = database.Recipe.Where(w => w.cateID == item.id).ToList();
+
+                    for (int i = 0; i < lsRecipe.Count; i++)
+                        lsRecipe[i].quantity *= (int)item.quantity;
+
+                    lsIngredientInProduct.AddRange(lsRecipe);
+                }
+
+                var lsIngredientInProductGrouped = lsIngredientInProduct
+                                                    .GroupBy(x => x.ingID)
+                                                    .Select(g => new Recipe {
+                                                        ingID = g.Key,
+                                                        quantity = g.Sum(x => x.quantity)
+                                                    }).ToList();
+
+                foreach(var item in lsIngredientInProductGrouped) {
+                    var itemIngredient = database.Ingredient.FirstOrDefault(f => f.ingID == item.ingID);
+                    itemIngredient.quantity -= item.quantity;
+                    database.SaveChanges();
+                }
 
             }
-            database.SaveChanges();
+
             if (donhang == null) {
                 return HttpNotFound();
             }
 
             return RedirectToAction("DonHang", "Admin");
         }
+
+        public void setIngredientProduct(List<IngredientProduct> lsThanhPhan, IngredientProduct item, bool calculation)
+        {
+            //if calculation == true => phep cong
+            //else phep tru
+            bool find = true;
+
+            for (int i = 0; i < lsThanhPhan.Count; i++) {
+                if (lsThanhPhan[i].id == item.id) {
+                    if (calculation)
+                        lsThanhPhan[i].quantity += item.quantity;
+                    else
+                        lsThanhPhan[i].quantity *= item.quantity;
+
+                    find = false;
+                    break;
+                }
+            }
+
+            if(find)
+                lsThanhPhan.Add(item);
+        }
+
+        public void ListToList(List<IngredientProduct> lsThanhPhan, List<IngredientProduct> lsAdd)
+        {
+        }
+
         public ActionResult Dagiao(int? id)
         {
             if (id == null) {

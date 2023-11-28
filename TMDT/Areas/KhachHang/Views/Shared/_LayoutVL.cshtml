@@ -796,6 +796,12 @@
                 });
             });
 
+            $('.add-cart').each(() => {
+                $(this).click(() => {
+                    getGioHang();
+                })
+            })
+
             $('#openCart').click(() => {
                 getGioHang()
             })

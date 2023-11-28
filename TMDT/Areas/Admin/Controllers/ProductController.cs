@@ -28,6 +28,9 @@ namespace TMDT.Areas.Admin.Controllers
                     lsView.Add(item);
             }
 
+            ViewBag.result = TempData["result"];
+            ViewBag.notification = TempData["notification"];
+
             return View(lsView);
         }
 
