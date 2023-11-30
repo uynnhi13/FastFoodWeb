@@ -14,8 +14,8 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data.SqlClient;
     using System.Data;
+    using System.Data.SqlClient;
     using System.Collections.Generic;
 
     public partial class TMDTThucAnNhanhEntities : DbContext
@@ -37,16 +37,15 @@ namespace TMDT.Models
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }
         public virtual DbSet<Condition> Condition { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
-        public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<location> location { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Position> Position { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
     

@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
+using PagedList;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -26,7 +28,6 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Gmail không được để trống");
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
-
                 var kiemTraUser = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
                 if (kiemTraUser != null && kiemTraUser.password != null)
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
@@ -251,14 +252,12 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
         [HttpGet]
-        public ActionResult OrderList(Condition cd, string searchstring = "")
+        public ActionResult OrderList(DateTime? startdate, DateTime? enddate,int? page ,Condition cd, string searchstring = "")
         {
             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
 
             var user = (User)Session["TaiKhoan"];
-            var userPhone = user.numberPhone;
-
-            var orderQuery = db.Order.Where(o => o.numberPhone.Equals(userPhone));
+            var orderQuery = db.Order.Where(o => o.numberPhone==user.numberPhone);
             // hàm tìm kím 
             if (!string.IsNullOrEmpty(searchstring)) {
                 orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
@@ -275,11 +274,24 @@ namespace TMDT.Areas.KhachHang.Controllers
             if (showButton) {
                 orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
             }
+        
+            //
+            if (startdate != null && enddate != null) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orderQuery = orderQuery.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
+                return View(orderQuery.ToList());
+            }
 
+         
             // hiển thị tổng
-            var orders = orderQuery.ToList();
-           
-            return View(orders);
+            var hienthi = orderQuery.ToList();
+
+            int pagesize = 5;
+            int pagenum = (page ?? 1);
+         
+
+
+            return View(hienthi.ToPagedList(pagenum,pagesize));
         }
 
         public ActionResult Review()
@@ -313,14 +325,16 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
 
-        public ActionResult OrderDetail()
+
+
+
+
+        public ActionResult OrderDetail(int id)
         {
+            var order = db.Order.FirstOrDefault(s => s.orderID == id);
+            return View(order);
 
-            var user = (User)Session["TaiKhoan"];
 
-            var ordt = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
-
-            return View(ordt);
 
         }
 

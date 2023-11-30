@@ -8,13 +8,21 @@
     <div class="main-content rounded-3 border border-2 py-4 px-3">
         <div class="col-3">
             <h2 style="padding:10px">Quản lý đơn hàng </h2>
-            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Post))
+
+            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Get))
+
             {
                 <div>
                     From Date: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     To Date: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
 
                     <button type="submit" class="bg-white">Lọc đơn hàng</button>
+                </div>
+                <div>
+                    @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new { @*onchange = "this.form.submit();"*@ })
+                </div>
+                <div>
+                    Tổng tiền: <input value="@ViewBag.TongTien" disabled/>
                 </div>
 
             }
@@ -43,6 +51,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+
                             <th></th>
                         </tr>
                     </thead>
@@ -77,32 +86,38 @@
                                         if (Oder.conditionID == 1)
                                         {
 
-                                            <p>
-                                                @Html.ActionLink("Xác nhận đơn hàng", "XacNhanDH", new
-                                                {
-                                                    id = Oder.orderID
-                                                    })
-                                            </p>
+                                            <button class="btn btn-outline-success" >
+                                                 @Html.ActionLink("Xác nhận đơn hàng", "XacNhanDH", new
+                                            {
+                                                id = Oder.orderID
+                                            })
+                                            </button>
+                                               
+                                            
 
                                         }
-                                    }
-                                </td>
 
                                 <td>
                                     @{
+
+
                                         if (Oder.conditionID == 2)
                                         {
 
-                                            <p>
+                                            <button class=" btn btn-outline-warning" >
                                                 @Html.ActionLink("Đã giao", "Dagiao", new
                                                 {
                                                     id = Oder.orderID
                                                     })
-                                            </p>
+                                            </button>
 
                                         }
                                     }
                                 </td>
+                                <td>
+                                    @Oder.total
+                                </td>
+                                 
                                 <td>
 
                                     @Html.ActionLink("Chi tiết", "DetailsDH", new { id = Oder.orderID })

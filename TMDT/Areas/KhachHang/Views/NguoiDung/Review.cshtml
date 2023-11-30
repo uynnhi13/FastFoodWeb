@@ -4,110 +4,192 @@
     ViewBag.Title = "Review";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
+@{
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
 
-<h2>Review</h2>
+    var lstp = db.OrderDetail.Where(s => s.orderID == Model.orderID);
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.datetime)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.datetime)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.note)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.note)
-        </dd>
+}
 
-        <dt>
-            @Html.DisplayNameFor(model => model.total)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.total)
-        </dd>
+<div class="col-sm-12 col-md-9 col-lg-9">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-xl-7">
+                <div class="card" style="border-radius: 10px;" id="carbo">
+                    <div class="card-header">
+                        <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;">@Model.User.fullName</span>!</h5>
+                        <p class="text-muted mb-0">Ngày: @Model.datetime</p>
+                    </div>
+                    <div class="card-body p-2">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.fullAddress)
-        </dt>
+                        @foreach (var item in lstp)
+                        {
+                            var pro = db.Combo.FirstOrDefault(s => s.comboID == item.comboID);
+                            var upup = db.ComboDetail.FirstOrDefault(a => a.comboID == item.comboID);
+                            var price = pro.price * (100 - pro.sale) / 100 * item.quantity;
+                            <div class="card shadow-0 border mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
+                                                 class="img-fluid" alt="Phone">
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0">@pro.nameCombo</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">@string.Format("{0:N0}", pro.price)</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">@pro.sale%</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">Số lượng:@item.quantity</p>
+                                        </div>
+                                        <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                                            <p class="text-muted mb-0 small">@string.Format("{0:N0}", price)</p>
+                                        </div>
+                                    </div>
+                                    <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                                </div>
+                            </div>
+                        }
+                    <div class="card-near-foot ">
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="fw-bold mb-0">Order Details</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-4"></span> </p>
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.fullAddress)
-        </dd>
+                        <div class="d-flex justify-content-between pt-2">
+                            <p class="text-muted mb-0"><span class="fw-bold me-2">Tên Người Nhận :</span> @Model.recipient</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-2">Trạng Thái:</span> @Model.Condition.nameCon </p>
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.recipient)
-        </dt>
+                        <div class="d-flex justify-content-between">
 
-        <dd>
-            @Html.DisplayFor(model => model.recipient)
-        </dd>
+                            <p class="text-muted mb-0"><span class="fw-bold me-2">Số Điện Thoại:</span> @Model.recipientNumber</p>
+                            <p class="text-muted mb-0"><span class="fw-bold me-2">Hình thức thanh toán:</span> @Model.TypePayment</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p class="text-muted mb-0"><span class="fw-bold me-1">Địa chỉ: </span> @Model.fullAddress</p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.star)
-        </dt>
+                        </div>
+                    </div>
+                       
+                        </div>
+                        <div class="card-footer border-0 "
+                             style="background-color: #ff8989; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">
+                                Thành Tiền : <span class="h2 mb-0 ms-2">@string.Format("{0:N0}", Model.total) VNĐ  </span>
+                            </h5>
+                        </div>
+                    </div>
+            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.star)
-        </dd>
+            <div  class="col-lg-5 col-xl-5">
+                <div style="margin:5px" class="submit-review">
+                    <h4>Submit Review</h4>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.comment)
-        </dt>
+                    @using (Html.BeginForm("SubmitReview", "NguoiDung", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.orderID) <!-- Truyền OrderId ẩn đi -->
 
-        <dd>
-            @Html.DisplayFor(model => model.comment)
-        </dd>
+                        <div class="form-group">
+                            <label for="star">Đánh giá:</label>
+                            @Html.DropDownListFor(model => model.star, Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control", required = "required" })
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Condition.nameCon)
-        </dt>
+                        <div class="form-group">
+                            <label for="comment">Bình Luận:</label>
+                            @Html.TextAreaFor(model => model.comment, new { @class = "form-control", required = "required" })
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Condition.nameCon)
-        </dd>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    }
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Employees.FirstName)
-        </dt>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Employees.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.User.gmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.User.gmail)
-        </dd>
-
-    </dl>
 </div>
 
-@using (Html.BeginForm("SubmitReview", "NguoiDung", FormMethod.Post))
-{
-    @Html.HiddenFor(model => model.orderID) <!-- Truyền OrderId ẩn đi -->
 
-    <div class="form-group">
-        <label for="star">Star:</label>
-        @Html.DropDownListFor(model => model.star, Enumerable.Range(1, 5).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }), new { @class = "form-control", required = "required" })
-    </div>
+<style>
+    .col-lg-7 col-xl-7{
 
-    <div class="form-group">
-        <label for="comment">Comment:</label>
-        @Html.TextAreaFor(model => model.comment, new { @class = "form-control", required = "required" })
-    </div>
+    }
+    /* Phần Order Information */
+    .order-info {
+        background-color: #fcd8d8;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        padding: 10px;
+    }
 
-    <button type="submit" class="btn btn-primary">Submit Review
-    </button>
-}
+        .order-info h4 {
+            color: #333;
+            font-weight: bold;
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .order-info dl {
+            margin-bottom: 0;
+        }
+
+            .order-info dl dt {
+                font-weight: bold;
+                margin-top: 10px;
+            }
+
+            .order-info dl dd {
+                margin-bottom: 10px;
+            }
+
+    /* Phần Submit Review */
+    .submit-review {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        background-color: #ffcdcd;
+        box-shadow: 1px 4px 3px rgb(255 136 136 / 61%); /* Thêm shadow */
+    }
+
+        .submit-review h4 {
+            color: #333;
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .submit-review hr {
+            border-top: 1px solid #ccc;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .submit-review .form-group {
+            margin-bottom: 20px;
+        }
+    .card-header {
+        border: 1px solid #8f686885 !important;
+    }
+
+    #carbo {
+        box-shadow: 0px 0px 10px 5px rgb(230 146 146 / 49%);
+        border-radius: 10px;
+        border: 2px solid #a0a0a0;
+    }
+
+    .card-body .border {
+        border: 1px solid #8f686885 !important;
+    }
+
+    .card-near-foot {
+        border-top: 1px solid #8f686885 !important;
+    }
+</style>

@@ -37,18 +37,12 @@ namespace TMDT.Models
             }
 
             else {
-                var details = db.ComboDetail.Single(s => s.comboID == this.ComboID);
-                var products = db.Product.Single(s => s.cateID == details.cateID);
-                this.image = products.image;
-                if (size == "medium") {
-                    this.size = "medium";
-                    this.price = sanPham.price;
-                }
-                else if (size == "big") {
-                    this.size = "big";
-                    this.price = sanPham.price + products.priceUp;
-                }
+                var comboDetail = db.ComboDetail.FirstOrDefault(s => s.comboID == sanPham.comboID);
+                var product = db.Product.FirstOrDefault(s => s.cateID == comboDetail.cateID);
+                this.image = product.image;
+                this.size = size;
             }
+            this.price = sanPham.price;
             //Số lương mua ban đầu của sp là 1 (cho lần click đầu)
             this.soLuong = 1;
         }
