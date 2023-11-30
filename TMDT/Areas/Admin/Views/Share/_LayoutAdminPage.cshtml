@@ -235,10 +235,10 @@
             configLine,
             configBar,
             configPie,
-            lineChart;
-        barChart, pieChart;
+            lineChart,
+            barChart, pieChart;
         // DOM is ready
-        $(function () {
+        $(document).ready(function () {
             updateChartOptions();
             drawLineChart(); // Line Chart
             drawBarChart(); // Bar Chart
@@ -261,6 +261,10 @@
     <!--gg map cdn-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5.1/jquery.googlemap.min.js" integrity="sha512-mTxKPggCYbMylBEGHSZqkUvemhyjRIshmudjw6fiAxjVbKMZUqqVH/ugpvnQgOU4c4C2UhrWpOXkBeXFQfr9kA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
+    <script src="~/Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+
+    <script src="~/signalr/hubs" type="text/javascript"></script>
     <script>
         $('body').addClass('overflow-hidden');
 

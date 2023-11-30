@@ -13,6 +13,8 @@
     <!-- Add site Favicon -->
     <link rel="shortcut icon" href="~/Areas/KhachHang/assets/images/logo/logochuchu.png" type="image/png">
 
+    <!--css chat-->
+    <link href="~/Areas/KhachHang/assets/css/chat.css" rel="stylesheet" />
 
     <!-- vendor css (Icon Font) -->
 
@@ -34,6 +36,8 @@
     <!-- Main Style -->
     <link rel="stylesheet" href="~/Areas/KhachHang/assets/css/Style3.css" />
 
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -447,9 +451,7 @@
     <div style="margin-bottom:100px">
         @RenderBody()
     </div>
-
-
-
+    @Html.Partial("~/Areas/KhachHang/Views/Chat/Chat.cshtml")
 
     <!-- Footer Area Start -->
     <div class="footer-area">
@@ -782,10 +784,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Thông qua CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-
+    <script src="~/Areas/KhachHang/assets/js/chat.js"></script>
 
     @RenderSection("scripts", required: false)
-<script>
+    <script>
         $(document).ready(() => {
 
             $('.add-to-cart').each(function () {
@@ -848,17 +850,17 @@
                 });
 
                 $('#lsCartMini').append(`
-                            <li>
-                                <a href="single-product.html" class="image">
-                                    <img src="${image}" style="height: 50px; object-fit: contain"
-                                         alt="Cart product Image">
-                                </a>
-                                <div class="content">
-                                    <a href="single-product.html" class="title">${name}</a>
-                                    <span class="quantity-price">${soluong} x ${formattedNumber}</span>
-                                    <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
-                                </div>
-                            </li>`
+                                <li>
+                                    <a href="single-product.html" class="image">
+                                        <img src="${image}" style="height: 50px; object-fit: contain"
+                                             alt="Cart product Image">
+                                    </a>
+                                    <div class="content">
+                                        <a href="single-product.html" class="title">${name}</a>
+                                        <span class="quantity-price">${soluong} x ${formattedNumber}</span>
+                                        <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
+                                    </div>
+                                </li>`
                 )
             }
 
@@ -886,7 +888,7 @@
                 });
             }
         })
-</script>
+    </script>
 </body>
 
 </html>
