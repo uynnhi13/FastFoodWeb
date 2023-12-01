@@ -14,8 +14,8 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data;
     using System.Data.SqlClient;
+    using System.Data;
     using System.Collections.Generic;
 
     public partial class TMDTThucAnNhanhEntities : DbContext

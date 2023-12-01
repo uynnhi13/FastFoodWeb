@@ -33,13 +33,15 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
 
                 if (ModelState.IsValid) {
+
                     if (kiemTraUser != null && kiemTraUser.password == null) {
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
-                        kiemTraUser.password = user.password;
+                        kiemTraUser.password = BCrypt.Net.BCrypt.HashPassword(user.password);
                         db.SaveChanges();
                     }
                     else {
+                        user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
                         db.User.Add(user);
                         db.SaveChanges();
                     }
@@ -66,8 +68,8 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
                 if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
-                    var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
-                    if (kiemtra != null) {
+                    var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
+                    if (kiemtra != null && BCrypt.Net.BCrypt.Verify(user.password, kiemtra.password)) {
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
                         ViewBag.TaiKhoan = Session["TaiKhoan"];
@@ -112,6 +114,10 @@ namespace TMDT.Areas.KhachHang.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UserEdit(User u)
         {
+            if (string.IsNullOrEmpty(u.fullName))
+                ModelState.AddModelError(string.Empty, "Họ tên không được để trống");
+
+
             if (ModelState.IsValid) {
                 db.Entry(u).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();// LUU THAY DOI
@@ -323,11 +329,6 @@ namespace TMDT.Areas.KhachHang.Controllers
             return PartialView(revi);
 
         }
-
-
-
-
-
 
         public ActionResult OrderDetail(int id)
         {
