@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
 using PagedList;
+using System.Collections.Generic;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -334,14 +335,55 @@ namespace TMDT.Areas.KhachHang.Controllers
         {
             var order = db.Order.FirstOrDefault(s => s.orderID == id);
             return View(order);
-
-
-
         }
 
+            //End Order//
+            //ordere cho vl 
+        public ActionResult OrderFinvl()
+        {
+            return View();
+        }
 
-        //End Order//
+        [HttpGet]
+        public ActionResult OrderFinvl(string searchdh = " ", string searchsdt = " ")
+        {
+            var orderQuery = db.Order.AsQueryable();
+            // Tìm kiếm theo mã đơn hàng
+            if (!string.IsNullOrEmpty(searchdh)) {
+                orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchdh) && o.orderID.ToString().Length == searchdh.Length);
+            }
 
+            // Tìm kiếm theo số điện thoại người dùng
+            if (!string.IsNullOrEmpty(searchsdt)) {
+                orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
+            }
+
+            int orderId = 0;
+            if (orderQuery.ToList().Count != 0) {
+                var hienthi = orderQuery.ToList();
+                var lastItemOrder = hienthi.Last();
+                orderId = lastItemOrder.orderID;
+            }
+
+            // Nếu có kết quả duy nhất và tìm kiếm đúng theo điều kiện, chuyển hướng đến trang chi tiết đơn hàng
+            if (orderId != 0 )
+                return RedirectToAction("TimKiemVL", new { orderId = orderId });
+
+            return View();
+        }
+
+        public ActionResult TimKiemVL(int orderId)
+        {
+            // Lấy thông tin chi tiết đơn hàng dựa trên orderId và hiển thị trang chi tiết
+            var orderDetail = db.Order.FirstOrDefault(o => o.orderID == orderId);
+
+            if (orderDetail == null) {
+                // Xử lý nếu không tìm thấy đơn hàng
+                return RedirectToAction("NotFound");
+            }
+
+            return View(orderDetail);
+        }
 
 
     }

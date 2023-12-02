@@ -1,0 +1,59 @@
+﻿@model TMDT.Models.Order
+
+@{
+    ViewBag.Title = "TimKiemVL";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<div class="col-sm-12 col-md-12 col-lg-12" >
+    <div class="row align-items-center">
+
+
+        <div class="table_page table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Mã đơn hàng  </th>
+
+                        <th>  Số Điện Thoại</th>
+
+                        <th> Phương thức thanh toán</th>
+                        <th> Tổng Tiền</th>
+                        <th> Trạng thái đơn hàng</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.orderID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.recipientsNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.TypePayment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.total)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Condition.nameCon)
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div style="margin-top:10px;float: right">
+
+                @Html.ActionLink("Tìm kiếm đơn hàng", "OrderFinvl", "NguoiDung", new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    
+
+    </div>
+    </div>

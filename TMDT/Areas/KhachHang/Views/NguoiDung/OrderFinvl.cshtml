@@ -1,0 +1,73 @@
+﻿@using TMDT.Models
+@model IEnumerable<TMDT.Models.Order>
+@{
+    ViewBag.Title = "OrderFinvl";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<div class="contact-area pt-100px pb-100px">
+    <div class="container">
+        <div class="contact-wrapper">
+            <div class="row">
+                @using (Html.BeginForm("OrderFinvl", "NguoiDung", FormMethod.Get))
+                {
+                    <div class="col-lg-10" style="margin:0 auto">
+                        <div class="contact-form">
+                            <div class="contact-title mb-30">
+                                <h2 class="title" data-aos="fade-up" data-aos-delay="200">Tra cứu đơn hàng</h2>
+                                <p>helo world </p>
+                            </div>
+                            <form class="contact-form-style" id="contact-form"
+                                  action="assets/php/mail.php" method="post">
+                                <div class="row">
+                                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                                        @Html.TextBox("searchdh", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Mã đơn hàng" })
+                                    </div>
+                                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                                        @Html.TextBox("searchsdt", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Số điện thoại" })
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-primary mt-4 " data-aos="fade-up" data-aos-delay="200"
+                                        type="submit">
+                                    Tìm kiếm
+                                </button>
+
+
+
+                            </form>
+                            <p class="form-messege"></p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* Style for the input fields */
+    .contact-formn {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    /* Style for the submit button */
+    .btn-primary {
+        width: 50%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        margin: 0 auto; /* Canh giữa */
+    }
+</style>
+
+
+
