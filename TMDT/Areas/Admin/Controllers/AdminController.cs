@@ -458,6 +458,28 @@ namespace TMDT.Areas.Admin.Controllers
             searchU = (Employees)Session["user"];
             return PartialView(searchU);
         }
+        
+        public ActionResult QlyDanhGia(Order ord)
+        {
+            // Tạo danh sách sao đánh giá
+            List<SelectListItem> stars = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "1 Sao", Value = "1"},
+                new SelectListItem { Text = "2 Sao", Value = "2"},
+                new SelectListItem { Text = "3 Sao", Value = "3"},
+                new SelectListItem { Text = "4 Sao", Value = "4"},
+                new SelectListItem { Text = "5 Sao", Value = "5"}
+            };
+            if(stars != null) {
+                ViewBag.StarList = stars;
+                return View();
+            }
+            var commt = database.Order.FirstOrDefault(o => o.star == ord.star);
+            return View(commt);
+        }
+
+
+       
     }
 
 
