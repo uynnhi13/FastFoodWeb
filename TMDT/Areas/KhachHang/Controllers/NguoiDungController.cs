@@ -39,9 +39,11 @@ namespace TMDT.Areas.KhachHang.Controllers
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
                         kiemTraUser.password = user.password;
+                       
                         db.SaveChanges();
                     }
                     else {
+                        user.IsActive = true;
                         db.User.Add(user);
                         db.SaveChanges();
                     }
