@@ -301,11 +301,11 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View(hienthi.ToPagedList(pagenum,pagesize));
         }
 
-        public ActionResult Review()
+        public ActionResult Review(int id )
         {
             var user = (User)Session["TaiKhoan"];
 
-            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone &&u.orderID==id);
 
             return View(review);
         }
@@ -338,37 +338,43 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
             //End Order//
-            //ordere cho vl 
-        public ActionResult OrderFinvl()
-        {
-            return View();
-        }
+
+
+            //ordere cho vl
 
         [HttpGet]
         public ActionResult OrderFinvl(string searchdh = " ", string searchsdt = " ")
         {
-            var orderQuery = db.Order.AsQueryable();
-            // Tìm kiếm theo mã đơn hàng
-            if (!string.IsNullOrEmpty(searchdh)) {
-                orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchdh) && o.orderID.ToString().Length == searchdh.Length);
+            if (ModelState.IsValid) {
+                if (string.IsNullOrEmpty(searchsdt))
+                    ModelState.AddModelError(string.Empty, "Vui lòng nhập số điện thoại");
+                var orderQuery = db.Order.AsQueryable();
+                // Kiểm tra xem sdt
+                if (!string.IsNullOrEmpty(searchsdt)) {
+                // gán đt
+                    orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
+
+                  
+                    if (orderQuery.Any()) {
+                        // Kiểm tra mã đơn
+                        if (!string.IsNullOrEmpty(searchdh)) {
+                            // Nếu có nhập mã đơn hàng, thêm điều kiện tìm kiếm theo cả orderID và số điện thoại
+                            orderQuery = orderQuery.Where(o => o.orderID.ToString() == searchdh);
+                            var order = orderQuery.FirstOrDefault(); // Lấy đơn hàng thỏa mãn cả hai điều kiện
+
+                            if (order != null) {
+                                return RedirectToAction("TimKiemVL", new { orderId = order.orderID });
+                            }
+                        }
+                        else {
+                            var lastItemOrder = orderQuery.OrderByDescending(o => o.orderID).First();
+                            // Nếu không nhập mã đơn hàng, hiển thị danh sách các đơn hàng tìm thấy dựa trên số điện thoại
+                            return View("TimKiemVL", lastItemOrder);
+                        }
+                    }
+                }
+               
             }
-
-            // Tìm kiếm theo số điện thoại người dùng
-            if (!string.IsNullOrEmpty(searchsdt)) {
-                orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
-            }
-
-            int orderId = 0;
-            if (orderQuery.ToList().Count != 0) {
-                var hienthi = orderQuery.ToList();
-                var lastItemOrder = hienthi.Last();
-                orderId = lastItemOrder.orderID;
-            }
-
-            // Nếu có kết quả duy nhất và tìm kiếm đúng theo điều kiện, chuyển hướng đến trang chi tiết đơn hàng
-            if (orderId != 0 )
-                return RedirectToAction("TimKiemVL", new { orderId = orderId });
-
             return View();
         }
 

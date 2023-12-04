@@ -15,7 +15,7 @@
                         <div class="contact-form">
                             <div class="contact-title mb-30">
                                 <h2 class="title" data-aos="fade-up" data-aos-delay="200">Tra cứu đơn hàng</h2>
-                                <p>helo world </p>
+                                <p>Hãy nhập số điện thoại và mã đơn hàng của bạn  </p>
                             </div>
                             <form class="contact-form-style" id="contact-form"
                                   action="assets/php/mail.php" method="post">
@@ -24,7 +24,7 @@
                                         @Html.TextBox("searchdh", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Mã đơn hàng" })
                                     </div>
                                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                                        @Html.TextBox("searchsdt", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Số điện thoại" })
+                                        @Html.TextBox("searchsdt", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Số điện thoại", required = "required" })
                                     </div>
 
                                 </div>
