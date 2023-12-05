@@ -920,7 +920,7 @@
                 console.log(chat)
 
                 // Create a function that the hub can call to broadcast messages.
-                chat.client.broadcastMessage = function (userId, message, decentral) {
+                chat.client.broadcastMessage = function (userId, message, dateTime, decentral) {
                     // Add the message to the page.
                     if (decentral == 0)
                         $('.body-chat .content-chat ul').append('<li class="user-chat">' + message + '</li>');

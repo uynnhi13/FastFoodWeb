@@ -1,8 +1,267 @@
-﻿
+﻿@model List<Bmessage>
+@using TMDT.Models;
+@using TMDT.Hubs;
 @{
     ViewBag.Title = "AdminChat";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    var lsPeople = ViewBag.lsPeopleChat as List<Bmessage>;
+    var peopleChat = ViewBag.PeopleChat as Bmessage;
 }
 
-<h2>AdminChat</h2>
+@section style{
+    <link href="~/Areas/Admin/Content/css/chat.css" rel="stylesheet" />
+    <style>
+        img {
+            width: 50px;
+            height: 50px;
+            padding: 10px;
+        }
+    </style>
+}
+
+<div class="container clearfix">
+    <div class="people-list" id="people-list">
+        <div class="search">
+            <input type="text" placeholder="search" />
+            <i class="fa fa-search"></i>
+        </div>
+
+        <ul class="list">
+            @{
+                if (lsPeople != null)
+                {
+                    foreach (var item in lsPeople)
+                    {
+                        <li class="clearfix">
+                            <a href="@Url.Action("filterChat","Chat", new { user_id = item.user_id})">
+                                <img src="~/Areas/Admin/Content/img/97432-logo-chat-photos-download-free-image.png" alt="avatar" />
+                                <div class="about">
+                                    <div class="name" style="color: antiquewhite">@item.message</div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="clearfix">
+                        <p>Trống</p>
+                    </li>
+                }
+            }
+
+        </ul>
+    </div>
+
+    <div class="chat">
+        <div class="chat-header clearfix">
+            <img src="~/Areas/Admin/Content/img/97432-logo-chat-photos-download-free-image.png" alt="avatar" />
+
+            @if (peopleChat != null)
+            {
+                <div class="chat-about">
+                    <div class="chat-with">@peopleChat.message</div>
+                </div>
+            }
+            else
+            {
+                <div class="chat-about">
+                    <div class="chat-with">Chat</div>
+                </div>
+            }
+
+            <i class="fa fa-star"></i>
+        </div> <!-- end chat-header -->
+
+        <div class="chat-history">
+
+            @{
+                if (Model == null)
+                {
+                    <div style="width:100%; height: 100%; display: flex; justify-content: center; align-items: center">
+                        <p>Trống</p>
+                    </div>
+                }
+                else
+                {
+
+                    <ul id="Chat-content">
+                        @foreach (var item in Model)
+                        {
+                            if (item.decentral == 0)
+                            {
+                                <li class="user-chat">
+                                    <div class="message-data">
+                                        <span class="message-data-time">@item.timestamp.ToString("dd/MM/yyyy")</span> &nbsp; &nbsp;
+                                    </div>
+                                    <div class="message my-message">
+                                        @item.message
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="admin-chat">
+                                    <div class="message-data align-right">
+                                        <span class="message-data-time">@item.timestamp.ToString("dd/MM/yyyy")</span> &nbsp; &nbsp;
+                                    </div>
+                                    <div class="message other-message float-right">
+                                        @item.message
+                                    </div>
+                                </li>
+                            }
+
+                        }
+                    </ul>
+                }
+            }
+
+
+
+        </div> <!-- end chat-history -->
+
+        <div class="chat-message clearfix">
+            <input name="message-to-send" id="valSendChat" placeholder="Input message" />
+            <button id="btnSendChat">Send</button>
+
+        </div> <!-- end chat-message -->
+
+    </div> <!-- end chat -->
+
+</div> <!-- end container -->
+
+
+
+@section Scripts{
+    <script src="~/Areas/Admin/Content/js/ChatJs.js"></script>
+    <script id="message-template" type="text/x-handlebars-template">
+        <li class="clearfix">
+            <div class="message-data align-right">
+                <span class="message-data-time">{{time}}, Today</span> &nbsp; &nbsp;
+                <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
+            </div>
+            <div class="message other-message float-right">
+                {{messageOutput}}
+            </div>
+        </li>
+    </script>
+
+    <script id="message-response-template" type="text/x-handlebars-template">
+        <li>
+            <div class="message-data">
+                <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+                <span class="message-data-time">{{time}}, Today</span>
+            </div>
+            <div class="message my-message">
+                {{response}}
+            </div>
+        </li>
+    </script>
+
+    <!--Add script to update the page and send messages.-->
+    <script>
+
+    $(document).ready(() => {
+            @{
+                List<Bmessage> lsMessage = new List<Bmessage>();
+                string numberUser = "";
+                if (peopleChat != null)
+                {
+                    numberUser = peopleChat.user_id;
+                }
+            }
+
+            var userId = "";
+
+            userId = @numberUser;
+
+            $.connection.hub.logging = true;
+
+            // Declare a proxy to reference the hub.
+            var chat = $.connection.chatHub;
+
+            console.log(chat)
+
+            // Create a function that the hub can call to broadcast messages.
+            chat.client.broadcastMessage = function (userId, message, dateTime, decentral) {
+                // Add the message to the page.
+                let date = new Date(dateTime);
+
+                let day = date.getDate();
+
+                let month = date.getMonth();
+
+                let year = date.getFullYear();
+
+                let format1 = `${month}/${day}/${year}`;
+
+                if (decentral == 0) {
+                    // Tạo một chuỗi HTML mới chứa dòng lệnh mà bạn muốn thêm
+                    var newMessageUser = `
+                        <li class="user-chat">
+                            <div class="message-data">
+                                <span class="message-data-time">${format1}</span> &nbsp; &nbsp;
+                            </div>
+                            <div class="message my-message">
+                                ${message}
+                            </div>
+                        </li>
+                    `;
+
+                    // Sử dụng append() để thêm chuỗi HTML mới vào cuối ul trong chat-history
+                    $('.chat-history ul').append(newMessageUser);
+
+                }
+
+                else {
+                    var newMessageAdmin = `
+                        <li class="admin-chat">
+                            <div class="message-data align-right">
+                                <span class="message-data-time">${format1}</span> &nbsp; &nbsp;
+                            </div>
+                            <div class="message other-message float-right">
+                                ${message}
+                            </div>
+                        </li>`
+                    $('.chat-history ul').append(newMessageAdmin);
+                }
+            };
+
+            // Start the connection.
+            $.connection.hub.start().done(function () {
+                //bấm nút gửi
+                $('#btnSendChat').click(function () {
+                    var message = $("#valSendChat").val()
+
+                    console.log(message)
+
+                    // Call the Send method on the hub.
+                    chat.server.send(userId, message, parseInt(1));
+                    // Clear text box and reset focus for next comment.
+                    $('#valSendChat').val('').focus();
+                });
+
+                //nhấn enter trên bàn phím
+                $('#valSendChat').keydown(function (event) {
+
+                    if (event.keyCode === 13) {
+
+                        var message = $(this).val();
+
+                        console.log(message)
+
+                        // Call the Send method on the hub.
+                        chat.server.send(userId, message, parseInt(1));
+                        // Clear text box and reset focus for next comment.
+                        $('#valSendChat').val('').focus();
+
+                        //Xoá trắng input sau khi enter
+                        $(this).val('');
+                    }
+                });
+            });
+    })
+    </script>
+
+}
 

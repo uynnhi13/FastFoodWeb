@@ -22,7 +22,7 @@ namespace TMDT.Hubs
 
             db.AddCollectionMessage(new Bmessage(user_id, message, dateTime, decentral));
 
-            Clients.All.broadcastMessage(user_id, message, decentral);
+            Clients.All.broadcastMessage(user_id, message, dateTime, decentral);
         }
     }
 }
