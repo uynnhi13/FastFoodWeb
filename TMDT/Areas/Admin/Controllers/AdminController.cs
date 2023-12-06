@@ -164,7 +164,32 @@ namespace TMDT.Areas.Admin.Controllers
             var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
             return View(kh);
         }
+       
+        public ActionResult EditKHang(string id)
+        {
+             var em = database.User.FirstOrDefault(s => s.numberPhone == id);
+                if (em == null) {
+                    return HttpNotFound();
+                }
+                return View(em);
+            
+            
+        }
+        [HttpPost]
+       public ActionResult EditKHang(User us)
+        {
+            if (ModelState.IsValid) {
+                var a = database.User.FirstOrDefault(f => f.numberPhone == us.numberPhone);
 
+                a.fullName = us.fullName;
+                a.gmail = us.gmail;
+                a.password = us.password;
+                a.numberPhone = us.numberPhone;
+
+                database.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("QlyKH");
+        }
         public ActionResult DisableAccount(string id)
         {
             //Cập nhật lại database, thêm 1 cột IsActive trong User
@@ -211,14 +236,7 @@ namespace TMDT.Areas.Admin.Controllers
             }
             if(conditionID != 0 && conditionID != null) {
                 orders = orders.Where(o => o.conditionID == conditionID).ToList();
-                if(conditionID == 3) {
-                    decimal Tong = 0;
-                    foreach (var item in orders) {
-                        Tong += item.total;
-                    }
-                    ViewBag.TongTien = Tong;
-                    
-                }
+               
                 
             }
             var donhang = orders.ToList();
@@ -237,7 +255,7 @@ namespace TMDT.Areas.Admin.Controllers
             if (donhang != null) {
                 // chinh trang thai don hang
                 donhang.conditionID = 2;
-
+                database.SaveChanges();
                 if (donhang.employeeID == null) {
                     var searchU = (Employees)Session["user"];
                     donhang.employeeID = searchU.EmployeeID;
@@ -477,9 +495,46 @@ namespace TMDT.Areas.Admin.Controllers
             var commt = database.Order.FirstOrDefault(o => o.star == ord.star);
             return View(commt);
         }
+        [HttpGet]
+        public ActionResult ThongKe(DateTime? startdate, DateTime? enddate, int? ConditionID)
+        {
+            var orders = database.Order.ToList();
 
+            ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
+            if (startdate != null && enddate != null ) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
 
-       
+                decimal Tong = 0;
+                foreach (var item in orders) {
+                    if (item.conditionID == 3) {
+                        Tong += item.total;
+                    }
+                    
+                }
+                ViewBag.TongTien = Tong;
+                if (ConditionID!=0) {
+                    var chuaxn = 0;
+                    chuaxn = orders.Count(o => o.conditionID == 1);
+                    ViewBag.Chuaxn = chuaxn;
+
+                    var daxn = 0;
+                    daxn = orders.Count(o => o.conditionID == 2);
+                    ViewBag.Daxn = daxn;
+
+                    var dagiao = 0;
+                    dagiao = orders.Count(o => o.conditionID == 3);
+                    ViewBag.Dagiao = dagiao;
+                   
+                }
+
+            }
+            
+            
+            return View(orders);
+
+        }
+
     }
 
 

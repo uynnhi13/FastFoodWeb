@@ -639,6 +639,8 @@
     <Content Include="Areas\Admin\Views\Chat\Chat.cshtml" />
     <Content Include="Areas\Admin\Views\Chat\AdminChat.cshtml" />
     <Content Include="Areas\KhachHang\Views\Chat\Chat.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditKHang.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ThongKe.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
