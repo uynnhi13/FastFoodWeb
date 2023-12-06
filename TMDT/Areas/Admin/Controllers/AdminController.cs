@@ -225,11 +225,12 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult DonHang(DateTime? startdate, DateTime? enddate, int? conditionID)
+        public ActionResult DonHang(DateTime? startdate, DateTime? enddate, int? conditionID, Order ord, string selectedPaymentMethod)
         {
             var orders = database.Order.ToList();
 
             ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
+           
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
                 orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
@@ -239,10 +240,29 @@ namespace TMDT.Areas.Admin.Controllers
                
                 
             }
+            List<SelectListItem> pt = new List<SelectListItem>()
+             {
+                new SelectListItem { Text = "Phương thức", Value = "0"},
+                new SelectListItem { Text = "Tại cửa hàng", Value = "1"},
+                new SelectListItem { Text = "VNPay", Value = "2"}
+            };
+
+           
+            ViewBag.PaymentMethods = pt;
+
+            // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
+            if (selectedPaymentMethod == "1") {
+                orders = orders.Where(o => o.TypePayment == 1).ToList();
+            }
+            if (selectedPaymentMethod == "2") {
+                orders = orders.Where(o => o.TypePayment == 2).ToList();
+            }
             var donhang = orders.ToList();
             return View(orders);
 
         }
+        
+
 
         public ActionResult XacNhanDH(int? id)
         {
@@ -477,7 +497,7 @@ namespace TMDT.Areas.Admin.Controllers
             return PartialView(searchU);
         }
         
-        public ActionResult QlyDanhGia(Order ord)
+        /*public ActionResult QlyDanhGia(Order ord)
         {
             // Tạo danh sách sao đánh giá
             List<SelectListItem> stars = new List<SelectListItem>()
@@ -494,7 +514,7 @@ namespace TMDT.Areas.Admin.Controllers
             }
             var commt = database.Order.FirstOrDefault(o => o.star == ord.star);
             return View(commt);
-        }
+        }*/
         [HttpGet]
         public ActionResult ThongKe(DateTime? startdate, DateTime? enddate, int? ConditionID)
         {
