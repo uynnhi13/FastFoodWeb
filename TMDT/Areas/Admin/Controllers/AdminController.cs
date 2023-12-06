@@ -496,10 +496,43 @@ namespace TMDT.Areas.Admin.Controllers
             searchU = (Employees)Session["user"];
             return PartialView(searchU);
         }
-        
-        /*public ActionResult QlyDanhGia(Order ord)
+        [HttpGet]
+        public ActionResult QlyDanhGia(string selected)
         {
-            // Tạo danh sách sao đánh giá
+            var orders = database.Order.ToList();
+            List<SelectListItem> star = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "Sắp xếp", Value = "0"},
+                new SelectListItem { Text = "1 Sao", Value = "1"},
+                new SelectListItem { Text = "2 Sao", Value = "2"},
+                new SelectListItem { Text = "3 Sao", Value = "3"},
+                new SelectListItem { Text = "4 Sao", Value = "4"},
+                new SelectListItem { Text = "5 Sao", Value = "5"}
+            };
+
+            ViewBag.Star = star;
+
+            // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
+            if (selected== "1") {
+                orders = orders.Where(o => o.star == 1).ToList();
+            }
+            if (selected == "2") {
+                orders = orders.Where(o => o.star == 2).ToList();
+            }
+            if (selected == "3") {
+                orders = orders.Where(o => o.star == 3).ToList();
+            }
+            if (selected == "4") {
+                orders = orders.Where(o => o.star == 4).ToList();
+            }
+            if (selected == "5") {
+                orders = orders.Where(o => o.star == 5).ToList();
+            }
+            var donhang = orders.ToList();
+            return View(orders);
+
+
+            /*// Tạo danh sách sao đánh giá
             List<SelectListItem> stars = new List<SelectListItem>()
             {
                 new SelectListItem { Text = "1 Sao", Value = "1"},
@@ -508,13 +541,13 @@ namespace TMDT.Areas.Admin.Controllers
                 new SelectListItem { Text = "4 Sao", Value = "4"},
                 new SelectListItem { Text = "5 Sao", Value = "5"}
             };
-            if(stars != null) {
+            if (stars != null) {
                 ViewBag.StarList = stars;
                 return View();
             }
             var commt = database.Order.FirstOrDefault(o => o.star == ord.star);
-            return View(commt);
-        }*/
+            return View(commt);*/
+        }
         [HttpGet]
         public ActionResult ThongKe(DateTime? startdate, DateTime? enddate, int? ConditionID)
         {

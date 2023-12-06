@@ -185,8 +185,16 @@
                                 <li class="nav-item">
                                     @Html.ActionLink("Nhân viên", "Index", "Employee", null, new { @class = "nav-link" })
                                 </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Thống kê", "ThongKe", "Admin", null, new { @class = "nav-link" })
+                                
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Thống kê
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Doanh thu", "ThongKe", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Đánh giá", "QlyDanhGia", "Admin", null, new { @class = "dropdown-item" })
+                                    </div>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
