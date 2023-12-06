@@ -212,6 +212,7 @@
                                             </li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Thay đổi mật khẩu </a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Đăng Xuất</a></li>
                                         </ul>
                                     </div>
@@ -476,7 +477,9 @@
                             <li>@Html.ActionLink("Thông tin cá nhân ", "UserInfo", null, new { }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("Đơn hàng ", "OrderList", null, new { }, new { @class = "nav-link" })</li>
                             <li>@Html.ActionLink("Địa chỉ ", "LocaList", null, new { }, new { @class = "nav-link" }) </li>
+                            <li>@Html.ActionLink("Đổi mật khẩu ", "ChangePassword", null, new { }, new { @class = "nav-link" }) </li>
                             <li>@Html.ActionLink("Đăng xuất ", "DangXuat", null, new { }, new { @class = "nav-link" }) </li>
+
 
                         </ul>
                     </div>

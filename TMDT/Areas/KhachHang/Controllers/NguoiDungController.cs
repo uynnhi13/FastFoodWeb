@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TMDT.Models;
 using PagedList;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -38,11 +39,11 @@ namespace TMDT.Areas.KhachHang.Controllers
                     if (kiemTraUser != null && kiemTraUser.password == null) {
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
-                        kiemTraUser.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+                        kiemTraUser.password = user.password;
                         db.SaveChanges();
                     }
                     else {
-                        user.password = BCrypt.Net.BCrypt.HashPassword(user.password);
+                        user.password = user.password;
                         db.User.Add(user);
                         db.SaveChanges();
                     }
@@ -70,7 +71,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
-                    if (kiemtra != null && BCrypt.Net.BCrypt.Verify(user.password, kiemtra.password)) {
+                    if (kiemtra != null && user.password == kiemtra.password) {
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
                         ViewBag.TaiKhoan = Session["TaiKhoan"];
@@ -259,12 +260,12 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
         [HttpGet]
-        public ActionResult OrderList(DateTime? startdate, DateTime? enddate,int? page ,Condition cd, string searchstring = "")
+        public ActionResult OrderList(DateTime? startdate, DateTime? enddate, int? page, Condition cd, string searchstring = "")
         {
             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
 
             var user = (User)Session["TaiKhoan"];
-            var orderQuery = db.Order.Where(o => o.numberPhone==user.numberPhone);
+            var orderQuery = db.Order.Where(o => o.numberPhone == user.numberPhone);
             // hàm tìm kím 
             if (!string.IsNullOrEmpty(searchstring)) {
                 orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
@@ -281,7 +282,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             if (showButton) {
                 orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
             }
-        
+
             //
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
@@ -289,28 +290,28 @@ namespace TMDT.Areas.KhachHang.Controllers
                 return View(orderQuery.ToList());
             }
 
-         
+
             // hiển thị tổng
             var hienthi = orderQuery.ToList();
 
             int pagesize = 5;
             int pagenum = (page ?? 1);
-         
 
 
-            return View(hienthi.ToPagedList(pagenum,pagesize));
+
+            return View(hienthi.ToPagedList(pagenum, pagesize));
         }
 
-        public ActionResult Review(int id )
+        public ActionResult Review(int id)
         {
             var user = (User)Session["TaiKhoan"];
 
-            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone &&u.orderID==id);
+            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone && u.orderID == id);
 
             return View(review);
         }
         [HttpPost]
-        public ActionResult SubmitReview(Order o )
+        public ActionResult SubmitReview(Order o)
         {
 
             var user = (User)Session["TaiKhoan"];
@@ -337,11 +338,10 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View(order);
         }
 
-            //End Order//
+        //End Order//
 
 
-            //ordere cho vl
-
+        //Tìm kiếm đơn hàng cho khách vãng lai
         [HttpGet]
         public ActionResult OrderFinvl(string searchdh = " ", string searchsdt = " ")
         {
@@ -351,15 +351,13 @@ namespace TMDT.Areas.KhachHang.Controllers
                 var orderQuery = db.Order.AsQueryable();
                 // Kiểm tra xem sdt
                 if (!string.IsNullOrEmpty(searchsdt)) {
-                // gán đt
+                    // gán đt
                     orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
-
-                  
                     if (orderQuery.Any()) {
                         // Kiểm tra mã đơn
                         if (!string.IsNullOrEmpty(searchdh)) {
-                            // Nếu có nhập mã đơn hàng, thêm điều kiện tìm kiếm theo cả orderID và số điện thoại
-                            orderQuery = orderQuery.Where(o => o.orderID.ToString() == searchdh);
+                            // thêm dữ liệu
+                            orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchdh) && o.orderID.ToString().Length == searchdh.Length);
                             var order = orderQuery.FirstOrDefault(); // Lấy đơn hàng thỏa mãn cả hai điều kiện
 
                             if (order != null) {
@@ -367,13 +365,13 @@ namespace TMDT.Areas.KhachHang.Controllers
                             }
                         }
                         else {
+                            // hiển thị sp cuối cùng 
                             var lastItemOrder = orderQuery.OrderByDescending(o => o.orderID).First();
-                            // Nếu không nhập mã đơn hàng, hiển thị danh sách các đơn hàng tìm thấy dựa trên số điện thoại
+
                             return View("TimKiemVL", lastItemOrder);
                         }
                     }
                 }
-               
             }
             return View();
         }
@@ -390,7 +388,47 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             return View(orderDetail);
         }
+        // đổi mật khẩu 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string currentPassword, string newPassword, string confirmPassword)
+        {
+            var u = Session["TaiKhoan"] as User; // Giả sử User là đối tượng chứa thông tin tài khoản của người dùng
+            var n = db.User.FirstOrDefault(o => o.numberPhone == u.numberPhone);
+            if (u != null) {
+                if (currentPassword == u.password) // Kiểm tra mật khẩu hiện tại của người dùng
+                {
+                    if (newPassword == confirmPassword) // Kiểm tra mật khẩu mới và mật khẩu xác nhận có trùng khớp không
+                    {
+                     
 
+                        n.password = newPassword; // Cập nhật mật khẩu mới
 
+                        db.Entry(n).State = EntityState.Modified;
+                      
+                        db.SaveChanges();
+                        ViewBag.ErrorMessage = "Thay đổi thành công ";
+                        // Redirect về trang chủ hoặc trang thông báo thành công
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else {
+                        ViewBag.ErrorMessage = " Xác nhận mật khẩu không đúng  ";
+                    }
+                }
+                else {
+                    ViewBag.ErrorMessage = "Nhập sai mật khẩu hiện tại";
+                }
+            }
+            else {
+                return RedirectToAction("Login", "NguoiDung"); // Nếu không có thông tin tài khoản trong Session, chuyển hướng đến trang đăng nhập
+            }
+
+            // Nếu có lỗi, hiển thị lại form thay đổi mật khẩu với thông báo lỗi
+            return View();
+        }
     }
 }
+

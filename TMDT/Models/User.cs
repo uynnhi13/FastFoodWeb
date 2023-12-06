@@ -25,6 +25,8 @@ namespace TMDT.Models
         public string gmail { get; set; }
         public string password { get; set; }
         public string fullName { get; set; }
+        public string oldPassword { get; set; }
+        public string newPassword { get; set; }
         public Nullable<System.DateTime> bDay { get; set; }
         public Nullable<bool> gender { get; set; }
         public Nullable<int> addressID { get; set; }

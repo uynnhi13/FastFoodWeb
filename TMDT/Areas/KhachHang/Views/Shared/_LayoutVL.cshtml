@@ -193,9 +193,10 @@
                     <div class="col col-lg-auto align-self-center pl-0">
                         <div class="header-actions">
                             <!-- Single Wedge Start -->
-                            <a href="#" class="header-action-btn" data-bs-toggle="modal" data-bs-target="#searchActive">
+                            <a href="@Url.Action("OrderFinvl","NguoiDung")" class="header-action-btn">
                                 <i class="pe-7s-search"></i>
                             </a>
+                          
                             <!-- Single Wedge End -->
                             @{
                                 var user = Session["TaiKhoan"] as TMDT.Models.User;

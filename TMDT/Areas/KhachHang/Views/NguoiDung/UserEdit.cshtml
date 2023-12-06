@@ -12,49 +12,47 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <h6>Số Điện Thoại</h6>
-                        @Html.EditorFor(model => model.numberPhone, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.numberPhone, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        <h6>Mail</h6>
-                        @Html.EditorFor(model => model.gmail, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.gmail, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        <h6>Ngày Sinh</h6>
-                        @Html.EditorFor(model => model.bDay, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.bDay, "", new { @class = "text-danger" })
-                    </div>
-
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <h6>Số Điện Thoại</h6>
+                    @Html.EditorFor(model => model.numberPhone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.numberPhone, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <h6>Mật Khẩu</h6>
-                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        <h6>Họ Tên</h6>
-                        @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        <h6>Giới Tính</h6>
-                        @Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
-                    </div>
-
-                    <!-- Thêm các trường khác vào cột này nếu cần -->
-
+                <div class="form-group">
+                    <h6>Mail</h6>
+                    @Html.EditorFor(model => model.gmail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.gmail, "", new { @class = "text-danger" })
                 </div>
+                <div class="form-group">
+                    <h6>Ngày Sinh</h6>
+                    @Html.EditorFor(model => model.bDay, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.bDay, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <h6>Mật Khẩu</h6>
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <h6>Họ Tên</h6>
+                    @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <h6>Giới Tính</h6>
+                    @Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Thêm các trường khác vào cột này nếu cần -->
 
             </div>
             <div class="form-group">
@@ -64,8 +62,10 @@
             </div>
 
             <div class="form-group" style="text-align:right">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu " class="btn btn-primary" />
             </div>
+        </div>
+         
         }
     </div>
 
@@ -79,25 +79,7 @@
             background-color: #ffcece;
             padding: 10px;
         }
-             
-            .btn-primary {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #d19797; /* Màu nền của nút */
-                color: #fff; /* Màu chữ trắng */
-                text-align: center;
-                text-decoration: none;
-                border: none;
-                border-radius: 4px; /* Bo tròn viền */
-                cursor: pointer;
-                transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi khi hover */
-            }
-
-            .btn-primary:hover {
-                background-color: #a27070; /* Màu nền khi hover */
-                color: #71706f;
-            }
-
+        .btn{float:right}
         /* Định dạng label và input */
         .control-label {
             font-weight: bold;

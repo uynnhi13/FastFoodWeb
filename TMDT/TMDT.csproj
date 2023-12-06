@@ -575,6 +575,7 @@
     </Content>
     <Content Include="Areas\KhachHang\Views\NguoiDung\OrderFinvl.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\TimKiemVL.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\ChangePassword.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
