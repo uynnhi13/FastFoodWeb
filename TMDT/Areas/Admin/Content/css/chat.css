@@ -263,7 +263,6 @@ ul{
 
 /*design chat*/
 ul#Chat-content {
-    height: 100%;
     display: flex;
     bottom: 0;
     justify-content: end;

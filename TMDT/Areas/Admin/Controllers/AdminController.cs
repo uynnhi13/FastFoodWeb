@@ -223,7 +223,6 @@ namespace TMDT.Areas.Admin.Controllers
             }
             var donhang = orders.ToList();
             return View(orders);
-
         }
 
         public ActionResult XacNhanDH(int? id)

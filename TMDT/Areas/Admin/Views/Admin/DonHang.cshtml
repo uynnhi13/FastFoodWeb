@@ -19,7 +19,7 @@
                     <button type="submit" class="bg-white">Lọc đơn hàng</button>
                 </div>
                 <div>
-                    @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new { @*onchange = "this.form.submit();"*@ })
+                    @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new { @*onchange = "this.form.submit();"*@ )
                 </div>
                 <div>
                     Tổng tiền: <input value="@ViewBag.TongTien" disabled/>
@@ -124,6 +124,7 @@
 
                                 </td>
                             </tr>
+
                         }
                     </tbody>
                 </table>
