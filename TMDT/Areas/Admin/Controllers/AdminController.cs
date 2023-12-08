@@ -164,7 +164,32 @@ namespace TMDT.Areas.Admin.Controllers
             var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
             return View(kh);
         }
+       
+        public ActionResult EditKHang(string id)
+        {
+             var em = database.User.FirstOrDefault(s => s.numberPhone == id);
+                if (em == null) {
+                    return HttpNotFound();
+                }
+                return View(em);
+            
+            
+        }
+        [HttpPost]
+       public ActionResult EditKHang(User us)
+        {
+            if (ModelState.IsValid) {
+                var a = database.User.FirstOrDefault(f => f.numberPhone == us.numberPhone);
 
+                a.fullName = us.fullName;
+                a.gmail = us.gmail;
+                a.password = us.password;
+                a.numberPhone = us.numberPhone;
+
+                database.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("QlyKH");
+        }
         public ActionResult DisableAccount(string id)
         {
             //Cập nhật lại database, thêm 1 cột IsActive trong User
@@ -200,31 +225,44 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult DonHang(DateTime? startdate, DateTime? enddate, int? conditionID)
+        public ActionResult DonHang(DateTime? startdate, DateTime? enddate, int? conditionID, Order ord, string selectedPaymentMethod)
         {
             var orders = database.Order.ToList();
 
             ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
+           
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
                 orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
             }
             if(conditionID != 0 && conditionID != null) {
                 orders = orders.Where(o => o.conditionID == conditionID).ToList();
-                if(conditionID == 3) {
-                    decimal Tong = 0;
-                    foreach (var item in orders) {
-                        Tong += item.total;
-                    }
-                    ViewBag.TongTien = Tong;
-                    
-                }
+               
                 
+            }
+            List<SelectListItem> pt = new List<SelectListItem>()
+             {
+                new SelectListItem { Text = "Phương thức", Value = "0"},
+                new SelectListItem { Text = "Tại cửa hàng", Value = "1"},
+                new SelectListItem { Text = "VNPay", Value = "2"}
+            };
+
+           
+            ViewBag.PaymentMethods = pt;
+
+            // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
+            if (selectedPaymentMethod == "1") {
+                orders = orders.Where(o => o.TypePayment == 1).ToList();
+            }
+            if (selectedPaymentMethod == "2") {
+                orders = orders.Where(o => o.TypePayment == 2).ToList();
             }
             var donhang = orders.ToList();
             return View(orders);
 
         }
+        
+
 
         public ActionResult XacNhanDH(int? id)
         {
@@ -237,7 +275,7 @@ namespace TMDT.Areas.Admin.Controllers
             if (donhang != null) {
                 // chinh trang thai don hang
                 donhang.conditionID = 2;
-
+                database.SaveChanges();
                 if (donhang.employeeID == null) {
                     var searchU = (Employees)Session["user"];
                     donhang.employeeID = searchU.EmployeeID;
@@ -458,6 +496,98 @@ namespace TMDT.Areas.Admin.Controllers
             searchU = (Employees)Session["user"];
             return PartialView(searchU);
         }
+        [HttpGet]
+        public ActionResult QlyDanhGia(string selected)
+        {
+            var orders = database.Order.ToList();
+            List<SelectListItem> star = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "Sắp xếp", Value = "0"},
+                new SelectListItem { Text = "1 Sao", Value = "1"},
+                new SelectListItem { Text = "2 Sao", Value = "2"},
+                new SelectListItem { Text = "3 Sao", Value = "3"},
+                new SelectListItem { Text = "4 Sao", Value = "4"},
+                new SelectListItem { Text = "5 Sao", Value = "5"}
+            };
+
+            ViewBag.Star = star;
+
+            // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
+            if (selected== "1") {
+                orders = orders.Where(o => o.star == 1).ToList();
+            }
+            if (selected == "2") {
+                orders = orders.Where(o => o.star == 2).ToList();
+            }
+            if (selected == "3") {
+                orders = orders.Where(o => o.star == 3).ToList();
+            }
+            if (selected == "4") {
+                orders = orders.Where(o => o.star == 4).ToList();
+            }
+            if (selected == "5") {
+                orders = orders.Where(o => o.star == 5).ToList();
+            }
+            var donhang = orders.ToList();
+            return View(orders);
+
+
+            /*// Tạo danh sách sao đánh giá
+            List<SelectListItem> stars = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "1 Sao", Value = "1"},
+                new SelectListItem { Text = "2 Sao", Value = "2"},
+                new SelectListItem { Text = "3 Sao", Value = "3"},
+                new SelectListItem { Text = "4 Sao", Value = "4"},
+                new SelectListItem { Text = "5 Sao", Value = "5"}
+            };
+            if (stars != null) {
+                ViewBag.StarList = stars;
+                return View();
+            }
+            var commt = database.Order.FirstOrDefault(o => o.star == ord.star);
+            return View(commt);*/
+        }
+        [HttpGet]
+        public ActionResult ThongKe(DateTime? startdate, DateTime? enddate, int? ConditionID)
+        {
+            var orders = database.Order.ToList();
+
+            ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
+            if (startdate != null && enddate != null ) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
+
+                decimal Tong = 0;
+                foreach (var item in orders) {
+                    if (item.conditionID == 3) {
+                        Tong += item.total;
+                    }
+                    
+                }
+                ViewBag.TongTien = Tong;
+                if (ConditionID!=0) {
+                    var chuaxn = 0;
+                    chuaxn = orders.Count(o => o.conditionID == 1);
+                    ViewBag.Chuaxn = chuaxn;
+
+                    var daxn = 0;
+                    daxn = orders.Count(o => o.conditionID == 2);
+                    ViewBag.Daxn = daxn;
+
+                    var dagiao = 0;
+                    dagiao = orders.Count(o => o.conditionID == 3);
+                    ViewBag.Dagiao = dagiao;
+                   
+                }
+
+            }
+            
+            
+            return View(orders);
+
+        }
+
     }
 
 
