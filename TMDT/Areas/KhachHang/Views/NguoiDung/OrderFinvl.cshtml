@@ -8,38 +8,52 @@
 <div class="contact-area pt-100px pb-100px">
     <div class="container">
         <div class="contact-wrapper">
-            <div class="row">
-                @using (Html.BeginForm("OrderFinvl", "NguoiDung", FormMethod.Get))
+            <a class="active" style="text-align:center" href="#lg1">
+            
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
                 {
+                    <div class="alert alert-danger">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+            </a>
+            <div class="row">
+            
                     <div class="col-lg-10" style="margin:0 auto">
                         <div class="contact-form">
                             <div class="contact-title mb-30">
                                 <h2 class="title" data-aos="fade-up" data-aos-delay="200">Tra cứu đơn hàng</h2>
                                 <p>Hãy nhập số điện thoại và mã đơn hàng của bạn  </p>
+
                             </div>
-                            <form class="contact-form-style" id="contact-form"
-                                  action="assets/php/mail.php" method="post">
-                                <div class="row">
-                                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                                        @Html.TextBox("searchdh", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Mã đơn hàng" })
-                                    </div>
-                                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                                        @Html.TextBox("searchsdt", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Số điện thoại", required = "required" })
-                                    </div>
+                            <div id="lg1" class="tab-pane active">
+                                @using (Html.BeginForm("OrderFinvl", "NguoiDung", FormMethod.Get))
+                                {
+                                    <form class="contact-form-style" id="contact-form"
+                                          action="assets/php/mail.php" method="post">
+                                        <div class="row">
+                                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                                                @Html.TextBox("searchdh", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Mã đơn hàng" })
+                                            </div>
+                                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                                                @Html.TextBox("searchsdt", ViewBag.CurrentFilter as string, new { @class = "contact-formn", placeholder = "Số điện thoại", required = "required" })
+                                            </div>
 
+                                        </div>
+                                        <button class="btn btn-primary mt-4 " data-aos="fade-up" data-aos-delay="200"
+                                                type="submit">
+                                            Tìm kiếm
+                                        </button>
+
+
+
+                                    </form>
+                                }
+                                    <p class="form-messege"></p>
+                                    <
                                 </div>
-                                <button class="btn btn-primary mt-4 " data-aos="fade-up" data-aos-delay="200"
-                                        type="submit">
-                                    Tìm kiếm
-                                </button>
-
-
-
-                            </form>
-                            <p class="form-messege"></p>
-                        </div>
                     </div>
-                }
+                
             </div>
         </div>
     </div>

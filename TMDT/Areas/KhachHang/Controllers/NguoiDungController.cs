@@ -339,15 +339,13 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
         //End Order//
-
-
-        //Tìm kiếm đơn hàng cho khách vãng lai
+        public ActionResult OrderFinvl()
+        {
+            return View();
+        }
         [HttpGet]
         public ActionResult OrderFinvl(string searchdh = " ", string searchsdt = " ")
         {
-            if (ModelState.IsValid) {
-                if (string.IsNullOrEmpty(searchsdt))
-                    ModelState.AddModelError(string.Empty, "Vui lòng nhập số điện thoại");
                 var orderQuery = db.Order.AsQueryable();
                 // Kiểm tra xem sdt
                 if (!string.IsNullOrEmpty(searchsdt)) {
@@ -372,9 +370,13 @@ namespace TMDT.Areas.KhachHang.Controllers
                         }
                     }
                 }
-            }
+                ViewBag.ErrorMessage = " Xác nhận mật khẩu không đúng  ";
+            
             return View();
         }
+       //Tìm kiếm đơn hàng cho khách vãng lai
+      
+    
 
         public ActionResult TimKiemVL(int orderId)
         {
