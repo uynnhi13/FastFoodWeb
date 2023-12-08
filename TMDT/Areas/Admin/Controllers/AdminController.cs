@@ -221,6 +221,16 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult DonHang(int? id)
         {
             var donhang = database.Order.Include(s => s.OrderDetail);
+
+            List<SelectListItem> pt = new List<SelectListItem>()
+             {
+                new SelectListItem { Text = "Phương thức", Value = "0"},
+                new SelectListItem { Text = "Tại cửa hàng", Value = "1"},
+                new SelectListItem { Text = "VNPay", Value = "2"}
+            };
+
+            ViewBag.PaymentMethods = pt;
+
             return View(donhang);
         }
 
