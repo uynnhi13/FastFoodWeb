@@ -1,11 +1,29 @@
-﻿<div class="icon-chat">
-    <div style="position:relative">
-        <div id="checkNotification"></div>
+﻿@using TMDT.Models
+@{
+    var user = (User)Session["TaiKhoan"];
+    List<Bmessage> lsMessage = new List<Bmessage>();
+    string numberUser = "";
+    if (user != null)
+    {
+        numberUser = user.numberPhone;
+        MongoDBconnection db = new MongoDBconnection();
+        lsMessage = db.lsMessage.Where(w => w.user_id == numberUser).ToList();
+    }
+}
+
+
+@if (user != null)
+{
+    <div class="icon-chat">
+        <div style="position:relative">
+            <div id="checkNotification"></div>
+        </div>
+        <p>
+            <i class="fa-solid fa-message" style="color: #fef9f7"></i>
+        </p>
     </div>
-    <p>
-        <i class="fa-solid fa-message" style="color: #fef9f7"></i>
-    </p>
-</div>
+}
+
 
 <div class="live-chat">
     <div class="infor-chat">
@@ -24,17 +42,28 @@
     <div class="body-chat" id="style-1">
         <div class="content-chat">
             <ul>
-                <li class="user-chat">i'm user</li>
-                <li class="admin-chat">Hello, I'm the manager of Chu Chu. Is there anything you'd like to share with us about your experience?</li>  
+                @foreach (var item in lsMessage)
+                {
+                    if (item.decentral == 0)
+                    {
+                        <li class="user-chat">@item.message</li>
+                    }
+                    else
+                    {
+                        <li class="admin-chat">@item.message</li>
+                    }
+                }
             </ul>
         </div>
     </div>
     <div class="input-chat">
         <div>
-            <input id="valSendChat" type="text" name="name" value="" placeholder="Input text" autocomplete="off"/>
+            <input id="valSendChat" type="text" name="name" value="" placeholder="Input text" autocomplete="off" />
         </div>
+
         <button id="btnSendChat">
             Send
         </button>
     </div>
 </div>
+

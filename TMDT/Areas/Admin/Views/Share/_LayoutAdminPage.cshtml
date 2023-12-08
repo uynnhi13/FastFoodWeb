@@ -180,6 +180,9 @@
                                     @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
+                                    @Html.ActionLink("Chat", "AdminChat", "Chat", null, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
                                     @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
@@ -274,7 +277,6 @@
     
     <script src="~/Scripts/jquery.signalR-2.4.3.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-    
     <script src="~/signalr/hubs" type="text/javascript"></script>
     <script>
         $('body').addClass('overflow-hidden');

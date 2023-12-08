@@ -1,4 +1,5 @@
-﻿
+﻿@using TMDT.Models
+@using TMDT.Hubs
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -48,14 +49,14 @@
                 <div class="row">
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="@Url.Action("Index","Home")"><img style="width:150px" src="~/Areas/KhachHang/assets/images/logo/logochuchu.png" alt="Site Logo" /></a>
+                            <a href="@Url.Action("Index", "Home")"><img style="width:150px" src="~/Areas/KhachHang/assets/images/logo/logochuchu.png" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <div class="col align-self-center d-none d-lg-block">
                         <div class="main-menu">
                             <ul>
                                 <li class="dropdown">
-                                    <a href="@Url.Action("Index","Home")">Trang Chủ </a>
+                                    <a href="@Url.Action("Index", "Home")">Trang Chủ </a>
 
                                 </li>
                                 <li><a href="~/Areas/KhachHang/View/About/About.cshtml">Về ChuChu</a></li>
@@ -211,11 +212,11 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
                                             <li>
-                                                <a class="dropdown-item" href="@Url.Action("UserInfo","NguoiDung")">Tài Khoản</a>
+                                                <a class="dropdown-item" href="@Url.Action("UserInfo", "NguoiDung")">Tài Khoản</a>
                                             </li>
                                             <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Đăng Xuất</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang", "GioHang")">Giỏ Hàng</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangXuat", "NguoiDung")">Đăng Xuất</a></li>
                                         </ul>
                                     </div>
                                 }
@@ -226,8 +227,8 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-right">
-                                            <li><a class="dropdown-item" href="@Url.Action("DangNhap","NguoiDung")">Đăng Nhập</a></li>
-                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("DangNhap", "NguoiDung")">Đăng Nhập</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang", "GioHang")">Giỏ Hàng</a></li>
                                         </ul>
                                     </div>
                                 }
@@ -785,6 +786,7 @@
     <!-- Thông qua CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
     <script src="~/Areas/KhachHang/assets/js/chat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     @RenderSection("scripts", required: false)
     <script>
@@ -850,17 +852,17 @@
                 });
 
                 $('#lsCartMini').append(`
-                                <li>
-                                    <a href="single-product.html" class="image">
-                                        <img src="${image}" style="height: 50px; object-fit: contain"
-                                             alt="Cart product Image">
-                                    </a>
-                                    <div class="content">
-                                        <a href="single-product.html" class="title">${name}</a>
-                                        <span class="quantity-price">${soluong} x ${formattedNumber}</span>
-                                        <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
-                                    </div>
-                                </li>`
+                                                                                            <li>
+                                                                                                <a href="single-product.html" class="image">
+                                                                                                    <img src="${image}" style="height: 50px; object-fit: contain"
+                                                                                                         alt="Cart product Image">
+                                                                                                </a>
+                                                                                                <div class="content">
+                                                                                                    <a href="single-product.html" class="title">${name}</a>
+                                                                                                    <span class="quantity-price">${soluong} x ${formattedNumber}</span>
+                                                                                                    <a href="javascript:void(0);" onclick="XoaSanPham(${ComboID}, '${size}')" class="remove">×</a>
+                                                                                                </div>
+                                                                                            </li>`
                 )
             }
 
@@ -887,6 +889,74 @@
                     }
                 });
             }
+        })
+    </script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+    <script>
+
+        $(document).ready(() => {
+                @{
+                    List<Bmessage> lsMessage = new List<Bmessage>();
+                    string numberUser = "";
+                    if (user != null)
+                    {
+                        numberUser = user.numberPhone;
+                        MongoDBconnection db = new MongoDBconnection();
+                        lsMessage = db.lsMessage.Where(w=> w.user_id == numberUser).ToList();
+                    }
+                }
+
+                var userId = "";
+
+                userId = @numberUser;
+
+                $.connection.hub.logging = true;
+
+                // Declare a proxy to reference the hub.
+                var chat = $.connection.chatHub;
+
+                console.log(chat)
+
+                // Create a function that the hub can call to broadcast messages.
+                chat.client.broadcastMessage = function (userId, message, dateTime, decentral) {
+                    // Add the message to the page.
+                    if (decentral == 0)
+                        $('.body-chat .content-chat ul').append('<li class="user-chat">' + message + '</li>');
+                    else
+                        $('.body-chat .content-chat ul').append('<li class="admin-chat">' + message + '</li>');
+                };
+
+                // Start the connection.
+                $.connection.hub.start().done(function () {
+                    //bấm nút gửi
+                    $('#btnSendChat').click(function () {
+                        var message = $("#valSendChat").val()
+
+                        // Call the Send method on the hub.
+                        chat.server.send(userId, message, parseInt(0));
+                        // Clear text box and reset focus for next comment.
+                        $('#valSendChat').val('').focus();
+                    });
+
+                    //nhấn enter trên bàn phím
+                    $('#valSendChat').keydown(function (event) {
+
+                        if (event.keyCode === 13) {
+
+                            var message = $(this).val();
+
+                            // Call the Send method on the hub.
+                            chat.server.send(userId, message, parseInt(0));
+                            // Clear text box and reset focus for next comment.
+                            $('#valSendChat').val('').focus();
+
+                            //Xoá trắng input sau khi enter
+                            $(this).val('');
+                        }
+                    });
+                });
         })
     </script>
 </body>
