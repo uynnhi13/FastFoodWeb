@@ -5,6 +5,9 @@ using TMDT.Models;
 using PagedList;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Net.Mail;
+using System.Net;
+using System.Configuration;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -431,6 +434,104 @@ namespace TMDT.Areas.KhachHang.Controllers
             // Nếu có lỗi, hiển thị lại form thay đổi mật khẩu với thông báo lỗi
             return View();
         }
+        public ActionResult SendResetLink()
+        {
+            return View();
+        }
+
+        // POST: /ForgotPassword/SendResetLink
+        [HttpPost]
+        public ActionResult SendResetLink(string email)
+        {
+            var user = db.User.FirstOrDefault(u => u.gmail == email);
+
+            if (user != null) {
+                // Gọi hàm để gửi email chứa liên kết đổi mật khẩu
+                bool emailSent = SendResetPasswordEmail(email);
+
+                if (emailSent) {
+                    return RedirectToAction("ChangePasswordvl");
+                }
+                else {
+                    return RedirectToAction("ErrorSendingEmail");
+                }
+            }  
+            else {
+                return RedirectToAction("EmailNotFound");
+            }
+        }
+        string smtpServer = ConfigurationManager.AppSettings["smtpServer"];
+        bool enableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]);
+        int smtpPort = int.Parse(ConfigurationManager.AppSettings["smtpPort"]);
+        string smtpUser = ConfigurationManager.AppSettings["smtpUser"];
+        string smtpPass = ConfigurationManager.AppSettings["smtpPass"];
+        string adminEmail = ConfigurationManager.AppSettings["adminEmail"];
+
+        private bool SendResetPasswordEmail(string emailAddress)
+        {
+                string mailBody = "Link to reset password:  ";
+                
+
+                MailMessage message = new MailMessage(smtpUser, emailAddress);
+                message.Subject = "Reset Your Password";
+                message.Body = mailBody+ "https://localhost:44322/KhachHang/NguoiDung/ChangePasswordvl";
+
+                SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential(smtpUser, smtpPass);
+                smtpClient.EnableSsl = enableSsl;
+                smtpClient.Send(message);
+                return true; // Email đã được gửi thành công
+            try {
+                smtpClient.Send(message);
+                return true; // Email đã được gửi thành công
+            }
+            catch (Exception ex) {
+                // Log lỗi hoặc xử lý ngoại lệ tại đây
+                return false; // Email không thể được gửi
+            }
+
+        }
+
+
+        // đổi mật khẩu 
+        public ActionResult ChangePasswordvl()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePasswordvl(string userId, string currentPassword, string newPassword, string confirmPassword)
+        {
+            var user = db.User.FirstOrDefault(u => u.numberPhone == userId); // Sử dụng ID của người dùng để truy xuất thông tin
+            if (user != null) {
+                if (currentPassword == user.password) {
+                    if (newPassword == confirmPassword) {
+                        user.password = newPassword;
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                        ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else {
+                        ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";
+                    }
+                }
+                else {
+                    ViewBag.ErrorMessage = "Nhập sai mật khẩu hiện tại";
+                }
+            }
+            else {
+                return RedirectToAction("Login", "NguoiDung");
+            }
+
+            return View();
+        }
+
+
+
+
     }
 }
+
+
 

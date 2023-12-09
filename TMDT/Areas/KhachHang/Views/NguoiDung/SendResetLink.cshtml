@@ -1,0 +1,17 @@
+﻿@model TMDT.Models.User
+
+@{
+    ViewBag.Title = "SendResetLink";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<h2>SendResetLink</h2>
+
+@using (Html.BeginForm("SendResetLink", "NguoiDung", FormMethod.Post))
+{
+    <div>
+        <label for="email">Enter your email:</label>
+        <input type="email" id="email" name="email" required />
+    </div>
+    <button type="submit">Send Reset Link</button>
+}
