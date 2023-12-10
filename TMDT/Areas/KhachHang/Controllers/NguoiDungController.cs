@@ -8,6 +8,8 @@ using System.Data.Entity;
 using System.Net.Mail;
 using System.Net;
 using System.Configuration;
+using TMDT.Mtk;
+
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -164,17 +166,23 @@ namespace TMDT.Areas.KhachHang.Controllers
 
                 if (ad.priority) {
                     var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
-
+/*
                     foreach (var item in lsAad) {
                         if (item.priority) {
                             addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
                             addres.priority = false;
 
                         }
+                    }*/
+                    Iteratorr iteratorr = new Iterator(lsAad);
+                    for (var item = iteratorr.First();
+                        !iteratorr.IsDone; item = iteratorr.Next()) {
+                        addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                        addres.priority = false;
                     }
-
                 }
 
+              
                 db.SaveChanges();
 
 
@@ -450,7 +458,9 @@ namespace TMDT.Areas.KhachHang.Controllers
                 bool emailSent = SendResetPasswordEmail(email);
 
                 if (emailSent) {
-                    return RedirectToAction("ChangePasswordvl");
+
+                    Session["Mailvl"] = email;
+                    return RedirectToAction("Noficication");
                 }
                 else {
                     return RedirectToAction("ErrorSendingEmail");
@@ -492,6 +502,10 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
 
         }
+        public ActionResult Noficication()
+        {
+            return View();
+        }
 
 
         // đổi mật khẩu 
@@ -500,9 +514,10 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult ChangePasswordvl(string userId, string currentPassword, string newPassword, string confirmPassword)
+        public ActionResult ChangePasswordvl(string email, string currentPassword, string newPassword, string confirmPassword)
         {
-            var user = db.User.FirstOrDefault(u => u.numberPhone == userId); // Sử dụng ID của người dùng để truy xuất thông tin
+            var m = Session["Mailvl"] as User;
+            var user = db.User.FirstOrDefault(u => u.gmail == m.gmail);
             if (user != null) {
                 if (currentPassword == user.password) {
                     if (newPassword == confirmPassword) {
@@ -510,7 +525,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         db.Entry(user).State = EntityState.Modified;
                         db.SaveChanges();
                         ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("DangKy", "NguoiDung");
                     }
                     else {
                         ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";

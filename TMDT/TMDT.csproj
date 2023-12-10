@@ -243,6 +243,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Mtk\Iterator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +336,8 @@
     <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.ttf" />
     <Content Include="Areas\KhachHang\assets\fonts\Pe-icon-7-stroke\Pe-icon-7-stroke.woff" />
     <Content Include="Areas\KhachHang\assets\images\404\404.jpg" />
+    <Content Include="Areas\KhachHang\assets\images\404\helo.jpg" />
+    <Content Include="Areas\KhachHang\assets\images\404\s.jpg" />
     <Content Include="Areas\KhachHang\assets\images\about-image\intro-bg.jpg" />
     <Content Include="Areas\KhachHang\assets\images\about-image\srevice-left-img.png" />
     <Content Include="Areas\KhachHang\assets\images\about-image\srevice-left-shape.png" />
@@ -578,6 +581,7 @@
     <Content Include="Areas\KhachHang\Views\NguoiDung\ChangePassword.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\SendResetLink.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\ChangePasswordvl.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\Noficication.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
