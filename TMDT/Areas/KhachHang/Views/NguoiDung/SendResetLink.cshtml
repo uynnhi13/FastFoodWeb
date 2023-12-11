@@ -4,14 +4,45 @@
     ViewBag.Title = "SendResetLink";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
 }
+<div class="login-register-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <a class="active" style="text-align:center" href="#lg1">
+                        <h2>Quên mật khẩu </h2>
+                        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                        {
+                            <div class="alert alert-danger">
+                                @ViewBag.ErrorMessage
+                            </div>
+                        }
+                    </a>
+                    <div class="tab-content">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    <form action="#" method="post">
+                                        @using (Html.BeginForm("SendResetLink", "NguoiDung", FormMethod.Post))
+                                        {
+                                            @Html.ValidationSummary(true)
+                                            <div>
+                                                <label for="email">Vui lòng nhập Mail của bạn </label>
+                                                <input type="email" id="email" name="email" required />
+                                            </div>
+                                            <div class="btn btn-primary">
+                                                <button type="submit">Xác nhận</button>
+                                            </div>
+                                          
 
-<h2>SendResetLink</h2>
-
-@using (Html.BeginForm("SendResetLink", "NguoiDung", FormMethod.Post))
-{
-    <div>
-        <label for="email">Enter your email:</label>
-        <input type="email" id="email" name="email" required />
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit">Send Reset Link</button>
-}
+</div>

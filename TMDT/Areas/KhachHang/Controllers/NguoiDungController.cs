@@ -166,14 +166,14 @@ namespace TMDT.Areas.KhachHang.Controllers
 
                 if (ad.priority) {
                     var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
-/*
-                    foreach (var item in lsAad) {
-                        if (item.priority) {
-                            addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
-                            addres.priority = false;
+                    /*
+                                        foreach (var item in lsAad) {
+                                            if (item.priority) {
+                                                addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                                                addres.priority = false;
 
-                        }
-                    }*/
+                                            }
+                                        }*/
                     Iteratorr iteratorr = new Iterator(lsAad);
                     for (var item = iteratorr.First();
                         !iteratorr.IsDone; item = iteratorr.Next()) {
@@ -182,11 +182,8 @@ namespace TMDT.Areas.KhachHang.Controllers
                     }
                 }
 
-              
+      
                 db.SaveChanges();
-
-
-
                 ad.userID = user.numberPhone;
                 db.Address.Add(ad);
                 db.SaveChanges();// LUU THAY DOI
@@ -463,12 +460,13 @@ namespace TMDT.Areas.KhachHang.Controllers
                     return RedirectToAction("Noficication");
                 }
                 else {
-                    return RedirectToAction("ErrorSendingEmail");
+                    ViewBag.ErrorMessage = "Không gửi đc email ";
                 }
             }  
             else {
-                return RedirectToAction("EmailNotFound");
+                ViewBag.ErrorMessage = "Không tìm thấy Email của ban";
             }
+            return View();
         }
         string smtpServer = ConfigurationManager.AppSettings["smtpServer"];
         bool enableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]);
@@ -492,18 +490,12 @@ namespace TMDT.Areas.KhachHang.Controllers
                 smtpClient.EnableSsl = enableSsl;
                 smtpClient.Send(message);
                 return true; // Email đã được gửi thành công
-            try {
-                smtpClient.Send(message);
-                return true; // Email đã được gửi thành công
-            }
-            catch (Exception ex) {
-                // Log lỗi hoặc xử lý ngoại lệ tại đây
-                return false; // Email không thể được gửi
-            }
+       
 
         }
         public ActionResult Noficication()
         {
+           
             return View();
         }
 
@@ -514,29 +506,36 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult ChangePasswordvl(string email, string currentPassword, string newPassword, string confirmPassword)
+        public ActionResult ChangePasswordvl( string currentPassword, string newPassword, string confirmPassword)
         {
-            var m = Session["Mailvl"] as User;
-            var user = db.User.FirstOrDefault(u => u.gmail == m.gmail);
-            if (user != null) {
-                if (currentPassword == user.password) {
-                    if (newPassword == confirmPassword) {
-                        user.password = newPassword;
-                        db.Entry(user).State = EntityState.Modified;
-                        db.SaveChanges();
-                        ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
-                        return RedirectToAction("DangKy", "NguoiDung");
+            var email = Session["Mailvl"] as string; // Lấy email từ session
+
+            if (email != null) {
+                var user = db.User.FirstOrDefault(u => u.gmail == email);
+
+                if (user != null) {
+                    if (currentPassword == user.password) {
+                        if (newPassword == confirmPassword) {
+                            user.password = newPassword;
+                            db.Entry(user).State = EntityState.Modified;
+                            db.SaveChanges();
+                            ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
+                            return RedirectToAction("DangKy", "NguoiDung");
+                        }
+                        else {
+                            ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";
+                        }
                     }
                     else {
-                        ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";
+                        ViewBag.ErrorMessage = "Nhập sai mật khẩu hiện tại";
                     }
                 }
                 else {
-                    ViewBag.ErrorMessage = "Nhập sai mật khẩu hiện tại";
+                    return RedirectToAction("Login", "NguoiDung");
                 }
             }
             else {
-                return RedirectToAction("Login", "NguoiDung");
+                // Xử lý khi không tìm thấy email trong session
             }
 
             return View();
