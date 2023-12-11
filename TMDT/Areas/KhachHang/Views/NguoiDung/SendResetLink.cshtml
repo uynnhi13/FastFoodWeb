@@ -26,14 +26,17 @@
                                         @using (Html.BeginForm("SendResetLink", "NguoiDung", FormMethod.Post))
                                         {
                                             @Html.ValidationSummary(true)
-                                            <div>
+                                        <div class="row">
+                                            <div class="col-md-8">
                                                 <label for="email">Vui lòng nhập Mail của bạn </label>
                                                 <input type="email" id="email" name="email" required />
                                             </div>
-                                            <div class="btn btn-primary">
+                                            <div class="col-md-4 btn btn-primary">
                                                 <button type="submit">Xác nhận</button>
                                             </div>
-                                          
+
+                                        </div>
+                                         
 
                                         }
                                     </form>
@@ -46,3 +49,12 @@
         </div>
     </div>
 </div>
+
+<style>
+    .col-md-4{
+        margin-top: 35px
+    }
+        .col-md-4 .btn:hover{
+            background-color:black;
+        }
+</style>
