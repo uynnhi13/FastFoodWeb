@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using TMDT.Models;
-using PagedList;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Net.Mail;
-using System.Net;
 using System.Configuration;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Web.Mvc;
+using PagedList;
+using TMDT.Models;
 using TMDT.Mtk;
 
 
@@ -335,7 +334,13 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
         public ActionResult ReviewView()
         {
-            var revi = db.Order.ToList();
+            //var revi = db.Order.Where(o => o.star != null && !string.IsNullOrEmpty(o.comment)).ToList();
+            //if (revi != null) {
+            //    var s = revi.Where(o => o.star > 3);
+            //        return PartialView(s);
+            //}
+            var revi = db.Order.Where(o => o.star != null && !string.IsNullOrEmpty(o.comment) && o.star >= 3).ToList();
+
             return PartialView(revi);
 
         }
@@ -541,7 +546,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
 
-
+      
 
 
     }
