@@ -58,8 +58,8 @@ namespace TMDT.Areas.KhachHang.Controllers
             var lstType = db.Category;
             return PartialView(lstType);
         }
-
-        public ActionResult LocSanPhamS(int id, int? page)
+        [HttpGet]
+        public ActionResult LocSanPhamS(int id, int? page, string searchstring)
         {
             //Lấy sản phẩm theo id Type
             var lstProductType = db.Product.Where(Product => Product.typeID == id);
@@ -70,18 +70,46 @@ namespace TMDT.Areas.KhachHang.Controllers
                 var comboproduct = db.Combo.FirstOrDefault(s => s.comboID == combodetails.comboID);
                 lstCombo.Add(comboproduct);
             }
+            //Trả về view để render các sản phẩm trên
+            ViewBag.CurrentFilter = searchstring;
+            if (!string.IsNullOrEmpty(searchstring)) {
+                lstCombo = lstCombo.Where(o => o.nameCombo.ToLower().Contains(searchstring) || o.nameCombo.ToLower().ToString().Length == searchstring.ToLower().Length).ToList();
+               
+            }
+            int pagesize = 16;
+            int pagenum = (page ?? 1);
+            return View(lstCombo.ToPagedList(pagenum, pagesize));
+        }
+
+        [HttpGet]
+        public ActionResult LocComboS(string searchstring)
+        {
+            var lstCombo = db.Combo.Where(s => s.typeCombo == true).ToList();
+            ViewBag.CurrentFilter = searchstring;
+            if (!string.IsNullOrEmpty(searchstring)) {
+                lstCombo = lstCombo.Where(o => o.nameCombo.Contains(searchstring) || o.nameCombo.ToString().Length == searchstring.Length).ToList();
+
+            }
+            return View(lstCombo);
+        }
+        public ActionResult Km(int? page,string searchstring)
+        {
+            var lstCombo = db.Combo
+                      .Where(sp => sp.sale > 0)
+                      .Join(db.ComboDetail, combo => combo.comboID, detail => detail.comboID, (combo, detail) => new { Combo = combo, Detail = detail })
+                      .Where(n => n.Detail.sizeUP == false)
+                      .Select(h => h.Combo)
+                      .ToList();
+
+            // Tìm kiếm theo tên sản phẩm
+            ViewBag.CurrentFilter = searchstring;
+            if (!string.IsNullOrEmpty(searchstring)) {
+                lstCombo = lstCombo.Where(o => o.nameCombo.ToLower().IndexOf(searchstring.ToLower()) >= 0).ToList();
+            }
 
             int pagesize = 16;
             int pagenum = (page ?? 1);
             return View(lstCombo.ToPagedList(pagenum, pagesize));
-            //Trả về view để render các sản phẩm trên
-          
         }
-        public ActionResult LocComboS()
-        {
-            var lstCombo = db.Combo.Where(s => s.typeCombo == true);
-            return View(lstCombo);
-        }
-
     }
 }

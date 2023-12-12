@@ -585,6 +585,7 @@
     <Content Include="Areas\KhachHang\Views\Home\LayProductTypeS.cshtml" />
     <Content Include="Areas\KhachHang\Views\Home\LocSanPhamS.cshtml" />
     <Content Include="Areas\KhachHang\Views\Home\LocComboS.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Home\Km.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

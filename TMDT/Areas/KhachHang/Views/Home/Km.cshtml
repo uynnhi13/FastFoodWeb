@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TMDT.Models.Combo>
+
+@{
+    ViewBag.Title = "Km";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<h2>Km</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nameCombo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sale)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.typeCombo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nameCombo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sale)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.typeCombo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.image)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.comboID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.comboID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.comboID })
+        </td>
+    </tr>
+}
+
+</table>
