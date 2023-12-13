@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -60,12 +60,12 @@ namespace TMDT.Areas.Admin.Controllers
             }
 
             //1: lấy danh sách từ db | 2: lọc danh sách user đã chat
-            var lsUser = _db.User.ToList();
+           // var lsUser = _db.User.ToList();
 
-            User tam;
+            User tam = new User();
             int dem = 0;
             for (int i = 0; i < lsPeopleChat.Count; i++) {
-                tam = lsUser.FirstOrDefault(a => a.numberPhone.Contains(lsPeopleChat[i].user_id) && a.numberPhone.Length == lsPeopleChat[i].user_id.Length);
+                //tam = lsUser.FirstOrDefault(a => a.numberPhone.Contains(lsPeopleChat[i].user_id) && a.numberPhone.Length == lsPeopleChat[i].user_id.Length);
                 if (tam != null) {
                     lsPeopleChat[i].message = tam.fullName;
                 }

@@ -27,9 +27,9 @@ namespace TMDT.Models
         public int positionID { get; set; }
         public string imgEP { get; set; }
         public string numberPhone { get; set; }
-        public string location { get; set; }
         public string password { get; set; }
         public Nullable<bool> roleUser { get; set; }
+        public string location { get; set; }
     
         public virtual Position Position { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

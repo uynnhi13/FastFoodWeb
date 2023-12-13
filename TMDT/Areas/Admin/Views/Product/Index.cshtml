@@ -34,11 +34,8 @@
         }
         .modal p{
             font-size: 20px;
-            white-space: pre-wrap;
+
         }
-            .modal p:last-child {
-                font-weight: normal;
-            }
         .modal div > p{
             font-weight: bold;
         }
@@ -77,6 +74,14 @@
                 </div>
             </div>
 
+            <div>
+                <p class="title">Lọc theo combo</p>
+                <div class="row">
+                    <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 0})">TẤt cả combo</a>
+                    <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 0})">Combo ẩn</a>
+                    <a class="btn" href="@Url.Action("locCombo","Product", new {loai = 0})">Combo sản xuất</a>
+                </div>
+            </div>
 
         </div>
 
@@ -84,11 +89,14 @@
             <table class="table table-hover table-striped tm-table-striped-even mt-3">
                 <thead>
                     <tr class="tm-bg-gray">
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">Tên thực phẩm</th>
                         <th scope="col" class="text-center">Hình ảnh</th>
                         <th scope="col">Giá tiền</th>
                         <th scope="col">Giá UP size</th>
                         <th scope="col">Loại</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
@@ -98,6 +106,9 @@
                     {
                         <tr class="btnModel">
                             @Html.Hidden("comboID", item.comboID)
+                            <th scope="row">
+                                <input type="checkbox" aria-label="Checkbox">
+                            </th>
                             <td class="tm-product-name">@item.nameCombo</td>
                             @if (item.typeCombo == false)
                             {
@@ -111,6 +122,9 @@
                                 <td class="text-center">@pro.price.ToString("#,##0") VNĐ</td>
                                 <td class="text-center">@pro.priceUp.ToString("#,##0") VNĐ</td>
                                 <td class="text-center">@db.Category.FirstOrDefault(f => f.typeID == pro.typeID).nameType</td>
+
+                                <td>@Html.ActionLink("Edit", "Edit", "Product", new { id = cateID }, null)</td>
+                                <td>@Html.ActionLink("Công thức", "listIngredient", "Ingredients", new { id = cateID }, null)</td>
                             }
                             else
                             {
@@ -122,6 +136,9 @@
                                 <td class="text-center">@item.price.ToString("#,##0") VNĐ</td>
                                 <th scope="col">&nbsp;</th>
                                 <td class="text-center">Combo</td>
+
+                                <td>@Html.ActionLink("Edit", "Edit", "Combo", new { id = item.comboID }, new { @class = "" })</td>
+                                <td>@Html.ActionLink("Công thức", "Details", "Combo", new { id = item.comboID }, null)</td>
                             }
                         </tr>
                     }
@@ -148,7 +165,7 @@
             <div class="modal-body">
                 <div class="row p-5">
                     <div class="content-left-body col row">
-                        <div class="col m-4">
+                        <div class="col">
                             <div class="row justify-content-between">
                                 <p>Tên thực phẩm: </p>
                                 <p>Combo 1</p>
@@ -194,7 +211,7 @@
             <!-- Footer Modal -->
             <div class="modal-footer">
                 <button id="btnClose" type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button id="btnEditCombo" type="button" class="btn btn-primary" data-dismiss="modal">Chi tiết</button>
+                <button id="btnCreateCombo" type="button" class="btn btn-primary" data-dismiss="modal">Chi tiết</button>
             </div>
 
         </div>
@@ -205,8 +222,8 @@
         $(document).ready(() => {
             var result = @Html.Raw(Json.Encode(result));
             var notificationPro = '@notificationPro';
-
-            
+            //test
+            $('#myModal').show();
 
             //đóng mở modal
             $('tr.btnModel').click(function () {
@@ -224,12 +241,6 @@
                 $('#myModal').hide();
             })
 
-            //chuyển hướng trang edit
-            $('#btnEditCombo').click(() => {
-                var _id = $('#comboIDEdit').val()
-                window.location.href = '/Admin/Product/Edit?comboID=' + parseInt(_id)
-            })
-
             runSweetAlert2()
 
             function getCombo(_id) {
@@ -241,7 +252,7 @@
                     //data: JSON.stringify({ comboID: parseInt(_id)}),
                     success: function (data) {
                         console.log('test in')
-                        addModalCombo(data.comboID, data.nameCombo, data.image, data.price, 0, data.price * (data.sale / 100))
+                        addModalCombo(data.comboID, data.nameCombo, data.image, data.price, 0, data.price * (data.sale / 100),)
                     },
                     error: function (xhr) {
                         alert('error');
@@ -255,70 +266,80 @@
 
                 var titleUpsize = ""
 
-                var input = `<input id="comboIDEdit" name="comboID" type="hidden" value="${comboID}">`
+                var input = `<input id="comboID" name="comboID" type="hidden" value="${comboID}">`
 
                 if (upSize) {
                     titleUpsize = `
-                    <div class="row justify-content-between">
-                        <p>Giá tiền: </p>
-                        <p>${price} VND</p>
-                    </div>
-                    <div class="row justify-content-between">
-                        <p>Giá tiền UP SIZE: </p>
-                        <p>${price} VND</p>
+                    <div class="row">
+                        <p>Giá upsize: </p>
                     </div>
                     `
 
-                    upsize = `<div class="row justify-content-between">
-                                <p>Giá tiền UP SIZE: </p>
-                                <p>${priceUp} VND</p>
-                            </div>
-                                `
+                    upsize = `<div class="row">
+                                <p>${priceUp}</p>
+                            </div>`
 
                     checked = `
-                            <div class="row mr-5">
-                                <div scope="row mr-5">
+                            <div class="row">
+                                <div scope="row">
                                     <input type="checkbox" aria-label="Checkbox" checked>
                                 </div>
                             </div>
                     `
                 } else {
                     checked = `
-                            <div class="row mr-5">
+                            <div class="row">
                                 <div scope="row">
-                                    <input type="checkbox" aria-label="Checkbox" >
+                                    <input type="checkbox" aria-label="Checkbox">
                                 </div>
                             </div>
                     `
                 }
 
 
-                var cont = input + `
+                var content = input+`
                 <div class="row p-5">
                     <div class="content-left-body col row">
-                        <div class="col m-4">
-                            <div class="row justify-content-between">
+                        <div class="col">
+                            <div class="row">
                                 <p>Tên thực phẩm: </p>
+                            </div>
+                            <div class="row">
+                                <p>Giá tiền: </p>
+                            </div>
+                            `+ titleUpsize +`
+                            <div class="row">
+                                <p>Số lượng</p>
+                            </div>
+                            <div class="row">
+                                <p>Up size: </p>
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
                                 <p>${namePro}</p>
                             </div>
-                            <div class="row justify-content-between">
-                                <p>Giá tiền: </p>
+                            <div class="row">
                                 <p>${price} VND</p>
                             </div>
-                            <div class="row justify-content-between">
-                                <p>Up size: </p>
-                                `+ checked +`
-                            </div>
+                            `+ upsize +`
+                            <div class="row">
+                                <p>${quantity}</p>
+                            </div>`
+                    + checked +
+                             
+                            `
                         </div>
                     </div>
                     <div class="content-right-body col">
                         <img style="height: 250px; width: 250px; object-fit: contain" src="${img}" alt="Alternate Text" />
                     </div>
                 </div>
-                `
 
+                `
                 $('.modal-body').empty()
-                $('.modal-body').append(cont)
+                $('.modal-body').append(content)
             }
 
             function addListCombo(_id, _name, _quantity, _sizeUp) {

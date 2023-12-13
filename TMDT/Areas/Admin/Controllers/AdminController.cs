@@ -154,12 +154,9 @@ namespace TMDT.Areas.Admin.Controllers
             database.SaveChanges();
             return RedirectToAction("Account", "Admin");
         }
-
-
         [HttpGet]
         public ActionResult QlyKH(string searchstring = "")
         {
-
             var dskh = database.User;
             var lskh = database.User.Where(s => s.numberPhone.Contains(searchstring));
             if (searchstring != null) {
@@ -172,9 +169,6 @@ namespace TMDT.Areas.Admin.Controllers
         }
         public ActionResult DetailsKH(string id)
         {
-            if (!UserIsAdmin()) {
-                return RedirectToAction("AccessDenied");
-            }
             var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
             return View(kh);
         }
@@ -266,15 +260,15 @@ namespace TMDT.Areas.Admin.Controllers
             var orders = database.Order.ToList();
 
             ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
-
+           
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
                 orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
             }
-            if (conditionID != 0 && conditionID != null) {
+            if(conditionID != 0 && conditionID != null) {
                 orders = orders.Where(o => o.conditionID == conditionID).ToList();
-
-
+               
+                
             }
             List<SelectListItem> pt = new List<SelectListItem>()
              {
@@ -283,7 +277,7 @@ namespace TMDT.Areas.Admin.Controllers
                 new SelectListItem { Text = "VNPay", Value = "2"}
             };
 
-
+           
             ViewBag.PaymentMethods = pt;
 
             // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
@@ -296,7 +290,7 @@ namespace TMDT.Areas.Admin.Controllers
             var donhang = orders.ToList();
             return View(orders);
         }
-
+        
 
 
         public ActionResult XacNhanDH(int? id)
@@ -395,7 +389,7 @@ namespace TMDT.Areas.Admin.Controllers
                                                         quantity = g.Sum(x => x.quantity)
                                                     }).ToList();
 
-                foreach (var item in lsIngredientInProductGrouped) {
+                foreach(var item in lsIngredientInProductGrouped) {
                     var itemIngredient = database.Ingredient.FirstOrDefault(f => f.ingID == item.ingID);
                     itemIngredient.quantity -= item.quantity;
                     database.SaveChanges();
@@ -428,7 +422,7 @@ namespace TMDT.Areas.Admin.Controllers
                 }
             }
 
-            if (find)
+            if(find)
                 lsThanhPhan.Add(item);
         }
 
@@ -515,65 +509,63 @@ namespace TMDT.Areas.Admin.Controllers
                 return View();
             }
         }
+
         [HttpPost]
         public ActionResult EditMypro(Employees em, HttpPostedFileBase HinhAnh)
-        { 
-                try {
-                    if (ModelState.IsValid) {
-                        if (HinhAnh != null && HinhAnh.ContentLength > 0) {
-                            // Lưu hình ảnh
-                            string Noiluu = Server.MapPath("/Images/Employees/");
-                            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(HinhAnh.FileName);
-                            string PathImg = Path.Combine(Noiluu, uniqueFileName);
-                            HinhAnh.SaveAs(PathImg);
+        {
+            try {
+                if (ModelState.IsValid) {
+                    if (HinhAnh != null && HinhAnh.ContentLength > 0) {
+                        // Lưu hình ảnh
+                        string Noiluu = Server.MapPath("/Images/Employees/");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(HinhAnh.FileName);
+                        string PathImg = Path.Combine(Noiluu, uniqueFileName);
+                        HinhAnh.SaveAs(PathImg);
 
-                            // Cập nhật thông tin Employee
-                            var existingEmployee = database.Employees.FirstOrDefault(f => f.EmployeeID == em.EmployeeID);
+                        // Cập nhật thông tin Employee
+                        var existingEmployee = database.Employees.FirstOrDefault(f => f.EmployeeID == em.EmployeeID);
 
-                            if (existingEmployee != null) {
-                                existingEmployee.EmployeeID = em.EmployeeID;
-                                existingEmployee.imgEP = "/Images/Employees/" + uniqueFileName;
-                                existingEmployee.FirstName = em.FirstName;
-                                existingEmployee.LastName = em.LastName;
-                                existingEmployee.numberPhone = em.numberPhone;
-                                existingEmployee.Email = em.Email;
+                        if (existingEmployee != null) {
+                            existingEmployee.EmployeeID = em.EmployeeID;
+                            existingEmployee.imgEP = "/Images/Employees/" + uniqueFileName;
+                            existingEmployee.FirstName = em.FirstName;
+                            existingEmployee.LastName = em.LastName;
+                            existingEmployee.numberPhone = em.numberPhone;
+                            existingEmployee.Email = em.Email;
 
-                                database.SaveChanges(); // Lưu thay đổi
-                            }
+                            database.SaveChanges(); // Lưu thay đổi
                         }
-                        else {
-                            // Không có hình ảnh mới, chỉ cập nhật thông tin
-                            var existingEmployee = database.Employees.FirstOrDefault(f => f.EmployeeID == em.EmployeeID);
-
-                            if (existingEmployee != null) {
-                                existingEmployee.EmployeeID = em.EmployeeID;
-                                existingEmployee.FirstName = em.FirstName;
-                                existingEmployee.LastName = em.LastName;
-                                existingEmployee.numberPhone = em.numberPhone;
-                                existingEmployee.Email = em.Email;
-
-                                database.SaveChanges(); // Lưu thay đổi
-                            }
-                        }
-
-                        return RedirectToAction("Mypro");
                     }
                     else {
-                        // Model không hợp lệ, quay lại form với thông báo lỗi
-                        return View(em);
+                        // Không có hình ảnh mới, chỉ cập nhật thông tin
+                        var existingEmployee = database.Employees.FirstOrDefault(f => f.EmployeeID == em.EmployeeID);
+
+                        if (existingEmployee != null) {
+                            existingEmployee.EmployeeID = em.EmployeeID;
+                            existingEmployee.FirstName = em.FirstName;
+                            existingEmployee.LastName = em.LastName;
+                            existingEmployee.numberPhone = em.numberPhone;
+                            existingEmployee.Email = em.Email;
+
+                            database.SaveChanges(); // Lưu thay đổi
+                        }
                     }
+
+                    return RedirectToAction("Mypro");
                 }
-                catch (Exception e) {
-                    // Xử lý exception, ví dụ: ghi log
-                    return View();
+                else {
+                    // Model không hợp lệ, quay lại form với thông báo lỗi
+                    return View(em);
                 }
             }
+            catch (Exception e) {
+                // Xử lý exception, ví dụ: ghi log
+                return View();
+            }
+        }
 
 
-           
 
-        
-       
 
         public ActionResult nameLogin()
         {

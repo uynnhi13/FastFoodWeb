@@ -16,7 +16,7 @@
 </style>
 <br />
 <br />
-@using (Html.BeginForm("EditMypro", "Admin", FormMethod.Post, new { @class = "tm-login-form" , enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditMypro", "Admin", FormMethod.Post, new { @class = "tm-login-form", enctype = "multipart/form-data" }))
 {
     @Html.Hidden("EmployeeID", Model.EmployeeID)
     <section class="vh-100" style="background-color: #f4f5f7;">
@@ -63,7 +63,7 @@
                                     <div class="row pt-1">
                                         <div class="col-6 mb-3">
                                             <h6>Mã chi nhánh</h6>
-                                            <input type="text" value="@Model.locationID" disabled />
+                                            <input type="text" value="" disabled />
 
                                         </div>
                                         <div class="col-6 mb-3">
@@ -100,9 +100,10 @@
                 };
             });
 
-           
+
 
         });
 
     </script>
 }
+

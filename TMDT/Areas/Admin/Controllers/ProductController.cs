@@ -167,12 +167,12 @@ namespace TMDT.Areas.Admin.Controllers
         }
 
         // GET: Admin/Product/Edit/5
-        public ActionResult Edit(int? comboID)
+        public ActionResult Edit(int? id)
         {
-            if (combID == null) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(combID);
+            Product product = db.Product.Find(id);
             if (product == null) {
                 return HttpNotFound();
             }

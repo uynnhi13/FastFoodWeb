@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -178,7 +178,7 @@
                                         Khách hàng
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Tài khoản", "QlyKH", "Admin", null, new { @class = "dropdown-item" })
                                         @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "dropdown-item" })
                                         @Html.ActionLink("Tư vấn khách hàng", "AdminChat", "Chat", null, new { @class = "dropdown-item" })
                                     </div>
@@ -284,7 +284,6 @@
     
     <script src="~/Scripts/jquery.signalR-2.4.3.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-    
     <script src="~/signalr/hubs" type="text/javascript"></script>
     <script>
         $('body').addClass('overflow-hidden');
