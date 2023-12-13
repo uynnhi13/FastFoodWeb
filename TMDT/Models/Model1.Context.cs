@@ -27,8 +27,8 @@ namespace TMDT.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<Address> Address { get; set; }
-        public virtual DbSet<AdminUser> AdminUser { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Combo> Combo { get; set; }
         public virtual DbSet<ComboDetail> ComboDetail { get; set; }
@@ -37,7 +37,6 @@ namespace TMDT.Models
         public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
-        public virtual DbSet<location> location { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Position> Position { get; set; }
@@ -70,6 +69,31 @@ namespace TMDT.Models
                 new ObjectParameter("priceUp", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductAndCombo", nameParameter, priceParameter, imageParameter, typeIDParameter, priceUpParameter);
+        }
+    
+        public virtual int createRecipe(string productName, Nullable<decimal> productPrice, Nullable<decimal> productPriceUp, string productImage, Nullable<int> productTypeID)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            var productPriceParameter = productPrice.HasValue ?
+                new ObjectParameter("ProductPrice", productPrice) :
+                new ObjectParameter("ProductPrice", typeof(decimal));
+    
+            var productPriceUpParameter = productPriceUp.HasValue ?
+                new ObjectParameter("ProductPriceUp", productPriceUp) :
+                new ObjectParameter("ProductPriceUp", typeof(decimal));
+    
+            var productImageParameter = productImage != null ?
+                new ObjectParameter("ProductImage", productImage) :
+                new ObjectParameter("ProductImage", typeof(string));
+    
+            var productTypeIDParameter = productTypeID.HasValue ?
+                new ObjectParameter("ProductTypeID", productTypeID) :
+                new ObjectParameter("ProductTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createRecipe", productNameParameter, productPriceParameter, productPriceUpParameter, productImageParameter, productTypeIDParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

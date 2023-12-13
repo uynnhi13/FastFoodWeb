@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "DangKy";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+
+
 }
 
 <body>
@@ -10,14 +12,16 @@
             <div class="row">
                 <div class="col-lg-7 col-md-12 ml-auto mr-auto">
                     <div class="login-register-wrapper">
-                            <a style="text-align:center" href="#lg1">
-                                <h2 class="title">Đăng Ký</h2>
-                            </a>
+                        <a style="text-align:center" href="#lg1">
+                            <h2 class="title">Đăng Ký</h2>
+                                <div class="alert alert-danger" id="errorSummary">
+                                    @Html.ValidationSummary()
+                                </div>
+                        </a>
                         <div class="tab-content">
                             <div>
-                                @using (Html.BeginForm("DangKy", "NguoiDung"))
+                                @using (Html.BeginForm("DangKy", "NguoiDung", FormMethod.Post))
                                 {
-                                    @Html.ValidationSummary(true)
                                     <div class="login-form-container">
                                         <div class="login-register-form">
                                             <div class="form-group">
@@ -34,7 +38,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="password">Password: </label>
-                                                @Html.TextBox("password", null, new { @class = "form-control", @id = "password", required = "required" })
+                                                @Html.TextBox("password", null, new { @class = "form-control", @id = "password", required = "required" , type = "password" })
                                             </div>
                                             <div class="button-box">
                                                 <button type="submit"><span>Đăng Ký</span></button>
@@ -52,5 +56,18 @@
     <!-- login area end -->
 </body>
 
-</html>
+@section Scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        var hasErrors = @Html.Raw(Json.Encode(!ViewData.ModelState.IsValid));
+
+        if (hasErrors) {
+            $("#errorSummary").show();
+        } else {
+            $("#errorSummary").hide();
+        }
+    });
+    </script>
+    
+}
 

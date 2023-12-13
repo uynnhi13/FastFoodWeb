@@ -29,6 +29,7 @@ namespace TMDT.Models
         public Nullable<bool> gender { get; set; }
         public Nullable<int> addressID { get; set; }
         public bool permission { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Address { get; set; }

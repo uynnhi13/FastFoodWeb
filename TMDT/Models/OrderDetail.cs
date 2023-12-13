@@ -17,6 +17,7 @@ namespace TMDT.Models
         public int comboID { get; set; }
         public int orderID { get; set; }
         public int quantity { get; set; }
+        public Nullable<decimal> price { get; set; }
     
         public virtual Combo Combo { get; set; }
         public virtual Order Order { get; set; }

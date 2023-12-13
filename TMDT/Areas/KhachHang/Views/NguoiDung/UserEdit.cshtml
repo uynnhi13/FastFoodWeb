@@ -1,0 +1,148 @@
+﻿@model TMDT.Models.User
+@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+
+}
+
+<div class="col-sm-12 col-md-9 col-lg-9">
+    <h2 style="color: #ad6868">Chỉnh sửa thông tin cá nhân </h2>
+    <div class="usered">
+        @using (Html.BeginForm("UserEdit", "NguoiDung", FormMethod.Post, new { @class = "tm-login-form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h6>Số Điện Thoại</h6>
+                        @Html.EditorFor(model => model.numberPhone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.numberPhone, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Mail</h6>
+                        @Html.EditorFor(model => model.gmail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.gmail, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <h6>Ngày Sinh</h6>
+                        @Html.EditorFor(model => model.bDay, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.bDay, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h6>Mật Khẩu</h6>
+                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Họ Tên</h6>
+                        @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Giới Tính</h6>
+                        @Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Thêm các trường khác vào cột này nếu cần -->
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <h6>Địa Chỉ</h6>
+                @Html.EditorFor(model => model.addressID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.addressID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group" style="text-align:right">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+
+
+
+
+
+
+    <style>
+        .usered {
+            background-color: #ffcece;
+            padding: 10px;
+        }
+             
+            .btn-primary {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #d19797; /* Màu nền của nút */
+                color: #fff; /* Màu chữ trắng */
+                text-align: center;
+                text-decoration: none;
+                border: none;
+                border-radius: 4px; /* Bo tròn viền */
+                cursor: pointer;
+                transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi khi hover */
+            }
+
+            .btn-primary:hover {
+                background-color: #a27070; /* Màu nền khi hover */
+                color: #71706f;
+            }
+
+        /* Định dạng label và input */
+        .control-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Định dạng form group và form horizontal */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-horizontal .control-label {
+            text-align: right;
+            margin-top: 8px;
+        }
+
+        <!-- Chia form thành 2 cột -->
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+
+        /* Định dạng nút Back to List */
+        a.btn-default {
+            background-color: #ccc;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+            a.btn-default:hover {
+                background-color: #999;
+            }
+    </style>
+
+</div>

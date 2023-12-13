@@ -1,0 +1,95 @@
+﻿@model TMDT.Models.User
+@using TMDT.Models
+
+@{
+    ViewBag.Title = "DetailsKH";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>DetailsKH</h2>
+
+<div class="card mb-4">
+    
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.gmail)
+
+        </dt>
+
+        <dd>
+            @Model.gmail
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+           @Model.password
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fullName)
+        </dt>
+
+        <dd>
+           @Model.fullName
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bDay)
+        </dt>
+
+        <dd>
+           @Model.bDay
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gender)
+        </dt>
+
+        <dd>
+           @Model.gender
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addressID)
+        </dt>
+
+        <dd>
+          @Model.Address
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.permission)
+        </dt>
+
+        <dd>
+           @Model.permission
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Model.IsActive
+        </dd>
+
+    </dl>
+ 
+    <p>
+
+        <a href="@Url.Action("QlyKH", "Admin", new {id=Model.numberPhone})" class="nav-link">
+           Back to list
+
+        </a>
+        
+        <a href="@Url.Action("EditKHang", "Admin", new {id=Model.numberPhone})" class="nav-link">
+            Edit
+
+        </a>
+    </p>
+</div>

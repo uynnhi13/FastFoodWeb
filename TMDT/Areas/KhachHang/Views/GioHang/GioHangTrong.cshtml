@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "GioHangTrong";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+    <div class="empty-cart-area pb-100px pt-100px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cart-heading">
+                        <h2>Giỏ Hàng Của Bạn</h2>
+                    </div>
+                    <div class="empty-text-contant text-center">
+                        <i class="pe-7s-shopbag"></i>
+                        <h3>Không có sản phẩm nào trong giỏ hàng</h3>
+                        <a class="empty-cart-btn" href="@Url.Action("Index","Home")">
+                            <i class="fa fa-arrow-left"> </i> Tiếp tục mua sắm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cart area end -->
+

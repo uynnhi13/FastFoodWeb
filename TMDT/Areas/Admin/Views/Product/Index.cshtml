@@ -1,0 +1,424 @@
+﻿@model List<Combo>
+@using TMDT.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+    var lsProduct = db.Product.ToList();
+
+    string notificationPro = "";
+    bool result = false;
+
+    if (ViewBag.result != null)
+    {
+        result = ViewBag.result;
+        notificationPro = ViewBag.notification;
+    }
+}
+
+@section style{
+    <style>
+
+        .btn {
+            display: block;
+            width: max-content;
+            height: max-content;
+            padding: 10px 20px;
+            background: #fc85ae;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .title {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .modal p {
+            font-size: 20px;
+            white-space: pre-wrap;
+        }
+
+            .modal p:last-child {
+                font-weight: normal;
+            }
+
+        .modal div > p {
+            font-weight: bold;
+        }
+    </style>
+}
+<br />
+<br />
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+            <div class="col text-right row">
+
+                <a href="~/Admin/Product/CreateComboDetailt" class="btn btn-small btn-primary mr-3">Thêm combo</a>
+                <a href="~/Admin/Ingredients/createRecipe" class="btn btn-small btn-primary">Tạo món</a>
+
+            </div>
+        </div>
+
+        <div class="btn-Filter-products">
+            @* @using (Html.BeginForm("locCombo", "Product", FormMethod.Post))
+                {
+                    <input type="button" name="combo" value="Tất cả combo" />
+                    <input type="button" name="combo" value="" />
+
+                }*@
+
+            <div>
+                <p class="title">Lọc theo combo</p>
+                <div class="row">
+                    <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 0})">TẤt cả combo</a>
+                    <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 1})">Combo còn hoạt động</a>
+                    <a class="btn" href="@Url.Action("locCombo","Product", new {loai = 2})">Combo ẩn</a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                <thead>
+                    <tr class="tm-bg-gray">
+                        <th scope="col">Tên thực phẩm</th>
+                        <th scope="col" class="text-center">Hình ảnh</th>
+                        <th scope="col">Giá tiền</th>
+                        <th scope="col">Giá UP size</th>
+                        <th scope="col">Loại</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="btnModel">
+                            @Html.Hidden("comboID", item.comboID)
+                            <td class="tm-product-name">@item.nameCombo</td>
+                            @if (item.typeCombo == false)
+                            {
+                                var cateID = db.ComboDetail.FirstOrDefault(f => f.comboID == item.comboID).cateID;
+                                var pro = lsProduct.FirstOrDefault(f => f.cateID == cateID);
+                                <td class="text-center">
+                                    <img src="@pro.image" class="rounded mx-auto d-block" alt="..."
+                                         onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:cover">
+                                </td>
+                                <td class="text-center">@pro.price.ToString("#,##0") VNĐ</td>
+                                <td class="text-center">@pro.priceUp.ToString("#,##0") VNĐ</td>
+                                <td class="text-center">@db.Category.FirstOrDefault(f => f.typeID == pro.typeID).nameType</td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <img src="@item.image" class="rounded mx-auto d-block" alt="..."
+                                         onerror="this.onerror=null; this.src='https://i.pinimg.com/564x/45/bc/94/45bc949e100e2abc6ee67e876c40007e.jpg';"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:cover">
+                                </td>
+                                <td class="text-center">@item.price.ToString("#,##0") VNĐ</td>
+                                <th scope="col">&nbsp;</th>
+                                <td class="text-center">Combo</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" style="background-color: rgba(0, 0, 0, 0.8);">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <!-- Header Modal -->
+            <div class="modal-header">
+                <h5 class="modal-title">Các món trong combo</h5>
+                <button id="btnClose" type="button" class="close btnClose" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- Nội dung Modal -->
+            <div class="modal-body">
+                <div class="row p-5">
+                    <div class="content-left-body col row">
+                        <div class="col m-4">
+                            <div class="row justify-content-between">
+                                <p>Tên thực phẩm: </p>
+                                <p>Combo 1</p>
+                            </div>
+                            <div class="row justify-content-between">
+                                <p>Giá tiền: </p>
+                                <p>10.000.000 VND</p>
+                            </div>
+                            <div class="row justify-content-between">
+                                <p>Số lượng</p>
+                                <p>13000</p>
+                            </div>
+                            <div class="row justify-content-between">
+                                <p>Up size: </p>
+                                <div scope="row">
+                                    <input type="checkbox" aria-label="Checkbox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-right-body col">
+                        <img style="height: 250px; width: 250px; object-fit: contain" src="@Model[0].image" alt="Alternate Text" />
+                    </div>
+                </div>
+
+                @*<table class="table table-hover table-striped tm-table-striped-even mt-3">
+                        <thead>
+                            <tr class="tm-bg-gray">
+                                <th scope="col">Tên thực phẩm</th>
+                                <th scope="col" class="text-center">Hình ảnh</th>
+                                <th scope="col" class="text-center">Giá tiền</th>
+
+                                <th scope="col" class="text-center">số lượng</th>
+                                <th scope="col" class="text-center">Up size</th>
+                            </tr>
+                        </thead>
+                        <tbody id="item_table">
+                        </tbody>
+                    </table>*@
+
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="modal-footer">
+                <button id="btnClose" type="button" class="btnClose btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button id="btnEditCombo" type="button" class="btn btn-primary" data-dismiss="modal">Chi tiết</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(() => {
+            var result = @Html.Raw(Json.Encode(result));
+            var notificationPro = '@notificationPro';
+
+
+
+            //đóng mở modal
+            $('tr.btnModel').click(function () {
+                //hiện modal
+                $('#myModal').show();
+
+                var cateID = $(this).find('input[id="comboID"]').val();
+
+                getCombo(cateID)
+
+                console.log('test click product: ' + parseInt(cateID))
+            })
+
+            $('.btnClose').click(() => {
+                $('#myModal').hide();
+            })
+
+            //chuyển hướng trang edit
+            $('#btnEditCombo').click(() => {
+                var _id = $('#comboIDEdit').val()
+                window.location.href = '/Admin/Product/Edit?comboID=' + parseInt(_id)
+            })
+
+            runSweetAlert2()
+
+            function getCombo(_id) {
+                $.ajax({
+                    url: '/Admin/Product/getProduct/?comboID=' + parseInt(_id),
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    //data: JSON.stringify({ comboID: parseInt(_id)}),
+                    success: function (data) {
+                        console.log('test in')
+                        addModalCombo(data.comboID, data.nameCombo, data.image, data.price, 0, data.price * (data.sale / 100))
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+            function addModalCombo(comboID,namePro,img, price,priceUp, quantity, upSize) {
+                var checked = ""
+                var upsize = ""
+
+                var titleUpsize = ""
+
+                var input = `<input id="comboIDEdit" name="comboID" type="hidden" value="${comboID}">`
+
+                if (upSize) {
+                    titleUpsize = `
+                    <div class="row justify-content-between">
+                        <p>Giá tiền: </p>
+                        <p>${price} VND</p>
+                    </div>
+                    <div class="row justify-content-between">
+                        <p>Giá tiền UP SIZE: </p>
+                        <p>${price} VND</p>
+                    </div>
+                    `
+
+                    upsize = `<div class="row justify-content-between">
+                                <p>Giá tiền UP SIZE: </p>
+                                <p>${priceUp} VND</p>
+                            </div>
+                                `
+
+                    checked = `
+                            <div class="row mr-5">
+                                <div scope="row mr-5">
+                                    <input type="checkbox" aria-label="Checkbox" checked>
+                                </div>
+                            </div>
+                    `
+                } else {
+                    checked = `
+                            <div class="row mr-5">
+                                <div scope="row">
+                                    <input type="checkbox" aria-label="Checkbox" >
+                                </div>
+                            </div>
+                    `
+                }
+
+
+                var cont = input + `
+                <div class="row p-5">
+                    <div class="content-left-body col row">
+                        <div class="col m-4">
+                            <div class="row justify-content-between">
+                                <p>Tên thực phẩm: </p>
+                                <p>${namePro}</p>
+                            </div>
+                            <div class="row justify-content-between">
+                                <p>Giá tiền: </p>
+                                <p>${price} VND</p>
+                            </div>
+                            <div class="row justify-content-between">
+                                <p>Up size: </p>
+                                `+ checked +`
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-right-body col">
+                        <img style="height: 250px; width: 250px; object-fit: contain" src="${img}" alt="Alternate Text" />
+                    </div>
+                </div>
+                `
+
+                $('.modal-body').empty()
+                $('.modal-body').append(cont)
+            }
+
+            function addListCombo(_id, _name, _quantity, _sizeUp) {
+                // Tạo một dòng tr
+                var tr = $("<tr>").addClass("col-product");
+
+                // Thêm input hidden vào tr
+                tr.append(`<input type="hidden" name="cateID" id="cateID" value="${_id}" />`);
+
+                // Thêm td cho tên sản phẩm
+                var productNameTd = $("<td>").addClass("tm-product-name").text(_name);
+                tr.append(productNameTd);
+
+                // Thêm td cho số lượng và span text-danger
+                var quantityTd = $("<td>").addClass("text-center");
+                var quantityInput = $("<input>").attr("type", "text").attr("name", "quantity").attr("value", _quantity).addClass("form-control validate col");
+                var quantitySpan = $("<span>").addClass("text-danger");
+                quantityTd.append(quantityInput, quantitySpan);
+                tr.append(quantityTd);
+
+                // Thêm td cho checkbox
+                var checkboxTd = $("<td>").addClass("text-center");
+                var checkboxInput = $("<input>").attr("type", "checkbox").attr("name", "sizeUp").prop('checked', _sizeUp);
+                checkboxTd.append(checkboxInput);
+                tr.append(checkboxTd);
+
+                //thêm button delete
+                tr.append(`<td><i class="fas fa-trash-alt tm-trash-icon" id="btnDelete"></i></td>`)
+                // Thêm dòng tr vào tbody
+                $('tbody#item_table').append(tr);
+
+                // thêm sự kiện vào
+                $("tbody#item_table input[name='sizeUp']").change(function () {
+
+                    var cateID;
+
+                    if (this.checked) {
+                        cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                        uppSize(parseInt(cateID), Boolean(this.checked))
+                    } else {
+                        cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                        uppSize(parseInt(cateID), Boolean(this.checked))
+                    }
+                });
+                //thêm sự kiện delete vào
+                $('tbody#item_table i#btnDelete').click(function () {
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger"
+                        },
+                        buttonsStyling: false
+                    });
+                    swalWithBootstrapButtons.fire({
+                        title: "bỏ chọn sản phẩm ?",
+                        text: "Bạn có muốn bỏ sản phẩm khỏi combo của mình không",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteProduct(parseInt(cateID))
+                        }
+                    });
+
+                })
+            }
+
+            function runSweetAlert2() {
+                if (result != null && notificationPro != "") {
+                    if (result) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: notificationPro,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "center",
+                            icon: "error",
+                            title: notificationPro,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                }
+            }
+        })
+    </script>
+    <cripts>
+
+    </cripts>
+}

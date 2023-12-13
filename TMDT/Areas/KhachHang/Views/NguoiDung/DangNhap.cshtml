@@ -12,7 +12,12 @@
                     <div class="login-register-wrapper">
                         <a class="active" style="text-align:center" href="#lg1">
                             <h2>Đăng Nhập</h2>
-                            <h2 style="color: red;">@ViewBag.ThongBao</h2>
+                            @if (!string.IsNullOrEmpty(ViewBag.ThongBao))
+                            {
+                                <div class="alert alert-danger">
+                                    @ViewBag.ThongBao
+                                </div>
+                            }
                         </a>
                         <div class="tab-content">
                             <div id="lg1" class="tab-pane active">
@@ -28,7 +33,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password">Mật Khẩu: </label>
-                                                    @Html.TextBox("password", null, new { @class = "form-group", @id = "password", required = "required" })
+                                                    @Html.TextBox("password", null, new { @class = "form-group", @id = "password", required = "required", type="password" })
                                                 </div>
                                                 <div class="button-box">
                                                     <div class="login-toggle-btn">
@@ -39,8 +44,16 @@
                                                     <div class="login-toggle-btn">
                                                         <p>Bạn chưa có tài khoản? Hãy  <a class="flote-none" href="@Url.Action("DangKy","NguoiDung")">Đăng Ký</a>  tại đây</p>
                                                     </div>
-                                                    <button type="submit"><span>Login</span></button>
+                                                    <div>
+                                                        <button type="submit"><span>Login</span></button> Hoặc
+                                                        <!-- Nút đăng nhập bằng Facebook -->
+                                                        <a href="@Url.Action("FacebookLogin", "NguoiDung")"><i class="fa-brands fa-facebook"></i></a>
+
+                                                    </div>
+                                                    
                                                 </div>
+                                               
+                                                
                                             }
                                         </form>
                                     </div>
@@ -55,3 +68,4 @@
     <!-- login area end -->
 </body>
 
+<script src="https://kit.fontawesome.com/e93b3623e7.js" crossorigin="anonymous"></script>

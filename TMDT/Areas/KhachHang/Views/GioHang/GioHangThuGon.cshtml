@@ -1,0 +1,44 @@
+﻿@using TMDT.Models
+@model List<MatHangMua>
+
+<a id="openCart" href="#offcanvas-cart"
+   class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+    <i class="pe-7s-shopbag"></i>
+    <span id="soLuongGioHang" class="header-action-num">@ViewBag.TongSL</span>
+    <!-- <span class="cart-amount">€30.00</span> -->
+</a>
+<div id="offcanvas-cart" class="offcanvas offcanvas-cart">
+    <div class="inner">
+        <div class="head">
+            <span class="title">Cart</span>
+            <button class="offcanvas-close">×</button>
+        </div>
+
+        <div class="body customScroll">
+            <ul id="lsCartMini" class="minicart-product-list">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="single-product.html" class="image">
+                            <img src="@item.image" style="height: 50px; object-fit: contain"
+                                 alt="Cart product Image">
+                        </a>
+                        <div class="content">
+                            <a href="single-product.html" class="title">@item.name</a>
+                            <span class="quantity-price">@item.soLuong x @string.Format("{0:N0}", item.price)</span>
+                            <a href="javascript:void(0);" onclick="XoaSanPham(@item.ComboID, '@item.size')" class="remove">×</a>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+        </div>
+        <div class="foot">
+            <div class="buttons mt-30px">
+                <a href="@Url.Action("HienThiGioHang","GioHang")" class="btn btn-dark btn-hover-primary mb-30px">Xem Giỏ Hàng</a>
+                <a href="checkout.html" class="btn btn-outline-dark current-btn">Thanh Toán</a>
+            </div>
+        </div>
+    </div>
+</div>
+

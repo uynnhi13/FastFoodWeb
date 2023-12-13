@@ -1,0 +1,338 @@
+﻿@model IEnumerable<TMDT.Models.Product>
+@using TMDT.Models
+@{
+    ViewBag.Title = "CreateComboDetailt";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+}
+
+
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+            <div class="col text-right row">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Xem chi tiết</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            @using (Html.BeginForm("CreateRecipe", "Ingredients", new
+            {
+                @class = "tm-edit-product-form",
+                enctype = "multipart/form-data"
+            }))
+            {
+                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                    <thead>
+                        <tr class="tm-bg-gray">
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Tên thực phẩm</th>
+                            <th scope="col" class="text-center">số lượng</th>
+                            <th scope="col" class="text-center">Up size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="col-product">
+                                <td>
+                                    <input type="hidden" name="cateID" id="cateID" value="@item.cateID" />
+                                </td>
+                                <th scope="row">
+                                    <input type="checkbox" name="checkbox" aria-label="Checkbox">
+                                </th>
+                                <td class="tm-product-name">
+                                    <p id="name-product">@item.name</p>
+                                </td>
+                                <td class="text-center">
+                                    <div class="">
+                                        <input type="text" name="quantity" class="form-control validate col" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </td>
+                                @if (item.priceUp != 0)
+                                {
+                                    <td class="text-center">
+                                        <input type="checkbox" name="sizeUp" disabled />
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <!-- Header Modal -->
+            <div class="modal-header">
+                <h5 class="modal-title">Các món trong combo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <!-- Nội dung Modal -->
+            <div class="modal-body">
+
+                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                    <thead>
+                        <tr class="tm-bg-gray">
+                            <th scope="col">Tên thực phẩm</th>
+                            <th scope="col" class="text-center">số lượng</th>
+                            <th scope="col" class="text-center">Up size</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="item_table">
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button id="btnCreateCombo" type="button" class="btn btn-primary" data-dismiss="modal">Tạo combo</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+
+            $('#btnCreateCombo').click(function () {
+                window.location.href = "@Url.Action("Create","Combo")";
+            })
+
+            //change input quantity
+            $('input[name="quantity"]').change(function () {
+                // Kiểm tra trạng thái của checkbox
+                var item = $(this).val();
+
+                var cateID;
+                var name;
+                var quantity;
+                var sizeUp;
+
+
+                if (item !== null && item.trim() !== "") {
+
+                    $(this).closest('tr').find('input[name="checkbox"]').prop('checked', true);
+                    $("input[name='sizeUp']").prop("disabled", false);
+
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                    name = $(this).closest('tr').find('#name-product').html();
+                    quantity = $(this).closest('tr').find('input[name="quantity"]').val();
+
+                    console.log('quantity: ' + parseInt(quantity) + ' id : ' + parseInt(cateID) + 'name : ' + name + ' size : ' + Boolean(sizeUp));
+
+                    addCombo(parseInt(cateID), String(name), parseInt(quantity), false);
+                } else {
+                    $(this).closest('tr').find('input[name="checkbox"]').prop('checked', false);
+                    $("input[name='sizeUp']").prop("disabled", true);
+
+                    var quantity = 0;
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+
+                    console.log('quantity: ' + parseInt(quantity) + ' id : ' + parseInt(cateID) + ' size : ' + Boolean(sizeUp));
+
+                    addCombo(parseInt(cateID), String(name), parseInt(quantity), Boolean(sizeUp));
+                }
+            });
+
+            //input checker sizeUP
+            $("input[name='sizeUp']").change(function () {
+
+                var cateID;
+
+                if (this.checked) {
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                    uppSize(parseInt(cateID), Boolean(this.checked))
+                } else {
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                    uppSize(parseInt(cateID), Boolean(this.checked))
+                }
+            });
+
+            function uppSize(_id, _sizeUp) {
+                console.log('test upsize')
+                $.ajax({
+                    url: "/Product/uppSize/",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ cateID: _id, sizeUp: _sizeUp }),
+                    success: function (data) {
+                        console.log('--------------')
+                        var dataArray = Object.values(data);
+
+                        $('tbody#item_table').empty();
+
+                        for (let x in dataArray) {
+                            addListCombo(dataArray[x].producID, dataArray[x].productName, dataArray[x].quantity, dataArray[x].upSize)
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+            function addCombo(_id, _name, _quantity, _sizeUp) {
+                $.ajax({
+                    url: "/Product/CrCombo/",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ cateID: _id, name: _name, quantity: _quantity, sizeUp: _sizeUp }),
+                    success: function (data) {
+                        console.log('--------------')
+                        var dataArray = Object.values(data);
+
+                        $('tbody#item_table').empty();
+
+                        for (let x in dataArray) {
+                            console.log(dataArray[x].producID);
+                            console.log(dataArray[x].productName);
+                            console.log(dataArray[x].quantity);
+                            console.log(dataArray[x].upSize);
+                            addListCombo(dataArray[x].producID, dataArray[x].productName, dataArray[x].quantity, dataArray[x].upSize)
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+
+            function deleteProduct(_id) {
+                $.ajax({
+                    url: "/Product/deleteProduct/",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ cateID: _id }),
+                    success: function (data) {
+                        if (data) {
+                            var dataArray = Object.values(data);
+
+                            $('tbody#item_table').empty();
+
+                            for (let x in dataArray) {
+                                console.log(dataArray[x].producID);
+                                console.log(dataArray[x].productName);
+                                console.log(dataArray[x].quantity);
+                                console.log(dataArray[x].upSize);
+                                addListCombo(dataArray[x].producID, dataArray[x].productName, dataArray[x].quantity, dataArray[x].upSize)
+                            }
+
+                            var item = $('input[type="hidden"][name="cateID"][value="' + _id + '"]')
+                            item.closest('tr').find('input[name="checkbox"]').prop('checked', false);
+                            item.closest('tr').find('input[name = "quantity"]').val('');
+                            item.closest('tr').find("input[name='sizeUp']").prop("disabled", true);
+                            item.closest('tr').find("input[name='sizeUp']").prop("checked", false);
+
+                            Swal.fire("", "", "success");
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire("lỗi truyền ajax bị sai", "", "error");
+                    }
+                });
+            }
+
+            function addListCombo(_id, _name, _quantity, _sizeUp) {
+                // Tạo một dòng tr
+                var tr = $("<tr>").addClass("col-product");
+
+                // Thêm input hidden vào tr
+                tr.append(`<input type="hidden" name="cateID" id="cateID" value="${_id}" />`);
+
+                // Thêm td cho tên sản phẩm
+                var productNameTd = $("<td>").addClass("tm-product-name").text(_name);
+                tr.append(productNameTd);
+
+                // Thêm td cho số lượng và span text-danger
+                var quantityTd = $("<td>").addClass("text-center");
+                var quantityInput = $("<input>").attr("type", "text").attr("name", "quantity").attr("value", _quantity).addClass("form-control validate col");
+                var quantitySpan = $("<span>").addClass("text-danger");
+                quantityTd.append(quantityInput, quantitySpan);
+                tr.append(quantityTd);
+
+                // Thêm td cho checkbox
+                var checkboxTd = $("<td>").addClass("text-center");
+                var checkboxInput = $("<input>").attr("type", "checkbox").attr("name", "sizeUp").prop('checked', _sizeUp);
+                checkboxTd.append(checkboxInput);
+                tr.append(checkboxTd);
+
+                //thêm button delete
+                tr.append(`<td><i class="fas fa-trash-alt tm-trash-icon" id="btnDelete"></i></td>`)
+                // Thêm dòng tr vào tbody
+                $('tbody#item_table').append(tr);
+
+                // thêm sự kiện vào
+                $("tbody#item_table input[name='sizeUp']").change(function () {
+
+                    var cateID;
+
+                    if (this.checked) {
+                        cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                        uppSize(parseInt(cateID), Boolean(this.checked))
+                    } else {
+                        cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+                        uppSize(parseInt(cateID), Boolean(this.checked))
+                    }
+                });
+                //thêm sự kiện delete vào
+                $('tbody#item_table i#btnDelete').click(function () {
+                    cateID = $(this).closest('tr').find('input[name="cateID"]').val();
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-success",
+                            cancelButton: "btn btn-danger"
+                        },
+                        buttonsStyling: false
+                    });
+                    swalWithBootstrapButtons.fire({
+                        title: "bỏ chọn sản phẩm ?",
+                        text: "Bạn có muốn bỏ sản phẩm khỏi combo của mình không",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteProduct(parseInt(cateID))
+                        } 
+                    });
+                    
+                })
+            }
+
+        });
+
+    </script>
+}

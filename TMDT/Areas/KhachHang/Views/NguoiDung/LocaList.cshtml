@@ -1,0 +1,97 @@
+﻿@model IEnumerable<TMDT.Models.Address>
+@using TMDT.Models
+@{
+    ViewBag.Title = "LocaList";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+
+<script src="https://kit.fontawesome.com/2b079f0a79.js" crossorigin="anonymous"></script>
+<div class="col-sm-12 col-md-9 col-lg-9">
+
+
+    <div class="row align-items-center">
+
+
+        <div style="margin-bottom:10px">
+
+            @Html.ActionLink("Create New", "LocaAdd", "NguoiDung", new { @class = "btn btn-primary" })
+        </div>
+
+
+        <div class="table_page table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>  Họ </th>
+                        <th> Tên</th>
+                        <th>  Số Điện Thoại</th>
+                        <th> Địa chỉ</th>
+                        <th> Địa chỉ mặc định</th>
+                        <th> Mail</th>
+                        <th> Note</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.firstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.lastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.numberPhone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.priority)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.gmail)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.note)
+                            </td>
+                            <style>
+                                .list-inline mb-0 ul li {color:black}
+                            </style>
+                            <td>
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item" >
+
+                                        @Html.ActionLink(" ", "LocaEdit", new { id = item.addressID }, new { @class = "bx bx-pencil font-size-18" })
+                                    </li>
+                                    <li class="list-inline-item">
+
+                                        @Html.ActionLink(" ", "DeleteAddress", "NguoiDung", new { id = item.addressID }, new { @class = "bx bx-trash-alt font-size-18" })
+                                    </li>
+                                    <li class="list-inline-item" >
+                                        @Html.ActionLink(" ", "LocaDetail", "NguoiDung", new { @class = "fa-solid fa-user fa-xs", })
+
+                                    </li>
+
+                                </ul>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+
+
+
