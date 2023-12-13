@@ -16,6 +16,7 @@ namespace TMDT.Areas.Admin.Controllers
     public class IngredientsController : Controller
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+        private YourDataAccessClass proce = new YourDataAccessClass();
 
         // GET: Admin/Ingredients
         public ActionResult Index(int? page)
@@ -133,6 +134,7 @@ namespace TMDT.Areas.Admin.Controllers
         {
             try {
                 if ((HinhAnh != null && HinhAnh.ContentLength > 0) && ModelState.IsValid) {
+
                     // luu file
                     string Noiluu = Server.MapPath("/Images/Product/");
                     String PathImg = Noiluu + HinhAnh.FileName;
@@ -144,9 +146,8 @@ namespace TMDT.Areas.Admin.Controllers
 
                     List<ingre> lsDeci = LayIngre();
 
-                    db.createRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
+                    proce.CreateRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
-
 
                     TempData["result"] = true;
                     TempData["notification"] = "Thêm sản phẩm thành công";

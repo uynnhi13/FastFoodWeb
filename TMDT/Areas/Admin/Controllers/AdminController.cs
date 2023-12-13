@@ -221,6 +221,18 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult DonHang(int? id)
         {
             var donhang = database.Order.Include(s => s.OrderDetail);
+
+
+            List<SelectListItem> pt = new List<SelectListItem>()
+             {
+                new SelectListItem { Text = "Phương thức", Value = "0"},
+                new SelectListItem { Text = "Tại cửa hàng", Value = "1"},
+                new SelectListItem { Text = "VNPay", Value = "2"}
+            };
+
+
+            ViewBag.PaymentMethods = pt;
+
             return View(donhang);
         }
 
@@ -421,6 +433,13 @@ namespace TMDT.Areas.Admin.Controllers
 
             return RedirectToAction("DonHang", "Admin");
         }
+
+
+        //Login admin => danh sách DH => xác nhận đơn => id đơn hàng tìm đơn hàng cần xác nhận
+        // => đổi trạng thái
+
+        //class account
+        //
 
         public ActionResult DetailsDH(int id)
         {

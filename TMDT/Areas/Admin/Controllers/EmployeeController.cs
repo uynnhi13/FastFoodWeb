@@ -17,8 +17,12 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Employee
         public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.location).Include(e => e.Position);
+            var employees = db.Employees.Include(e => e.Position);
             return View(employees.ToList());
+        }
+        public ActionResult map()
+        {
+            return View();
         }
 
         // GET: Admin/Employee/Details/5
@@ -39,7 +43,6 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Employee/Create
         public ActionResult Create()
         {
-            ViewBag.locationID = new SelectList(db.location, "locationID", "StreetAddress");
             ViewBag.positionID = new SelectList(db.Position, "PositionID", "posName");
             return View();
         }
@@ -58,7 +61,6 @@ namespace TMDT.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.locationID = new SelectList(db.location, "locationID", "StreetAddress", employees.locationID);
             ViewBag.positionID = new SelectList(db.Position, "PositionID", "posName", employees.positionID);
             return View(employees);
         }
@@ -75,7 +77,6 @@ namespace TMDT.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.locationID = new SelectList(db.location, "locationID", "StreetAddress", employees.locationID);
             ViewBag.positionID = new SelectList(db.Position, "PositionID", "posName", employees.positionID);
             return View(employees);
         }
@@ -93,7 +94,6 @@ namespace TMDT.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.locationID = new SelectList(db.location, "locationID", "StreetAddress", employees.locationID);
             ViewBag.positionID = new SelectList(db.Position, "PositionID", "posName", employees.positionID);
             return View(employees);
         }

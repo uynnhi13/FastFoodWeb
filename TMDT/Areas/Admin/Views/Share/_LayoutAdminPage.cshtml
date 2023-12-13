@@ -155,7 +155,6 @@
     @RenderSection("style", required: false)
 </head>
 <body id="reportsPage">
-
     <div id="loading">
         <div class="lds-roller" style=""><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
@@ -173,22 +172,20 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "nav-link" })
-                                </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "nav-link" })
-                                </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Chat", "AdminChat", "Chat", null, new { @class = "nav-link" })
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Khách hàng
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Tư vấn khách hàng", "AdminChat", "Chat", null, new { @class = "dropdown-item" })
+                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
                                 </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Nhân viên", "Index", "Employee", null, new { @class = "nav-link" })
-                                </li>
-                                
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
@@ -197,6 +194,16 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         @Html.ActionLink("Doanh thu", "ThongKe", "Admin", null, new { @class = "dropdown-item" })
                                         @Html.ActionLink("Đánh giá", "QlyDanhGia", "Admin", null, new { @class = "dropdown-item" })
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Quản lý nhân viên
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Chức vụ", "index", "Position", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Nhân viên", "index", "Employee", null, new { @class = "dropdown-item" })
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">

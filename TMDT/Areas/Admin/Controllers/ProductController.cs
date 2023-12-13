@@ -1,22 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TMDT.MauThietKe;
 using TMDT.Models;
+using NLog;
 
 namespace TMDT.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+        private ComboSingleton comboSingleton = ComboSingleton.instance;
+        Logger log = LogManager.GetCurrentClassLogger();
+
+        public ProductController()
+        {
+            comboSingleton.Init(db);
+        }
 
         // GET: Admin/Product
         public ActionResult Index()
         {
-            var allProduct = db.Combo.ToList();
+            var allProduct = comboSingleton.lsCombo;
+
             var lsCombo = allProduct.Where(w => w.typeCombo == true);
             var lsProduct = allProduct.Where(w => w.typeCombo == false);
             var lsComboDetail = db.ComboDetail.ToList();
@@ -28,12 +39,46 @@ namespace TMDT.Areas.Admin.Controllers
                     lsView.Add(item);
             }
 
+            log.Info("Get list product");
+
             ViewBag.result = TempData["result"];
             ViewBag.notification = TempData["notification"];
 
             return View(lsView);
         }
 
+        public ActionResult locCombo(int loai)
+        {
+            var lsCombo = new List<Combo>();
+            var active = comboSingleton.SoldOut;
+            var lsComboActive = new List<Combo>();
+            var lsComboInactive = new List<Combo>();
+
+            var listReturn = new List<Combo>();
+
+            for (int i = 0; i < comboSingleton.lsCombo.Count; i++) {
+                if (comboSingleton.lsCombo[i].typeCombo == true && comboSingleton.lsCombo[i].hiden == true) {
+                    lsComboActive.Add(comboSingleton.lsCombo[i]);
+                }
+                if (comboSingleton.lsCombo[i].typeCombo == true && comboSingleton.lsCombo[i].hiden == false) {
+                    lsComboInactive.Add(comboSingleton.lsCombo[i]);
+                }
+                if (comboSingleton.lsCombo[i].typeCombo == true)
+                    lsCombo.Add(comboSingleton.lsCombo[i]);
+            }
+
+            if (loai == 0)
+                listReturn = lsCombo;
+            if (loai == 1)
+                listReturn = lsComboActive;
+            if (loai == 2)
+                listReturn = lsComboInactive;
+
+            ViewBag.lsComboActive = lsComboActive;
+            ViewBag.lsComboNonActive = lsComboInactive;
+
+            return View("Index", listReturn);
+        }
 
         [HttpPost]
         public JsonResult getCombo(int cateID)
@@ -50,6 +95,17 @@ namespace TMDT.Areas.Admin.Controllers
             }
 
             return Json(lsitemCombo);
+        }
+
+        [HttpPost]
+        public JsonResult getProduct(int comboID)
+        {
+            var list = comboSingleton.lsCombo;
+            var item = list.FirstOrDefault(f=>f.comboID == comboID);
+
+            //kiểm tra item là combo hay product 
+
+            return Json(new { comboID = item.comboID, nameCombo = item.nameCombo, price = item.price, item.image });
         }
 
         // GET: Admin/Product/Details/5
@@ -94,6 +150,7 @@ namespace TMDT.Areas.Admin.Controllers
                     db.AddProductAndCombo(product.name, product.price, img, product.typeID, product.priceUp);
                     db.SaveChanges();
 
+                    comboSingleton.Update(db);
                     ViewBag.notification = true;
                     return View("Create");
                 }
@@ -133,6 +190,7 @@ namespace TMDT.Areas.Admin.Controllers
             if (ModelState.IsValid) {
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+                comboSingleton.Update(db);
                 return RedirectToAction("Index");
             }
             ViewBag.typeID = new SelectList(db.Category, "typeID", "nameType", product.typeID);
