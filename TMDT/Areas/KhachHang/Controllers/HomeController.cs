@@ -92,14 +92,17 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return View(lstCombo);
         }
+        [HttpGet]
         public ActionResult Km(int? page,string searchstring)
         {
+          
             var lstCombo = db.Combo
-                      .Where(sp => sp.sale > 0)
-                      .Join(db.ComboDetail, combo => combo.comboID, detail => detail.comboID, (combo, detail) => new { Combo = combo, Detail = detail })
-                      .Where(n => n.Detail.sizeUP == false)
-                      .Select(h => h.Combo)
-                      .ToList();
+                    .Where(sp => sp.sale > 0)
+                    .Join(db.ComboDetail, combo => combo.comboID, detail => detail.comboID, (combo, detail) => new { Combo = combo, Detail = detail })
+                    .Where(joined => joined.Detail.sizeUP == false)
+                    .Select(joined => joined.Combo)
+                    .ToList();
+
 
             // Tìm kiếm theo tên sản phẩm
             ViewBag.CurrentFilter = searchstring;
