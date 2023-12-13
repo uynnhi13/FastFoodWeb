@@ -1,12 +1,11 @@
 ﻿
 .icon-chat {
-    position: fixed;
+    position:fixed;
     right: 20px;
     bottom: 130px;
     z-index: 99999;
     cursor: pointer;
 }
-
     .icon-chat #checkNotification {
         height: 15px;
         width: 15px;
@@ -17,7 +16,6 @@
         right: -3px;
         top: -3px;
     }
-
     .icon-chat p {
         display: block;
         height: 50px;
@@ -28,18 +26,17 @@
         align-items: center;
         position: relative;
     }
-
-        .icon-chat p i {
-            display: block;
-            font-size: 25px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
+    .icon-chat p i {
+        display:block;
+        font-size:25px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 .live-chat {
-    display: none;
+    display:none;
+    //height: 450px;
     width: 300px;
     position: fixed;
     right: 20px;
@@ -49,111 +46,93 @@
     border: 3px solid #eaaa85;
     background: white;
 }
-
-    .live-chat .infor-chat {
-        width: 100%;
+    .live-chat .infor-chat{
+        width:100%;
         background: white;
-        border-radius: 30px 30px 0 0;
+        border-radius: 30px 30px 0 0; 
         padding: 10px 20px;
         display: flex;
         justify-content: space-between;
-        border-bottom: 3px solid #eaaa85;
+        border-bottom: 1px solid black;
     }
-
         .live-chat .infor-chat .logo-shop {
             display: flex;
             align-items: center;
         }
-
             .live-chat .infor-chat .logo-shop img {
                 height: 50px;
                 width: 50px;
                 background: #eaaa85;
                 border-radius: 50%;
             }
-
             .live-chat .infor-chat .logo-shop p {
                 font-size: 25px;
-                padding-left: 10px;
+                padding-left:10px;
             }
-
-        .live-chat .infor-chat .btn-close-chat {
+        .live-chat .infor-chat .btn-close-chat{
             display: flex;
             align-items: center;
         }
-
-            .live-chat .infor-chat .btn-close-chat i {
-                font-size: 25px;
-                cursor: pointer;
-            }
-
-    .live-chat .body-chat {
+        .live-chat .infor-chat .btn-close-chat i{
+            font-size: 25px;
+            cursor: pointer;
+        }
+    .live-chat .body-chat{
         width: 100%;
         height: 400px;
     }
-
         .live-chat .body-chat .content-chat {
             overflow-y: scroll;
             height: 100%;
-        }
 
+        }
         .live-chat .body-chat #style-1::-webkit-scrollbar {
             width: 6px;
             background-color: #F5F5F5;
         }
-
         .live-chat .body-chat #style-1::-webkit-scrollbar-thumb {
             background-color: #000000;
         }
-
         .live-chat .body-chat #style-1::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
             background-color: #F5F5F5;
         }
-
         .live-chat .body-chat .content-chat ul {
             height: 100%;
             display: flex;
-            bottom: 0;
-            justify-content: end;
-            flex-direction: column;
-            align-items: flex-start;
+            flex-direction:column-reverse;
+            align-items: flex-end;
         }
-
             .live-chat .body-chat .content-chat ul li {
                 padding: 10px 20px;
                 max-width: 200px;
                 word-wrap: break-word;
                 height: max-content;
             }
-
                 .live-chat .body-chat .content-chat ul li.user-chat {
                     border-radius: 20px 0 0 20px;
                     align-self: flex-end;
                 }
-
                 .live-chat .body-chat .content-chat ul li.admin-chat {
                     border-radius: 0 20px 20px 0;
                     align-self: flex-start;
                     background: #eaaa85;
-                    color: white;
+                    color:white;
                 }
-
-    .live-chat .input-chat {
-        width: 100%;
-        padding: 10px;
-        border-radius: 0 0 30px 30px;
-        display: flex;
-        justify-content: space-around;
-        background: #eaaa85;
-    }
-
-        .live-chat .input-chat input {
-            border: 0;
+                .live-chat .input-chat {
+                    width: 100%;
+                    padding: 10px;
+                    border-radius: 0 0 30px 30px;
+                    display: flex;
+                    justify-content: space-around;
+                    background: #eaaa85;
+                }
+        .live-chat .input-chat input{
+            border:0;
             background: white;
             border-radius: 30px;
-        }
 
+        }
         .live-chat .input-chat button {
             background: white;
             color: #eaaa85;
@@ -161,18 +140,3 @@
             padding: 0 20px;
             border-radius: 30px;
         }
-
-::-webkit-scrollbar {
-    width: 4px;
-    border: 1px solid #d5d5d5;
-}
-
-::-webkit-scrollbar-track {
-    border-radius: 0;
-    background: #eeeeee;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 0;
-    background: #eaaa85;
-}

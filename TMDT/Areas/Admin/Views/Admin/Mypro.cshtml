@@ -25,12 +25,19 @@
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-white"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="@Model.imgEP"
-                                 alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                            @if (!string.IsNullOrEmpty(Model.imgEP))
+                            {
+                                <img src="@Model.imgEP" alt="Profile Picture" style="max-width: 200px; max-height: 200px;" />
+                            }
+                            else
+                            {
+                                <span>No profile picture available</span>
+                            }
+                            
                             <h4>@Model.FirstName @Model.LastName</h4>
                             <p>Mã nhân viên: @Model.EmployeeID</p>
-                            @Html.ActionLink(" ", "EditMypro", "Admin", new {@class= "far fa-edit mb-5" })
-                           
+                            @Html.ActionLink(" ", "EditMypro", "Admin", new { @class = "far fa-edit mb-5" })
+
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">

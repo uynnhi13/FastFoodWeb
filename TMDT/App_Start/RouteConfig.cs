@@ -10,18 +10,18 @@ namespace TMDT
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "KhachHang",
-                url: "{area}/{controller}/{action=Index}/{id}",
-                defaults: new { Areas = "KhachHang", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "TMDT.Areas.KhachHang.Controllers" } // Namespace của vùng (area) KhachHang
-            );
+                        name: "KhachHang",
+                        url: "{area}/{controller}/{action=Index}/{id}",
+                        defaults: new { Areas = "KhachHang", controller = "Home", action = "Index", id = UrlParameter.Optional }
+                        );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "TMDT.Controllers" } // Namespace của controller chính
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+
         }
     }
 }
