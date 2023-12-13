@@ -6,17 +6,29 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TMDT.Models;
+using TMDT.MauThietKe;
 
 namespace TMDT.Areas.Admin.Controllers
 {
     public class ComboController : Controller
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+        private ComboSingleton comboSingleton = ComboSingleton.instance;
 
         // GET: Admin/Combo
+        /*public ActionResult Index()
+        {
+
+            return View(db.Combo.ToList());
+        }*/
+
         public ActionResult Index()
         {
-            return View(db.Combo.ToList());
+            comboSingleton.Init(db);
+
+            var lsCombo = comboSingleton.lsCombo;
+
+            return View(lsCombo);
         }
 
         // GET: Admin/Combo/Details/5
@@ -70,7 +82,7 @@ namespace TMDT.Areas.Admin.Controllers
                         var product = db.Product.FirstOrDefault(f => f.cateID == item.producID);
                         if (item.upSize == true) sumPrice += product.price * item.quantity;
                         else sumPrice += (product.price + product.priceUp) * item.quantity;
-                        lstComboDetail.Add(new ComboDetail(combo.comboID, item.producID, item.quantity, item.upSize));
+                        lstComboDetail.Add(new ComboDetail{comboID = combo.comboID, cateID = item.producID, quantity = item.quantity, sizeUP = item.upSize });
                     }
 
                     combo.price = sumPrice * (100-combo.sale)/100;

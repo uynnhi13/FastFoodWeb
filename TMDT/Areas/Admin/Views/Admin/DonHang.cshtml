@@ -5,10 +5,8 @@
 @{
     ViewBag.Title = "DonHang";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
-    List<SelectListItem> paymentMethods = ViewBag.PaymentMethods;
-    string selectedPaymentMethod = ViewBag.SelectedPaymentMethod;
-
-
+    var paymentMethods = ViewBag.PaymentMethods as List<SelectListItem>;
+    string selectedPaymentMethod = ViewBag.SelectedPaymentMethod ;
 }
 <br />
 <br />
@@ -29,7 +27,16 @@
                 </div>
                 <div>
 
-                    @Html.DropDownList("selectedPaymentMethod", paymentMethods, selectedPaymentMethod, new {  })
+                    <select name="selectedPaymentMethod">
+                        @if (paymentMethods != null)
+                        {
+                            foreach (var item in paymentMethods)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+
+                            }
+                        }
+                    </select>
 
                 </div>
                 <button type="submit" class="bg-white">Lọc đơn hàng</button>

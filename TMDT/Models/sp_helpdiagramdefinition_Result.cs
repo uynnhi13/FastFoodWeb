@@ -10,15 +10,10 @@
 namespace TMDT.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Recipe
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int ingID { get; set; }
-        public int cateID { get; set; }
-        public double quantity { get; set; }
-    
-        public virtual Ingredient Ingredient { get; set; }
-        public virtual Product Product { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
