@@ -778,6 +778,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Fakes Include="Fakes\System.Runtime.CompilerServices.Unsafe.fakes" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
