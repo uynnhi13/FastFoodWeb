@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SharpCompress;
 using TMDT.Models;
 
 namespace TMDT.Areas.Admin.Controllers
