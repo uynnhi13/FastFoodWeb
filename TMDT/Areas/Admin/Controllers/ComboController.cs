@@ -65,9 +65,11 @@ namespace TMDT.Areas.Admin.Controllers
 
                     //tong tien
                     decimal sumPrice = 0;
+
                     foreach (var item in lsitemCombo) {
                         var product = db.Product.FirstOrDefault(f => f.cateID == item.producID);
-                        sumPrice += product.price * item.quantity;
+                        if (item.upSize == true) sumPrice += product.price * item.quantity;
+                        else sumPrice += (product.price + product.priceUp) * item.quantity;
                         lstComboDetail.Add(new ComboDetail(combo.comboID, item.producID, item.quantity, item.upSize));
                     }
 

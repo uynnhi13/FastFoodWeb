@@ -207,6 +207,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategorySingleton.cs" />
     <Compile Include="Areas\Admin\Controllers\ChatController.cs" />
     <Compile Include="Areas\Admin\Controllers\ComboController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
@@ -307,9 +308,12 @@
     <Content Include="Areas\Admin\Content\css\fontawesome.min.css" />
     <Content Include="Areas\Admin\Content\css\fullcalendar.min.css" />
     <Content Include="Areas\Admin\Content\css\tooplate.css" />
+    <Content Include="Areas\Admin\Content\img\5a3ab5f51f4870.52965704151379710912814100.png" />
+    <Content Include="Areas\Admin\Content\img\97432-logo-chat-photos-download-free-image.png" />
     <Content Include="Areas\Admin\Content\img\dash-bg-01.jpg" />
     <Content Include="Areas\Admin\Content\img\dash-bg-02.jpg" />
     <Content Include="Areas\Admin\Content\img\dash-bg-03.jpg" />
+    <Content Include="Areas\Admin\Content\img\Mỳ ý 2.png" />
     <Content Include="Areas\Admin\Content\img\product-image.jpg" />
     <Content Include="Areas\Admin\Content\img\profile-image.png" />
     <Content Include="Areas\Admin\Content\jquery-ui-datepicker\AUTHORS.txt" />
