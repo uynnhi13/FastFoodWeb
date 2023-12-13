@@ -4,9 +4,6 @@
     ViewBag.Title = "UserInfo";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
-
-
-
 <link href="~/Areas/KhachHang/assets/css/myInfor.css" rel="stylesheet" />
 <div class="col-sm-12 col-md-10 col-lg-10">
     <h2 style="color:#ad6868">Thông tin cá nhân</h2>
@@ -20,59 +17,53 @@
                     <div class="card-body">
                         <form>
 
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <div class="user-image">
+                                        <img src="@Url.Content(Model.userpic)" alt="Hình ảnh người dùng" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <label class="small mb-1" for="inputUsername">Tên tài khoản: </label>
                                     <input class="form-control" id="inputUsername" type="text" value="@Model.numberPhone" readonly>
-
-                                </div>
-
-                                <div class="col-md-6">
                                     <label class="small mb-1" for="inputPass">Password:</label>
                                     <input class="form-control" id="inputPass" type="text" value="@Model.password" readonly>
                                     <span class="toggle-password"></span>
                                 </div>
 
 
-                            </div>
-                            <!-- Form Row        -->
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label class="small mb-1" for="inputName">Họ và tên:</label>
                                     <input class="form-control" id="inputName" type="text" value="@Model.fullName" readonly>
-                                </div>
-
-                                <div class="col-md-6">
                                     <label class="small mb-1" for="inputDateOfBirth">Ngày sinh:</label>
                                     <input class="form-control" id="inputDateOfBirth" type="text" value="@Model.bDay" readonly>
                                 </div>
 
 
-                            </div>
-                            <!-- Form Group (email address)-->
-
-
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label class="small mb-1" for="inputEmail">Email:</label>
                                     <input class="form-control" id="inputEmail" type="email" value="@Model.gmail" readonly>
-                                </div>
-                                <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
                                     <input class="form-control" id="inputPhone" type="text" value="@Model.numberPhone" readonly>
                                 </div>
+
                             </div>
+
+                            <!-- Form Group (email address)-->
+
+                            <div>
+                                @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "btn btn-primary" })
+
+                            </div>
+
 
                         </form>
                     </div>
                 </div>
             </div>
-            <div >
-                @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "btn btn-primary" })
-
-            </div>
+           
         </div>
-       
+
     </div>
 
 
@@ -84,15 +75,20 @@
     .container-xl {
         background-color: #ffb2b280;
         padding-top: 15px;
-        padding-bottom:50px
+        padding-bottom: 50px
     }
+
     .btn {
         float: right
     }
-  
+    /* CSS để điều chỉnh kích thước hình ảnh */
+    .user-image img {
+        max-width: 200px; /* Điều chỉnh chiều rộng tối đa của hình ảnh */
+        max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+        width: auto;
+        height: auto;
+        display: block;
+        margin: 0 auto; /* Để căn giữa hình ảnh trong khung */
+    }
 
 </style>
-
-
-
-

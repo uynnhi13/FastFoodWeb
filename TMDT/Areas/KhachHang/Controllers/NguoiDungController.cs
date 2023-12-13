@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using TMDT.Models;
@@ -109,27 +111,54 @@ namespace TMDT.Areas.KhachHang.Controllers
 
         public ActionResult UserEdit(string id)
         {
-            var us = db.User.FirstOrDefault(u => u.numberPhone == id);
-            if (us == null) {
+            var user = db.User.FirstOrDefault(u => u.numberPhone == id);
+            if (user == null) {
                 return HttpNotFound();
             }
-            return View(us);
-
+            return View(user);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UserEdit(User u)
+        public ActionResult UserEdit(User updatedUser, HttpPostedFileBase HinhAnh)
         {
-            if (string.IsNullOrEmpty(u.fullName))
-                ModelState.AddModelError(string.Empty, "Họ tên không được để trống");
-
-
+            var user = db.User.FirstOrDefault(u => u.numberPhone == updatedUser.numberPhone);
             if (ModelState.IsValid) {
-                db.Entry(u).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();// LUU THAY DOI
+                if (HinhAnh != null && HinhAnh.ContentLength > 0) {
+                    // Kiểm tra loại file hình ảnh
+                    if (HinhAnh.ContentType == "image/jpeg" || HinhAnh.ContentType == "image/png") {
+                        // Lưu hình ảnh
+                        string folderPath = Server.MapPath("~/Images/User/");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(HinhAnh.FileName);
+                        string imagePath = Path.Combine(folderPath, uniqueFileName);
+                        HinhAnh.SaveAs(imagePath);
+                        user.userpic = "~/Images/User/" + uniqueFileName;
+                        db.SaveChanges(); // Lưu thay đổi
+                    }
+                    else {
+                        ModelState.AddModelError("", "Chỉ chấp nhận file hình ảnh (jpg, png).");
+                        return View(); // Hiển thị view với thông báo lỗi
+                    }
+                }
+
+                user.fullName = updatedUser.fullName; // Cập nhật thông tin người dùng
+                user.gmail = updatedUser.gmail;
+                user.numberPhone = updatedUser.numberPhone;
+                user.bDay = updatedUser.bDay;
+                user.password = updatedUser.password;
+                user.gender = updatedUser.gender;
+              
+
+
+                // Cập nhật các trường thông tin người dùng khác tương tự ở đây
+
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();// Lưu thay đổi
             }
             return RedirectToAction("UserInfo", "NguoiDung");
         }
+
+
         //End THÔNG TIN USER//
 
 

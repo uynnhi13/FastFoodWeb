@@ -674,6 +674,7 @@
     <Folder Include="Areas\KhachHang\Views\ShoppingCart\" />
     <Folder Include="Data\" />
     <Folder Include="Images\Combo\" />
+    <Folder Include="Images\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

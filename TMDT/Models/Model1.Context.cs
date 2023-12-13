@@ -14,9 +14,9 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Data.SqlClient;
-    using System.Data;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
 
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
@@ -73,7 +73,6 @@ namespace TMDT.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductAndCombo", nameParameter, priceParameter, imageParameter, typeIDParameter, priceUpParameter);
         }
-
         public virtual void createRecipeDB(string productName, Nullable<decimal> productPrice, Nullable<decimal> productPriceUp, string productImage, Nullable<int> productTypeID, List<ingre> IngredientsList)
         {
             // table type
@@ -113,5 +112,6 @@ namespace TMDT.Models
                 productNamePara, productPricePara, productPriceUpPara, productImagePara, productTypeIDPara, IngredientsListPara);
             }
         }
+
     }
 }

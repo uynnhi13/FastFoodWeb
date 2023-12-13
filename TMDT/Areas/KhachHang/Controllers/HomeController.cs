@@ -73,7 +73,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             //Trả về view để render các sản phẩm trên
             ViewBag.CurrentFilter = searchstring;
             if (!string.IsNullOrEmpty(searchstring)) {
-                lstCombo = lstCombo.Where(o => o.nameCombo.ToLower().Contains(searchstring) || o.nameCombo.ToLower().ToString().Length == searchstring.ToLower().Length).ToList();
+                lstCombo = lstCombo.Where(o => o.nameCombo.Contains(searchstring) || o.nameCombo.ToString().Length == searchstring.Length).ToList();
                
             }
             int pagesize = 16;
