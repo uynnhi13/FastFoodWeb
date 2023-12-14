@@ -149,7 +149,7 @@ namespace TMDT.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult QlyKH(string searchstring = "")
         {
-            var dskh = database.User;
+            var dskh = database.User.Where(s=>s.password!=null);
             var lskh = database.User.Where(s => s.numberPhone.Contains(searchstring));
             if (searchstring != null) {
 

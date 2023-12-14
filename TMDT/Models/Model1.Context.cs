@@ -20,6 +20,7 @@ namespace TMDT.Models
 
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
+
         public TMDTThucAnNhanhEntities()
             : base("name=TMDTThucAnNhanhEntities")
         {
@@ -47,6 +48,7 @@ namespace TMDT.Models
         public virtual DbSet<Position> Position { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
     
@@ -74,6 +76,7 @@ namespace TMDT.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddProductAndCombo", nameParameter, priceParameter, imageParameter, typeIDParameter, priceUpParameter);
         }
+
         public virtual void createRecipeDB(string productName, Nullable<decimal> productPrice, Nullable<decimal> productPriceUp, string productImage, Nullable<int> productTypeID, List<ingre> IngredientsList)
         {
             // table type
@@ -113,7 +116,6 @@ namespace TMDT.Models
                 productNamePara, productPricePara, productPriceUpPara, productImagePara, productTypeIDPara, IngredientsListPara);
             }
         }
-
 
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

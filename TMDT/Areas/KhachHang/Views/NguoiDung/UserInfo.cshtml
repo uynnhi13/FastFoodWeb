@@ -1,9 +1,13 @@
 ﻿@model TMDT.Models.User
 @using TMDT.Models;
+
 @{
     ViewBag.Title = "UserInfo";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
+
+
+
 <link href="~/Areas/KhachHang/assets/css/myInfor.css" rel="stylesheet" />
 <div class="col-sm-12 col-md-10 col-lg-10">
     <h2 style="color:#ad6868">Thông tin cá nhân</h2>
@@ -20,7 +24,14 @@
                             <div class="row mb-3">
                                 <div class="col-md-3">
                                     <div class="user-image">
-                                        <img src="@Url.Content(Model.userpic)" alt="Hình ảnh người dùng" />
+                                        @if (Model.userpic != null)
+                                        {
+                                            <img src="@Url.Content(Model.userpic)" alt="Hình ảnh người dùng" />
+                                        }
+                                        else
+                                        {
+                                            <img src="" alt="Hình ảnh người dùng" />
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -61,7 +72,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
 
     </div>
@@ -90,5 +101,6 @@
         display: block;
         margin: 0 auto; /* Để căn giữa hình ảnh trong khung */
     }
-
 </style>
+
+

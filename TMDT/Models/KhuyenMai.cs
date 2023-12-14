@@ -11,11 +11,12 @@ namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
+    
     public interface KhuyenMaiPrototype
     {
         KhuyenMaiPrototype clone();
     }
-    public partial class KhuyenMai : KhuyenMaiPrototype
+    public partial class KhuyenMai:KhuyenMaiPrototype
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhuyenMai()

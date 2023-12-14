@@ -49,6 +49,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         db.SaveChanges();
                     }
                     else {
+                        user.IsActive = true;
                         user.password = user.password;
                         db.User.Add(user);
                         db.SaveChanges();
@@ -79,9 +80,13 @@ namespace TMDT.Areas.KhachHang.Controllers
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
 
                     if (kiemtra != null) {
-                        //Lưu vào session
-                        Session["TaiKhoan"] = user;
-                        ViewBag.TaiKhoan = Session["TaiKhoan"];
+                        if (kiemtra.IsActive == true) {
+                            //Lưu vào session
+                            Session["TaiKhoan"] = user;
+                            ViewBag.TaiKhoan = Session["TaiKhoan"];
+
+                        }
+
                     }
                     else {
                         var tk = db.Employees.Where(s => s.Email == user.gmail && s.password == user.password).FirstOrDefault();
@@ -120,7 +125,7 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
 
-
+        
         public ActionResult UserEdit(string id)
         {
             var user = db.User.FirstOrDefault(u => u.numberPhone == id);
@@ -563,20 +568,15 @@ namespace TMDT.Areas.KhachHang.Controllers
                 var user = db.User.FirstOrDefault(u => u.gmail == email);
 
                 if (user != null) {
-                    if (currentPassword == user.password) {
-                        if (newPassword == confirmPassword) {
-                            user.password = newPassword;
-                            db.Entry(user).State = EntityState.Modified;
-                            db.SaveChanges();
-                            ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
-                            return RedirectToAction("DangKy", "NguoiDung");
-                        }
-                        else {
-                            ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";
-                        }
+                    if (newPassword == confirmPassword) {
+                        user.password = newPassword;
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                        ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
+                        return RedirectToAction("Login", "NguoiDung");
                     }
                     else {
-                        ViewBag.ErrorMessage = "Nhập sai mật khẩu hiện tại";
+                        ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";
                     }
                 }
                 else {
