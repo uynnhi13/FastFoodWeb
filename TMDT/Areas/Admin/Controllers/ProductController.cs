@@ -485,5 +485,21 @@ namespace TMDT.Areas.Admin.Controllers
             TMDTThucAnNhanhEntities db, ComboSingleton comboSingleton, Logger log
             ");
         }
+
+        [HttpPost]
+        public ActionResult addRecipe(int cateID, int ingID, double quantity)
+        {
+            var item = db.Recipe.FirstOrDefault(f => f.cateID == cateID && f.ingID == ingID);
+
+            if (item != null) {
+                item.quantity = quantity;
+                db.SaveChanges();
+                return Json(new { cateID = cateID, ingID = ingID, quantity = quantity, message = "Data updated successfully!" });
+            }
+            else {
+                // Xử lý khi không tìm thấy đối tượng cần cập nhật
+                return Json(new { message = "Item not found or unable to update!" });
+            }
+        }
     }
 }

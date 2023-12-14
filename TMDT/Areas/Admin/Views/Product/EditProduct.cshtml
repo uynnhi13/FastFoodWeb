@@ -102,20 +102,22 @@
                                     <th scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="lsRecipe">
                                 @if (lsRecipe.Count > 0 && lsRecipe != null)
                                 {
                                     for (int i = 0; i < lsRecipe.Count; i++)
                                     {
-                                        <tr class="col-product">
+                                        <tr  class="col-product">
                                             <td>
+                                                <input type="hidden" name="cateID" value="@lsRecipe[i].cateID" />
+                                                <input type="hidden" name="ingID" value="@lsRecipe[i].ingID" />
                                             </td>
                                             <td class="tm-product-name">
                                                 <p id="name-product">@lsRecipe[i].Ingredient.ingName</p>
                                             </td>
 
                                             <td class="text-center">
-                                                <p id="name-product">@lsRecipe[i].quantity</p>
+                                                <input type="number" name="quantity" value="@lsRecipe[i].quantity" id="name-product"/>
                                             </td>
                                             <td class="tm-product-name">
                                                 <p id="name-product">@lsRecipe[i].Ingredient.Unit.nameU</p>
@@ -130,10 +132,7 @@
                 </div>
                 <div class="form-group row ml-3">
                     <div >
-                        <input type="submit" value="Cập nhật giá trị sản phẩm" class="border-0 btn btn-primary custom-btn" />
-                    </div>
-                    <div >
-                        <input type="button" value="Thay đổi nguyên liệu" class="border-0 btn btn-primary custom-btn" />
+                        <input id="btnEditRecipe" type="submit" value="Cập nhật giá trị sản phẩm" class="border-0 btn btn-primary custom-btn" />
                     </div>
                 </div>
 
@@ -144,9 +143,6 @@
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        // Vô hiệu hóa nút submit khi trang bắt đầu tải
-        $('input[type="submit"]').prop('disabled', true);
-
 
         $(document).ready(function () {
 
@@ -159,74 +155,47 @@
                 };
             });
 
-            // Sự kiện load hoàn thành của trang
-            $('input[type="submit"]').prop('disabled', false);
-
-            $('#btnTao').click(function () {
-
-                $('tr.col-product').each(function (index, value) {
-                    var inputValue = $(this).find('input[name="quantity"]').val();
-                    if (inputValue.trim() != "" ) {
-                        $(this).find('input[type="checkbox"]').prop('checked', true);
-                        var quantityValue = $(this).find('input[name="quantity"]').val();
-                        var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
-                        console.log("Quantity Value:", quantityValue);
-                        console.log("ingID Value:", ingID);
-                    } else {
-                        $(this).find('input[type="checkbox"]').prop('checked', false);
-                        var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
-                        console.log("ingID Value:", ingID);
-                    }
-                });
-
+            // get lsRecipe
+            $('#btnEditRecipe').click(() => {
+                getLsRecipe()
+                $('#btnEditRecipe').submit();
             })
 
-            $('input[name="quantity"]').change(function () {
-                // Kiểm tra trạng thái của checkbox
-                var item = $(this).val();
-                var quantityValue;
-                var ingID;
-                if (item !== null && item.trim() !== "") {
 
-                    $(this).closest('tr').find('input[type="checkbox"]').prop('checked', true);
-                    var quantityValue = $(this).closest('tr').find('input[name="quantity"]').val();
-                    var ingID = $(this).closest('tr').find('input[name="ingID"]').val();
+            function getLsRecipe() {
+                $('#lsRecipe tr').each(function (index, element) {
+                    var cateID = $(this).find('td input[name="cateID"]').val()
+                    var ingID = $(this).find('td input[name="ingID"]').val()
+                    var quantity = $(this).find('td input[name="quantity"]').val()
 
-                    console.log('quantity: ' + quantityValue + ' id : ' + ingID);
+                    sendDataToServer(cateID, ingID, quantity)
+                });
+                
+            }
 
-                    addRecipe(parseInt(ingID), parseFloat(quantityValue));
-
-                } else {
-                    $(this).closest('tr').find('input[type="checkbox"]').prop('checked', false);
-                }
-
-            });
-
-            function addRecipe(_id, _quantity) {
+            function sendDataToServer(_cateID, _ingID, _quantity) {
+                // Tạo đối tượng chứa dữ liệu
+                
+                var dataToSend = {
+                    cateID: parseInt(_cateID),
+                    ingID: parseInt(_ingID),
+                    quantity: parseFloat(_quantity)
+                };
+                // Gửi AJAX request đến server
                 $.ajax({
-                    url: "/Ingredients/CrRecipe",
-                    dataType: "json",
                     type: "POST",
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify({ id: _id, quantity: _quantity }),
-                    success: function (data) {
-                        console.log('--------------')
-                        var dataArray = Object.values(data);
-                        if (dataArray === null) {
-                            window.location.href = '@Url.Action("CreateRecipe", "Ingredients")'; // Chuyển hướng tới trang khác nếu data là null
-                        } else {
-                            for (let x in dataArray) {
-                                console.log(dataArray[x].id);
-                                console.log(dataArray[x].quantity);
-                            }
-                        }
+                    url: "/Product/addRecipe",
+                    data: JSON.stringify(dataToSend),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response.cateID + " " + response.ingID + " " + response.quantity);
                     },
-                    error: function (xhr) {
-                        alert('error');
+                    error: function (error) {
+                        alert("error")
                     }
                 });
             }
-
         });
 
     </script>

@@ -75,6 +75,7 @@
             <div>
                 <p class="title">Lọc theo combo</p>
                 <div class="row">
+                    <a class="btn mr-3" href="@Url.Action("Index","Product")">TẤt cả món ăn</a>
                     <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 0})">TẤt cả combo</a>
                     <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 1})">Combo còn hoạt động</a>
                     <a class="btn" href="@Url.Action("locCombo","Product", new {loai = 2})">Combo ẩn</a>
