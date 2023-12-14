@@ -12,7 +12,7 @@
                 <h2 class="tm-block-title d-inline-block">Danh sách nhân viên</h2>
             </div>
             <div class="col text-right row">
-                <a href="~/Admin/Employee/Create" class="btn btn-small btn-primary">Thêm nhân viên</a>
+                <a href="~/Admin/Admin/AddnewNV" class="btn btn-small btn-primary">Thêm nhân viên</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -42,7 +42,7 @@
                             <td class="text-center">@item.numberPhone</td>
                             <td class="text-center">@item.Position.posName</td>
 
-                            <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                            <td>@Html.ActionLink("Delete","DeleteNV", "Employee", new { id= item.EmployeeID})</td>
                         </tr>
                     }
                 </tbody>

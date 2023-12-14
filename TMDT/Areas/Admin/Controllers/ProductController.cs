@@ -16,7 +16,7 @@ namespace TMDT.Areas.Admin.Controllers
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
         private ComboSingleton comboSingleton = ComboSingleton.instance;
-        Logger log = LogManager.GetCurrentClassLogger();
+        
 
         public ProductController()
         {
@@ -26,7 +26,8 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Index()
         {
-            var allProduct = comboSingleton.lsCombo;
+            var allProduct = new List<Combo>();
+            allProduct = comboSingleton.lsCombo;
 
             var lsCombo = allProduct.Where(w => w.typeCombo == true);
             var lsProduct = allProduct.Where(w => w.typeCombo == false);
@@ -38,8 +39,6 @@ namespace TMDT.Areas.Admin.Controllers
                 if (lsComboDetail.FirstOrDefault(f => f.comboID == item.comboID && f.sizeUP == false) != null)
                     lsView.Add(item);
             }
-
-            log.Info("Get list product");
 
             ViewBag.result = TempData["result"];
             ViewBag.notification = TempData["notification"];

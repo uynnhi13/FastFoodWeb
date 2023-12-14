@@ -72,6 +72,9 @@ namespace TMDT.Areas.Admin.Controllers
 
         public ActionResult Account()
         {
+            if (!UserIsAdmin()) {
+                return RedirectToAction("AccessDenied");
+            }
             var dsnv = database.Employees;
             return View(dsnv);
         }
@@ -172,12 +175,13 @@ namespace TMDT.Areas.Admin.Controllers
             var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
             return View(kh);
         }
-
+       
         public ActionResult EditKHang(string id)
         {
             if (!UserIsAdmin()) {
                 return RedirectToAction("AccessDenied");
             }
+
 
             var em = database.User.FirstOrDefault(s => s.numberPhone == id);
             if (em == null) {
@@ -194,12 +198,16 @@ namespace TMDT.Areas.Admin.Controllers
                 return RedirectToAction("AccessDenied");
             }
             if (ModelState.IsValid) {
-                var a = database.User.FirstOrDefault(f => f.numberPhone == us.numberPhone);
 
-                a.fullName = us.fullName;
-                a.gmail = us.gmail;
-                a.password = us.password;
-                database.SaveChanges();// LUU THAY DOI
+                var a = database.User.FirstOrDefault(f => f.numberPhone == us.numberPhone);
+                if (a != null) {
+                    a.fullName = us.fullName;
+                    a.gmail = us.gmail;
+                    a.password = us.password;
+                    database.SaveChanges();// LUU THAY DOI
+                }
+
+               
             }
             return RedirectToAction("QlyKH");
         }

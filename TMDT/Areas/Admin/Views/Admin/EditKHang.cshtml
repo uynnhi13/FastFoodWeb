@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
 }
 <div class="card mb-4">
-    @using (Html.BeginForm("EditKHang", "Admin", FormMethod.Post, new { @class = "tm-login-form" }))
+    @using (Html.BeginForm("EditKHang", "Admin", FormMethod.Post, new { @class = "tm-login-form", enctype = "multipart/form-data" }))
     {
         @Html.Hidden("permition", Model.permission)
         @Html.Hidden("IsActive", Model.IsActive)

@@ -71,13 +71,18 @@ namespace TMDT.Areas.KhachHang.Controllers
                 if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
-                    if (kiemtra != null) {
-                        //Lưu vào session
-                        Session["TaiKhoan"] = user;
-                        ViewBag.TaiKhoan = Session["TaiKhoan"];
+                    if (kiemtra != null ) {
+                        if(kiemtra.IsActive == true) {
+                            //Lưu vào session
+                            Session["TaiKhoan"] = user;
+                            ViewBag.TaiKhoan = Session["TaiKhoan"];
+
+                        }
+                        
                     }
                     else {
-                        ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                       
+                         ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
                         // Chuyển hướng người dùng trở lại trang đăng nhập
                         return View();
                     }

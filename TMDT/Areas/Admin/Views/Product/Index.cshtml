@@ -4,16 +4,16 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
     TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
-    var lsProduct = db.Product.ToList();
+    //var lsProduct = db.Product.ToList();
 
     string notificationPro = "";
     bool result = false;
 
-    if (ViewBag.result != null)
-    {
-        result = ViewBag.result;
-        notificationPro = ViewBag.notification;
-    }
+    //if (ViewBag.result != null && ViewBag.result)
+    //{
+    //    result = ViewBag.result;
+    //    notificationPro = ViewBag.notification;
+    //}
 }
 
 @section style{
@@ -74,15 +74,6 @@
                 </div>
             </div>
 
-            <div>
-                <p class="title">Lọc theo combo</p>
-                <div class="row">
-                    <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 0})">TẤt cả combo</a>
-                    <a class="btn mr-3" href="@Url.Action("locCombo","Product", new {loai = 0})">Combo ẩn</a>
-                    <a class="btn" href="@Url.Action("locCombo","Product", new {loai = 0})">Combo sản xuất</a>
-                </div>
-            </div>
-
         </div>
 
         <div class="table-responsive">
@@ -101,9 +92,11 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+                @*<tbody>
+                    @if(Model.Count >= 1) {
+                        for (int i = 0; i < Model.Count;i++)
+                        {
+                         var item = Model[i];
                         <tr class="btnModel">
                             @Html.Hidden("comboID", item.comboID)
                             <th scope="row">
@@ -141,8 +134,9 @@
                                 <td>@Html.ActionLink("Công thức", "Details", "Combo", new { id = item.comboID }, null)</td>
                             }
                         </tr>
+                        }
                     }
-                </tbody>
+                </tbody>*@
             </table>
         </div>
     </div>
