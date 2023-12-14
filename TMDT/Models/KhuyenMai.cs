@@ -15,7 +15,7 @@ namespace TMDT.Models
     {
         KhuyenMaiPrototype clone();
     }
-    public partial class KhuyenMai:KhuyenMaiPrototype
+    public partial class KhuyenMai : KhuyenMaiPrototype
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhuyenMai()
@@ -41,17 +41,17 @@ namespace TMDT.Models
 
         public KhuyenMaiPrototype clone()
         {
-            KhuyenMai newkhuyenmai=new KhuyenMai();
-            newkhuyenmai.TenQuanLy = TenQuanLy;
-            newkhuyenmai.TenHienThi = TenHienThi;
-            newkhuyenmai.LoaiKhuyenMai = LoaiKhuyenMai;
-            newkhuyenmai.GiaTriKhuyenMai=GiaTriKhuyenMai;
-            newkhuyenmai.GiaTriGiamToiDa=GiaTriGiamToiDa;
-            newkhuyenmai.SoTienGiam= SoTienGiam;
-            newkhuyenmai.DieuKienApDung_DonHangToiThieu = DieuKienApDung_DonHangToiThieu;
-            newkhuyenmai.DieuKienApDung_SoLuongToiThieu = DieuKienApDung_SoLuongToiThieu;
-
-            return newkhuyenmai;
+            KhuyenMai khuyenMai = new KhuyenMai();
+            khuyenMai.TenQuanLy = TenQuanLy;
+            khuyenMai.TenHienThi = TenHienThi;
+            khuyenMai.MaKhuyenMai = MaKhuyenMai;
+            khuyenMai.LoaiKhuyenMai = LoaiKhuyenMai;
+            khuyenMai.GiaTriKhuyenMai = GiaTriKhuyenMai;
+            khuyenMai.GiaTriGiamToiDa = GiaTriGiamToiDa;
+            khuyenMai.SoTienGiam = SoTienGiam;
+            khuyenMai.DieuKienApDung_DonHangToiThieu = DieuKienApDung_DonHangToiThieu;
+            khuyenMai.DieuKienApDung_SoLuongToiThieu = DieuKienApDung_SoLuongToiThieu;
+            return khuyenMai;
         }
     }
 }
