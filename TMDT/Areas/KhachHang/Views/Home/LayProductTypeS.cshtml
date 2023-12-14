@@ -1,0 +1,11 @@
+﻿@model IEnumerable<TMDT.Models.Category>
+
+<li class="d-flex">
+    @foreach (var item in Model)
+    {
+        <ul class="d-block">
+            <li class="title"><a href="@Url.Action("LocSanPhamS", "Home", new { id = item.typeID })"> @item.nameType</a></li>
+
+        </ul>
+    }
+</li>

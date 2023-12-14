@@ -1,175 +1,51 @@
-﻿@using TMDT.Models;
-@model IEnumerable<Combo>
-
+﻿
+@using TMDT.Models;
+@using PagedList.Mvc
+@model PagedList.PagedList<Combo>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Km";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
     TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+   
+
 }
 
-
-@* Slide Trang Chủ *@
-<!-- Hero/Intro Slider Start -->
-<div class="section bg-color1 ptb-30px slider-banner">
+<div class="product-area">
     <div class="container">
-        <div class="row">
-            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                <div class="hero-slider swiper-container slider-nav-style-1 slider-dot-style-1">
-                    <!-- Hero slider Active -->
-                    <div class="swiper-wrapper">
-                        <!-- Single slider item --> 
-                        <div class="hero-slide-item slider-height-2 swiper-slide d-flex"
-                             data-bg-image="/Areas/KhachHang/assets/images/slider-image/Hamburger-Day.png">
-                            <div class="hero-slide-content hero-slide-content-2 slider-animated-1 slider-animated-2 text-start align-self-center pl-80px">
-                                <span class="category">-20% Off</span>
-                                <h2 class="title-1">Hamburger <br> ChuChu</h2>
-                                <a href="shop-left-sidebar.html" class="btn btn-primary text-uppercase">Order Now</a>
-                            </div>
-                        </div>
-                        <!-- Single slider item -->
-                        <div class="hero-slide-item slider-height-2 swiper-slide d-flex"
-                             data-bg-image="/Areas/KhachHang/assets/images/slider-image/Chicken-Day.png">
-                            <div class="hero-slide-content hero-slide-content-2 slider-animated-1 slider-animated-2 text-start align-self-center pl-80px">
-                                <span class="category">-20% Off</span>
-                                <h2 class="title-1">Chicken <br> ChuChu</h2>
-                                <a href="shop-left-sidebar.html" class="btn btn-primary text-uppercase">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination swiper-pagination-white"></div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-buttons">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 responsive-flex">
-                <div class="single-banner">
-                    <img src="~/Areas/KhachHang/assets/images/banner/BannerBur.png" alt="">
-                    <div class="banner-content">
-                        <span class="category">Best Sellber</span>
-                        <span class="title" style="color:white">
-                            Burger
-                            <br> & Cheese
-                        </span>
-                        <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">
-                            Order
-                            Now
-                        </a>
-                    </div>
-                </div>
-                <div class="single-banner mt-25px">
-                    <img src="~/Areas/KhachHang/assets/images/banner/BannerPasta.png" alt="">
-                    <div class="banner-content">
-                        <span class="category">Best Seller</span>
-                        <span class="title" style="color:white">
-                            Pasta
-                        </span>
-                        <a href="shop-left-sidebar.html" class="shop-link btn btn-primary text-uppercase">
-                            Order
-                            Now
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Hero/Intro Slider End -->
-@* 3 thanh trong đó có freeship :D *@
-<!-- Feature Area Srart -->
-<div class="feature-area pt-100px">
-    <div class="container">
-        <div class="feature-wrapper">
-            <div class="single-feture-col">
-                <!-- single item -->
-                <div class="single-feature">
-                    <div class="feature-icon">
-                        <img src="assets/images/icons/1.png" alt="">
-                    </div>
-                    <div class="feature-content">
-                        <h4 class="title">Free Shipping</h4>
-                        <span class="sub-title">Capped at $39 per order</span>
-                    </div>
-                </div>
-            </div>
-            <!-- single item -->
-            <div class="single-feture-col ">
-                <div class="single-feature">
-                    <div class="feature-icon">
-                        <img src="assets/images/icons/2.png" alt="">
-                    </div>
-                    <div class="feature-content">
-                        <h4 class="title">Card Payments</h4>
-                        <span class="sub-title">12 Months Installments</span>
-                    </div>
-                </div>
-            </div>
-            <!-- single item -->
-            <div class="single-feture-col">
-                <div class="single-feature">
-                    <div class="feature-icon">
-                        <img src="" alt="">
-                    </div>
-                    <div class="feature-content">
-                        <h4 class="title">Easy Returns</h4>
-                        <span class="sub-title">Shop With Confidence</span>
-                    </div>
-                </div>
-                <!-- single item -->
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Feature Area End -->
-@* Best Product *@
-<!-- Product Area Start -->
-<div class="product-area pt-100px">
-    <div class="container">
-        <!-- Section Title & Tab Start -->
-        <div class="row">
-            <!-- Section Title Start -->
-            <div class="col-12">
-                <div class="section-title text-center mb-60px">
-                    <h2 class="title">Thực Đơn</h2>
-                    <p>
-                        Thực đơn của website fast food đa dạng và hấp dẫn, với các món
-                        chúng tôi cung cấp sự lựa chọn phong phú cho tất cả các thực khách yêu thích đồ ăn nhanh.
-                        ăn nhanh được chế biến ngon mắt và thơm ngon. Từ bữa sáng sáng tạo đến bữa tối thỏa mãn,
-                    </p>
-                </div>
-                <!-- Tab Start -->
-                @* Danh mục sản phẩm *@
-                @Html.Action("LayProductType", "Home")
-
-                <!-- Tab End -->
-            </div>
-            <!-- Section Title End -->
-          
-
-        </div>
         <!-- Section Title & Tab End -->
         @* SẢN PHẨM *@
         <div class="row">
             <div class="col">
-                <div class="tab-content mt-60px">
+                <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-fabric-2">
                         <div class="row">
-                            @foreach (var item in Model)
-                            {
-                                var detailItem = db.ComboDetail.FirstOrDefault(s => s.comboID == item.comboID);
-                                var productItem = db.Product.FirstOrDefault(s => s.cateID == detailItem.cateID);
-                                var size = detailItem.sizeUP;
+                            <div class="search-container text-center">
+                                <div class="form-ser">
+                                    @using (Html.BeginForm("Km", "Home", FormMethod.Get))
+                                    {
+                                        <div class="search-box">
+                                            <input type="text" placeholder="Tìm kiếm..." name="searchstring" value="@ViewBag.CurrentFilter">
+                                            <button type="submit">Tìm kiếm</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
 
-                                if (size == false && item.typeCombo == false)
-                                {
+
+                        </div>
+                        <div class="row">
+                            @foreach (var item in Model)
+                                        {
+                                            var detailItem = db.ComboDetail.FirstOrDefault(s => s.comboID == item.comboID);
+                                            var productItem = db.Product.FirstOrDefault(s => s.cateID == detailItem.cateID);
+                                            var size = detailItem.sizeUP;
+                                            var km =  ((100-item.sale) * item.price)/100;
+
+                                            if (size == false && item.typeCombo == false)
+                                            {
                                     <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
                                         <!-- Single Prodect -->
-                                        <div class="product">
+                                        <div class="product">   
                                             <div class="thumb">
                                                 <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
                                                     <img style="width:270px; height: 300px ; object-fit: contain" src="@productItem.image" alt="Product" />
@@ -177,7 +53,7 @@
                                                          alt="Product" />
                                                 </a>
                                                 <span class="badges">
-                                                    <span class="new">New</span>
+                                                    <span class="new">Sale @item.sale%</span>
                                                 </span>
                                                 <div class="actions">
                                                     <a href="wishlist.html" class="action wishlist" title="Wishlist">
@@ -204,7 +80,10 @@
                                                     </a>
                                                 </h5>
                                                 <span class="price">
-                                                    <span class="new">@string.Format("{0:N0}", item.price) đ</span>
+                                                    <span class="new" style="text-decoration:line-through">@string.Format("{0:N0}", item.price) đ</span>
+                                                </span>
+                                                <span class="price">
+                                                    <span class="new">@string.Format("{0:N0}",km) đ</span>
                                                 </span>
                                             </div>
                                             <button title="Add To Cart" class="add-to-cart" data-comboid="@item.comboID" data-type="@item.typeCombo">
@@ -225,7 +104,7 @@
                                                          alt="Product" />
                                                 </a>
                                                 <span class="badges">
-                                                    <span class="new">New</span>
+                                                    <span class="new">@item.sale%</span>
                                                 </span>
                                                 <div class="actions">
                                                     <a href="wishlist.html" class="action wishlist" title="Wishlist">
@@ -252,7 +131,10 @@
                                                     </a>
                                                 </h5>
                                                 <span class="price">
-                                                    <span class="new">@string.Format("{0:N0}", item.price) đ</span>
+                                                    <span class="new  style=" text-decoration:line-through"">@string.Format("{0:N0}", item.price) đ</span>
+                                                </span>
+                                                <span class="price">
+                                                    <span class="new">@string.Format("{0:N0}", km) đ</span>
                                                 </span>
                                             </div>
                                             <button title="Add To Cart" class="add-to-cart" data-comboid="@item.comboID" data-type="@item.typeCombo">
@@ -262,6 +144,13 @@
                                     </div>
                                 }
                             }
+
+                            <div class="pro-pagination-style text-center mt-2 mb-0 hehe" data-aos="fade-up" data-aos-delay="200">
+                                <div class="pages">
+                                    @Html.PagedListPager(Model, page => Url.Action("Km", new { page }))
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -272,12 +161,11 @@
 <!-- Product Area End -->
 
 @section Scripts{
-
+        
     <script>
         $(document).ready(function () {
-            $(".add-to-cart").click(function()
-            {
-               
+            $(".add-to-cart").click(function () {
+
                 var comboID = $(this).data("comboid");
                 var typeCombo = $(this).data("type");
                 console.log(typeCombo);
@@ -317,3 +205,54 @@
 
 
 }
+<style>
+    .product-area {
+        margin-top: 50px;
+    }
+
+    .search-container {
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-ser {
+        display: flex;
+        align-items: center;
+    }
+
+    /* CSS cho phần input và nút tìm kiếm */
+    .search-box {
+        display: flex;
+        align-items: center;
+    }
+
+        .search-box input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1;
+            margin-right: 10px;
+            width: 400px;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #ff6666;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            .search-box button:hover {
+                background-color: #ffa36e;
+                cursor: pointer;
+            }
+
+
+    .product .thumb .badges span.new {
+        background-color:red;
+    }
+</style>

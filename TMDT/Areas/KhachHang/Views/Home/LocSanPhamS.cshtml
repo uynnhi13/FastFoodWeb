@@ -1,0 +1,246 @@
+﻿
+@using TMDT.Models;
+@using PagedList.Mvc
+@model PagedList.PagedList<Combo>
+
+@{
+    ViewBag.Title = "LocSanPhamS";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+}
+<div class="product-area">
+    <div class="container">
+        <!-- Section Title & Tab End -->
+        @* SẢN PHẨM *@
+        <div class="row">
+            <div class="col">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-fabric-2">
+                        <div class="row">
+                            <div class="search-container text-center">
+                                <div class="form-ser">
+                                    @using (Html.BeginForm("LocSanPhamS", "Home", FormMethod.Get))
+                                    {
+                                        <div class="search-box">
+                                            <input type="text" placeholder="Tìm kiếm..." name="searchstring" value="@ViewBag.CurrentFilter">
+                                            <button type="submit">Tìm kiếm</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+
+                        </div>
+                            <div class="row">
+                                @foreach (var item in Model)
+                                {
+                                    var detailItem = db.ComboDetail.FirstOrDefault(s => s.comboID == item.comboID);
+                                    var productItem = db.Product.FirstOrDefault(s => s.cateID == detailItem.cateID);
+                                    var size = detailItem.sizeUP;
+
+                                    if (size == false && item.typeCombo == false)
+                                    {
+                                        <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                            <!-- Single Prodect -->
+                                            <div class="product">
+                                                <div class="thumb">
+                                                    <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
+                                                        <img style="width:270px; height: 300px ; object-fit: contain" src="@productItem.image" alt="Product" />
+                                                        <img style="width: 270px; height: 300px; object-fit: contain" class="hover-image" src="@productItem.image"
+                                                             alt="Product" />
+                                                    </a>
+                                                    <span class="badges">
+                                                        <span class="new">New</span>
+                                                    </span>
+                                                    <div class="actions">
+                                                        <a href="wishlist.html" class="action wishlist" title="Wishlist">
+                                                            <i class="pe-7s-like"></i>
+                                                        </a>
+                                                        <a href="#" class="action quickview" data-link-action="quickview"
+                                                           title="Quick view" data-bs-toggle="modal"
+                                                           data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
+                                                        <a href="compare.html" class="action compare" title="Compare">
+                                                            <i class="pe-7s-refresh-2"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <span class="ratings">
+                                                        <span class="rating-wrap">
+                                                            <span class="star" style="width: 100%"></span>
+                                                        </span>
+                                                        <span class="rating-num">( 5 Review )</span>
+                                                    </span>
+                                                    <h5 class="title">
+                                                        <a href="single-product.html">
+                                                            @item.nameCombo
+                                                        </a>
+                                                    </h5>
+                                                    <span class="price">
+                                                        <span class="new">@string.Format("{0:N0}", item.price) đ</span>
+                                                    </span>
+                                                </div>
+                                                <button title="Add To Cart" class="add-to-cart" data-comboid="@item.comboID" data-type="@item.typeCombo">
+                                                    Thêm Sản Phẩm
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (item.typeCombo == true)
+                                    {
+                                        <div class="col-lg-4 col-xl-3 col-md-6 col-sm-6 col-xs-6 mb-30px">
+                                            <!-- Single Prodect -->
+                                            <div class="product">
+                                                <div class="thumb">
+                                                    <a href="@Url.Action("ChiTietSP", "Home", new { id = item.comboID })" class="image">
+                                                        <img style="width: 270px; height: 300px; object-fit: contain" src="@item.image" alt="Product" />
+                                                        <img style="width: 270px; height: 300px; object-fit: contain" class="hover-image" src="@item.image"
+                                                             alt="Product" />
+                                                    </a>
+                                                    <span class="badges">
+                                                        <span class="new">New</span>
+                                                    </span>
+                                                    <div class="actions">
+                                                        <a href="wishlist.html" class="action wishlist" title="Wishlist">
+                                                            <i class="pe-7s-like"></i>
+                                                        </a>
+                                                        <a href="#" class="action quickview" data-link-action="quickview"
+                                                           title="Quick view" data-bs-toggle="modal"
+                                                           data-bs-target="#exampleModal"><i class="pe-7s-look"></i></a>
+                                                        <a href="compare.html" class="action compare" title="Compare">
+                                                            <i class="pe-7s-refresh-2"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <span class="ratings">
+                                                        <span class="rating-wrap">
+                                                            <span class="star" style="width: 100%"></span>
+                                                        </span>
+                                                        <span class="rating-num">( 5 Review )</span>
+                                                    </span>
+                                                    <h5 class="title">
+                                                        <a href="single-product.html">
+                                                            @item.nameCombo
+                                                        </a>
+                                                    </h5>
+                                                    <span class="price">
+                                                        <span class="new">@string.Format("{0:N0}", item.price) đ</span>
+                                                    </span>
+                                                </div>
+                                                <button title="Add To Cart" class="add-to-cart" data-comboid="@item.comboID" data-type="@item.typeCombo">
+                                                    Thêm Sản Phẩm
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                                <div class="pro-pagination-style text-center mt-2 mb-0 hehe" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="pages">
+                                        @Html.PagedListPager(Model, page => Url.Action("LocSanPhamS", new { page }))
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product Area End -->
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $(".add-to-cart").click(function () {
+
+                var comboID = $(this).data("comboid");
+                var typeCombo = $(this).data("type");
+                console.log(typeCombo);
+                if (typeCombo == true) {
+                    size = "Combo";
+                }
+                else {
+                    size = "medium";
+                }
+                var data = {
+                    comboID: comboID,
+                    soLuong: 1,
+                    size: size
+                }
+                $.ajax({
+                    type: "POST",
+                    /*url: "/GioHang/ThemSanPhamVaoGio?cateID=" + cateID*/// Thay thế "Controller" bằng tên thực tế của Controller
+                    url: "/GioHang/ThemSanPhamVaoGio",
+                    data: data,
+                    success: function (data) {
+                        Swal.fire({
+                            position: 'top-middle',
+                            icon: 'success',
+                            title: 'Sản Phẩm Đã Thêm Thành Công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    error: function () {
+                        // Xử lý lỗi
+                    }
+                });
+            })
+        });
+
+    </script>
+
+
+}
+<style>
+    .product-area{
+        margin-top:50px;
+    }
+    .search-container {
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-ser {
+        display: flex;
+        align-items: center;
+    }
+
+    /* CSS cho phần input và nút tìm kiếm */
+    .search-box {
+        display: flex;
+        align-items: center;
+    }
+
+        .search-box input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1;
+            margin-right: 10px;
+            width:400px;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            border: none;
+            background-color: #ff6666;
+            color: white;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+            .search-box button:hover {
+                background-color: #ffa36e;
+                cursor: pointer;
+            }
+
+
+
+</style>
