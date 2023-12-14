@@ -20,6 +20,7 @@ namespace TMDT.Models
 
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
+
         public TMDTThucAnNhanhEntities()
             : base("name=TMDTThucAnNhanhEntities")
         {
@@ -40,6 +41,8 @@ namespace TMDT.Models
         public virtual DbSet<Ingredient> Ingredient { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual DbSet<KhuyenMai> KhuyenMai { get; set; }
+        public virtual DbSet<location> location { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Position> Position { get; set; }

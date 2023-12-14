@@ -1,10 +1,18 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Web;
 using System.Web.Mvc;
-using TMDT.Models;
 using PagedList;
 using Facebook;
 using System.Collections.Generic;
+using TMDT.Models;
+using TMDT.Mtk;
+
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
@@ -35,6 +43,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                     ModelState.AddModelError(string.Empty, "Số điện thoại này đã được sử dụng");
 
                 if (ModelState.IsValid) {
+
                     if (kiemTraUser != null && kiemTraUser.password == null) {
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
@@ -44,6 +53,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                     }
                     else {
                         user.IsActive = true;
+                        user.password = user.password;
                         db.User.Add(user);
                         db.SaveChanges();
                     }
@@ -64,24 +74,40 @@ namespace TMDT.Areas.KhachHang.Controllers
         public ActionResult DangNhap(User user)
         {
             if (ModelState.IsValid) {
-                if (string.IsNullOrEmpty(user.numberPhone))
-                    ModelState.AddModelError(string.Empty, "Số điện thoại không được để trống");
+                if (string.IsNullOrEmpty(user.numberPhone) && string.IsNullOrEmpty(user.gmail))
+                    ModelState.AddModelError(string.Empty, "Số điện thoại hoặc gmail không được để trống");
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
                 if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
                     var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
+
                     if (kiemtra != null) {
-                        //Lưu vào session
-                        Session["TaiKhoan"] = user;
-                        ViewBag.TaiKhoan = Session["TaiKhoan"];
+                        if (kiemtra.IsActive == true) {
+                            //Lưu vào session
+                            Session["TaiKhoan"] = user;
+                            ViewBag.TaiKhoan = Session["TaiKhoan"];
+
+                        }
+
                     }
                     else {
-                        ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
-                        // Chuyển hướng người dùng trở lại trang đăng nhập
-                        return View();
-                    }
+                        var tk = db.Employees.Where(s => s.Email == user.gmail && s.password == user.password).FirstOrDefault();
 
+                        if (tk == null) {
+                            ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                            return View();
+                        }
+                        else {
+                            Session["user"] = tk;
+                            return RedirectToAction("Index", "Admin", new { area = "Admin" });
+
+                        }
+                        //ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                        //// Chuyển hướng người dùng trở lại trang đăng nhập
+                        //return View();
+                    }
+                    
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -102,26 +128,57 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
 
-
+        
         public ActionResult UserEdit(string id)
         {
-            var us = db.User.FirstOrDefault(u => u.numberPhone == id);
-            if (us == null) {
+            var user = db.User.FirstOrDefault(u => u.numberPhone == id);
+            if (user == null) {
                 return HttpNotFound();
             }
-            return View(us);
-
+            return View(user);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UserEdit(User u)
+        public ActionResult UserEdit(User updatedUser, HttpPostedFileBase HinhAnh)
         {
+            var user = db.User.FirstOrDefault(u => u.numberPhone == updatedUser.numberPhone);
             if (ModelState.IsValid) {
-                db.Entry(u).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();// LUU THAY DOI
+                if (HinhAnh != null && HinhAnh.ContentLength > 0) {
+                    // Kiểm tra loại file hình ảnh
+                    if (HinhAnh.ContentType == "image/jpeg" || HinhAnh.ContentType == "image/png") {
+                        // Lưu hình ảnh
+                        string folderPath = Server.MapPath("~/Images/User/");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(HinhAnh.FileName);
+                        string imagePath = Path.Combine(folderPath, uniqueFileName);
+                        HinhAnh.SaveAs(imagePath);
+                        user.userpic = "~/Images/User/" + uniqueFileName;
+                        db.SaveChanges(); // Lưu thay đổi
+                    }
+                    else {
+                        ModelState.AddModelError("", "Chỉ chấp nhận file hình ảnh (jpg, png).");
+                        return View(); // Hiển thị view với thông báo lỗi
+                    }
+                }
+
+                user.fullName = updatedUser.fullName; // Cập nhật thông tin người dùng
+                user.gmail = updatedUser.gmail;
+                user.numberPhone = updatedUser.numberPhone;
+                user.bDay = updatedUser.bDay;
+                user.password = updatedUser.password;
+                user.gender = updatedUser.gender;
+              
+
+
+                // Cập nhật các trường thông tin người dùng khác tương tự ở đây
+
+                db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();// Lưu thay đổi
             }
             return RedirectToAction("UserInfo", "NguoiDung");
         }
+
+
         //End THÔNG TIN USER//
 
 
@@ -157,21 +214,24 @@ namespace TMDT.Areas.KhachHang.Controllers
 
                 if (ad.priority) {
                     var lsAad = db.Address.Where(w => w.userID == user.numberPhone);
+                    /*
+                                        foreach (var item in lsAad) {
+                                            if (item.priority) {
+                                                addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                                                addres.priority = false;
 
-                    foreach (var item in lsAad) {
-                        if (item.priority) {
-                            addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
-                            addres.priority = false;
-
-                        }
+                                            }
+                                        }*/
+                    Iteratorr iteratorr = new Iterator(lsAad);
+                    for (var item = iteratorr.First();
+                        !iteratorr.IsDone; item = iteratorr.Next()) {
+                        addres = db.Address.FirstOrDefault(f => f.addressID == item.addressID);
+                        addres.priority = false;
                     }
-
                 }
 
+      
                 db.SaveChanges();
-
-
-
                 ad.userID = user.numberPhone;
                 db.Address.Add(ad);
                 db.SaveChanges();// LUU THAY DOI
@@ -202,6 +262,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return View(lc);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LocaEdit(Address ad)
@@ -234,6 +295,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 aad.note = ad.note;
                 aad.priority = ad.priority;
                 aad.address1 = ad.address1;
+                aad.district = ad.district;
 
                 db.SaveChanges();// LUU THAY DOI
             }
@@ -256,12 +318,12 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
         [HttpGet]
-        public ActionResult OrderList(DateTime? startdate, DateTime? enddate,int? page ,Condition cd, string searchstring = "")
+        public ActionResult OrderList(DateTime? startdate, DateTime? enddate, int? page, Condition cd, string searchstring = "")
         {
             ViewBag.conditionID = new SelectList(db.Condition.ToList(), "conditionID", "nameCon");
 
             var user = (User)Session["TaiKhoan"];
-            var orderQuery = db.Order.Where(o => o.numberPhone==user.numberPhone);
+            var orderQuery = db.Order.Where(o => o.numberPhone == user.numberPhone);
             // hàm tìm kím 
             if (!string.IsNullOrEmpty(searchstring)) {
                 orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchstring) && o.orderID.ToString().Length == searchstring.Length);
@@ -278,7 +340,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             if (showButton) {
                 orderQuery = orderQuery.Where(o => o.conditionID == cd.conditionID);
             }
-        
+
             //
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
@@ -286,28 +348,29 @@ namespace TMDT.Areas.KhachHang.Controllers
                 return View(orderQuery.ToList());
             }
 
-         
+
             // hiển thị tổng
             var hienthi = orderQuery.ToList();
 
             int pagesize = 5;
             int pagenum = (page ?? 1);
-         
 
 
-            return View(hienthi.ToPagedList(pagenum,pagesize));
+
+            return View(hienthi.ToPagedList(pagenum, pagesize));
         }
 
-        public ActionResult Review()
+        public ActionResult Review(int id)
         {
             var user = (User)Session["TaiKhoan"];
 
-            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone);
+            var review = db.Order.FirstOrDefault(u => u.numberPhone == user.numberPhone && u.orderID == id);
 
             return View(review);
         }
+
         [HttpPost]
-        public ActionResult SubmitReview(Order o )
+        public ActionResult SubmitReview(Order o)
         {
 
             var user = (User)Session["TaiKhoan"];
@@ -323,25 +386,175 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
         public ActionResult ReviewView()
         {
-            var revi = db.Order.ToList();
+            //var revi = db.Order.Where(o => o.star != null && !string.IsNullOrEmpty(o.comment)).ToList();
+            //if (revi != null) {
+            //    var s = revi.Where(o => o.star > 3);
+            //        return PartialView(s);
+            //}
+            var revi = db.Order.Where(o => o.star != null && !string.IsNullOrEmpty(o.comment) && o.star >= 3).ToList();
+
             return PartialView(revi);
 
         }
-
-
-
-
-
 
         public ActionResult OrderDetail(int id)
         {
             var order = db.Order.FirstOrDefault(s => s.orderID == id);
             return View(order);
-
-
-
         }
 
+        //End Order//
+        public ActionResult OrderFinvl()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult OrderFinvl(string searchdh = " ", string searchsdt = " ")
+        {
+                var orderQuery = db.Order.AsQueryable();
+                // Kiểm tra xem sdt
+                if (!string.IsNullOrEmpty(searchsdt)) {
+                    // gán đt
+                    orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
+                    if (orderQuery.Any()) {
+                        // Kiểm tra mã đơn
+                        if (!string.IsNullOrEmpty(searchdh)) {
+                            // thêm dữ liệu
+                            orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchdh) && o.orderID.ToString().Length == searchdh.Length);
+                            var order = orderQuery.FirstOrDefault(); // Lấy đơn hàng thỏa mãn cả hai điều kiện
+
+                            if (order != null) {
+                                return RedirectToAction("TimKiemVL", new { orderId = order.orderID });
+                            }
+                        }
+                        else {
+                            // hiển thị sp cuối cùng 
+                            var lastItemOrder = orderQuery.OrderByDescending(o => o.orderID).First();
+
+                            return View("TimKiemVL", lastItemOrder);
+                        }
+                    }
+                }
+                ViewBag.ErrorMessage = " Xác nhận mật khẩu không đúng  ";
+            
+            return View();
+        }
+       //Tìm kiếm đơn hàng cho khách vãng lai
+      
+    
+
+        public ActionResult TimKiemVL(int orderId)
+        {
+            // Lấy thông tin chi tiết đơn hàng dựa trên orderId và hiển thị trang chi tiết
+            var orderDetail = db.Order.FirstOrDefault(o => o.orderID == orderId);
+
+            if (orderDetail == null) {
+                // Xử lý nếu không tìm thấy đơn hàng
+                return RedirectToAction("NotFound");
+            }
+
+            return View(orderDetail);
+        }
+        // đổi mật khẩu 
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string currentPassword, string newPassword, string confirmPassword)
+        {
+            var u = Session["TaiKhoan"] as User; // Giả sử User là đối tượng chứa thông tin tài khoản của người dùng
+            var n = db.User.FirstOrDefault(o => o.numberPhone == u.numberPhone);
+            if (u != null) {
+                if (currentPassword == u.password) // Kiểm tra mật khẩu hiện tại của người dùng
+                {
+                    if (newPassword == confirmPassword) // Kiểm tra mật khẩu mới và mật khẩu xác nhận có trùng khớp không
+                    {
+                     
+
+                        n.password = newPassword; // Cập nhật mật khẩu mới
+
+                        db.Entry(n).State = EntityState.Modified;
+                      
+                        db.SaveChanges();
+                        ViewBag.ErrorMessage = "Thay đổi thành công ";
+                        // Redirect về trang chủ hoặc trang thông báo thành công
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else {
+                        ViewBag.ErrorMessage = " Xác nhận mật khẩu không đúng  ";
+                    }
+                }
+                else {
+                    ViewBag.ErrorMessage = "Nhập sai mật khẩu hiện tại";
+                }
+            }
+            else {
+                return RedirectToAction("Login", "NguoiDung"); // Nếu không có thông tin tài khoản trong Session, chuyển hướng đến trang đăng nhập
+            }
+
+            // Nếu có lỗi, hiển thị lại form thay đổi mật khẩu với thông báo lỗi
+            return View();
+        }
+        public ActionResult SendResetLink()
+        {
+            return View();
+        }
+
+        // POST: /ForgotPassword/SendResetLink
+        [HttpPost]
+        public ActionResult SendResetLink(string email)
+        {
+            var user = db.User.FirstOrDefault(u => u.gmail == email);
+
+            if (user != null) {
+                // Gọi hàm để gửi email chứa liên kết đổi mật khẩu
+                bool emailSent = SendResetPasswordEmail(email);
+
+                if (emailSent) {
+
+                    Session["Mailvl"] = email;
+                    return RedirectToAction("Noficication");
+                }
+                else {
+                    ViewBag.ErrorMessage = "Không gửi đc email ";
+                }
+            }  
+            else {
+                ViewBag.ErrorMessage = "Không tìm thấy Email của ban";
+            }
+            return View();
+        }
+        string smtpServer = ConfigurationManager.AppSettings["smtpServer"];
+        bool enableSsl = bool.Parse(ConfigurationManager.AppSettings["EnableSsl"]);
+        int smtpPort = int.Parse(ConfigurationManager.AppSettings["smtpPort"]);
+        string smtpUser = ConfigurationManager.AppSettings["smtpUser"];
+        string smtpPass = ConfigurationManager.AppSettings["smtpPass"];
+        string adminEmail = ConfigurationManager.AppSettings["adminEmail"];
+
+        private bool SendResetPasswordEmail(string emailAddress)
+        {
+                string mailBody = "Link to reset password:  ";
+                
+
+                MailMessage message = new MailMessage(smtpUser, emailAddress);
+                message.Subject = "Reset Your Password";
+                message.Body = mailBody+ "https://localhost:44322/KhachHang/NguoiDung/ChangePasswordvl";
+
+                SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential(smtpUser, smtpPass);
+                smtpClient.EnableSsl = enableSsl;
+                smtpClient.Send(message);
+                return true; // Email đã được gửi thành công
+       
+
+        }
+        public ActionResult Noficication()
+        {
+           
+            return View();
+        }
 
         //End Order//
         public ActionResult FacebookLogin()
@@ -395,7 +608,48 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
         }
 
+        // đổi mật khẩu 
+        public ActionResult ChangePasswordvl()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePasswordvl( string currentPassword, string newPassword, string confirmPassword)
+        {
+            var email = Session["Mailvl"] as string; // Lấy email từ session
+
+            if (email != null) {
+                var user = db.User.FirstOrDefault(u => u.gmail == email);
+
+
+                if (user != null) {
+                    if (newPassword == confirmPassword) {
+                        user.password = newPassword;
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                        ViewBag.ErrorMessage = "Thay đổi mật khẩu thành công ";
+                        return RedirectToAction("Login", "NguoiDung");
+                    }
+                    else {
+                        ViewBag.ErrorMessage = "Xác nhận mật khẩu không đúng";
+                    }
+                }
+                else {
+                    return RedirectToAction("Login", "NguoiDung");
+                }
+            }
+            else {
+                // Xử lý khi không tìm thấy email trong session
+            }
+
+            return View();
+        }
+
+      
 
 
     }
 }
+
+
+

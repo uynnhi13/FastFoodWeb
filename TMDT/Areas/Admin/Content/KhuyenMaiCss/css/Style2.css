@@ -1,0 +1,20 @@
+﻿/* Định dạng cho class buttonClick */
+.buttonClick {
+    background-color: lightpink; /* Màu hồng */
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s; /* Thời gian chuyển đổi */
+    border-radius: 10px
+}
+
+    .buttonClick:hover {
+        background-color:hotpink ; /* Màu hồng nhạt khi di chuột vào */
+        color: black;
+    }

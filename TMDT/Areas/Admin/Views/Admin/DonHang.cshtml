@@ -81,7 +81,7 @@
                         {
                             <tr>
                                 <td>@Oder.User.fullName</td>
-                                <td>@Oder.orderID</td>
+                                <td class="madonhang">@Oder.orderID</td>
                                 <td>@Oder.datetime.ToString("dd-MM-yyyy")</td>
                                 <td>@Oder.note</td>
                                 <td>
@@ -132,8 +132,7 @@
                                 <td>
                                     @Oder.total
                                 </td>
-
-                                <td>
+                                <td class="btChiTiet">
 
                                     @Html.ActionLink("Chi tiết", "DetailsDH", new { id = Oder.orderID })
 

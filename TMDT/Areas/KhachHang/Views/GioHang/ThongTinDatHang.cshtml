@@ -1,19 +1,32 @@
 ﻿@using TMDT.Models
+@using TMDT.Models.Payments
+@using TMDT.MauThietKe
 @model List<MatHangMua>
 @{
     ViewBag.Title = "DatHang";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
     TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+    double TongTien = @ViewBag.TongTien + ViewBag.TongTien * 0.1;
+    int soLuong = @ViewBag.TongSL;
+    TMDT.MauThietKe.Facade.KhuyenMaiFacade khuyenMaiFacade = new TMDT.MauThietKe.Facade.KhuyenMaiFacade();
+    var user = Session["TaiKhoan"] as TMDT.Models.User;
+    var lstKhuyenMai = db.KhuyenMai.ToList();
 }
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
 
 <body>
     <div class="checkout-area pt-100px pb-100px">
         <div class="container">
             <div class="row">
                 @{
-                    var user = Session["TaiKhoan"] as TMDT.Models.User;
+
                     var lstAddress = db.Address.Where(s => s.userID == user.numberPhone);
-                    
+
                     if (user == null || lstAddress.Count() == 0)
                     {
                         <div class="col-lg-7">
@@ -34,12 +47,26 @@
                                                 <input type="text" name="numberPhone" />
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        <div class="col-lg-8">
                                             <div class="billing-info mb-4">
                                                 <label>Địa chỉ: </label>
-                                                <input type="text" name="fullAddress" />
+                                                <input type="text" name="fullAddress" style="height:39px" />
                                             </div>
                                         </div>
+                                        <div class="col-lg-4">
+                                            <label>Quận: </label>
+                                            <div class="shop-select">
+                                                <select class="shop-sort" name="district" id="quanSelect">
+                                                    @foreach (var quan in Enum.GetValues(typeof(DistrictOption.districtOption)))
+                                                    {
+                                                        <option value="@DistrictOption.DistrictHelper.GetDistrictDisplayName((DistrictOption.districtOption)quan)" name="district" id="districtSelected">
+                                                            @DistrictOption.DistrictHelper.GetDistrictDisplayName((DistrictOption.districtOption)quan)
+                                                        </option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="additional-info-wrap">
                                             <div class="additional-info">
                                                 <label>Ghi Chú</label>
@@ -47,6 +74,7 @@
                                                           name="message"></textarea>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-12">
                                             <div class="billing-select mb-4" id="drTypePayment">
                                                 <label>Hình thức thanh toán: </label>
@@ -91,10 +119,12 @@
                                         @Html.Hidden("HiddenHoTen", @addPriority.lastName + " " + @addPriority.firstName)
                                         @Html.Hidden("HiddenNumberPhone", @addPriority.numberPhone)
                                         @Html.Hidden("HiddenAddress", @addPriority.address1)
+                                        @Html.Hidden("HiddenDistrict", @addPriority.district)
 
                                         <input type="hidden" id="recipient" name="recipient" />
                                         <input type="hidden" id="numberPhone" name="numberPhone" />
                                         <input type="hidden" id="fullAddress" name="fullAddress" />
+                                        <input type="hidden" id="district" name="district" />
                                         <div class="col-lg-12">
                                             <div class="billing-info mb-4">
                                                 <b>Tên Người Nhận:</b> <p id="hoTenShow">@addPriority.lastName @addPriority.firstName</p>
@@ -108,6 +138,11 @@
                                         <div class="col-lg-12">
                                             <div class="billing-info mb-4">
                                                 <b>Địa chỉ: </b><p id="addressShow">@addPriority.address1</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="billing-info mb-4">
+                                                <b>Quận: </b><p id="districtShow">@addPriority.district</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -156,28 +191,32 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                @{
-                                                    foreach (var diaChi in lstAddress)
-                                                    {
-                                                        <div style="border:1px solid black; border-radius:5px; padding: 5px; margin: 5px" class="editAddressItem" data-address-id="@diaChi.addressID">
+                                                @foreach (var diaChi in lstAddress)
+                                                {
+                                                    <div style="border:1px solid black; border-radius:5px; padding: 5px; margin: 5px" class="editAddressItem" data-address-id="@diaChi.addressID">
+                                                        <div>
                                                             <div>
-                                                                <div>
-                                                                    <b>Tên Người Nhận:</b> <p class="hoTenSelect">@diaChi.lastName @diaChi.firstName</p>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div>
-                                                                    <b>Số Điện Thoại: </b> <p class="numberPhoneSelect">@diaChi.numberPhone</p>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div>
-                                                                    <b>Địa chỉ: </b><p class="addressSelect">@diaChi.address1</p>
-                                                                </div>
+                                                                <b>Tên Người Nhận:</b> <p class="hoTenSelect">@diaChi.lastName @diaChi.firstName</p>
                                                             </div>
                                                         </div>
-                                                    }
+                                                        <div>
+                                                            <div>
+                                                                <b>Số Điện Thoại: </b> <p class="numberPhoneSelect">@diaChi.numberPhone</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <b>Địa chỉ: </b><p class="addressSelect">@diaChi.address1</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <b>Quận: </b><p class="districtSelect">@diaChi.district</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 }
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
@@ -201,89 +240,118 @@
                                         <li>Total</li>
                                     </ul>
                                 </div>
-                                @foreach (var item in Model)
-                                {
-                                    var thanhTien = item.price * item.soLuong;
-                                    <div class="your-order-middle">
+
+                                <div class="your-order-middle">
+                                    @foreach (var item in Model)
+                                    {
+                                        var thanhTien = item.price * item.soLuong;
                                         <ul>
                                             <li>
                                                 <span class="order-middle-left">@item.name X @item.soLuong</span> <span class="order-price">@string.Format("{0:N0}", thanhTien) </span>
                                             </li>
                                         </ul>
-                                    </div>
-                                }
+
+                                    }
+                                </div>
+
                                 <div class="your-order-bottom">
                                     <ul>
+                                        <li class="order-total">Total</li>
+                                        <li>@string.Format("{0:N0}", @ViewBag.TongTien) ₫</li>
+                                    </ul>
+                                    <ul>
                                         <li class="your-order-shipping">Shipping</li>
-                                        <li>Free shipping</li>
+                                        <li id="shipping-fee" class="shipping-fee">0₫</li>
+                                    </ul>
+                                    <ul>
+                                        <li class="VAT"><b>VAT (10%)</b></li>
+                                        <li>@string.Format("{0:N0}", @ViewBag.TongTien * 0.1) ₫</li>
                                     </ul>
                                 </div>
                                 <div class="your-order-total">
                                     <ul>
                                         <li class="order-total">Total</li>
-                                        <li>@ViewBag.TongTien</li>
+                                        <li id="canThanhToan">@string.Format("{0:N0}", @TongTien) ₫</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="payment-method">
-                                <div class="payment-accordion element-mrg">
-                                    <div id="faq" class="panel-group">
-                                        <div class="panel panel-default single-my-account m-0">
-                                            <div class="panel-heading my-account-title">
-                                                <h4 class="panel-title">
-                                                    <a data-bs-toggle="collapse"
-                                                       href="#my-account-1" class="collapsed"
-                                                       aria-expanded="true">Direct bank transfer</a>
-                                                </h4>
-                                            </div>
-                                            <div id="my-account-1" class="panel-collapse collapse show"
-                                                 data-bs-parent="#faq">
+                                <label><b>Mã Khuyến Mãi:</b></label>
+                                @using (Html.BeginForm("DongYDatHang", "GioHang", FormMethod.Post))
+                                {
+                                    <div class="input-group" style="margin-bottom: 20px">
+                                        <input type="text" class="form-control" name="makhuyenmai" id="layMaKM">
+                                        <span class="input-group-text hidden">
+                                            <a class="deleteVoucher"><i class="fas fa-times"></i></a>
+                                            
+                                        </span>
+                                    </div>
+                                    <input type="hidden" id="giatriVoucher" name="khuyenmai" style="margin-top:10px"/>
+                                }
+                                <span><a href="#" id="selectVoucher">Chọn Mã Khuyến Mãi</a></span>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="selectVoucherShow" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <!-- Nội dung của modal để chỉnh sửa địa chỉ -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editAddressModalLabel">Mã Khuyến Mãi</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" style="max-height: 400px; overflow-y: scroll;">
+                                        @foreach (var khuyenmai in lstKhuyenMai)
+                                        {
+                                            if (khuyenMaiFacade.KhuyenMaiSuDungDuoc(TongTien, soLuong, khuyenmai.ID))
+                                            {
+                                                <div style="border:1px solid black; border-radius:5px; padding: 5px; margin: 5px" class="khuyen-mai-item" data-ma-khuyen-mai="@khuyenmai.ID">
+                                                    <div>
+                                                        <div>
+                                                            <b>@khuyenmai.TenHienThi</b>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <b>Mã: </b> <p style="display:inline" class="makhuyenmai">@khuyenmai.MaKhuyenMai</p>
+                                                        </div>
+                                                    </div>
 
-                                                <div class="panel-body">
-                                                    <p>
-                                                        Please send a check to Store Name, Store Street, Store Town,
-                                                        Store State / County, Store Postcode.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default single-my-account m-0">
-                                            <div class="panel-heading my-account-title">
-                                                <h4 class="panel-title">
-                                                    <a data-bs-toggle="collapse"
-                                                       href="#my-account-2" aria-expanded="false"
-                                                       class="collapsed">Check payments</a>
-                                                </h4>
-                                            </div>
-                                            <div id="my-account-2" class="panel-collapse collapse"
-                                                 data-bs-parent="#faq">
+                                                    <div>
+                                                        <div>
+                                                            <b>Loại: </b><p style="display:inline">@khuyenmai.LoaiKhuyenMai</p>
+                                                        </div>
+                                                    </div>
 
-                                                <div class="panel-body">
-                                                    <p>
-                                                        Please send a check to Store Name, Store Street, Store Town,
-                                                        Store State / County, Store Postcode.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default single-my-account m-0">
-                                            <div class="panel-heading my-account-title">
-                                                <h4 class="panel-title">
-                                                    <a data-bs-toggle="collapse"
-                                                       href="#my-account-3">Cash on delivery</a>
-                                                </h4>
-                                            </div>
-                                            <div id="my-account-3" class="panel-collapse collapse"
-                                                 data-bs-parent="#faq">
+                                                    @{ 
+                                                        if (khuyenmai.LoaiKhuyenMai == "Theo Phần Trăm")
+                                                        {
+                                                        <div>
+                                                            <div>
+                                                                <b>Giá trị khuyến mãi: </b><p  style="display:inline">@khuyenmai.GiaTriKhuyenMai %</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <b>Giá trị giảm tối đa: </b><p style="display:inline">@string.Format("{0:N0}", @khuyenmai.GiaTriGiamToiDa)</p>
+                                                            </div>
+                                                        </div>
+                                                        }
+                                                        else 
+                                                        {
+                                                        <div>
+                                                            <div>
+                                                                <b>Số tiền giảm: </b><p style="display:inline">@string.Format("{0:N0}", @khuyenmai.SoTienGiam) </p>
+                                                            </div>
+                                                        </div>
+                                                        }
+                                                     }
 
-                                                <div class="panel-body">
-                                                    <p>
-                                                        Please send a check to Store Name, Store Street, Store Town,
-                                                        Store State / County, Store Postcode.
-                                                    </p>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            }
+                                        }
+
                                     </div>
                                 </div>
                             </div>
@@ -296,6 +364,14 @@
 </body>
 
 @section Scripts {
+
+    <script>
+        const VND = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             $("#editAddressLink").click(function () {
@@ -304,6 +380,72 @@
                 $('#editAddressModal').modal('show');
             });
         });
+    </script>
+
+    <script>
+        $('#quanSelect').change(() => {
+            var selectedValue = $("#drTypePayment select").val();
+            if (selectedValue == 2) {
+                TinhPhiShip();
+            }
+        });
+    </script>
+
+    <script>
+        
+        function ApVoucher() {
+            console.log("Vào áp voucher")
+            var maKhuyenMai = $('input[name="makhuyenmai"]').val(); // Lấy giá trị từ input
+
+            if (maKhuyenMai != null && maKhuyenMai.trim() !== '') {
+                document.querySelector('.input-group-text').classList.remove('hidden'); // Hiển thị thẻ <span>
+            } else {
+                document.querySelector('.input-group-text').classList.add('hidden'); // Ẩn thẻ <span>
+                $('input[name="makhuyenmai"]').val(null);
+            }
+        }
+    </script>
+
+    <script>
+        function TinhPhiShip() {
+            var selectedDistrict = $('#quanSelect').val();
+            var selectedValue = $("#drTypePayment select").val();
+            var selectedVoucher = $("#giatriVoucher").val();
+            console.log(selectedVoucher);
+            if (selectedVoucher == "") {
+                selectedVoucher = -1;
+            }
+            
+            if (selectedDistrict == null) {
+                selectedDistrict = $("#districtShow").text();
+            }
+            var TongTien = @TongTien;
+            console.log(TongTien);
+        // Gọi Ajax để lấy phí ship từ Controller
+            $.ajax({
+                            type: "POST", // Hoặc "POST" tùy theo cách bạn xử lý ở phía server
+                            url: "@Url.Action("GetShippingFee", "GioHang")", // Đường dẫn đến phương thức tính phí ship
+                            data: { district: selectedDistrict, total: TongTien, Value: selectedValue, voucher: selectedVoucher }, // Truyền quận đã chọn
+                            success: function (data) {
+                                // Hiển thị thông tin về phí ship lên giao diện
+                                $('#shipping-fee').text(VND.format(data.shippingFee));
+                                if (data.totalString == data.tongTienApMaStr) {
+                                    $('#canThanhToan').text(VND.format(data.totalString));
+                                }
+                                else {
+                                    var element = document.getElementById('canThanhToan');
+
+                                    // Thay thế nội dung với cấu trúc HTML mong muốn
+                                    element.innerHTML = '<del>' + VND.format(data.totalString) + '</del>' +" "+ VND.format(data.tongTienApMaStr);
+                                }
+                                
+                            },
+                            error: function () {
+                                console.log('Lỗi');
+                            }
+            })
+            
+        }
     </script>
 
     <script>
@@ -317,21 +459,29 @@
                 var hoTen = selectedAddress.find(".hoTenSelect").text();
                 var numberPhone = selectedAddress.find(".numberPhoneSelect").text();
                 var address = selectedAddress.find(".addressSelect").text();
+                var district = selectedAddress.find(".districtSelect").text();
 
                 // Gán các giá trị vào các trường trong form
                 $("#hoTenShow").text(hoTen);
                 $("#numberPhoneShow").text(numberPhone);
                 $("#addressShow").text(address);
+                $("#districtShow").text(district);
 
                 //Gán các giá trị vào trường ẩn trong form
                 $("#HiddenHoTen").val(hoTen);
                 $("#HiddenNumberPhone").val(numberPhone);
                 $("#HiddenAddress").val(address);
+                $("#HiddenDistrict").val(district);
+
 
                 // Gán giá trị từ form ẩn vào các trường trong form sẽ gửi đi
                 $("#recipient").val($("#HiddenHoTen").val());
                 $("#numberPhone").val($("#HiddenNumberPhone").val());
                 $("#fullAddress").val($("#HiddenAddress").val());
+                $("#district").val($("#HiddenDistrict").val());
+                console.log($("#district").text);
+
+                TinhPhiShip();
 
                 // Đóng modal sau khi chọn địa chỉ
                 $('#editAddressModal').modal('hide');
@@ -340,12 +490,15 @@
         });
     </script>
 
+
     <script>
         $(document).ready(function () {
             console.log('HelloWorld')
             $("#recipient").val($("#HiddenHoTen").val());
             $("#numberPhone").val($("#HiddenNumberPhone").val());
             $("#fullAddress").val($("#HiddenAddress").val());
+            $("#district").val($("#HiddenDistrict").val());
+
         })
     </script>
 
@@ -359,8 +512,14 @@
                 $('#load_form_payment').hide();
                 if (selectedValue == "2") {
                     $('#load_form_payment').show();
+                    console.log("Vào tính phí ship");
+                    TinhPhiShip();
                 }
-                else $('#load_form_payment').hide();
+                else {
+                    $('#load_form_payment').hide();
+                    $('#shipping-fee').text("0đ");
+                    $('#canThanhToan').text(VND.format(@TongTien));
+                }
             });
 
             // Bắt sự kiện khi người dùng thay đổi giá trị của radio button
@@ -408,7 +567,48 @@
     });
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $("#selectVoucher").click(function () {
+                // Hiển thị modal hoặc điều hướng đến trang chỉnh sửa địa chỉ
+                // Ví dụ sử dụng modal:
+                $('#selectVoucherShow').modal('show');
+            });
+            $('.close').click(() => {
+                $('#selectVoucherShow').modal('hide');
+            });
+        });
+    </script>
 
+    <script>
+        $(document).ready(function () {
+            $('.khuyen-mai-item').on('click', function () {
+                var idKhuyenMai = $(this).data('ma-khuyen-mai'); // Lấy giá trị mã khuyến mãi từ data-attribute
+                var maKhuyenMai = $(this).find('.makhuyenmai').text().trim();
+                console.log(idKhuyenMai + "  " + maKhuyenMai);
+                $('input[name="makhuyenmai"]').val(maKhuyenMai);
+                $('input[name="khuyenmai"]').val(idKhuyenMai); // Cập nhật giá trị mã khuyến mãi vào ô input
+
+                TinhPhiShip();
+                ApVoucher();
+
+
+                $('#selectVoucherShow').modal('hide');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.deleteVoucher').click(function () {
+                console.log("Đã vào xóa voucher");
+                // Gọi function xóa khuyến mãi tại đây
+                document.querySelector('.input-group-text').classList.add('hidden'); // Ẩn thẻ <span>
+                $('input[name="makhuyenmai"]').val(null);
+                $('input[name="khuyenmai"]').val(null);
+
+                TinhPhiShip();
+            });
+        });
+    </script>
 }
-
-

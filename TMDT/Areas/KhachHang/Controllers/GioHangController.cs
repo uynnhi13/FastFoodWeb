@@ -12,6 +12,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 {
     public class GioHangController : Controller
     {
+        TMDT.MauThietKe.Facade.KhuyenMaiFacade khuyenMaiFacade = new MauThietKe.Facade.KhuyenMaiFacade();
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
         // GET: KhachHang/GioHang
         public List<MatHangMua> LayGioHang()
@@ -188,49 +189,55 @@ namespace TMDT.Areas.KhachHang.Controllers
             //Kiểm tra xem khách hàng đã có tài khoản hay chưa
             var userCheck = db.User.FirstOrDefault(s => s.numberPhone == number);
             //Đã có tài khoản
-            if (userCheck!=null ) {
+            if (userCheck != null) {
                 donHang.numberPhone = userCheck.numberPhone;
                 donHang.recipientsNumber = number;
                 //Kiểm tra thử địa chỉ đã có hay chưa
-                var lstDiaChi=db.Address.Where(s=>s.userID == number).ToList();
+                var lstDiaChi = db.Address.Where(s => s.userID == number).ToList();
                 string[] parts = form["recipient"].Split(' ');
 
                 // Gán giá trị cho firstName và lastName
                 var lastName = parts[0]; // Lấy từ đầu tiên làm lastName
                 var firstName = string.Join(" ", parts.Skip(1)); // Gộp các từ còn lại thành firstName
 
+
                 if (lstDiaChi.Count() == 0) {
                     Address address = new Address();
                     address.firstName = firstName;
-                    address.lastName= lastName;
+                    address.lastName = lastName;
                     address.address1 = form["fullAddress"];
                     address.numberPhone = number;
                     address.userID = userCheck.numberPhone;
                     address.priority = true;
-
+                    address.district = form["district"];
                     address.note = form["message"];
                     db.Address.Add(address);
-                    
+
                 }
-            } else {
+            }
+            else {
                 //Chưa có tài khoản
                 if (userCheck == null) {
                     userCheck = new User();
                     userCheck.numberPhone = number;
                     db.User.Add(userCheck);
                     donHang.numberPhone = number;
-                    donHang.recipientsNumber= number;
+                    donHang.recipientsNumber = number;
                 }
             }
             donHang.recipient = form["recipient"];
-            donHang.fullAddress = form["fullAddress"];
+            string districtName = form["district"];
+            donHang.fullAddress = form["fullAddress"] + " " + form["district"];
+            donHang.ship = DistrictOption.ShippingFeeCalculator.GetShippingFee(districtName);
             donHang.datetime = DateTime.Now;
             donHang.note = form["message"];
             donHang.conditionID = 1;
             donHang.total = (decimal)TinhTongTien();
+            
             var hinhThucThanhToan = form["HinhThucThanhToan"];
             if (hinhThucThanhToan == "1") {
                 donHang.TypePayment = 1;
+                donHang.ship = 0;
             }
             else donHang.TypePayment = 2;
             if (donHang.TypePayment == 2) {
@@ -250,6 +257,19 @@ namespace TMDT.Areas.KhachHang.Controllers
                 }
 
             }
+
+            donHang.tongPhaiTra = donHang.total + donHang.total * 0.1M;
+            var KhuyenMai = form["khuyenmai"];
+            if (KhuyenMai == "" || KhuyenMai == "-1") {
+                donHang.KhuyenMaiID = null;
+            }
+            else {
+                donHang.KhuyenMaiID = Convert.ToInt32(KhuyenMai);
+                decimal giaGia = khuyenMaiFacade.thongTinKhuyenMai((int)donHang.KhuyenMaiID, donHang.total, (decimal)donHang.ship, (int)donHang.TypePayment);
+                donHang.tongPhaiTra = donHang.tongPhaiTra - giaGia;
+            }
+
+            
             db.Order.Add(donHang);
             db.SaveChanges();
 
@@ -259,6 +279,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 chiTiet.orderID = donHang.orderID;
                 chiTiet.comboID = sanpham.ComboID;
                 chiTiet.quantity = sanpham.soLuong;
+
                 db.OrderDetail.Add(chiTiet);
             }
             db.SaveChanges();
@@ -271,7 +292,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 code = new { Success = true, Code = 2, Url = url };
             }
             return Json(code);
-        } 
+        }
 
 
 
@@ -390,5 +411,38 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return View();
         }
+        
+        public ActionResult GetShippingFee(string district, double total, int Value, int voucher)
+        {
+            try {
+                decimal shippingFee = DistrictOption.ShippingFeeCalculator.GetShippingFee(district);
+                string shippingFeeString = shippingFee.ToString();
+
+                double tongTien = total;
+                if (Value == 2) {
+                    tongTien += (double)shippingFee;
+                }
+                else {
+                    shippingFeeString = "0";
+                }
+
+                string totalString = tongTien.ToString();
+                decimal giamGia = 0;
+                if (voucher != -1) {
+                    var voucherSearch = db.KhuyenMai.FirstOrDefault(s => s.ID == voucher);
+                    giamGia=khuyenMaiFacade.thongTinKhuyenMai(voucherSearch.ID, (decimal)tongTien, shippingFee, Value);
+                }
+
+                tongTien = tongTien - (double)giamGia;
+                string tongTienApMaStr = tongTien.ToString();
+                return Json(new { shippingFee = shippingFeeString, totalString=totalString, tongTienApMaStr= tongTienApMaStr });
+            }
+            catch (Exception ex) {
+                // Log exception for troubleshooting
+                Console.WriteLine($"Error getting shipping fee: {ex.Message}");
+                return Json(new { error = "An error occurred while fetching shipping fee." });
+            }
+        }
+
     }
 }  

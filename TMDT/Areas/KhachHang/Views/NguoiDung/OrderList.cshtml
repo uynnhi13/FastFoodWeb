@@ -2,14 +2,12 @@
 @using TMDT.Models
 @using PagedList.Mvc
 @model PagedList.PagedList<Order>
-
-
 @{
     ViewBag.Title = "OrderList";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
 
-<div class="col-sm-12 col-md-9 col-lg-9">
+<div class="col-sm-12 col-md-10 col-lg-10">
     <h3 style="color: #ad6868">Danh sách đơn hàng</h3>
 
     @using (Html.BeginForm("OrderList", "NguoiDung", FormMethod.Get))
@@ -32,7 +30,7 @@
         </div>
 
         <div>
-            Từ: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            Từ: <input type="date" name="startdate" id="startdate" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             Đến: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
 
 
@@ -41,7 +39,7 @@
 
 
 
-    <div class="table_page table-responsive">
+    <div class="table_page ">
         <table>
             <thead>
                 <tr>
@@ -63,9 +61,9 @@
                             @Html.DisplayFor(modelItem => item.datetime)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.recipientNumber)
+                            @Html.DisplayFor(modelItem => item.recipientsNumber)
                         </td>
-                        <td>
+                        <td class="maDonHang">
                             @Html.DisplayFor(modelItem => item.orderID)
                         </td>
                         <td>
@@ -74,8 +72,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Condition.nameCon)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.total)
+                        <td class="tongTien">
+                            @string.Format("{0:N0}", item.tongPhaiTra)
                         </td>
 
                         <td>

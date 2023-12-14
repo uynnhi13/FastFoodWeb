@@ -22,6 +22,7 @@ namespace TMDT.Models
         public bool priority { get; set; }
         public string note { get; set; }
         public string userID { get; set; }
+        public string district { get; set; }
     
         public virtual User User { get; set; }
     }
