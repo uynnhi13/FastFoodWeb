@@ -17,7 +17,7 @@ namespace TMDT.MauThietKe
         public void Init(TMDTThucAnNhanhEntities context)
         {
             if (lsCombo.Count == 0) {
-                var combo = context.Combo.Where(w=>w.hiden == true).AsEnumerable()
+                var combo = context.Combo.AsEnumerable()
                     .ToList();
 
                 lsCombo.AddRange(combo);

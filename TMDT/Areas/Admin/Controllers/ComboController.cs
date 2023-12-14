@@ -80,7 +80,7 @@ namespace TMDT.Areas.Admin.Controllers
 
                     foreach (var item in lsitemCombo) {
                         var product = db.Product.FirstOrDefault(f => f.cateID == item.producID);
-                        if (item.upSize == true) sumPrice += product.price * item.quantity;
+                        if (item.upSize == false) sumPrice += product.price * item.quantity;
                         else sumPrice += (product.price + product.priceUp) * item.quantity;
                         lstComboDetail.Add(new ComboDetail{comboID = combo.comboID, cateID = item.producID, quantity = item.quantity, sizeUP = item.upSize });
                     }

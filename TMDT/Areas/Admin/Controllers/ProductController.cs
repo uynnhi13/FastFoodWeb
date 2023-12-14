@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using TMDT.MauThietKe;
 using TMDT.Models;
 using NLog;
+using System.Collections;
 
 namespace TMDT.Areas.Admin.Controllers
 {
@@ -55,43 +56,54 @@ namespace TMDT.Areas.Admin.Controllers
 
             PrintInformation();
 
-            ViewBag.result = TempData["result"];
-            ViewBag.notification = TempData["notification"];
-
             return View(lsView);
         }
 
         public ActionResult locCombo(int loai)
         {
-            var lsCombo = new List<Combo>();
-            var active = comboSingleton.SoldOut;
-            var lsComboActive = new List<Combo>();
-            var lsComboInactive = new List<Combo>();
+            // Lọc dữ liệu từ comboSingleton.lsCombo một lần
+            var lsComboAll = db.Combo.ToList();
+
+            var lsComboActive = lsComboAll.Where(c => c.typeCombo == true && c.hiden == true).ToList();
+            var lsComboInactive = lsComboAll.Where(c => c.typeCombo == true && c.hiden == false).ToList();
+            var lsCombo = lsComboAll.Where(c => c.typeCombo= true).ToList();
 
             var listReturn = new List<Combo>();
 
-            for (int i = 0; i < comboSingleton.lsCombo.Count; i++) {
-                if (comboSingleton.lsCombo[i].typeCombo == true && comboSingleton.lsCombo[i].hiden == true) {
-                    lsComboActive.Add(comboSingleton.lsCombo[i]);
-                }
-                if (comboSingleton.lsCombo[i].typeCombo == true && comboSingleton.lsCombo[i].hiden == false) {
-                    lsComboInactive.Add(comboSingleton.lsCombo[i]);
-                }
-                if (comboSingleton.lsCombo[i].typeCombo == true)
-                    lsCombo.Add(comboSingleton.lsCombo[i]);
+            // Chọn danh sách dựa trên biến loai
+            switch (loai) {
+                case 0:
+                    if (lsCombo != null && lsCombo.Count > 0) {
+                        listReturn.Clear();
+                        listReturn.AddRange(lsCombo);
+                    }
+                    else {
+                        listReturn = new List<Combo>();
+                    }
+                    break;
+                case 1:
+                    if (lsComboActive != null && lsComboActive.Count > 0) {
+                        listReturn.Clear();
+                        listReturn.AddRange(lsComboActive);
+                    }
+                    else {
+                        listReturn = new List<Combo>();
+                    }
+                    break;
+                case 2:
+                    if(lsComboInactive != null && lsComboInactive.Count > 0) {
+                        listReturn.Clear();
+                        listReturn.AddRange(lsComboInactive);
+                    }
+                    else {
+                        listReturn = new List<Combo>();
+                    }
+                    break;
+                default:
+                    break;
             }
 
-            if (loai == 0)
-                listReturn = lsCombo;
-            if (loai == 1)
-                listReturn = lsComboActive;
-            if (loai == 2)
-                listReturn = lsComboInactive;
-
-            ViewBag.lsComboActive = lsComboActive;
-            ViewBag.lsComboNonActive = lsComboInactive;
-
-            return View("Index", listReturn);
+            return View("Index",listReturn);
         }
 
         [HttpPost]
@@ -209,7 +221,80 @@ namespace TMDT.Areas.Admin.Controllers
                 return RedirectToAction("index");
             }
         }
+        [HttpPost]
+        public ActionResult EditCombo([Bind(Include = "comboID,nameCombo,sale, hiden")] Combo _combo, HttpPostedFileBase HinhAnh)
+        {
+            try {
+                var combo = db.Combo.FirstOrDefault(f => f.comboID == _combo.comboID);
+                var lsProduct = db.Product.ToList();
+                if (HinhAnh != null && HinhAnh.ContentLength > 0) {
+                    // luu file
+                    string Noiluu = Server.MapPath("/Images/Combo/");
+                    String PathImg = Noiluu + HinhAnh.FileName;
+                    HinhAnh.SaveAs(PathImg);
 
+                    // Màu sắc điện thoại
+
+                    string img = "/Images/Combo/" + (string)HinhAnh.FileName;
+
+                    
+
+                    var lsitemCombo = db.ComboDetail.Where(f => f.comboID == combo.comboID).ToList();
+
+                    //tong tien
+                    decimal sumPrice = 0;
+
+                    foreach (var item in lsitemCombo) {
+                        var product = lsProduct.FirstOrDefault(f => f.cateID == item.cateID);
+                        if (item.sizeUP == false) sumPrice += product.price * item.quantity;
+                        else sumPrice += (product.price + product.priceUp) * item.quantity;
+                    }
+                    if (!img.Contains(combo.image)) {
+                        System.IO.File.Delete(combo.image);
+                        combo.image = img;
+                    }
+                    combo.nameCombo = _combo.nameCombo;
+                    combo.hiden = _combo.hiden;
+                    combo.sale = _combo.sale;
+                    combo.price = sumPrice * (100 - combo.sale) / 100;
+                    db.SaveChanges();
+                    comboSingleton.Update(db);
+                    TempData["EditSuccess"] = true;
+
+                    return RedirectToAction("Index");
+                }
+                else {
+                    
+
+                    var lsitemCombo = db.ComboDetail.Where(f => f.comboID == combo.comboID).ToList();
+
+                    //tong tien
+                    decimal sumPrice = 0;
+
+                    foreach (var item in lsitemCombo) {
+                        var product = lsProduct.FirstOrDefault(f => f.cateID == item.cateID);
+                        if (item.sizeUP == false) sumPrice += product.price * item.quantity;
+                        else sumPrice += (product.price + product.priceUp) * item.quantity;
+                    }
+
+                    combo.nameCombo = _combo.nameCombo;
+                    combo.hiden = _combo.hiden;
+                    combo.sale = _combo.sale;
+                    combo.price = sumPrice * (100 - combo.sale) / 100;
+                    db.SaveChanges();
+                    comboSingleton.Update(db);
+                    TempData["EditSuccess"] = true;
+
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e) {
+                
+                TempData["EditSuccess"] = false;
+
+                return RedirectToAction("Index", "Product");
+            }
+        }
         public ActionResult EditProduct(int? cateID)
         {
             try {
@@ -258,7 +343,7 @@ namespace TMDT.Areas.Admin.Controllers
                     }
                     itemProduct.typeID = product.typeID;
                     db.SaveChanges();
-
+                    
                     udpateCom(db, itemProduct);
 
                     comboSingleton.Update(db);
@@ -495,6 +580,22 @@ namespace TMDT.Areas.Admin.Controllers
                 item.quantity = quantity;
                 db.SaveChanges();
                 return Json(new { cateID = cateID, ingID = ingID, quantity = quantity, message = "Data updated successfully!" });
+            }
+            else {
+                // Xử lý khi không tìm thấy đối tượng cần cập nhật
+                return Json(new { message = "Item not found or unable to update!" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult addComboDetail(int comboID, int cateID, int quantity, bool sizeUP)
+        {
+            var item = db.ComboDetail.FirstOrDefault(f => f.cateID == cateID && f.comboID == comboID);
+
+            if (item != null) {
+                item.quantity = quantity;
+                db.SaveChanges();
+                return Json(new { comboID = comboID, cateID = cateID, quantity = quantity, sizeUP = sizeUP, message = "Data updated successfully!" });
             }
             else {
                 // Xử lý khi không tìm thấy đối tượng cần cập nhật
