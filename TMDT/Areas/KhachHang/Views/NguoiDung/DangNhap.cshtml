@@ -33,7 +33,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password">Mật Khẩu: </label>
-                                                    @Html.TextBox("password", null, new { @class = "form-group", @id = "password", required = "required", type="password" })
+                                                    @Html.TextBox("password", null, new { @class = "form-group", @id = "password", required = "required", type = "password" })
                                                 </div>
                                                 <div class="button-box">
                                                     <div class="login-toggle-btn">
@@ -44,6 +44,7 @@
                                                     <div class="login-toggle-btn">
                                                         <p>Bạn chưa có tài khoản? Hãy  <a class="flote-none" href="@Url.Action("DangKy","NguoiDung")">Đăng Ký</a>  tại đây</p>
                                                     </div>
+
                                                     <button type="submit"><span>Login</span></button>
                                                 </div>
                                             }
@@ -51,6 +52,47 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="lg2" class="tab-pane">
+                                <div class="login-form-container">
+                                    <div class="login-register-form">
+                                        <form action="#" method="post">
+                                            @using (Html.BeginForm("DangNhap", "NguoiDung"))
+                                            {
+                                                @Html.ValidationSummary(true)
+                                                <div class="form-group">
+                                                    <label for="gmail">Gmail: </label>
+                                                    @Html.TextBox("gmail", null, new { @class = "form-group", @id = "gmail", required = "required" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password">Mật Khẩu: </label>
+                                                    @Html.TextBox("password", null, new { @class = "form-group", @id = "password", required = "required", type = "password" })
+                                                </div>
+                                                <div class="button-box">
+                                                    <div class="login-toggle-btn">
+                                                        <input type="checkbox" />
+                                                        <a class="flote-none" href="javascript:void(0)">Remember me</a>
+                                                        <a href="#">Forgot Password?</a>
+                                                    </div>
+                                                    <div class="login-toggle-btn">
+                                                        <p>Bạn chưa có tài khoản? Hãy  <a class="flote-none" href="@Url.Action("DangKy","NguoiDung")">Đăng Ký</a>  tại đây</p>
+                                                    </div>
+
+                                                    <button type="submit"><span>Login</span></button>
+                                                </div>
+                                            }
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="login-register-tab-list nav" style="margin-top: 20px">
+                            <h4>Đăng nhập bằng </h4>
+                            <a class="active" data-bs-toggle="tab" href="#lg1">
+                                <h4>SĐT</h4>
+                            </a>
+                            <a data-bs-toggle="tab" href="#lg2">
+                                <h4>Gmail</h4>
+                            </a>
                         </div>
                     </div>
                 </div>

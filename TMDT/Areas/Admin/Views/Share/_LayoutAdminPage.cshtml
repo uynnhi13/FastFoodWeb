@@ -154,11 +154,9 @@
     @RenderSection("style", required: false)
 </head>
 <body id="reportsPage">
-
     <div id="loading">
         <div class="lds-roller" style=""><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
-
     <div class="" id="home">
         <div class="container">
             <div class="row">
@@ -180,6 +178,9 @@
                                 </li>
                                 <li class="nav-item">
                                     @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
+                                </li>
+                                <li class="nav-item">
+                                    @Html.ActionLink("Khuyến Mãi", "Index", "KhuyenMai", null, new { @class = "nav-link" })
                                 </li>
                                 <li class="nav-item">
                                     @Html.ActionLink("Nhân viên", "Index", "Employee", null, new { @class = "nav-link" })

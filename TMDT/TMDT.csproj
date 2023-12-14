@@ -143,9 +143,11 @@
     <Compile Include="Areas\Admin\Controllers\ComboController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IngredientsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhuyenMaiController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\KhachHang\Controllers\ApDungKhuyenMaiController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\GioHangController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\NguoiDungController.cs" />
@@ -155,6 +157,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MauThietKe\Facade\KhuyenMaiApDung.cs" />
+    <Compile Include="MauThietKe\Facade\KhuyenMaiFacade.cs" />
+    <Compile Include="MauThietKe\Facade\KhuyenMaiXacMinh.cs" />
     <Compile Include="Models\Address.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -173,6 +178,7 @@
     <Compile Include="Models\C__EFMigrationsHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DistrictOption.cs" />
     <Compile Include="Models\Employees.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -187,6 +193,10 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\itemProduct.cs" />
+    <Compile Include="Models\KhuyenMai.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\KhuyenMaiDetails.cs" />
     <Compile Include="Models\location.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -282,6 +292,23 @@
     <Content Include="Areas\Admin\Content\js\moment.min.js" />
     <Content Include="Areas\Admin\Content\js\tooplate-scripts.js" />
     <Content Include="Areas\Admin\Content\js\utils.js" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\mixins\_border-radius.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\mixins\_buttons.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\mixins\_screen-reader.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\mixins\_visibility.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\utilities\_stretched-link.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\_media.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\Style1.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\Style2.css" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\images\person_1.jpg" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\images\person_2.jpg" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\images\person_3.jpg" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\images\person_4.jpg" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\js\bootstrap.min.js" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\js\jquery.min.js" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\js\main.js" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\js\popper.js" />
     <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.eot" />
     <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.svg" />
     <Content Include="Areas\Admin\Content\webfonts\fa-brands-400.ttf" />
@@ -342,8 +369,6 @@
     <Content Include="Areas\KhachHang\assets\images\banner\4.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\5.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\6.jpg" />
-    <Content Include="Areas\KhachHang\assets\images\banner\7.jpg" />
-    <Content Include="Areas\KhachHang\assets\images\banner\8.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\9.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\menu-banner-1.jpg" />
     <Content Include="Areas\KhachHang\assets\images\banner\menu-banner-2.png" />
@@ -560,6 +585,108 @@
     <Content Include="Areas\Admin\Views\Employee\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\mixins\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\fonts\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\images\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\js\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\.DS_Store" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\bootstrap-grid.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\bootstrap-reboot.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\bootstrap.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_alert.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_badge.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_box-shadow.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_breakpoints.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_caret.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_deprecate.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_float.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_forms.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_grid.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_hover.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_image.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_lists.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_resize.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_screen-reader.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_size.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_text-hide.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_text-truncate.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_transition.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\mixins\_visibility.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_align.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_background.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_borders.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_clearfix.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_display.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_embed.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_flex.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_float.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_overflow.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_position.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_screenreaders.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_shadows.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_sizing.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_spacing.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_stretched-link.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_text.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\utilities\_visibility.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\vendor\_rfs.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_alert.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_badge.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_breadcrumb.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_button-group.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_buttons.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_card.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_carousel.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_close.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_code.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_custom-forms.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_dropdown.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_forms.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_functions.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_grid.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_images.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_input-group.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_jumbotron.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_list-group.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_media.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_mixins.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_modal.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_nav.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_navbar.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_pagination.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_popover.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_print.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_progress.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_reboot.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_root.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_spinners.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_tables.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_toasts.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_tooltip.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_transitions.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_type.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_utilities.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\bootstrap\_variables.scss" />
+    <Content Include="Areas\Admin\Content\KhuyenMaiCss\scss\style.scss" />
+    <Content Include="Areas\Admin\Views\KhuyenMai\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuyenMai\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuyenMai\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhuyenMai\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -567,6 +694,9 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\KhuyenMai\Delete.cshtml" />
+    <None Include="Properties\PublishProfiles\uyennhi-001-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\uyennhi-001-site1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -652,6 +782,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\KhachHang\Views\ApDungKhuyenMai\" />
     <Folder Include="Areas\KhachHang\Views\ShoppingCart\" />
     <Folder Include="Data\" />
     <Folder Include="Images\Combo\" />

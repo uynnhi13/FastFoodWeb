@@ -31,7 +31,7 @@
                                 {
                                         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
                                         var tongTienSP = sp.soLuong * (Double)sp.price;
-                                        var lstCombo = db.ComboDetail.Where(s => s.comboID == sp.ComboID);
+                                        var lstCombo = db.ComboDetail.Where(s => s.comboID == sp.ComboID).ToList();
                                         var nameSize = "";
                                         <tr data-comboid="@sp.ComboID" data-size="@sp.size">
                                             <td class="product-thumbnail">

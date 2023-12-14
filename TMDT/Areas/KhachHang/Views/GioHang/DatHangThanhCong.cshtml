@@ -79,10 +79,11 @@
                             }
 
                             var orderDetails = db.OrderDetail.Where(s => s.orderID == Model.orderID);
-                        }
+
                         <h5 style="color: red"><b>Chi Tiết Đơn Hàng</b></h5>
                         <table>
                             <tr>
+                                <th>Mã Đơn Hàng</th>
                                 <th>Tên Người Nhận</th>
                                 <th>Số Điện Thoại</th>
                                 <th>Địa Chỉ</th>
@@ -91,6 +92,7 @@
                                 <th>Phương Thức Thanh Toán</th>
                             </tr>
                             <tr>
+                                <td>@Model.orderID</td>
                                 <td>@Model.recipient</td>
                                 <td>@Model.recipientsNumber</td>
                                 <td>@Model.fullAddress</td>
@@ -112,7 +114,13 @@
                                     <td>@item.quantity</td>
                                 </tr>
                             }
+                            <tr>
+                                <td><b>Tổng thanh toán:</b> </td>
+                                <td class="TongTien">@string.Format("{0:N0}", Model.tongPhaiTra)</td>
+                            </tr>
                         </table>
+                        
+                    }
                     </div>
                 </div>
                 <div class="modal-footer">

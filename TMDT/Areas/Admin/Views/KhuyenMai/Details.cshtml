@@ -1,0 +1,131 @@
+﻿@model TMDT.Models.KhuyenMai
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>KhuyenMai</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenQuanLy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenQuanLy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TenHienThi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenHienThi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaKhuyenMai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaKhuyenMai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiKhuyenMai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiKhuyenMai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiaTriKhuyenMai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiaTriKhuyenMai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiaTriGiamToiDa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiaTriGiamToiDa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTienGiam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTienGiam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DieuKienApDung_DonHangToiThieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DieuKienApDung_DonHangToiThieu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DieuKienApDung_SanPhamToiThieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DieuKienApDung_SanPhamToiThieu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DieuKienApDung_SoLuongToiThieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DieuKienApDung_SoLuongToiThieu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GioiHanSoLanMaGiamGia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GioiHanSoLanMaGiamGia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GioiHanSoLanMaGiamGiaMoiKhachHang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GioiHanSoLanMaGiamGiaMoiKhachHang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThoiGianBatDau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiGianBatDau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThoiGianKetThuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiGianKetThuc)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
