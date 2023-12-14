@@ -1,0 +1,158 @@
+﻿@model TMDT.Models.KhuyenMai
+@{
+    ViewBag.Title = "KhuyenMaiCreate";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="~/Areas/Admin/Content/KhuyenMaiCss/css/Style1.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<body>
+    <section class="ftco-section">
+        <div class="container" style="width:1400px; background-color: white; border-radius: 10px; padding: 100px">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Tạo Khuyến Mãi</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Tên Quản Lý: </label>
+                            @Html.EditorFor(model => model.TenQuanLy, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenQuanLy, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Tên Hiển Thị: </label>
+                            @Html.EditorFor(model => model.TenHienThi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenHienThi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Mã Khuyến Mãi: </label>
+                            @Html.EditorFor(model => model.MaKhuyenMai, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MaKhuyenMai, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <label>Loại Khuyến Mãi:</label>
+                        <select id="loaiKhuyenMai" class="form-control" name="LoaiKhuyenMai">
+                            @foreach (var khuyenMai in Enum.GetValues(typeof(TMDT.Models.KhuyenMaiDetails.KhuyenMai)))
+                            {
+                                <option value="@TMDT.Models.KhuyenMaiDetails.KhuyenMaiHelper.GetLoaiKhuyenMaiDisplayName((TMDT.Models.KhuyenMaiDetails.KhuyenMai)khuyenMai)">
+                                    @TMDT.Models.KhuyenMaiDetails.KhuyenMaiHelper.GetLoaiKhuyenMaiDisplayName((TMDT.Models.KhuyenMaiDetails.KhuyenMai)khuyenMai)
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    @*Theo Phần Trăm*@
+                    <div id="th1" class="form-group">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Giá trị Khuyến mãi (%)</label>
+                                    <input type="text" name="GiaTriKhuyenMai" id="GiaTriKhuyenMai" class="form-control" placeholder="giá trị khuyến mãi (%)">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Giá trị Giảm Tối Đa</label>
+                                    <input type="text" name="GiaTriGiamToiDa" id="GiaTriGiamToiDa" class="form-control" placeholder="giá trị giảm tối đa">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*Theo số tiền*@
+                    <div id="th2" class="form-group" style="display: none;">
+                        <div class="col-md-10">
+                            <label>Số tiền giảm: </label>
+                            <!-- Ví dụ: input cho giảm giá khi mua hàng -->
+                            <input type="text" name="SoTienGiam" id="discountamountfield" class="form-control" placeholder="giảm cho khách khi mua hàng">
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <label>Điều Kiện Khuyến Mãi: </label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Tổng Giá Trị Đơn Hàng Tối Thiểu: </label>
+                                    <input type="text" name="DieuKienApDung_DonHangToiThieu" class="form-control" placeholder="Giá trị tối thiểu">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Số Lượng Tối Thiểu: </label>
+                                    <input type="text" name="DieuKienApDung_SoLuongToiThieu" class="form-control" placeholder="Số Lượng Tối Thiểu">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label>Thời Gian bắt đầu </label>
+                                    <input type="date" name="ThoiGianBatDau" id="startdate" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                </div>
+                                <div class="col-md-5">
+                                    <label>Thời Gian kết thúc </label>
+                                    <input type="date" name="ThoiGianKetThuc" id="enddate" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </section>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+@section Scripts {
+    <script>
+        document.getElementById('startdate').addEventListener('change', function () {
+            var startDate = document.getElementById('startdate').value;
+            document.getElementById('enddate').min = startDate;
+        });
+    </script>
+
+    <script>
+        document.getElementById('loaiKhuyenMai').addEventListener('change', function () {
+            var selectedOption = document.getElementById('loaiKhuyenMai').value;
+            console.log(selectedOption);
+            // Ẩn tất cả các trường dữ liệu
+            document.getElementById('th1').style.display = 'none';
+            document.getElementById('th2').style.display = 'none';
+            document.getElementById('th3').style.display = 'none';
+            // Hiển thị trường dữ liệu tương ứng với lựa chọn
+            if (selectedOption === 'Theo Phần Trăm') {
+                document.getElementById('th1').style.display = 'block';
+            } else {
+                document.getElementById('th2').style.display = 'block';
+            } 
+        });
+    </script>
+}

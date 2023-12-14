@@ -148,7 +148,6 @@ namespace TMDT.Areas.Admin.Controllers
 
                     proce.CreateRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
-
                     TempData["result"] = true;
                     TempData["notification"] = "Thêm sản phẩm thành công";
 

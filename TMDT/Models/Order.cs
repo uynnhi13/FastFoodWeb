@@ -34,9 +34,15 @@ namespace TMDT.Models
         public Nullable<int> TypePaymentVN { get; set; }
         public string recipient { get; set; }
         public string recipientsNumber { get; set; }
+
+        public Nullable<decimal> ship { get; set; }
+        public Nullable<decimal> diemTichLuy { get; set; }
+        public Nullable<decimal> tongPhaiTra { get; set; }
+        public Nullable<int> KhuyenMaiID { get; set; }
     
         public virtual Condition Condition { get; set; }
         public virtual Employees Employees { get; set; }
+        public virtual KhuyenMai KhuyenMai { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }

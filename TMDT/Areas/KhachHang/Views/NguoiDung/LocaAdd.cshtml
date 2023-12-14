@@ -1,13 +1,15 @@
-﻿@model TMDT.Models.Address
+﻿@using TMDT.Models
+@model TMDT.Models.Address
+
 
 @{
     ViewBag.Title = "LocaAdd";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
 
-<div class="col-sm-12 col-md-9 col-lg-9">
+<div class="col-sm-12 col-md-10 col-lg-10">
 
- 
+
 
     @using (Html.BeginForm())
     {
@@ -40,23 +42,34 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.address1, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label>Địa chỉ</label>
 
                     @Html.EditorFor(model => model.address1, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.address1, "", new { @class = "text-danger" })
 
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
 
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.priority)
-                        @Html.ValidationMessageFor(model => model.priority, "", new { @class = "text-danger" })
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.priority)
+                            @Html.ValidationMessageFor(model => model.priority, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-
                 </div>
-
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.district, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.DropDownListFor(model => model.district, new SelectList(Enum.GetValues(typeof(DistrictOption.districtOption)).Cast<DistrictOption.districtOption>().Select(e => new SelectListItem
+                                  {
+                                      Value = DistrictOption.DistrictHelper.GetDistrictDisplayName((DistrictOption.districtOption)e),
+                                      Text = DistrictOption.DistrictHelper.GetDistrictDisplayName((DistrictOption.districtOption)e)
+                                  }), "Value", "Text"), htmlAttributes: new { @class = "form-control", @id = "quanSelect" })
+                        @Html.ValidationMessageFor(model => model.district, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.note, htmlAttributes: new { @class = "control-label col-md-2" })
 

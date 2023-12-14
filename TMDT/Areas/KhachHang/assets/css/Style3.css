@@ -5846,7 +5846,7 @@ Pages - My Account
 }
 
 .blank-page-area .page-not-found {
-    margin-top: 310px;
+    margin-top: 180px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px) {
@@ -10497,6 +10497,8 @@ Pages - My Account
         border-radius: 0;
     }
 }
+
+
 
 @keyframes menu-animation {
     0% {

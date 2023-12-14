@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
 
 <script src="https://kit.fontawesome.com/2b079f0a79.js" crossorigin="anonymous"></script>
-<div class="col-sm-12 col-md-9 col-lg-9">
+<div class="col-sm-12 col-md-10 col-lg-10">
 
 
     <div class="row align-items-center">
@@ -49,7 +49,7 @@
                                 @Html.DisplayFor(modelItem => item.numberPhone)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.address1)
+                                @item.address1 @item.district
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.priority)
@@ -63,11 +63,13 @@
                                 @Html.DisplayFor(modelItem => item.note)
                             </td>
                             <style>
-                                .list-inline mb-0 ul li {color:black}
+                                .list-inline mb-0 ul li {
+                                    color: black
+                                }
                             </style>
                             <td>
                                 <ul class="list-inline mb-0">
-                                    <li class="list-inline-item" >
+                                    <li class="list-inline-item">
 
                                         @Html.ActionLink(" ", "LocaEdit", new { id = item.addressID }, new { @class = "bx bx-pencil font-size-18" })
                                     </li>
@@ -75,7 +77,7 @@
 
                                         @Html.ActionLink(" ", "DeleteAddress", "NguoiDung", new { id = item.addressID }, new { @class = "bx bx-trash-alt font-size-18" })
                                     </li>
-                                    <li class="list-inline-item" >
+                                    <li class="list-inline-item">
                                         @Html.ActionLink(" ", "LocaDetail", "NguoiDung", new { @class = "fa-solid fa-user fa-xs", })
 
                                     </li>
@@ -89,9 +91,6 @@
         </div>
 
 
+      </div>
     </div>
-
-
-
-
 
