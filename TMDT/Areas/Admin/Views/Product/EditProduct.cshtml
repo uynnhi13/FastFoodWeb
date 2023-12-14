@@ -1,29 +1,26 @@
-﻿@model TMDT.Models.Combo
+﻿@model TMDT.Models.Product
 @using TMDT.Models
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "EditProduct";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
 
     ViewBag.Title = "create";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
-    int i = 0;
+
     TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
 
-    var lsComboDetail = new List<ComboDetail>();
-    var lsIngredient = new List<Recipe>();
-    bool typeCombo = false;
+    var lsRecipe = new List<Recipe>();
+    var lsIngredient = new List<Ingredient>();
+    var lsType = new List<Category>();
 
-    if (Model.typeCombo)
+    if (Model != null)
     {
-        lsComboDetail = db.ComboDetail.Where(w => w.comboID == Model.comboID).ToList();
-        typeCombo = true;
+        int cateID = Model.cateID;
+        lsType = db.Category.ToList();
+        lsRecipe = db.Recipe.Where(f => f.cateID == cateID).ToList();
     }
-    else
-    {
-        var tam = db.ComboDetail.FirstOrDefault(f => f.comboID == Model.comboID).cateID;
-        lsIngredient = db.Recipe.Where(w => w.cateID == tam).ToList();
-    }
+
 }
 
 <div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
@@ -34,26 +31,19 @@
             </div>
         </div>
         <div class="">
-            @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { @class = "tm-edit-product-form", enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { @class = "tm-edit-product-form", enctype = "multipart/form-data" }))
             {
                 <div class="row">
                     <div class="col-6">
                         <div class="row mt-4 tm-edit-product-row">
                             <div class="col-8">
                                 <div class="form-horizontal">
-                                    <input type="hidden" id="comboID" name="comboID" value="@Model.comboID" />
+                                    <input type="hidden" id="comboID" name="cateID" value="@Model.cateID" />
 
                                     <div class="form-group">
-                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Tên combo</label>
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Tên sản phẩm</label>
                                         <div class="col-md-10">
-                                            <input type="text" name="nameCombo" value="@Model.nameCombo" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giảm giá</label>
-                                        <div class="col-md-10">
-                                            <input type="text" name="sale" value="@Model.sale" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                            <input type="text" name="name" value="@Model.name" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
                                         </div>
                                     </div>
 
@@ -63,6 +53,32 @@
                                             <input type="text" name="price" value="@Model.price" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
                                         </div>
                                     </div>
+
+                                    @if (Model.priceUp > 0)
+                                    {
+                                        <div class="form-group">
+                                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giá tiền upsize</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="priceUp" value="@Model.priceUp" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Loại sản phẩm</label>
+                                        <div class="col-md-10">
+                                            <select name="typeID" class="p-2 col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                                                @for (int i = 0; i < lsType.Count; i++)
+                                                {
+                                                    if (lsType[i].typeID == Model.typeID)
+                                                    {
+                                                        <option value="@lsType[i].typeID" selected>@lsType[i].nameType</option>
+                                                    }
+                                                    <option value="@lsType[i].typeID">@lsType[i].nameType</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
@@ -71,7 +87,7 @@
                                          style="fill: #868e96; height: 200px; width:200px; object-fit:over" />
                                 </div>
                                 <div class="custom-file mt-3 mb-3">
-                                    <input type="file" name="HinhAnh" id="imageInput" style="" />
+                                    <input type="file" name="HinhAnh" id="imageInput" style="" value="@Model.image" />
                                 </div>
                             </div>
                         </div>
@@ -81,51 +97,43 @@
                             <thead>
                                 <tr class="tm-bg-gray">
                                     <th scope="col">&nbsp;</th>
-                                    <th scope="col">&nbsp;</th>
                                     <th scope="col">Tên thực phẩm</th>
                                     <th scope="col" class="text-center">số lượng</th>
-                                    <th scope="col" class="text-center">Up size</th>
+                                    <th scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @*@foreach (var item in Model)
+                                @if (lsRecipe.Count > 0 && lsRecipe != null)
                                 {
-                                    <tr class="col-product">
-                                        <td>
-                                            <input type="hidden" name="cateID" id="cateID" value="@item.producID" />
-                                        </td>
-                                        <th scope="row">
-                                            <input type="checkbox" name="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">
-                                            <p id="name-product">@item.productName</p>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="">
-                                                <input type="text" name="quantity" class="form-control validate col" value="@item.quantity" />
-                                                <span class="text-danger"></span>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            @if (item.upSize)
-                                            {
-                                                <input type="checkbox" name="sizeUp" checked disabled />
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" name="sizeUp" disabled />
-                                            }
-                                        </td>
+                                    for (int i = 0; i < lsRecipe.Count; i++)
+                                    {
+                                        <tr class="col-product">
+                                            <td>
+                                            </td>
+                                            <td class="tm-product-name">
+                                                <p id="name-product">@lsRecipe[i].Ingredient.ingName</p>
+                                            </td>
 
-                                    </tr>
-                                }*@
+                                            <td class="text-center">
+                                                <p id="name-product">@lsRecipe[i].quantity</p>
+                                            </td>
+                                            <td class="tm-product-name">
+                                                <p id="name-product">@lsRecipe[i].Ingredient.Unit.nameU</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-group row ml-3">
+                    <div >
+                        <input type="submit" value="Cập nhật giá trị sản phẩm" class="border-0 btn btn-primary custom-btn" />
+                    </div>
+                    <div >
+                        <input type="button" value="Thay đổi nguyên liệu" class="border-0 btn btn-primary custom-btn" />
                     </div>
                 </div>
 
@@ -136,6 +144,10 @@
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+        // Vô hiệu hóa nút submit khi trang bắt đầu tải
+        $('input[type="submit"]').prop('disabled', true);
+
+
         $(document).ready(function () {
 
             $("#imageInput").change(function () {
@@ -146,6 +158,9 @@
                     $("#myImage").attr("src", reader.result);
                 };
             });
+
+            // Sự kiện load hoàn thành của trang
+            $('input[type="submit"]').prop('disabled', false);
 
             $('#btnTao').click(function () {
 
@@ -216,4 +231,6 @@
 
     </script>
 }
+
+
 

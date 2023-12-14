@@ -316,6 +316,7 @@
     <Compile Include="MauThietKe\ComboSingleton.cs" />
     <Compile Include="MauThietKe\ControllerTemplateMethod.cs" />
     <Compile Include="MauThietKe\EmployeeSingleton.cs" />
+    <Compile Include="MauThietKe\updateCombo.cs" />
     <Compile Include="Models\Address.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -683,9 +684,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Employees\2d9ae9af-0183-4f3f-a689-886ef71af342_348364941_630530112439683_5083284121965134752_n.jpg" />
+    <Content Include="Images\Employees\761d3c79-8016-47ed-9a22-9c14acbe6a8b_348364941_630530112439683_5083284121965134752_n.jpg" />
     <Content Include="Images\Product\Screenshot 2023-10-10 155715.png" />
     <Content Include="Images\Product\Screenshot 2023-10-12 125337.png" />
     <Content Include="Images\Product\Screenshot 2023-10-25 224048.png" />
+    <Content Include="Log\2023-12-14.log" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -709,7 +713,6 @@
     <Content Include="Areas\Admin\Views\Unit\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Unit\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\CreateRecipe.cshtml" />
@@ -779,6 +782,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Fakes Include="Fakes\System.Runtime.CompilerServices.Unsafe.fakes" />
+    <Content Include="Areas\Admin\Views\Product\EditCombo.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\EditProduct.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

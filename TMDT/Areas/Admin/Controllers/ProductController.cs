@@ -12,15 +12,18 @@ using NLog;
 
 namespace TMDT.Areas.Admin.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : ControllerTemplateMethod
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
         private ComboSingleton comboSingleton = ComboSingleton.instance;
-        Logger log = LogManager.GetCurrentClassLogger();
+        private updateCombo update;
+        private Logger log;
 
         public ProductController()
         {
             comboSingleton.Init(db);
+            log = LogManager.GetCurrentClassLogger();
+            update = new updateCombo(db);
         }
 
         // GET: Admin/Product
@@ -33,13 +36,24 @@ namespace TMDT.Areas.Admin.Controllers
             var lsComboDetail = db.ComboDetail.ToList();
             var lsView = new List<Combo>();
 
-            lsView.AddRange(lsCombo);
-            foreach (var item in lsProduct) {
-                if (lsComboDetail.FirstOrDefault(f => f.comboID == item.comboID && f.sizeUP == false) != null)
-                    lsView.Add(item);
+
+            try {
+                // tại product được lưu trong table Combo, nếu product đó có thể size up thì 1 Product = 2 Combo => lọc trường hợp trên và lấy 1 combo thôi 
+
+                lsView.AddRange(lsCombo);
+                foreach (var item in lsProduct) {
+                    if (lsComboDetail.FirstOrDefault(f => f.comboID == item.comboID && f.sizeUP == false) != null)
+                        lsView.Add(item);
+                }
+
+                log.Info("Get list in controller product");
+            }
+            catch (Exception ex) {
+                log.Error("Error: " + ex);
+                throw;
             }
 
-            log.Info("Get list product");
+            PrintInformation();
 
             ViewBag.result = TempData["result"];
             ViewBag.notification = TempData["notification"];
@@ -101,24 +115,11 @@ namespace TMDT.Areas.Admin.Controllers
         public JsonResult getProduct(int comboID)
         {
             var list = comboSingleton.lsCombo;
-            var item = list.FirstOrDefault(f=>f.comboID == comboID);
+            var item = list.FirstOrDefault(f => f.comboID == comboID);
 
             //kiểm tra item là combo hay product 
 
             return Json(new { comboID = item.comboID, nameCombo = item.nameCombo, price = item.price, item.image });
-        }
-
-        // GET: Admin/Product/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Product.Find(id);
-            if (product == null) {
-                return HttpNotFound();
-            }
-            return View(product);
         }
 
         // GET: Admin/Product/Create
@@ -166,18 +167,157 @@ namespace TMDT.Areas.Admin.Controllers
 
         }
 
-        // GET: Admin/Product/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? comboID)
         {
-            if (id == null) {
+
+            if (comboID == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            var product = comboSingleton.lsCombo.FirstOrDefault(f => f.comboID == comboID);
+            var lsComboDetail = db.ComboDetail.ToList();
+
             if (product == null) {
                 return HttpNotFound();
             }
-            ViewBag.typeID = new SelectList(db.Category, "typeID", "nameType", product.typeID);
-            return View(product);
+            else {
+
+                if (product.typeCombo) {
+                    return RedirectToAction("EditCombo", new { comboID = product.comboID});
+                }
+                else {
+                    var cateID = lsComboDetail.FirstOrDefault(f => f.comboID == product.comboID).cateID;
+                    return RedirectToAction("EditProduct", new {cateID = cateID });
+                }
+            }
+        }
+
+        // GET: Admin/Product/Edit/5
+        public ActionResult EditCombo(int? comboID)
+        {
+            try {
+
+                var product = comboSingleton.lsCombo.FirstOrDefault(f => f.comboID == comboID);
+
+                if (product != null) {
+                    return View(product);
+                }
+
+                return View();
+            }
+            catch (Exception) {
+
+                return RedirectToAction("index");
+            }
+        }
+
+        public ActionResult EditProduct(int? cateID)
+        {
+            try {
+                var proItem = db.Product.FirstOrDefault(f => f.cateID == cateID);
+
+
+                if (proItem != null) {
+                    return View(proItem);
+                }
+
+                return View();
+            }
+            catch (Exception) {
+
+                return RedirectToAction("index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditProduct([Bind(Include = "cateID,name,price,image,typeID,priceUp")] Product product, HttpPostedFileBase HinhAnh)
+        {
+            try {
+                var itemProduct = db.Product.FirstOrDefault(p => p.cateID == product.cateID);
+                if ((HinhAnh != null && HinhAnh.ContentLength > 0) && ModelState.IsValid && itemProduct != null) {
+
+                    // luu file
+                    string Noiluu = Server.MapPath("/Images/Product/");
+                    String PathImg = Noiluu + HinhAnh.FileName;
+                    HinhAnh.SaveAs(PathImg);
+
+                    // Màu sắc điện thoại
+
+                    string img = "/Images/Product/" + (string)HinhAnh.FileName;
+
+                    if (!img.Contains(itemProduct.image)) {
+                        System.IO.File.Delete(itemProduct.image);
+                        itemProduct.image = img;
+                    }
+
+                    itemProduct.name = product.name;
+                    itemProduct.price = product.price;
+                    
+                    
+                    if(product.priceUp != 0) {
+                        itemProduct.priceUp = product.priceUp;
+                    }
+                    itemProduct.typeID = product.typeID;
+                    db.SaveChanges();
+
+                    udpateCom(db, itemProduct);
+
+                    comboSingleton.Update(db);
+                    TempData["EditSuccess"] = true;
+                    return RedirectToAction("index");
+                }
+                else {
+
+                    itemProduct.name = product.name;
+                    itemProduct.price = product.price;
+
+                    if (product.priceUp != null && product.priceUp > 0) {
+                        itemProduct.priceUp = product.priceUp;
+                    }
+
+                    itemProduct.typeID = product.typeID;
+                    db.SaveChanges();
+
+                    udpateCom(db, itemProduct);
+
+                    comboSingleton.Update(db);
+                    TempData["EditSuccess"] = true;
+
+                    return RedirectToAction("index");
+                }
+            }
+            catch (Exception e) {
+                ViewBag.notification = false;
+                return RedirectToAction("index");
+            }
+        }
+
+        private void udpateCom(TMDTThucAnNhanhEntities db, Product itemProduct)
+        {
+            var lsComboID = update.getlistComboID(itemProduct);
+            // sản phẩm k có size up => combo chỉ có 1 sản phẩm nên count = 1
+            if (lsComboID.Count == 1) {
+                var comboID = lsComboID[0];
+
+                var item = db.Combo.FirstOrDefault(f => f.comboID == comboID);
+
+                item.nameCombo = (itemProduct.name.Contains(item.nameCombo)) ? item.nameCombo : itemProduct.name;
+                item.price = (itemProduct.price == (item.price * 100 / (100 - item.sale))) ? item.price : itemProduct.price;
+                item.image = (item.image.Contains(itemProduct.image)) ? item.image : itemProduct.image;
+                db.SaveChanges();
+            }
+            // sản phẩm k có size up => combo có 2 sản phẩm nên count = 2
+            if (lsComboID.Count == 2) {
+                for (int i = 0; i < lsComboID.Count; i++) {
+                    var comboID = lsComboID[i];
+
+                    var item = db.Combo.FirstOrDefault(f => f.comboID == comboID);
+
+                    item.nameCombo = (itemProduct.name.Contains(item.nameCombo)) ? item.nameCombo : itemProduct.name;
+                    item.price = (itemProduct.price == (item.price * 100 / (100 - item.sale))) ? item.price : itemProduct.price;
+                    item.image = (item.image.Contains(itemProduct.image)) ? item.image : itemProduct.image;
+                    db.SaveChanges();
+                }
+            }
         }
 
         // POST: Admin/Product/Edit/5
@@ -193,6 +333,8 @@ namespace TMDT.Areas.Admin.Controllers
                 comboSingleton.Update(db);
                 return RedirectToAction("Index");
             }
+            comboSingleton.Update(db);
+
             ViewBag.typeID = new SelectList(db.Category, "typeID", "nameType", product.typeID);
             return View(product);
         }
@@ -231,7 +373,6 @@ namespace TMDT.Areas.Admin.Controllers
 
                 lsitemCombo.Remove(lsitemCombo.FirstOrDefault(f => f.producID == cateID));
                 Session["combo"] = lsitemCombo;
-
             }
 
             return Json(lsitemCombo);
@@ -310,29 +451,6 @@ namespace TMDT.Areas.Admin.Controllers
             if (ing != null) lstCombo.Remove(ing);
             Session["combo"] = lstCombo;
         }
-        // GET: Admin/Product/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product product = db.Product.Find(id);
-            if (product == null) {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-
-        // POST: Admin/Product/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Product product = db.Product.Find(id);
-            db.Product.Remove(product);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -340,6 +458,32 @@ namespace TMDT.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public override void PrintRouter()
+        {
+            log.Info($@"{GetType().Name}
+            GET: Admin/Product/index
+            GET: Admin/Product/locCombo
+            POST: Admin/Product/getCombo
+            POST: Admin/Product/getProduct
+            GET: Admin/Product/Create
+            POST: Admin/Product/Create
+            GET: Admin/Product/Edit?comboID=?
+            POST: Admin/Product/Edit
+            GET: Admin/Product/CreateComboDetailt
+            POST: Admin/Product/deleteProduct
+            POST: Admin/Product/uppSize
+            POST: Admin/Product/CrCombo
+            ");
+        }
+
+        public override void PrintDIs()
+        {
+            log.Info($@"
+            Dependencies: 
+            TMDTThucAnNhanhEntities db, ComboSingleton comboSingleton, Logger log
+            ");
         }
     }
 }

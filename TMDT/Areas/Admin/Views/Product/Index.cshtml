@@ -90,9 +90,9 @@
                     <tr class="tm-bg-gray">
                         <th scope="col">Tên thực phẩm</th>
                         <th scope="col" class="text-center">Hình ảnh</th>
-                        <th scope="col">Giá tiền</th>
-                        <th scope="col">Giá UP size</th>
-                        <th scope="col">Loại</th>
+                        <th scope="col" class="text-center">Giá tiền</th>
+                        <th scope="col" class="text-center">Giá UP size</th>
+                        <th scope="col" class="text-center">Loại</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
@@ -210,7 +210,25 @@
             var result = @Html.Raw(Json.Encode(result));
             var notificationPro = '@notificationPro';
 
-
+            // notification succes
+            var editSuccess = '@(TempData["EditSuccess"] ?? "")';
+            if (editSuccess === 'True') { // Kiểm tra xem flag là true hay không
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Chỉnh xửa thành công",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } if (editSuccess === 'False') {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: 'Chỉnh xửa thất bại',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
 
             //đóng mở modal
             $('tr.btnModel').click(function () {
@@ -233,8 +251,6 @@
                 var _id = $('#comboIDEdit').val()
                 window.location.href = '/Admin/Product/Edit?comboID=' + parseInt(_id)
             })
-
-            runSweetAlert2()
 
             function getCombo(_id) {
                 $.ajax({
@@ -395,27 +411,6 @@
                 })
             }
 
-            function runSweetAlert2() {
-                if (result != null && notificationPro != "") {
-                    if (result) {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: notificationPro,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    } else {
-                        Swal.fire({
-                            position: "center",
-                            icon: "error",
-                            title: notificationPro,
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                }
-            }
         })
     </script>
     <cripts>

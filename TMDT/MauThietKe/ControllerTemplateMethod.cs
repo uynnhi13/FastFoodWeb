@@ -12,11 +12,10 @@ namespace TMDT.MauThietKe
         public abstract void PrintDIs();
 
         //template methods
-        public void PrintInfomation()
+        public void PrintInformation()
         {
             PrintRouter();
             PrintDIs();
         }
-
     }
 }
