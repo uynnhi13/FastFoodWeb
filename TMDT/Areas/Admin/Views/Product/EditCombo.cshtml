@@ -172,8 +172,9 @@
             function getLsRecipe() {
                 $('#lsRecipe tr').each(function (index, element) {
                     var cateID = $(this).find('td input[name="cateID"]').val()
-                    var ingID = $(this).find('td input[name="ingID"]').val()
+                    var comboID = $(this).find('td input[name="comboID"]').val()
                     var quantity = $(this).find('td input[name="quantity"]').val()
+                    var sizeUP = $(this).find('td input[name="sizeUp"]').prop('checked');
 
                     sendDataToServer(comboID, cateID, quantity, sizeUP)
                 });
@@ -187,7 +188,7 @@
                     comboID: parseInt(_comboID),
                     cateID: parseInt(_cateID),
                     quantity: parseFloat(_quantity),
-                    sizeUp: parseFloat(_sizeUP),
+                    sizeUp: Boolean(_sizeUP),
                 };
                 // Gửi AJAX request đến server
                 $.ajax({

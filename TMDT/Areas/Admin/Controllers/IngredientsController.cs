@@ -8,6 +8,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using NLog;
+using TMDT.MauThietKe;
 using TMDT.Models;
 
 
@@ -16,7 +18,15 @@ namespace TMDT.Areas.Admin.Controllers
     public class IngredientsController : Controller
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
-        private YourDataAccessClass proce = new YourDataAccessClass();
+        private ComboSingleton comboSingleton = ComboSingleton.instance;
+        private updateCombo update;
+
+        public IngredientsController()
+        {
+            comboSingleton.Init(db);
+            update = new updateCombo(db);
+        }
+
 
         // GET: Admin/Ingredients
         public ActionResult Index(int? page)
@@ -146,8 +156,9 @@ namespace TMDT.Areas.Admin.Controllers
 
                     List<ingre> lsDeci = LayIngre();
 
-                    proce.CreateRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
+                    db.createRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
+                    comboSingleton.Update(db);
 
                     TempData["result"] = true;
                     TempData["notification"] = "Thêm sản phẩm thành công";
@@ -176,6 +187,14 @@ namespace TMDT.Areas.Admin.Controllers
 
         }
 
+        public int GetMaxComboId()
+        {
+            using (var context = new TMDTThucAnNhanhEntities()) {
+                // Sử dụng LINQ để lấy ra ID lớn nhất từ bảng Combo
+                int maxId = (context.Combo.Max(c => (int?)c.comboID) ?? 0 ) + 1;
+                return maxId;
+            }
+        }
 
         [HttpPost]
         public JsonResult CrRecipe(int id, double quantity)
