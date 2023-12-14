@@ -17,6 +17,7 @@ namespace TMDT.Areas.KhachHang
                 "KhachHang/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

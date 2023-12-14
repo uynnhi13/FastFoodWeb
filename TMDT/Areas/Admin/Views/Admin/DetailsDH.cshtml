@@ -48,8 +48,8 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Order.User.numberPhone)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Order.total)
+                    <td class="tongTien">
+                        @string.Format("{0:N0}", item.Order.tongPhaiTra)
                     </td>
 
                     <td>

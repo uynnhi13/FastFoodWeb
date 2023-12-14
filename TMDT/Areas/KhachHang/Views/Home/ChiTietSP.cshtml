@@ -28,16 +28,8 @@
                     <div class="swiper-container zoom-top">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide zoom-image-hover">
-                                @if (Model.typeCombo == true)
-                                {
                                     <img class="@Model.image" src="@Model.image"
                                          alt="" style=" width: 270px; height: 300px; object-fit: contain">
-                                }
-                                else
-                                {
-                                    <img class="@productID.image" src="@productID.image"
-                                         alt="" style="width: 270px; height: 300px; object-fit: contain">
-                                }
                             </div>
                         </div>
                     </div>
@@ -48,31 +40,47 @@
                         <h2 style="color:black">@Model.nameCombo</h2>
 
                         @if (Model.typeCombo == true)
-                        {<h2 style="color:black">@string.Format("{0:N0}", Model.price) đ</h2>
-                        var lstComBo = db.ComboDetail.Where(s => s.comboID == Model.comboID);
-                        foreach (var lst in lstComBo)
                         {
-                            var proID = db.Product.FirstOrDefault(s => s.cateID == lst.cateID);
-                            <p>@detailpro.quantity x @proID.name</p>
-                        }
+                            <h2 style="color:black">@string.Format("{0:N0}", Model.price) đ</h2>
+                            var lstComBo = db.ComboDetail.Where(s => s.comboID == Model.comboID);
+                            foreach (var lst in lstComBo)
+                            {
+                                var proID = db.Product.FirstOrDefault(s => s.cateID == lst.cateID);
+                                <p>@detailpro.quantity x @proID.name</p>
+                            }
 
-                    }
-                    else
-                    {
-                        <div class="pricing-meta">
-                            <ul class="d-flex">
-                                <li class="price" id="updatePrice" style="color:black">@string.Format("{0:N0}", Model.price) đ</li>
-                            </ul>
-                            <ul>
-                                <li class="price-up">
-                                    <select id="sizeSelect">
-                                        <option value="medium">Vừa</option>
-                                        <option value="big">Lớn</option>
-                                    </select>
-                                </li>
-                            </ul>
-                        </div>
-                    }
+                        }
+                        else if (productID.priceUp == 0)
+                        {
+                            <div class="pricing-meta">
+                                <ul class="d-flex">
+                                    <li class="price" id="updatePrice" style="color:black">@string.Format("{0:N0}", Model.price) đ</li>
+                                </ul>
+                                <ul>
+                                    <li class="price-up">
+                                        <select id="sizeSelect">
+                                            <option value="medium">Vừa</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="pricing-meta">
+                                <ul class="d-flex">
+                                    <li class="price" id="updatePrice" style="color:black">@string.Format("{0:N0}", Model.price) đ</li>
+                                </ul>
+                                <ul>
+                                    <li class="price-up">
+                                        <select id="sizeSelect">
+                                            <option value="medium">Vừa</option>
+                                            <option value="big">Lớn</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
 
                         <div class="pro-details-rating-wrap">
                             <div class="rating-product">

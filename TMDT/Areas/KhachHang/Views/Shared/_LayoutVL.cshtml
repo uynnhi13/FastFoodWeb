@@ -12,6 +12,7 @@
 
     <!-- Add site Favicon -->
     <link rel="shortcut icon" href="~/Areas/KhachHang/assets/images/logo/logochuchu.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
     <!-- vendor css (Icon Font) -->
@@ -99,7 +100,7 @@
                                             <li>
                                                 <a class="dropdown-item" href="@Url.Action("UserInfo","NguoiDung")">Tài Khoản</a>
                                             </li>
-                                            <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("ThongTinDatHang", "GioHang")">Thanh Toán</a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("HienThiGioHang","GioHang")">Giỏ Hàng</a></li>
                                             <li><a class="dropdown-item" href="@Url.Action("DangXuat","NguoiDung")">Đăng Xuất</a></li>
                                         </ul>

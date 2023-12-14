@@ -1,12 +1,17 @@
-﻿using System.Web.Mvc;
+﻿using TMDT.Models;
+using System.Web.Mvc;
 
 namespace TMDT.Controllers
 {
     public class HomeController : Controller
     {
+        TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
+        // GET: KhachHangVangLai/Home
         public ActionResult Index()
         {
-            return View();
+            var lstProduct = db.Combo;
+            return View(lstProduct);
         }
 
         public ActionResult About()

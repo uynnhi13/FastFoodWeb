@@ -18,12 +18,13 @@
           </Key>
           <Property Name="addressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="priority" Type="bit" Nullable="false" />
-          <Property Name="note" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="500" />
           <Property Name="userID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="district" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -105,6 +106,23 @@
           <Property Name="quatity" Type="float" Nullable="false" />
           <Property Name="price" Type="money" Nullable="false" />
         </EntityType>
+        <EntityType Name="KhuyenMai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenQuanLy" Type="nvarchar" MaxLength="255" />
+          <Property Name="TenHienThi" Type="nvarchar" MaxLength="255" />
+          <Property Name="MaKhuyenMai" Type="varchar" MaxLength="50" />
+          <Property Name="LoaiKhuyenMai" Type="nvarchar" MaxLength="50" />
+          <Property Name="GiaTriKhuyenMai" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="GiaTriGiamToiDa" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SoTienGiam" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DieuKienApDung_DonHangToiThieu" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DieuKienApDung_SoLuongToiThieu" Type="int" />
+          <Property Name="ThoiGianBatDau" Type="datetime" />
+          <Property Name="ThoiGianKetThuc" Type="datetime" />
+        </EntityType>
         <EntityType Name="location">
           <Key>
             <PropertyRef Name="locationID" />
@@ -133,6 +151,11 @@
           <Property Name="TypePaymentVN" Type="int" />
           <Property Name="recipient" Type="nvarchar" MaxLength="100" />
           <Property Name="recipientsNumber" Type="nvarchar" MaxLength="50" />
+
+          <Property Name="ship" Type="money" />
+          <Property Name="diemTichLuy" Type="money" />
+          <Property Name="tongPhaiTra" Type="money" />
+          <Property Name="KhuyenMaiID" Type="int" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -142,6 +165,7 @@
           <Property Name="comboID" Type="int" Nullable="false" />
           <Property Name="orderID" Type="int" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="price" Type="money" />
         </EntityType>
         <EntityType Name="Position">
           <Key>
@@ -192,7 +216,7 @@
           <Property Name="addressID" Type="int" />
           <Property Name="permission" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" />
-          <Property Name="userpic" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DiemTichLuy" Type="money" />
         </EntityType>
         <Association Name="FK_Address_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -275,6 +299,18 @@
             </Principal>
             <Dependent Role="Ingredient">
               <PropertyRef Name="unitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhuyenMaiID">
+          <End Role="KhuyenMai" Type="Self.KhuyenMai" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhuyenMai">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="KhuyenMaiID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -412,6 +448,7 @@
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
@@ -447,6 +484,10 @@
           <AssociationSet Name="FK_Ingredient_Unit" Association="Self.FK_Ingredient_Unit">
             <End Role="Unit" EntitySet="Unit" />
             <End Role="Ingredient" EntitySet="Ingredient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhuyenMaiID" Association="Self.FK_KhuyenMaiID">
+            <End Role="KhuyenMai" EntitySet="KhuyenMai" />
+            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Condition" Association="Self.FK_Order_Condition">
             <End Role="Condition" EntitySet="Condition" />
@@ -502,12 +543,13 @@
           </Key>
           <Property Name="addressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="address1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="priority" Type="Boolean" Nullable="false" />
-          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="userID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="district" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="Self.FK_Address_User" FromRole="Address" ToRole="User" />
         </EntityType>
         <EntityType Name="Category">
@@ -605,6 +647,24 @@
           <NavigationProperty Name="Ingredient" Relationship="Self.FK_PurchaseInvoiceDetails_Ingredient" FromRole="InvoiceDetails" ToRole="Ingredient" />
           <NavigationProperty Name="Invoice" Relationship="Self.FK_PurchaseInvoiceDetails_PurchaseInvoice" FromRole="InvoiceDetails" ToRole="Invoice" />
         </EntityType>
+        <EntityType Name="KhuyenMai">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenQuanLy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TenHienThi" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MaKhuyenMai" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoaiKhuyenMai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GiaTriKhuyenMai" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="GiaTriGiamToiDa" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SoTienGiam" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DieuKienApDung_DonHangToiThieu" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DieuKienApDung_SoLuongToiThieu" Type="Int32" />
+          <Property Name="ThoiGianBatDau" Type="DateTime" Precision="3" />
+          <Property Name="ThoiGianKetThuc" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_KhuyenMaiID" FromRole="KhuyenMai" ToRole="Order" />
+        </EntityType>
         <EntityType Name="location">
           <Key>
             <PropertyRef Name="locationID" />
@@ -634,8 +694,13 @@
           <Property Name="TypePaymentVN" Type="Int32" />
           <Property Name="recipient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="recipientsNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ship" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="diemTichLuy" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="tongPhaiTra" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="KhuyenMaiID" Type="Int32" />
           <NavigationProperty Name="Condition" Relationship="Self.FK_Order_Condition" FromRole="Order" ToRole="Condition" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Order_Employees" FromRole="Order" ToRole="Employees" />
+          <NavigationProperty Name="KhuyenMai" Relationship="Self.FK_KhuyenMaiID" FromRole="Order" ToRole="KhuyenMai" />
           <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
         </EntityType>
@@ -647,6 +712,7 @@
           <Property Name="comboID" Type="Int32" Nullable="false" />
           <Property Name="orderID" Type="Int32" Nullable="false" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Combo" Relationship="Self.FK_OrderDetail_Combo" FromRole="OrderDetail" ToRole="Combo" />
           <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
         </EntityType>
@@ -706,6 +772,7 @@
           <Property Name="addressID" Type="Int32" />
           <Property Name="permission" Type="Boolean" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="DiemTichLuy" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Address_User" FromRole="User" ToRole="Address" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
           <Property Name="userpic" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
@@ -866,6 +933,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KhuyenMaiID">
+          <End Role="KhuyenMai" Type="Self.KhuyenMai" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KhuyenMai">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="KhuyenMaiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Order_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -913,6 +992,7 @@
           <EntitySet Name="Ingredient" EntityType="Self.Ingredient" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" />
           <EntitySet Name="InvoiceDetails" EntityType="Self.InvoiceDetails" />
+          <EntitySet Name="KhuyenMai" EntityType="Self.KhuyenMai" />
           <EntitySet Name="location" EntityType="Self.location" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" />
@@ -973,6 +1053,10 @@
             <End Role="Invoice" EntitySet="Invoice" />
             <End Role="InvoiceDetails" EntitySet="InvoiceDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_KhuyenMaiID" Association="Self.FK_KhuyenMaiID">
+            <End Role="KhuyenMai" EntitySet="KhuyenMai" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
             <End Role="User" EntitySet="User" />
             <End Role="Order" EntitySet="Order" />
@@ -1025,6 +1109,7 @@
                 <ScalarProperty Name="priority" ColumnName="priority" />
                 <ScalarProperty Name="note" ColumnName="note" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="district" ColumnName="district" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1114,6 +1199,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="KhuyenMai">
+            <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.KhuyenMai">
+              <MappingFragment StoreEntitySet="KhuyenMai">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TenQuanLy" ColumnName="TenQuanLy" />
+                <ScalarProperty Name="TenHienThi" ColumnName="TenHienThi" />
+                <ScalarProperty Name="MaKhuyenMai" ColumnName="MaKhuyenMai" />
+                <ScalarProperty Name="LoaiKhuyenMai" ColumnName="LoaiKhuyenMai" />
+                <ScalarProperty Name="GiaTriKhuyenMai" ColumnName="GiaTriKhuyenMai" />
+                <ScalarProperty Name="GiaTriGiamToiDa" ColumnName="GiaTriGiamToiDa" />
+                <ScalarProperty Name="SoTienGiam" ColumnName="SoTienGiam" />
+                <ScalarProperty Name="DieuKienApDung_DonHangToiThieu" ColumnName="DieuKienApDung_DonHangToiThieu" />
+                <ScalarProperty Name="DieuKienApDung_SoLuongToiThieu" ColumnName="DieuKienApDung_SoLuongToiThieu" />
+                <ScalarProperty Name="ThoiGianBatDau" ColumnName="ThoiGianBatDau" />
+                <ScalarProperty Name="ThoiGianKetThuc" ColumnName="ThoiGianKetThuc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="location">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.location">
               <MappingFragment StoreEntitySet="location">
@@ -1142,6 +1245,10 @@
                 <ScalarProperty Name="TypePaymentVN" ColumnName="TypePaymentVN" />
                 <ScalarProperty Name="recipient" ColumnName="recipient" />
                 <ScalarProperty Name="recipientsNumber" ColumnName="recipientsNumber" />
+                <ScalarProperty Name="ship" ColumnName="ship" />
+                <ScalarProperty Name="diemTichLuy" ColumnName="diemTichLuy" />
+                <ScalarProperty Name="tongPhaiTra" ColumnName="tongPhaiTra" />
+                <ScalarProperty Name="KhuyenMaiID" ColumnName="KhuyenMaiID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1151,6 +1258,7 @@
                 <ScalarProperty Name="comboID" ColumnName="comboID" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1206,6 +1314,7 @@
                 <ScalarProperty Name="addressID" ColumnName="addressID" />
                 <ScalarProperty Name="permission" ColumnName="permission" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DiemTichLuy" ColumnName="DiemTichLuy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

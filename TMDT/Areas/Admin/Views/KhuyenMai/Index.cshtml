@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TMDT.Models.KhuyenMai>
+
+@{
+    ViewBag.Title = "KhuyenMai";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="~/Areas/Admin/Content/KhuyenMaiCss/css/Style1.css">
+<link rel="stylesheet" href="~/Areas/Admin/Content/KhuyenMaiCss/css/Style2.css">
+
+<body>
+    <section class="ftco-section">
+        <div class="container" style="width:1400px; background-color: white; border-radius: 10px; padding: 15px">
+            <div>
+                <h2 style="padding-left:10px">Danh Sách Khuyến Mãi</h2>
+                <h1>@ViewBag.HienThi</h1>
+                <a class="buttonClick" href="@Url.Action("Create","KhuyenMai")">Tạo Mã Khuyến Mãi</a>
+            </div>
+            <div class="row" style="-moz-border-radius-bottomleft:5px">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table class="table table-responsive-xl">
+                            <thead>
+                                <tr>
+                                    <th>Tên Quản Lý</th>
+                                    <th>Tên Hiển Thị</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Mã Khuyến Mãi</th>
+                                    <th>Thời Gian Bắt Đầu</th>
+                                    <th>Thời Gian Kết Thúc</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="alert" role="alert">
+                                        <td class="d-flex align-items-center">
+                                            <div class="pl-3 email"
+                                                 >@item.TenQuanLy
+                                            </div>
+                                        </td>
+                                        <td>@item.TenHienThi</td>
+                                        <td class="status"><span class="active">Active</span></td>
+                                        <td>@item.MaKhuyenMai</td>
+                                        <td>@Convert.ToDateTime(item.ThoiGianBatDau).ToString("dd/MM/yyyy")</td>
+                                        <td>@Convert.ToDateTime(item.ThoiGianKetThuc).ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <a href="@Url.Action("Edit","KhuyenMai", new { id=item.ID})">Edit</a> | 
+                                            <a href="@Url.Action("Delete","KhuyenMai", new { id=item.ID})">Delete</a> |
+                                            <a href="@Url.Action("Duplicate","KhuyenMai", new { id=item.ID})">Duplicate</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+
+
+
+

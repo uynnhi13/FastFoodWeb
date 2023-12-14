@@ -30,7 +30,7 @@
         </div>
 
         <div>
-            Từ: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            Từ: <input type="date" name="startdate" id="startdate" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             Đến: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
 
 
@@ -63,7 +63,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.recipientsNumber)
                         </td>
-                        <td>
+                        <td class="maDonHang">
                             @Html.DisplayFor(modelItem => item.orderID)
                         </td>
                         <td>
@@ -72,8 +72,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Condition.nameCon)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.total)
+                        <td class="tongTien">
+                            @string.Format("{0:N0}", item.tongPhaiTra)
                         </td>
 
                         <td>

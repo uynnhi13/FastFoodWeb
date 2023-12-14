@@ -1,0 +1,155 @@
+﻿@model TMDT.Models.KhuyenMai
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<h2>Edit</h2>
+<section class="ftco-section">
+    <div class="container" style="width:1400px; background-color: white; border-radius: 10px; padding: 100px">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal" style="background-color: white">
+                <h4>KhuyenMai</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenQuanLy, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenQuanLy, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenQuanLy, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TenHienThi, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenHienThi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenHienThi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MaKhuyenMai, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MaKhuyenMai, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.MaKhuyenMai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LoaiKhuyenMai, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LoaiKhuyenMai, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LoaiKhuyenMai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GiaTriKhuyenMai, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.GiaTriKhuyenMai, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.GiaTriKhuyenMai, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.GiaTriGiamToiDa, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.GiaTriGiamToiDa, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.GiaTriGiamToiDa, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoTienGiam, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SoTienGiam, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SoTienGiam, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DieuKienApDung_DonHangToiThieu, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DieuKienApDung_DonHangToiThieu, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DieuKienApDung_DonHangToiThieu, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DieuKienApDung_SoLuongToiThieu, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DieuKienApDung_SoLuongToiThieu, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DieuKienApDung_SoLuongToiThieu, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ThoiGianBatDau, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="date" name="ThoiGianBatDau" id="startdate" value="@(Model.ThoiGianBatDau?.ToString("yyyy-MM-dd"))" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.ThoiGianBatDau, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ThoiGianKetThuc, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="date" name="ThoiGianKetThuc" id="enddate" value="@(Model.ThoiGianKetThuc?.ToString("yyyy-MM-dd"))" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.ThoiGianKetThuc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+          }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var timeBatDau = new Date(@Model.ThoiGianBatDau);
+        var timeKetthuc = new Date(@Model.ThoiGianKetThuc);
+
+        var day1 = timeBatDau.getDate();
+        var month1 = timeBatDau.getMonth();
+        var year1 = timeBatDau.getFullYear();
+
+        var date1 = day1 + '/' + month1 + '/' + year1;
+        var date11 = new Date(date1)
+
+        var day2 = timeKetthuc.getDate();
+        var month2 = timeKetthuc.getMonth();
+        var year2 = timeKetthuc.getFullYear();
+
+        var date2 = day2 + '/' + month2 + '/' + year2;
+        var date22 = new Date(date2)
+
+        console.log(timeBatDau)
+
+        $(document).ready(function () {
+            // Đặt giá trị cho thẻ input kiểu "date"
+            var dateValue = '2023-12-31'; // Giá trị ngày/tháng/năm cần đặt
+
+            $('#startdate').val(date11);
+            $('#enddate').val(date22);
+        });
+
+    </script>
+}

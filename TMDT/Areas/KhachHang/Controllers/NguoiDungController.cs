@@ -70,24 +70,36 @@ namespace TMDT.Areas.KhachHang.Controllers
         public ActionResult DangNhap(User user)
         {
             if (ModelState.IsValid) {
-                if (string.IsNullOrEmpty(user.numberPhone))
-                    ModelState.AddModelError(string.Empty, "Số điện thoại không được để trống");
+                if (string.IsNullOrEmpty(user.numberPhone) && string.IsNullOrEmpty(user.gmail))
+                    ModelState.AddModelError(string.Empty, "Số điện thoại hoặc gmail không được để trống");
                 if (string.IsNullOrEmpty(user.password))
                     ModelState.AddModelError(string.Empty, "Mật khẩu không được để trống");
                 if (ModelState.IsValid) {
                     //tìm khách hàng có sđt và password hợp lệ trong csdl
-                    var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone);
-                    if (kiemtra != null && user.password == kiemtra.password) {
+                    var kiemtra = db.User.FirstOrDefault(k => k.numberPhone == user.numberPhone && k.password == user.password);
+
+                    if (kiemtra != null) {
                         //Lưu vào session
                         Session["TaiKhoan"] = user;
                         ViewBag.TaiKhoan = Session["TaiKhoan"];
                     }
                     else {
-                        ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
-                        // Chuyển hướng người dùng trở lại trang đăng nhập
-                        return View();
-                    }
+                        var tk = db.Employees.Where(s => s.Email == user.gmail && s.password == user.password).FirstOrDefault();
 
+                        if (tk == null) {
+                            ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                            return View();
+                        }
+                        else {
+                            Session["user"] = tk;
+                            return RedirectToAction("Index", "Admin", new { area = "Admin" });
+
+                        }
+                        //ViewBag.ThongBao = "Tài khoản hoặc mật khẩu không hợp lệ.";
+                        //// Chuyển hướng người dùng trở lại trang đăng nhập
+                        //return View();
+                    }
+                    
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -242,6 +254,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             }
             return View(lc);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LocaEdit(Address ad)
@@ -274,6 +287,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 aad.note = ad.note;
                 aad.priority = ad.priority;
                 aad.address1 = ad.address1;
+                aad.district = ad.district;
 
                 db.SaveChanges();// LUU THAY DOI
             }
@@ -346,6 +360,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             return View(review);
         }
+
         [HttpPost]
         public ActionResult SubmitReview(Order o)
         {

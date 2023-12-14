@@ -29,6 +29,7 @@ namespace TMDT.Models
             this.quantity = quantity;
             this.sizeUP = sizeUP;
         }
+        
     }
 
 }
