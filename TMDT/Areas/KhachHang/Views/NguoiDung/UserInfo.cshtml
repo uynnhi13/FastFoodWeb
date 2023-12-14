@@ -4,84 +4,66 @@
     ViewBag.Title = "UserInfo";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
 }
-
-
-
 <link href="~/Areas/KhachHang/assets/css/myInfor.css" rel="stylesheet" />
-<div class="col-sm-12 col-md-9 col-lg-9">
+<div class="col-sm-12 col-md-10 col-lg-10">
     <h2 style="color:#ad6868">Thông tin cá nhân</h2>
     <div class="container-xl px-4 mt-4">
         <div class="row">
-            <div class="col-xl-4">
-                <!-- Profile picture card-->
-                <div class="card mb-4 mb-xl-0">
-                    <div class="card-header">Ảnh đại diện</div>
-                    <div class="card-body text-center">
-                        <!-- Profile picture image-->
-                        <img id="myImg" class="img-account-profile rounded-circle mb-2" src="~/hinh/ka-img.jpg" alt="your image">
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header">Thông tin</div>
                     <div class="card-body">
                         <form>
 
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <div class="user-image">
+                                        <img src="@Url.Content(Model.userpic)" alt="Hình ảnh người dùng" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <label class="small mb-1" for="inputUsername">Tên tài khoản: </label>
                                     <input class="form-control" id="inputUsername" type="text" value="@Model.numberPhone" readonly>
-
-                                </div>
-
-                                <div class="col-md-6">
                                     <label class="small mb-1" for="inputPass">Password:</label>
                                     <input class="form-control" id="inputPass" type="text" value="@Model.password" readonly>
                                     <span class="toggle-password"></span>
                                 </div>
 
 
-                            </div>
-                            <!-- Form Row        -->
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label class="small mb-1" for="inputName">Họ và tên:</label>
                                     <input class="form-control" id="inputName" type="text" value="@Model.fullName" readonly>
-                                </div>
-
-                                <div class="col-md-6">
                                     <label class="small mb-1" for="inputDateOfBirth">Ngày sinh:</label>
                                     <input class="form-control" id="inputDateOfBirth" type="text" value="@Model.bDay" readonly>
                                 </div>
 
 
-                            </div>
-                            <!-- Form Group (email address)-->
-
-
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <label class="small mb-1" for="inputEmail">Email:</label>
                                     <input class="form-control" id="inputEmail" type="email" value="@Model.gmail" readonly>
-                                </div>
-                                <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
                                     <input class="form-control" id="inputPhone" type="text" value="@Model.numberPhone" readonly>
                                 </div>
+
                             </div>
+
+                            <!-- Form Group (email address)-->
+
+                            <div>
+                                @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "btn btn-primary" })
+
+                            </div>
+
 
                         </form>
                     </div>
                 </div>
             </div>
+           
         </div>
-        <div class="button-container">
-            @Html.ActionLink("Chỉnh sửa", "UserEdit", new { id = Model.numberPhone }, new { @class = "button-style" })
 
-        </div>
     </div>
 
 
@@ -93,69 +75,20 @@
     .container-xl {
         background-color: #ffb2b280;
         padding-top: 15px;
+        padding-bottom: 50px
     }
 
-    .button-container {
-        text-align: right; /* Đặt nút bấm bên phải */
-        margin-top: 10px; /* Thêm khoảng cách phía trên nút bấm (tùy chọn) */
+    .btn {
+        float: right
+    }
+    /* CSS để điều chỉnh kích thước hình ảnh */
+    .user-image img {
+        max-width: 200px; /* Điều chỉnh chiều rộng tối đa của hình ảnh */
+        max-height: 200px; /* Điều chỉnh chiều cao tối đa của hình ảnh */
+        width: auto;
+        height: auto;
+        display: block;
+        margin: 0 auto; /* Để căn giữa hình ảnh trong khung */
     }
 
-    .button-style {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #d19797; /* Màu nền của nút */
-        color: #fff; /* Màu chữ trắng */
-        text-align: center;
-        text-decoration: none;
-        border: none;
-        border-radius: 4px; /* Bo tròn viền */
-        cursor: pointer;
-        transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi khi hover */
-        margin-bottom: 20px;
-    }
-
-        .button-style:hover {
-            background-color: #a27070; /* Màu nền khi hover */
-            color: #71706f;
-        }
-
-    .password-container {
-        position: relative;
-    }
-
-    .toggle-password {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-        width: 24px;
-        height: 24px;
-        background-image: url('link_to_eye_icon.png'); /* Thay đổi thành đường dẫn đến icon mắt */
-        background-size: cover;
-    }
-
-    #inputPass {
-        padding-right: 30px; /* Để icon không bị che khuất bởi input field */
-    }
 </style>
-<script>
-    const togglePassword = document.querySelector('.toggle-password');
-    const passwordField = document.querySelector('#inputPass');
-
-    let isPasswordVisible = false;
-
-    togglePassword.addEventListener('click', function () {
-        isPasswordVisible = !isPasswordVisible;
-
-        if (isPasswordVisible) {
-            passwordField.setAttribute('type', 'text');
-        } else {
-            passwordField.setAttribute('type', 'password');
-        }
-    });
-
-
-</script>
-
-
-
