@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TMDT.Models.Order>
+@using TMDT.Models
+@{
+    ViewBag.Title = "QlyDanhGia";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    List<SelectListItem> start = ViewBag.Star;
+    string selected = ViewBag.Selected;
+}
+<br />
+<br />
+<div class="card mb-4">
+    <div class="main-content rounded-3 border border-2 py-4 px-3">
+        <div class="col-8">
+            <h2 style="padding:10px">Quản lý đánh giá  </h2>
+
+            @using (Html.BeginForm("QlyDanhGia", "Admin", FormMethod.Get))
+
+            {
+              
+                <div>
+
+                    @Html.DropDownList("selected", start, selected, new { })
+
+                </div>
+                <button type="submit" class="bg-white">Lọc bình luận </button>
+
+
+            }
+        <div>
+
+            <div class="bg-white" style="text-align:center">
+                <table id="datatablesSimple" class="table align-middle mb-0">
+                    <thead>
+                        @*//Phần render*@
+                        <tr>
+
+                            <th>Mã đơn hàng</th>
+                            <th>Khách hàng</th>
+                            <th>Bình luận</th>
+                            <th>Đánh giá </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.orderID</td>
+                                <td>@item.numberPhone</td>
+                                <td>@item.comment</td>
+                                <td>@item.star</td>
+                               
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        </div>
+    </div>
+</div>

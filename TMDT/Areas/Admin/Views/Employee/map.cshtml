@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "map";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+
+<input id="search-box" type="text" placeholder="Enter a location">
+
+@section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.11&sensor=false&libraries=places&key=<You Key HERE>" type="text/javascript"></script>
+    <script>
+        google.maps.event.addDomListener(window, 'load', function () {
+            var places = new google.maps.places.Autocomplete(document.getElementById('search-box'));
+            google.maps.event.addListener(places, 'place_changed', function () {
+                var place = places.getPlace();
+                var address = place.formatted_address;
+                var latitude = place.geometry.location.lat();
+                var longitude = place.geometry.location.lng();
+            });
+        });
+    </script>
+}

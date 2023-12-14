@@ -16,6 +16,7 @@ namespace TMDT.Areas.Admin.Controllers
     public class IngredientsController : Controller
     {
         private TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+        private YourDataAccessClass proce = new YourDataAccessClass();
 
         // GET: Admin/Ingredients
         public ActionResult Index(int? page)
@@ -133,6 +134,7 @@ namespace TMDT.Areas.Admin.Controllers
         {
             try {
                 if ((HinhAnh != null && HinhAnh.ContentLength > 0) && ModelState.IsValid) {
+
                     // luu file
                     string Noiluu = Server.MapPath("/Images/Product/");
                     String PathImg = Noiluu + HinhAnh.FileName;
@@ -144,20 +146,31 @@ namespace TMDT.Areas.Admin.Controllers
 
                     List<ingre> lsDeci = LayIngre();
 
-                    db.createRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
+                    proce.CreateRecipeDB(product.name, product.price, product.priceUp, img, product.typeID, lsDeci);
                     db.SaveChanges();
+                    TempData["result"] = true;
+                    TempData["notification"] = "Thêm sản phẩm thành công";
 
-                    ViewBag.notification = true;
-                    return RedirectToAction("index");
+                    Session["ingre"] = null;
+
+                    return RedirectToAction("index","Product");
                 }
                 else {
-                    ViewBag.notification = false;
-                    return RedirectToAction("CreateRecipe");
+                    TempData["result"] = false;
+                    TempData["notification"] = "Thêm sản phẩm không thành công";
+
+                    Session["ingre"] = null;
+
+                    return RedirectToAction("index", "Product");
                 }
             }
-            catch (Exception e) {
-                ViewBag.notification = false;
-                return RedirectToAction("CreateRecipe");
+            catch (Exception) {
+                TempData["result"] = false;
+                TempData["notification"] = "Thêm sản phẩm không thành công";
+
+                Session["ingre"] = null;
+
+                return RedirectToAction("index", "Product");
             }
 
         }

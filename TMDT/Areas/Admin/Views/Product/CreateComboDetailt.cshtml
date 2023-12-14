@@ -15,9 +15,7 @@
                 <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
             </div>
             <div class="col text-right row">
-                <a href="~/Admin/Ingredients/createComboDetail" class="btn btn-small btn-primary mr-3">Tạo combo</a>
-
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Mở Modal</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Xem chi tiết</button>
             </div>
         </div>
         <div class="table-responsive">
@@ -56,9 +54,12 @@
                                         <span class="text-danger"></span>
                                     </div>
                                 </td>
-                                <td class="text-center">
-                                    <input type="checkbox" name="sizeUp" disabled />
-                                </td>
+                                @if (item.priceUp != 0)
+                                {
+                                    <td class="text-center">
+                                        <input type="checkbox" name="sizeUp" disabled />
+                                    </td>
+                                }
 
                             </tr>
                         }

@@ -34,8 +34,9 @@
         }
 
         #loading {
-            position: absolute;
+            position: fixed;
             top: 0;
+            left:0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -170,22 +171,40 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "nav-link" })
-                                </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "nav-link" })
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Khách hàng
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Tài khoản", "Account", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Khách hàng", "QlyKH", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Tư vấn khách hàng", "AdminChat", "Chat", null, new { @class = "dropdown-item" })
+                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     @Html.ActionLink("Đơn hàng", "DonHang", "Admin", null, new { @class = "nav-link" })
                                 </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Khuyến Mãi", "Index", "KhuyenMai", null, new { @class = "nav-link" })
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Thống kê
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Doanh thu", "ThongKe", "Admin", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Đánh giá", "QlyDanhGia", "Admin", null, new { @class = "dropdown-item" })
+                                    </div>
                                 </li>
-                                <li class="nav-item">
-                                    @Html.ActionLink("Nhân viên", "Index", "Employee", null, new { @class = "nav-link" })
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Quản lý nhân viên
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        @Html.ActionLink("Chức vụ", "index", "Position", null, new { @class = "dropdown-item" })
+                                        @Html.ActionLink("Nhân viên", "index", "Employee", null, new { @class = "dropdown-item" })
+                                    </div>
                                 </li>
-
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
@@ -235,10 +254,10 @@
             configLine,
             configBar,
             configPie,
-            lineChart;
-        barChart, pieChart;
+            lineChart,
+            barChart, pieChart;
         // DOM is ready
-        $(function () {
+        $(document).ready(function () {
             updateChartOptions();
             drawLineChart(); // Line Chart
             drawBarChart(); // Bar Chart
@@ -258,8 +277,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!--gg map cdn-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5.1/jquery.googlemap.min.js" integrity="sha512-mTxKPggCYbMylBEGHSZqkUvemhyjRIshmudjw6fiAxjVbKMZUqqVH/ugpvnQgOU4c4C2UhrWpOXkBeXFQfr9kA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script src="~/Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
     <script>
         $('body').addClass('overflow-hidden');
 

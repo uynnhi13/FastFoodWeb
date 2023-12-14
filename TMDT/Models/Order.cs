@@ -34,6 +34,7 @@ namespace TMDT.Models
         public Nullable<int> TypePaymentVN { get; set; }
         public string recipient { get; set; }
         public string recipientsNumber { get; set; }
+
         public Nullable<decimal> ship { get; set; }
         public Nullable<decimal> diemTichLuy { get; set; }
         public Nullable<decimal> tongPhaiTra { get; set; }

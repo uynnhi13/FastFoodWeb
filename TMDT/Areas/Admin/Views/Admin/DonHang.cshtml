@@ -1,39 +1,52 @@
 ﻿@model IEnumerable<TMDT.Models.Order>
 @using TMDT.Models
+
+
 @{
     ViewBag.Title = "DonHang";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+    var paymentMethods = ViewBag.PaymentMethods as List<SelectListItem>;
+    string selectedPaymentMethod = ViewBag.SelectedPaymentMethod ;
 }
 <br />
 <br />
 <div class="card mb-4">
-
     <div class="main-content rounded-3 border border-2 py-4 px-3">
-        <div class="col-3">
+        <div class="col-8">
             <h2 style="padding:10px">Quản lý đơn hàng </h2>
 
-            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Post))
+            @using (Html.BeginForm("DonHang", "Admin", FormMethod.Get))
+
             {
                 <div>
-                    From Date: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")"/>
-                    To Date: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                    Từ ngày: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    Đến ngày: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    Trạng thái: @Html.DropDownList("conditionID", (SelectList)ViewBag.conditionID, "Đơn Hàng", new
+{@*onchange = "this.form.submit();"*@})
 
-                    <button type="submit" class="bg-white">Lọc đơn hàng</button>
                 </div>
+                <div>
+
+                    <select name="selectedPaymentMethod">
+                        @if (paymentMethods != null)
+                        {
+                            foreach (var item in paymentMethods)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+
+                            }
+                        }
+                    </select>
+
+                </div>
+                <button type="submit" class="bg-white">Lọc đơn hàng</button>
+
+
 
             }
-
-
-
-
+            
+            
         </div>
-
-
-
-
-
-
-
         <div class="table-header row">
             <div class="col-3">
                 <h5 class="title">Quản lý đơn hàng</h5>
@@ -55,9 +68,10 @@
                             <th>Note</th>
 
                             <th>Trạng thái</th>
+
                             <th></th>
                             <th></th>
-                            <th></th>
+
                             <th></th>
                         </tr>
                     </thead>
@@ -68,7 +82,7 @@
                             <tr>
                                 <td>@Oder.User.fullName</td>
                                 <td class="madonhang">@Oder.orderID</td>
-                                <td>@Oder.datetime</td>
+                                <td>@Oder.datetime.ToString("dd-MM-yyyy")</td>
                                 <td>@Oder.note</td>
                                 <td>
 
@@ -84,8 +98,6 @@
                                         {
                                             <h5 style="color:goldenrod">Đã giao.  </h5>
                                         }
-
-
                                     }
 
                                 </td>
@@ -94,31 +106,31 @@
                                         if (Oder.conditionID == 1)
                                         {
 
-                                            <p>
+                                            <button class="btn btn-outline-success">
                                                 @Html.ActionLink("Xác nhận đơn hàng", "XacNhanDH", new
-                                                {
-                                                    id = Oder.orderID
-                                                    })
-                                            </p>
+                                           {
+                                               id = Oder.orderID
+                                           })
+                                            </button>
+
+
 
                                         }
-                                    }
-                                </td>
-
-                                 <td>
-                                    @{
                                         if (Oder.conditionID == 2)
                                         {
 
-                                            <p>
+                                            <button class=" btn btn-outline-warning">
                                                 @Html.ActionLink("Đã giao", "Dagiao", new
                                                 {
                                                     id = Oder.orderID
                                                     })
-                                            </p>
+                                            </button>
 
                                         }
                                     }
+
+                                <td>
+                                    @Oder.total
                                 </td>
                                 <td class="btChiTiet">
 
@@ -126,9 +138,8 @@
 
                                 </td>
                             </tr>
+
                         }
-
-
                     </tbody>
                 </table>
             </div>

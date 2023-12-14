@@ -45,6 +45,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.Core.3.7.300\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SecurityToken, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.SecurityToken.3.7.300\lib\net45\AWSSDK.SecurityToken.dll</HintPath>
+    </Reference>
+    <Reference Include="DnsClient, Version=1.7.0.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
+      <HintPath>..\packages\DnsClient.1.7.0\lib\net471\DnsClient.dll</HintPath>
     <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net472\BCrypt.Net-Next.dll</HintPath>
     </Reference>
@@ -54,40 +62,175 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Fakes">
+      <HintPath>FakesAssemblies\Facebook.Fakes.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.4\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.19.0\lib\net472\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.2.19.0\lib\net472\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Driver.Core.2.19.0\lib\net472\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Libmongocrypt, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Libmongocrypt.1.8.0\lib\net472\MongoDB.Libmongocrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.2.7\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="SharpCompress, Version=0.34.2.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpCompress.0.34.2\lib\net462\SharpCompress.dll</HintPath>
+    </Reference>
+    <Reference Include="Snappier, Version=1.1.2.0, Culture=neutral, PublicKeyToken=a1b25124e6e13a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Snappier.1.1.2\lib\netstandard2.0\Snappier.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.6.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.5.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.7.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.3.0\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Owin, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.3.0\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -100,8 +243,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
@@ -132,9 +273,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -142,6 +280,9 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="ZstdSharp, Version=0.7.4.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZstdSharp.Port.0.7.4\lib\net462\ZstdSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +296,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChatController.cs" />
     <Compile Include="Areas\Admin\Controllers\ComboController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IngredientsController.cs" />
@@ -162,6 +304,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\KhachHang\Controllers\ChatController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\ApDungKhuyenMaiController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\GioHangController.cs" />
     <Compile Include="Areas\KhachHang\Controllers\HomeController.cs" />
@@ -172,6 +315,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="MauThietKe\ComboSingleton.cs" />
+    <Compile Include="MauThietKe\ControllerTemplateMethod.cs" />
+    <Compile Include="MauThietKe\updateCombo.cs" />
     <Compile Include="MauThietKe\Facade\KhuyenMaiApDung.cs" />
     <Compile Include="MauThietKe\Facade\KhuyenMaiFacade.cs" />
     <Compile Include="MauThietKe\Facade\KhuyenMaiXacMinh.cs" />
@@ -201,6 +348,7 @@
     <Compile Include="Models\Ingredient.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IngredientProduct.cs" />
     <Compile Include="Models\Invoice.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -216,6 +364,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MatHangMua.cs" />
+    <Compile Include="Models\Bmessage.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -231,6 +380,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\MongoDBconnection.cs" />
+    <Compile Include="Models\MyController.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -241,6 +392,7 @@
     <Compile Include="Models\Position.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Procedure.cs" />
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -262,17 +414,34 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\YourDataAccessClass.cs" />
+    <Compile Include="MongoDB\LikeProduct.cs" />
     <Compile Include="Mtk\Iterator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Content\css\chat.css" />
     <Content Include="Areas\Admin\Content\css\fontawesome.min.css" />
     <Content Include="Areas\Admin\Content\css\fullcalendar.min.css" />
     <Content Include="Areas\Admin\Content\css\tooplate.css" />
+    <Content Include="Areas\Admin\Content\img\5a3ab5f51f4870.52965704151379710912814100.png" />
+    <Content Include="Areas\Admin\Content\img\97432-logo-chat-photos-download-free-image.png" />
     <Content Include="Areas\Admin\Content\img\dash-bg-01.jpg" />
     <Content Include="Areas\Admin\Content\img\dash-bg-02.jpg" />
     <Content Include="Areas\Admin\Content\img\dash-bg-03.jpg" />
+    <Content Include="Areas\Admin\Content\img\Mỳ ý 2.png" />
     <Content Include="Areas\Admin\Content\img\product-image.jpg" />
     <Content Include="Areas\Admin\Content\img\profile-image.png" />
     <Content Include="Areas\Admin\Content\jquery-ui-datepicker\AUTHORS.txt" />
@@ -303,6 +472,7 @@
     <Content Include="Areas\Admin\Content\jquery-ui-datepicker\package.json" />
     <Content Include="Areas\Admin\Content\js\bootstrap.min.js" />
     <Content Include="Areas\Admin\Content\js\Chart.min.js" />
+    <Content Include="Areas\Admin\Content\js\ChatJs.js" />
     <Content Include="Areas\Admin\Content\js\fullcalendar.min.js" />
     <Content Include="Areas\Admin\Content\js\jquery-3.3.1.min.js" />
     <Content Include="Areas\Admin\Content\js\moment.min.js" />
@@ -342,6 +512,15 @@
     <Content Include="Areas\Admin\Content\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Admin\Views\Share\_LayoutAdminPage.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\KhachHang\assets\css\animate.css" />
+    <Content Include="Areas\KhachHang\assets\css\baguetteBox.min.css" />
+    <Content Include="Areas\KhachHang\assets\css\bootstrap.min.css" />
+    <Content Include="Areas\KhachHang\assets\css\chat.css" />
+    <Content Include="Areas\KhachHang\assets\css\classic.css" />
+    <Content Include="Areas\KhachHang\assets\css\classic.date.css" />
+    <Content Include="Areas\KhachHang\assets\css\classic.time.css" />
+    <Content Include="Areas\KhachHang\assets\css\custom.css" />
+    <Content Include="Areas\KhachHang\assets\css\font-awesome.min.css" />
     <Content Include="Areas\KhachHang\assets\css\myInfor.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\animate.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\images\ui-icons_444444_256x240.png" />
@@ -355,8 +534,12 @@
     <Content Include="Areas\KhachHang\assets\css\plugins\plugins.min.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\swiper-bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\plugins\venobox.css" />
+    <Content Include="Areas\KhachHang\assets\css\responsive.css" />
+    <Content Include="Areas\KhachHang\assets\css\style.css" />
     <Content Include="Areas\KhachHang\assets\css\style.min.css" />
+    <Content Include="Areas\KhachHang\assets\css\style2.css" />
     <Content Include="Areas\KhachHang\assets\css\Style3.css" />
+    <Content Include="Areas\KhachHang\assets\css\superslides.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\bootstrap.bundle.min.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\font.awesome.css" />
     <Content Include="Areas\KhachHang\assets\css\vendor\pe-icon-7-stroke.css" />
@@ -451,6 +634,7 @@
     <Content Include="Areas\KhachHang\assets\images\team\4.jpg" />
     <Content Include="Areas\KhachHang\assets\images\testimonial-image\1.png" />
     <Content Include="Areas\KhachHang\assets\images\testimonial-image\quate-1.png" />
+    <Content Include="Areas\KhachHang\assets\js\chat.js" />
     <Content Include="Areas\KhachHang\assets\js\main.js" />
     <Content Include="Areas\KhachHang\assets\js\plugins\ajax-mail.js" />
     <Content Include="Areas\KhachHang\assets\js\plugins\countdown.js" />
@@ -525,13 +709,18 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="FakesAssemblies\Facebook.Fakes.dll" />
+    <Content Include="FakesAssemblies\Facebook.Fakes.xml" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Employees\2d9ae9af-0183-4f3f-a689-886ef71af342_348364941_630530112439683_5083284121965134752_n.jpg" />
+    <Content Include="Images\Employees\761d3c79-8016-47ed-9a22-9c14acbe6a8b_348364941_630530112439683_5083284121965134752_n.jpg" />
     <Content Include="Images\Product\Screenshot 2023-10-10 155715.png" />
     <Content Include="Images\Product\Screenshot 2023-10-12 125337.png" />
     <Content Include="Images\Product\Screenshot 2023-10-25 224048.png" />
+    <Content Include="Log\2023-12-14.log" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -542,15 +731,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="mongocrypt.dll" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Account.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\AddnewNV.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\DetailsNV.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\EditNV.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\QlyKH.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\Edit.cshtml" />
@@ -561,24 +744,16 @@
     <Content Include="Areas\Admin\Views\Unit\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Unit\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\CreateRecipe.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\addRecipeInProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Ingredients\createRecipeInProduct.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\DetailsDH.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\ThongKe.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\ThongKeAccKH.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\DetailsKH.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\DonHang.cshtml" />
     <Content Include="Areas\Admin\Views\Product\CreateComboDetailt.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Combo\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
     <Content Include="Areas\KhachHang\Views\_ViewStart.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\DeleteAddress.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\LocaAdd.cshtml" />
@@ -595,12 +770,34 @@
     <Content Include="Areas\KhachHang\Views\GioHang\GioHangTrong.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\ThongTinDatHang.cshtml" />
     <Content Include="Areas\KhachHang\Views\GioHang\VNPayReturn.cshtml" />
+    <Content Include="Areas\Admin\Views\Chat\Chat.cshtml" />
+    <Content Include="Areas\Admin\Views\Chat\AdminChat.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Chat\Chat.cshtml" />
+    <Content Include="libmongocrypt.so" />
+    <Content Include="libmongocrypt.dylib" />
+    <Fakes Include="Fakes\Facebook.fakes" />
+    <Content Include="Areas\Admin\Views\Admin\Account.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\AddnewNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsDH.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsKH.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DetailsNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\DonHang.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditKHang.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditMypro.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\EditNV.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Mypro.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\nameLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\QlyDanhGia.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\QlyKH.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\ThongKe.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\map.cshtml" />
     <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\.DS_Store" />
     <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\.DS_Store" />
     <Content Include="Areas\Admin\Content\KhuyenMaiCss\css\bootstrap\mixins\.DS_Store" />
@@ -721,6 +918,21 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="FakesAssemblies\Facebook.Fakes.fakesconfig" />
+    <Content Include="FakesAssemblies\Facebook.Fakes.messages" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Fakes Include="Fakes\System.Runtime.CompilerServices.Unsafe.fakes" />
+    <Content Include="Areas\Admin\Views\Product\EditCombo.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\EditProduct.cshtml" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <Content Include="Areas\KhachHang\Views\Shared\_LayoutPageUS.cshtml" />
     <Content Include="Areas\KhachHang\Views\NguoiDung\UserInfo.cshtml" />
     <None Include="Properties\PublishProfiles\uyennhi-001-site1 - FTP.pubxml" />
@@ -731,6 +943,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -832,6 +1046,16 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\AWSSDK.SecurityToken.3.7.300\analyzers\dotnet\cs\AWSSDK.SecurityToken.CodeAnalysis.dll" />
+    <Analyzer Include="..\packages\AWSSDK.SecurityToken.3.7.300\analyzers\dotnet\cs\SharedAnalysisCode.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -853,8 +1077,7 @@
           <IISUrl>https://localhost:44322/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>https://localhost:44322/</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
@@ -865,7 +1088,12 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\MongoDB.Libmongocrypt.1.8.0\build\MongoDB.Libmongocrypt.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MongoDB.Libmongocrypt.1.8.0\build\MongoDB.Libmongocrypt.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\MongoDB.Libmongocrypt.1.8.0\build\MongoDB.Libmongocrypt.targets" Condition="Exists('..\packages\MongoDB.Libmongocrypt.1.8.0\build\MongoDB.Libmongocrypt.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

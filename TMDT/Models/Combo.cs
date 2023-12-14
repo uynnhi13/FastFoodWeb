@@ -27,6 +27,7 @@ namespace TMDT.Models
         public int sale { get; set; }
         public bool typeCombo { get; set; }
         public string image { get; set; }
+        public Nullable<bool> hiden { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ComboDetail> ComboDetail { get; set; }

@@ -1,0 +1,213 @@
+﻿@model TMDT.Models.Combo
+@using TMDT.Models
+
+@{
+    ViewBag.Title = "EditCombo";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
+    var lsComboDetail = new List<ComboDetail>();
+
+    if (Model != null)
+    {
+        lsComboDetail = db.ComboDetail.Where(f => f.comboID == Model.comboID).ToList();
+    }
+
+}
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+        </div>
+        <div class="">
+            @using (Html.BeginForm("EditCombo", "Product", FormMethod.Post, new { @class = "tm-edit-product-form", enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row mt-4 tm-edit-product-row">
+                            <div class="col-8">
+                                <div class="form-horizontal">
+                                    <input type="hidden" id="comboID" name="comboID" value="@Model.comboID" />
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Tên sản phẩm</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="nameCombo" value="@Model.nameCombo" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giá tiền</label>
+                                        <div class="col-md-10">
+                                            <p class="col-xl-9 col-lg-8 col-md-8 col-sm-7"><strong>@Model.price.ToString("#,##0") VND</strong></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giá sale</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="sale" value="@Model.sale" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">hiện combo</label>
+                                        @if (Model.hiden == true)
+                                        {
+                                            <div class="col-md-10">
+                                                <input type="checkbox" id="hiden" name="hiden" value="true" checked>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-10">
+                                                <input type="checkbox" id="hiden" name="hiden" value="Bike">
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                                <div class="tm-product-img-dummy mx-auto">
+                                    <img src="@Model.image" id="myImage" class="rounded mx-auto d-block" alt="Alternate Text"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over" />
+                                </div>
+                                <div class="custom-file mt-3 mb-3">
+                                    <input type="file" name="HinhAnh" id="imageInput" style="" value="@Model.image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <thead>
+                                <tr class="tm-bg-gray">
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">Tên thực phẩm</th>
+                                    <th scope="col" class="text-center">số lượng</th>
+                                    <th scope="col" class="text-center">Up size</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lsRecipe">
+                                @foreach (var item in lsComboDetail)
+                                {
+                                    <tr class="col-product">
+                                        <td>
+                                            <input type="hidden" name="cateID" id="cateID" value="@item.cateID" />
+                                            <input type="hidden" name="comboID" id="comboID" value="@item.comboID" />
+                                        </td>
+                                        <th scope="row">
+                                            <input type="checkbox" name="checkbox" aria-label="Checkbox">
+                                        </th>
+                                        <td class="tm-product-name">
+                                            <p id="name-product">@item.Combo.nameCombo</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="">
+                                                <input type="text" name="quantity" class="form-control validate col" value="@item.quantity" />
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            @if (item.Product.priceUp > 0)
+                                            {
+                                                if (item.sizeUP == true)
+                                                {
+                                                    <input type="checkbox" name="sizeUp" checked />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" name="sizeUp" />
+                                                }
+                                            }
+
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group row ml-3">
+                    <div>
+                        <input id="btnEditRecipe" type="submit" value="Cập nhật giá trị sản phẩm" class="border-0 btn btn-primary custom-btn" />
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $("#imageInput").change(function () {
+                const file = this.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    $("#myImage").attr("src", reader.result);
+                };
+            });
+
+            // get lsRecipe
+            $('#btnEditRecipe').click(() => {
+                //getLsRecipe()
+                $('#btnEditRecipe').submit();
+            })
+
+
+            function getLsRecipe() {
+                $('#lsRecipe tr').each(function (index, element) {
+                    var cateID = $(this).find('td input[name="cateID"]').val()
+                    var ingID = $(this).find('td input[name="ingID"]').val()
+                    var quantity = $(this).find('td input[name="quantity"]').val()
+
+                    sendDataToServer(comboID, cateID, quantity, sizeUP)
+                });
+
+            }
+
+            function sendDataToServer(_comboID, _cateID, _quantity, _sizeUP) {
+                // Tạo đối tượng chứa dữ liệu
+
+                var dataToSend = {
+                    comboID: parseInt(_comboID),
+                    cateID: parseInt(_cateID),
+                    quantity: parseFloat(_quantity),
+                    sizeUp: parseFloat(_sizeUP),
+                };
+                // Gửi AJAX request đến server
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/addComboDetail",
+                    data: JSON.stringify(dataToSend),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response.cateID + " " + response.comboID + " " + response.quantity + " " + response.sizeUP);
+                    },
+                    error: function (error) {
+                        alert("error")
+                    }
+                });
+            }
+        });
+
+    </script>
+}
+
+
+

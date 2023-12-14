@@ -31,7 +31,6 @@
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_OrderDetail_Combo" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_ComboDetail_FoodAndDrink" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_Condition" ManuallyRouted="false" />
-        <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Employees_location" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Employees_Position" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Order_Employees" ManuallyRouted="false" />
         <AssociationConnector Association="TMDTThucAnNhanhModel.FK_Ingredient_Unit" ManuallyRouted="false" />

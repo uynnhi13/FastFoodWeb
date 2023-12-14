@@ -164,7 +164,32 @@ namespace TMDT.Areas.Admin.Controllers
             var kh = database.User.FirstOrDefault(s => s.numberPhone == id);
             return View(kh);
         }
+       
+        public ActionResult EditKHang(string id)
+        {
+             var em = database.User.FirstOrDefault(s => s.numberPhone == id);
+                if (em == null) {
+                    return HttpNotFound();
+                }
+                return View(em);
+            
+            
+        }
+        [HttpPost]
+       public ActionResult EditKHang(User us)
+        {
+            if (ModelState.IsValid) {
+                var a = database.User.FirstOrDefault(f => f.numberPhone == us.numberPhone);
 
+                a.fullName = us.fullName;
+                a.gmail = us.gmail;
+                a.password = us.password;
+                a.numberPhone = us.numberPhone;
+
+                database.SaveChanges();// LUU THAY DOI
+            }
+            return RedirectToAction("QlyKH");
+        }
         public ActionResult DisableAccount(string id)
         {
             //Cập nhật lại database, thêm 1 cột IsActive trong User
@@ -196,24 +221,59 @@ namespace TMDT.Areas.Admin.Controllers
         public ActionResult DonHang(int? id)
         {
             var donhang = database.Order.Include(s => s.OrderDetail);
+
+
+            List<SelectListItem> pt = new List<SelectListItem>()
+             {
+                new SelectListItem { Text = "Phương thức", Value = "0"},
+                new SelectListItem { Text = "Tại cửa hàng", Value = "1"},
+                new SelectListItem { Text = "VNPay", Value = "2"}
+            };
+
+
+            ViewBag.PaymentMethods = pt;
+
             return View(donhang);
         }
-        [HttpPost]
-        public ActionResult DonHang(DateTime? startdate, DateTime? enddate)
-        {
-            IQueryable<Order> orders = database.Order;
 
+        [HttpGet]
+        public ActionResult DonHang(DateTime? startdate, DateTime? enddate, int? conditionID, Order ord, string selectedPaymentMethod)
+        {
+            var orders = database.Order.ToList();
+
+            ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
+           
             if (startdate != null && enddate != null) {
                 enddate = enddate.Value.AddDays(1).AddTicks(-1);
-                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate /*&& o.conditionID == 2*/);
-                return View(orders.ToList());
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
             }
-            else {
-                var donhang = database.Order.Include(s => s.OrderDetail);
-                return View(donhang);
+            if(conditionID != 0 && conditionID != null) {
+                orders = orders.Where(o => o.conditionID == conditionID).ToList();
+               
+                
             }
+            List<SelectListItem> pt = new List<SelectListItem>()
+             {
+                new SelectListItem { Text = "Phương thức", Value = "0"},
+                new SelectListItem { Text = "Tại cửa hàng", Value = "1"},
+                new SelectListItem { Text = "VNPay", Value = "2"}
+            };
 
+           
+            ViewBag.PaymentMethods = pt;
+
+            // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
+            if (selectedPaymentMethod == "1") {
+                orders = orders.Where(o => o.TypePayment == 1).ToList();
+            }
+            if (selectedPaymentMethod == "2") {
+                orders = orders.Where(o => o.TypePayment == 2).ToList();
+            }
+            var donhang = orders.ToList();
+            return View(orders);
         }
+        
+
 
         public ActionResult XacNhanDH(int? id)
         {
@@ -222,20 +282,136 @@ namespace TMDT.Areas.Admin.Controllers
             }
             Order donhang = database.Order.Find(id);
 
+            // don hang dc tim thay
+            if (donhang != null) {
+                // chinh trang thai don hang
+                donhang.conditionID = 2;
+                database.SaveChanges();
+                if (donhang.employeeID == null) {
+                    var searchU = (Employees)Session["user"];
+                    donhang.employeeID = searchU.EmployeeID;
 
-            donhang.conditionID = 2;
-            if (donhang.employeeID == null) {
-                var searchU = (Employees)Session["user"];
-                donhang.employeeID = searchU.EmployeeID;
+                }
+
+                //lọc danh sách id sản phẩm kèm số lượng sản phẩm
+                var lsOrder = database.OrderDetail.Where(o => o.orderID == id).ToList();
+
+                // chua id combo and so luong trong order Detail
+                List<IngredientProduct> lsThanhPhan = new List<IngredientProduct>();
+
+                foreach (var productOrder in lsOrder) {
+                    var _thanhphan = new IngredientProduct(productOrder.comboID, productOrder.quantity);
+                    setIngredientProduct(lsThanhPhan, _thanhphan, true);
+                }
+
+                //neu co sp la combo thi chuyen sang product * tạm *
+                List<IngredientProduct> lsQuantityProduct = new List<IngredientProduct>();
+
+                //lọc danh sách conbo and non combo
+                var lsAllProductInDB = database.Combo.ToList();
+                List<Combo> lsAllProduct = lsAllProductInDB.Where(w => lsThanhPhan.Any(a => a.id == w.comboID)).ToList();
+                List<ComboDetail> lsAllComboDetail = database.ComboDetail.ToList();
+
+                var lsCombo = new List<Combo>();
+
+                foreach (var item in lsAllProduct) {
+                    if (item.typeCombo) {
+                        lsCombo.Add(item);
+                    }
+                    else {
+                        var chaneThanhPhan = lsThanhPhan.FirstOrDefault(a => a.id == item.comboID);
+                        var getIDProduct = lsAllComboDetail.FirstOrDefault(f => f.comboID == item.comboID);
+
+                        setIngredientProduct(lsQuantityProduct, new IngredientProduct(getIDProduct.cateID, chaneThanhPhan.quantity), true);
+                    }
+                }
+
+
+                //list product in combo
+                var lsQuantityProInCombo = new List<ComboDetail>();
+
+                foreach (var item in lsCombo) {
+                    var chaneThanhPhan = lsThanhPhan.FirstOrDefault(a => a.id == item.comboID);
+                    var lsProductInCombo = lsAllComboDetail.Where(f => f.comboID == item.comboID).ToList();
+
+                    var quantity = chaneThanhPhan.quantity;
+
+                    for (int i = 0; i < lsProductInCombo.Count; i++)
+                        lsProductInCombo[i].quantity *= (int)quantity;
+
+                    lsQuantityProInCombo.AddRange(lsProductInCombo);
+                }
+                //=> lsQuantityProInCombo xử lý trùng lặp
+                var lsQuantityProInComboGrouped = lsQuantityProInCombo
+                                                    .GroupBy(x => x.cateID)
+                                                    .Select(g => new ComboDetail {
+                                                        cateID = g.Key,
+                                                        quantity = g.Sum(x => x.quantity)
+                                                    }).ToList();
+
+                foreach (var item in lsQuantityProInComboGrouped) {
+                    setIngredientProduct(lsQuantityProduct, new IngredientProduct(item.cateID, item.quantity), true);
+                }
+                //=> lsQuantityProduct chua ls id product and so luong trong detail order
+
+                var lsIngredientInProduct = new List<Recipe>();
+                foreach (var item in lsQuantityProduct) {
+                    var lsRecipe = database.Recipe.Where(w => w.cateID == item.id).ToList();
+
+                    for (int i = 0; i < lsRecipe.Count; i++)
+                        lsRecipe[i].quantity *= (int)item.quantity;
+
+                    lsIngredientInProduct.AddRange(lsRecipe);
+                }
+
+                var lsIngredientInProductGrouped = lsIngredientInProduct
+                                                    .GroupBy(x => x.ingID)
+                                                    .Select(g => new Recipe {
+                                                        ingID = g.Key,
+                                                        quantity = g.Sum(x => x.quantity)
+                                                    }).ToList();
+
+                foreach(var item in lsIngredientInProductGrouped) {
+                    var itemIngredient = database.Ingredient.FirstOrDefault(f => f.ingID == item.ingID);
+                    itemIngredient.quantity -= item.quantity;
+                    database.SaveChanges();
+                }
 
             }
-            database.SaveChanges();
+
             if (donhang == null) {
                 return HttpNotFound();
             }
 
             return RedirectToAction("DonHang", "Admin");
         }
+
+        public void setIngredientProduct(List<IngredientProduct> lsThanhPhan, IngredientProduct item, bool calculation)
+        {
+            //if calculation == true => phep cong
+            //else phep tru
+            bool find = true;
+
+            for (int i = 0; i < lsThanhPhan.Count; i++) {
+                if (lsThanhPhan[i].id == item.id) {
+                    if (calculation)
+                        lsThanhPhan[i].quantity += item.quantity;
+                    else
+                        lsThanhPhan[i].quantity *= item.quantity;
+
+                    find = false;
+                    break;
+                }
+            }
+
+            if(find)
+                lsThanhPhan.Add(item);
+        }
+
+        public void ListToList(List<IngredientProduct> lsThanhPhan, List<IngredientProduct> lsAdd)
+        {
+        }
+
         public ActionResult Dagiao(int? id)
         {
             if (id == null) {
@@ -257,6 +433,13 @@ namespace TMDT.Areas.Admin.Controllers
 
             return RedirectToAction("DonHang", "Admin");
         }
+
+
+        //Login admin => danh sách DH => xác nhận đơn => id đơn hàng tìm đơn hàng cần xác nhận
+        // => đổi trạng thái
+
+        //class account
+        //
 
         public ActionResult DetailsDH(int id)
         {
@@ -323,16 +506,7 @@ namespace TMDT.Areas.Admin.Controllers
             }
             return RedirectToAction("MyPro");
         }
-        public ActionResult ThongKe()
-        {
-            return View();
-        }
-        public ActionResult ThongKeAccKH()
-        {
-            var listU = database.User.Where(u => u.IsActive == true).ToList();
-            int item = listU.Count;
-            return PartialView(item);
-        }
+       
 
         public ActionResult nameLogin()
         {
@@ -340,6 +514,98 @@ namespace TMDT.Areas.Admin.Controllers
             searchU = (Employees)Session["user"];
             return PartialView(searchU);
         }
+        [HttpGet]
+        public ActionResult QlyDanhGia(string selected)
+        {
+            var orders = database.Order.ToList();
+            List<SelectListItem> star = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "Sắp xếp", Value = "0"},
+                new SelectListItem { Text = "1 Sao", Value = "1"},
+                new SelectListItem { Text = "2 Sao", Value = "2"},
+                new SelectListItem { Text = "3 Sao", Value = "3"},
+                new SelectListItem { Text = "4 Sao", Value = "4"},
+                new SelectListItem { Text = "5 Sao", Value = "5"}
+            };
+
+            ViewBag.Star = star;
+
+            // Lọc danh sách orders dựa trên phương thức thanh toán được chọn
+            if (selected== "1") {
+                orders = orders.Where(o => o.star == 1).ToList();
+            }
+            if (selected == "2") {
+                orders = orders.Where(o => o.star == 2).ToList();
+            }
+            if (selected == "3") {
+                orders = orders.Where(o => o.star == 3).ToList();
+            }
+            if (selected == "4") {
+                orders = orders.Where(o => o.star == 4).ToList();
+            }
+            if (selected == "5") {
+                orders = orders.Where(o => o.star == 5).ToList();
+            }
+            var donhang = orders.ToList();
+            return View(orders);
+
+
+            /*// Tạo danh sách sao đánh giá
+            List<SelectListItem> stars = new List<SelectListItem>()
+            {
+                new SelectListItem { Text = "1 Sao", Value = "1"},
+                new SelectListItem { Text = "2 Sao", Value = "2"},
+                new SelectListItem { Text = "3 Sao", Value = "3"},
+                new SelectListItem { Text = "4 Sao", Value = "4"},
+                new SelectListItem { Text = "5 Sao", Value = "5"}
+            };
+            if (stars != null) {
+                ViewBag.StarList = stars;
+                return View();
+            }
+            var commt = database.Order.FirstOrDefault(o => o.star == ord.star);
+            return View(commt);*/
+        }
+        [HttpGet]
+        public ActionResult ThongKe(DateTime? startdate, DateTime? enddate, int? ConditionID)
+        {
+            var orders = database.Order.ToList();
+
+            ViewBag.conditionID = new SelectList(database.Condition.ToList(), "conditionID", "nameCon");
+            if (startdate != null && enddate != null ) {
+                enddate = enddate.Value.AddDays(1).AddTicks(-1);
+                orders = orders.Where(o => o.datetime >= startdate && o.datetime <= enddate).ToList();
+
+                decimal Tong = 0;
+                foreach (var item in orders) {
+                    if (item.conditionID == 3) {
+                        Tong += item.total;
+                    }
+                    
+                }
+                ViewBag.TongTien = Tong;
+                if (ConditionID!=0) {
+                    var chuaxn = 0;
+                    chuaxn = orders.Count(o => o.conditionID == 1);
+                    ViewBag.Chuaxn = chuaxn;
+
+                    var daxn = 0;
+                    daxn = orders.Count(o => o.conditionID == 2);
+                    ViewBag.Daxn = daxn;
+
+                    var dagiao = 0;
+                    dagiao = orders.Count(o => o.conditionID == 3);
+                    ViewBag.Dagiao = dagiao;
+                   
+                }
+
+            }
+            
+            
+            return View(orders);
+
+        }
+
     }
 
 

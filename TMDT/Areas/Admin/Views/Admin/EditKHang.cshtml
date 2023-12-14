@@ -1,0 +1,50 @@
+﻿@model TMDT.Models.User
+
+@{
+    ViewBag.Title = "EditKH";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+}
+<div class="card mb-4">
+    @using (Html.BeginForm("EditKHang", "Admin", FormMethod.Post, new { @class = "tm-login-form" }))
+    {
+        @Html.Hidden("permition", Model.permission)
+        @Html.Hidden("IsActive", Model.IsActive)
+        @Html.Hidden("gender", Model.gender)
+        @Html.Hidden("Address", Model.Address)
+        @Html.Hidden("bDay", Model.bDay)
+        <section class="vh-100">
+            <div class="container py-5 h-100">
+                <div>
+                    <h6>Tên</h6>
+                    <input type="text" name="Email" value="@Model.fullName" />
+
+                </div>
+                <div>
+                    <h6>Số điện thoại </h6>
+                    <input type="text" name="numberPhone" value="@Model.numberPhone" disabled />
+
+                </div>
+
+
+
+                <div class="col-6 mb-3">
+                    <h6>Gmail</h6>
+
+                    <input type="text" value="@Model.gmail" />
+
+                </div>
+                <div class="col-6 mb-3">
+                    <h6>Password</h6>
+
+                    <input type="text" value="@Model.password" />
+
+                </div>
+
+                <button type="submit">Save</button>
+            </div>
+
+
+
+        </section>
+    }
+</div>

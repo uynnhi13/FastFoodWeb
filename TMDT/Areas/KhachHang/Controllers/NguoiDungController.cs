@@ -8,6 +8,8 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using Facebook;
+using System.Collections.Generic;
 using TMDT.Models;
 using TMDT.Mtk;
 
@@ -46,6 +48,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
                         kiemTraUser.password = user.password;
+                       
                         db.SaveChanges();
                     }
                     else {
@@ -553,6 +556,57 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
 
+        //End Order//
+        public ActionResult FacebookLogin()
+        {
+            var fb = new FacebookClient();
+            var loginParameters = new Dictionary<string, object>
+            {
+        { "client_id", "1002499694175469" },
+        { "client_secret", "b9022ebcfa20c3197c53f2f484b2a4b6" },
+        { "redirect_uri", "https://localhost:44322/Home/FacebookCallback" },
+        { "response_type", "code" },
+        { "scope", "public_profile,email" } // Thêm các quyền bạn muốn yêu cầu từ người dùng
+    };
+
+            // Xây dựng URL đăng nhập Facebook
+            var loginUrl = fb.GetLoginUrl(loginParameters);
+            return Redirect(loginUrl.AbsoluteUri);
+            /*return Redirect(loginUrl.AbsoluteUri);*/
+        }
+
+        public ActionResult FacebookCallback(string code)
+        {
+            try {
+                var fb = new FacebookClient();
+
+                // Truy cập mã truy cập và lấy thông tin người dùng
+                dynamic result = fb.Post("oauth/access_token", new {
+                    client_id = "1002499694175469",
+                    client_secret = "b9022ebcfa20c3197c53f2f484b2a4b6",
+                    redirect_uri = "https://localhost:44322/Home/FacebookCallback",
+                    code = code
+                });
+
+                fb.AccessToken = result.access_token;
+
+                // Lấy thông tin người dùng từ Facebook
+                dynamic fbUser = fb.Get("/me?fields=name,email");
+
+                string name = fbUser.name;
+                string email = fbUser.email;
+
+                // Thêm lệnh ghi log để kiểm tra giá trị
+                System.Diagnostics.Debug.WriteLine($"Name: {name}, Email: {email}");
+
+                return RedirectToAction("DangNhap", "NguoiDung");
+            }
+            catch (Exception ex) {
+                // Ghi log nếu có lỗi
+                System.Diagnostics.Debug.WriteLine($"Exception in FacebookCallback: {ex.Message}");
+                throw; // hoặc xử lý lỗi theo nhu cầu
+            }
+        }
 
         // đổi mật khẩu 
         public ActionResult ChangePasswordvl()
@@ -566,6 +620,7 @@ namespace TMDT.Areas.KhachHang.Controllers
 
             if (email != null) {
                 var user = db.User.FirstOrDefault(u => u.gmail == email);
+
 
                 if (user != null) {
                     if (newPassword == confirmPassword) {

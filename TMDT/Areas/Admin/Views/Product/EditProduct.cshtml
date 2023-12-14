@@ -1,0 +1,205 @@
+﻿@model TMDT.Models.Product
+@using TMDT.Models
+
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+
+    ViewBag.Title = "create";
+    Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
+
+    TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+
+    var lsRecipe = new List<Recipe>();
+    var lsIngredient = new List<Ingredient>();
+    var lsType = new List<Category>();
+
+    if (Model != null)
+    {
+        int cateID = Model.cateID;
+        lsType = db.Category.ToList();
+        lsRecipe = db.Recipe.Where(f => f.cateID == cateID).ToList();
+    }
+
+}
+
+<div class="col-xl-10 col-lg-12 tm-md-12 tm-sm-12 tm-col container">
+    <div class="bg-white tm-block h-100">
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+                <h2 class="tm-block-title d-inline-block">Danh sách thực phẩm</h2>
+            </div>
+        </div>
+        <div class="">
+            @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { @class = "tm-edit-product-form", enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row mt-4 tm-edit-product-row">
+                            <div class="col-8">
+                                <div class="form-horizontal">
+                                    <input type="hidden" id="comboID" name="cateID" value="@Model.cateID" />
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Tên sản phẩm</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="name" value="@Model.name" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giá tiền</label>
+                                        <div class="col-md-10">
+                                            <input type="text" name="price" value="@Model.price" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                        </div>
+                                    </div>
+
+                                    @if (Model.priceUp > 0)
+                                    {
+                                        <div class="form-group">
+                                            <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Giá tiền upsize</label>
+                                            <div class="col-md-10">
+                                                <input type="text" name="priceUp" value="@Model.priceUp" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" />
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Loại sản phẩm</label>
+                                        <div class="col-md-10">
+                                            <select name="typeID" class="p-2 col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                                                @for (int i = 0; i < lsType.Count; i++)
+                                                {
+                                                    if (lsType[i].typeID == Model.typeID)
+                                                    {
+                                                        <option value="@lsType[i].typeID" selected>@lsType[i].nameType</option>
+                                                    }
+                                                    <option value="@lsType[i].typeID">@lsType[i].nameType</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                                <div class="tm-product-img-dummy mx-auto">
+                                    <img src="@Model.image" id="myImage" class="rounded mx-auto d-block" alt="Alternate Text"
+                                         style="fill: #868e96; height: 200px; width:200px; object-fit:over" />
+                                </div>
+                                <div class="custom-file mt-3 mb-3">
+                                    <input type="file" name="HinhAnh" id="imageInput" style="" value="@Model.image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <thead>
+                                <tr class="tm-bg-gray">
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">Tên thực phẩm</th>
+                                    <th scope="col" class="text-center">số lượng</th>
+                                    <th scope="col">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lsRecipe">
+                                @if (lsRecipe.Count > 0 && lsRecipe != null)
+                                {
+                                    for (int i = 0; i < lsRecipe.Count; i++)
+                                    {
+                                        <tr  class="col-product">
+                                            <td>
+                                                <input type="hidden" name="cateID" value="@lsRecipe[i].cateID" />
+                                                <input type="hidden" name="ingID" value="@lsRecipe[i].ingID" />
+                                            </td>
+                                            <td class="tm-product-name">
+                                                <p id="name-product">@lsRecipe[i].Ingredient.ingName</p>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <input type="number" name="quantity" value="@lsRecipe[i].quantity" id="name-product"/>
+                                            </td>
+                                            <td class="tm-product-name">
+                                                <p id="name-product">@lsRecipe[i].Ingredient.Unit.nameU</p>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group row ml-3">
+                    <div >
+                        <input id="btnEditRecipe" type="submit" value="Cập nhật giá trị sản phẩm" class="border-0 btn btn-primary custom-btn" />
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $("#imageInput").change(function () {
+                const file = this.files[0];
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    $("#myImage").attr("src", reader.result);
+                };
+            });
+
+            // get lsRecipe
+            $('#btnEditRecipe').click(() => {
+                getLsRecipe()
+                $('#btnEditRecipe').submit();
+            })
+
+
+            function getLsRecipe() {
+                $('#lsRecipe tr').each(function (index, element) {
+                    var cateID = $(this).find('td input[name="cateID"]').val()
+                    var ingID = $(this).find('td input[name="ingID"]').val()
+                    var quantity = $(this).find('td input[name="quantity"]').val()
+
+                    sendDataToServer(cateID, ingID, quantity)
+                });
+                
+            }
+
+            function sendDataToServer(_cateID, _ingID, _quantity) {
+                // Tạo đối tượng chứa dữ liệu
+                
+                var dataToSend = {
+                    cateID: parseInt(_cateID),
+                    ingID: parseInt(_ingID),
+                    quantity: parseFloat(_quantity)
+                };
+                // Gửi AJAX request đến server
+                $.ajax({
+                    type: "POST",
+                    url: "/Product/addRecipe",
+                    data: JSON.stringify(dataToSend),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response.cateID + " " + response.ingID + " " + response.quantity);
+                    },
+                    error: function (error) {
+                        alert("error")
+                    }
+                });
+            }
+        });
+
+    </script>
+}
+
+
+

@@ -1,12 +1,62 @@
-﻿@using TMDT.Models 
-@model TMDT.Models.User
+﻿
+@using TMDT.Models
 @{
     ViewBag.Title = "ThongKe";
     Layout = "~/Areas/Admin/Views/Share/_LayoutAdminPage.cshtml";
-}
 
-<div style="background: white">
-    <h2>ThongKe</h2>
-    <p>Số lượng tài khoản khách hàng chưa bị vô hiệu hóa: @Html.Action("ThongKeAccKH")</p>
+}
+<br />
+<br />
+
+<div class="card mb-4 ">
+    <div class="text-black-50 font-hairline text-2xl text-center text-blue-100 mb-16">
+        <h1>Thống kê doanh thu</h1>
+        <br />
+        @using (Html.BeginForm("ThongKe", "Admin", FormMethod.Get))
+
+        {
+            <div>
+                Từ ngày: <input type="date" name="startdate" id="startdate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                Đến ngày: <input type="date" name="enddate" id="enddate" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+            </div>
+            <br />
+            <button type="submit" class="bg-white">Lọc đơn hàng</button>
+            <br />
+            <br />
+            <div>
+                Tổng tiền: <input value="@ViewBag.TongTien" disabled />
+            </div>
+
+        }
+    </div>
+    <br />
+    <br />
+    <div class="flex flex-col lg:flex-row lg:justify-center" style="column-count:3; text-align:center">
+        <div class="flex flex-col items-center mx-12 w-64 mb-12 lg:mb-0">
+            <div class="text-xl text-blue-200"><h3>Đơn chưa xác nhận</h3></div>
+            <div class="text-6xl font-extrabold text-black-50 mb-6">
+
+                <h3>@ViewBag.Chuaxn</h3>
+            </div>
+
+        </div>
+
+        <div class="flex flex-col items-center mx-12 w-64 mb-12 lg:mb-0">
+            <div class="text-xl text-blue-200"><h3>Đơn đã xác nhận </h3></div>
+            <div class="text-6xl font-extrabold text-black-50 mb-6">
+                <h3>@ViewBag.Daxn</h3>
+            </div>
+
+        </div>
+
+        <div class="flex flex-col items-center mx-12 w-64 mb-12 lg:mb-0">
+            <div class="text-xl text-blue-200"><h3>Đơn đã giao</h3></div>
+            <div class="text-6xl font-extrabold text-black-50 mb-6">
+                <h3>@ViewBag.Dagiao</h3>
+            </div>
+
+        </div>
+    </div>
 </div>
 

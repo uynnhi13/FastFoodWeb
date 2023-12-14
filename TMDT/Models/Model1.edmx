@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDTThucAnNhanhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__EFMigrationsHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -43,6 +43,7 @@
           <Property Name="sale" Type="int" Nullable="false" />
           <Property Name="typeCombo" Type="bit" Nullable="false" />
           <Property Name="image" Type="nvarchar" MaxLength="1500" />
+          <Property Name="hiden" Type="bit" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -72,7 +73,7 @@
           <Property Name="positionID" Type="int" Nullable="false" />
           <Property Name="imgEP" Type="nvarchar" MaxLength="1000" />
           <Property Name="numberPhone" Type="varchar" MaxLength="20" />
-          <Property Name="locationID" Type="int" Nullable="false" />
+          <Property Name="location" Type="nvarchar" MaxLength="1500" />
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="roleUser" Type="bit" />
         </EntityType>
@@ -133,6 +134,7 @@
           <Property Name="District" Type="nvarchar" MaxLength="50" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
         </EntityType>
+
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="orderID" />
@@ -151,10 +153,12 @@
           <Property Name="TypePaymentVN" Type="int" />
           <Property Name="recipient" Type="nvarchar" MaxLength="100" />
           <Property Name="recipientsNumber" Type="nvarchar" MaxLength="50" />
+
           <Property Name="ship" Type="money" />
           <Property Name="diemTichLuy" Type="money" />
           <Property Name="tongPhaiTra" Type="money" />
           <Property Name="KhuyenMaiID" Type="int" />
+
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -223,7 +227,7 @@
           <Property Name="bDay" Type="datetime2" Precision="7" />
           <Property Name="gender" Type="bit" />
           <Property Name="addressID" Type="int" />
-          <Property Name="permission" Type="bit" />
+          <Property Name="permission" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="DiemTichLuy" Type="money" />
           <Property Name="userpic" Type="nvarchar" MaxLength="1000" />
@@ -261,18 +265,6 @@
             </Principal>
             <Dependent Role="ComboDetail">
               <PropertyRef Name="cateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employees_location">
-          <End Role="location" Type="Self.location" Multiplicity="1" />
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="location">
-              <PropertyRef Name="locationID" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="locationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -511,10 +503,6 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="ComboDetail" EntitySet="ComboDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employees_location" Association="Self.FK_Employees_location">
-            <End Role="location" EntitySet="location" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employees_Position" Association="Self.FK_Employees_Position">
             <End Role="Position" EntitySet="Position" />
             <End Role="Employees" EntitySet="Employees" />
@@ -568,8 +556,7 @@
             <End Role="Recipe" EntitySet="Recipe" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TMDTThucAnNhanhModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -615,6 +602,7 @@
           <Property Name="image" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ComboDetail" Relationship="Self.FK_ComboDetail_Combo" FromRole="Combo" ToRole="ComboDetail" />
           <NavigationProperty Name="OrderDetail" Relationship="Self.FK_OrderDetail_Combo" FromRole="Combo" ToRole="OrderDetail" />
+          <Property Name="hiden" Type="Boolean" />
         </EntityType>
         <EntityType Name="ComboDetail">
           <Key>
@@ -647,10 +635,9 @@
           <Property Name="positionID" Type="Int32" Nullable="false" />
           <Property Name="imgEP" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="numberPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="locationID" Type="Int32" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="1500" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="roleUser" Type="Boolean" />
-          <NavigationProperty Name="location" Relationship="Self.FK_Employees_location" FromRole="Employees" ToRole="location" />
           <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employees" FromRole="Employees" ToRole="Order" />
         </EntityType>
@@ -823,7 +810,7 @@
           <Property Name="bDay" Type="DateTime" Precision="7" />
           <Property Name="gender" Type="Boolean" />
           <Property Name="addressID" Type="Int32" />
-          <Property Name="permission" Type="Boolean" />
+          <Property Name="permission" Type="Boolean" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="DiemTichLuy" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="userpic" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
@@ -899,18 +886,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="conditionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employees_location">
-          <End Role="location" Type="Self.location" Multiplicity="1" />
-          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="location">
-              <PropertyRef Name="locationID" />
-            </Principal>
-            <Dependent Role="Employees">
-              <PropertyRef Name="locationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1079,10 +1054,6 @@
             <End Role="Condition" EntitySet="Condition" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employees_location" Association="Self.FK_Employees_location">
-            <End Role="location" EntitySet="location" />
-            <End Role="Employees" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employees_Position" Association="Self.FK_Employees_Position">
             <End Role="Position" EntitySet="Position" />
             <End Role="Employees" EntitySet="Employees" />
@@ -1219,6 +1190,7 @@
           <EntitySetMapping Name="Combo">
             <EntityTypeMapping TypeName="TMDTThucAnNhanhModel.Combo">
               <MappingFragment StoreEntitySet="Combo">
+                <ScalarProperty Name="hiden" ColumnName="hiden" />
                 <ScalarProperty Name="comboID" ColumnName="comboID" />
                 <ScalarProperty Name="nameCombo" ColumnName="nameCombo" />
                 <ScalarProperty Name="price" ColumnName="price" />
@@ -1256,7 +1228,7 @@
                 <ScalarProperty Name="positionID" ColumnName="positionID" />
                 <ScalarProperty Name="imgEP" ColumnName="imgEP" />
                 <ScalarProperty Name="numberPhone" ColumnName="numberPhone" />
-                <ScalarProperty Name="locationID" ColumnName="locationID" />
+                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="roleUser" ColumnName="roleUser" />
               </MappingFragment>

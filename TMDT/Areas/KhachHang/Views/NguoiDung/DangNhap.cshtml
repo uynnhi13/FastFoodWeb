@@ -77,9 +77,15 @@
                                                     <div class="login-toggle-btn">
                                                         <p>Bạn chưa có tài khoản? Hãy  <a class="flote-none" href="@Url.Action("DangKy","NguoiDung")">Đăng Ký</a>  tại đây</p>
                                                     </div>
+                                                    <div>
+                                                        <button type="submit"><span>Login</span></button> Hoặc
+                                                        <!-- Nút đăng nhập bằng Facebook -->
+                                                        <a href="@Url.Action("FacebookLogin", "NguoiDung")"><i class="fa-brands fa-facebook"></i></a>
 
-                                                    <button type="submit"><span>Login</span></button>
+                                                    </div>
                                                 </div>
+                                               
+                                                
                                             }
                                         </form>
                                     </div>
@@ -103,3 +109,4 @@
     <!-- login area end -->
 </body>
 
+<script src="https://kit.fontawesome.com/e93b3623e7.js" crossorigin="anonymous"></script>

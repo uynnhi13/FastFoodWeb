@@ -23,17 +23,21 @@ body {
 }
 
 body {
-  background-image: url(../img/dash-bg-01.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  padding-left: 50px;
-  padding-right: 50px;
+    background-color: #f5f5f5 !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.container{
+    border-radius: 20px;
 }
 
 .bg02 {
-	background-image: url(../img/dash-bg-02.jpg);
+    background-image: url(../img/dash-bg-02.jpg);
 }
 
 .bg03 {
