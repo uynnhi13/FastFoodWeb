@@ -93,27 +93,19 @@ namespace TMDT.Areas.Admin.Controllers
                     db.ComboDetail.AddRange(lstComboDetail);
                     db.SaveChanges();
 
-                    TempData["result"] = true;
-                    TempData["notification"] = "Tạo thành công";
-
-                    Session["combo"] = null;
+                    comboSingleton.Update(db);
+                    TempData["EditSuccess"] = true;
 
                     return RedirectToAction("Index","Product");
                 }
                 else {
-                    TempData["result"] = false;
-                    TempData["notification"] = "Tạo không thành công";
-
-                    Session["combo"] = null;
+                    TempData["EditSuccess"] = false;
 
                     return RedirectToAction("Index", "Product");
                 }
             }
             catch (Exception e) {
-                TempData["result"] = false;
-                TempData["notification"] = "Tạo không thành công";
-
-                Session["combo"] = null;
+                TempData["EditSuccess"] = false;
 
                 return RedirectToAction("Index", "Product");
             }
