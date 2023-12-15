@@ -48,7 +48,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         kiemTraUser.gmail = user.gmail;
                         kiemTraUser.fullName = user.fullName;
                         kiemTraUser.password = user.password;
-                       
+
                         db.SaveChanges();
                     }
                     else {
@@ -107,7 +107,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                         //// Chuyển hướng người dùng trở lại trang đăng nhập
                         //return View();
                     }
-                    
+
                 }
             }
             return RedirectToAction("Index", "Home");
@@ -128,7 +128,7 @@ namespace TMDT.Areas.KhachHang.Controllers
         }
 
 
-        
+
         public ActionResult UserEdit(string id)
         {
             var user = db.User.FirstOrDefault(u => u.numberPhone == id);
@@ -167,7 +167,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 user.bDay = updatedUser.bDay;
                 user.password = updatedUser.password;
                 user.gender = updatedUser.gender;
-              
+
 
 
                 // Cập nhật các trường thông tin người dùng khác tương tự ở đây
@@ -230,7 +230,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                     }
                 }
 
-      
+
                 db.SaveChanges();
                 ad.userID = user.numberPhone;
                 db.Address.Add(ad);
@@ -411,37 +411,37 @@ namespace TMDT.Areas.KhachHang.Controllers
         [HttpGet]
         public ActionResult OrderFinvl(string searchdh = " ", string searchsdt = " ")
         {
-                var orderQuery = db.Order.AsQueryable();
-                // Kiểm tra xem sdt
-                if (!string.IsNullOrEmpty(searchsdt)) {
-                    // gán đt
-                    orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
-                    if (orderQuery.Any()) {
-                        // Kiểm tra mã đơn
-                        if (!string.IsNullOrEmpty(searchdh)) {
-                            // thêm dữ liệu
-                            orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchdh) && o.orderID.ToString().Length == searchdh.Length);
-                            var order = orderQuery.FirstOrDefault(); // Lấy đơn hàng thỏa mãn cả hai điều kiện
+            var orderQuery = db.Order.AsQueryable();
+            // Kiểm tra xem sdt
+            if (!string.IsNullOrEmpty(searchsdt)) {
+                // gán đt
+                orderQuery = orderQuery.Where(o => o.numberPhone == searchsdt);
+                if (orderQuery.Any()) {
+                    // Kiểm tra mã đơn
+                    if (!string.IsNullOrEmpty(searchdh)) {
+                        // thêm dữ liệu
+                        orderQuery = orderQuery.Where(o => o.orderID.ToString().Contains(searchdh) && o.orderID.ToString().Length == searchdh.Length);
+                        var order = orderQuery.FirstOrDefault(); // Lấy đơn hàng thỏa mãn cả hai điều kiện
 
-                            if (order != null) {
-                                return RedirectToAction("TimKiemVL", new { orderId = order.orderID });
-                            }
-                        }
-                        else {
-                            // hiển thị sp cuối cùng 
-                            var lastItemOrder = orderQuery.OrderByDescending(o => o.orderID).First();
-
-                            return View("TimKiemVL", lastItemOrder);
+                        if (order != null) {
+                            return RedirectToAction("TimKiemVL", new { orderId = order.orderID });
                         }
                     }
+                    else {
+                        // hiển thị sp cuối cùng 
+                        var lastItemOrder = orderQuery.OrderByDescending(o => o.orderID).First();
+
+                        return View("TimKiemVL", lastItemOrder);
+                    }
                 }
-                ViewBag.ErrorMessage = " Xác nhận mật khẩu không đúng  ";
-            
+            }
+            ViewBag.ErrorMessage = " Xác nhận mật khẩu không đúng  ";
+
             return View();
         }
-       //Tìm kiếm đơn hàng cho khách vãng lai
-      
-    
+        //Tìm kiếm đơn hàng cho khách vãng lai
+
+
 
         public ActionResult TimKiemVL(int orderId)
         {
@@ -470,12 +470,12 @@ namespace TMDT.Areas.KhachHang.Controllers
                 {
                     if (newPassword == confirmPassword) // Kiểm tra mật khẩu mới và mật khẩu xác nhận có trùng khớp không
                     {
-                     
+
 
                         n.password = newPassword; // Cập nhật mật khẩu mới
 
                         db.Entry(n).State = EntityState.Modified;
-                      
+
                         db.SaveChanges();
                         ViewBag.ErrorMessage = "Thay đổi thành công ";
                         // Redirect về trang chủ hoặc trang thông báo thành công
@@ -519,7 +519,7 @@ namespace TMDT.Areas.KhachHang.Controllers
                 else {
                     ViewBag.ErrorMessage = "Không gửi đc email ";
                 }
-            }  
+            }
             else {
                 ViewBag.ErrorMessage = "Không tìm thấy Email của ban";
             }
@@ -534,25 +534,25 @@ namespace TMDT.Areas.KhachHang.Controllers
 
         private bool SendResetPasswordEmail(string emailAddress)
         {
-                string mailBody = "Link to reset password:  ";
-                
+            string mailBody = "Link to reset password:  ";
 
-                MailMessage message = new MailMessage(smtpUser, emailAddress);
-                message.Subject = "Reset Your Password";
-                message.Body = mailBody+ "https://localhost:44322/KhachHang/NguoiDung/ChangePasswordvl";
 
-                SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(smtpUser, smtpPass);
-                smtpClient.EnableSsl = enableSsl;
-                smtpClient.Send(message);
-                return true; // Email đã được gửi thành công
-       
+            MailMessage message = new MailMessage(smtpUser, emailAddress);
+            message.Subject = "Reset Your Password";
+            message.Body = mailBody + "https://localhost:44322/KhachHang/NguoiDung/ChangePasswordvl";
+
+            SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential(smtpUser, smtpPass);
+            smtpClient.EnableSsl = enableSsl;
+            smtpClient.Send(message);
+            return true; // Email đã được gửi thành công
+
 
         }
         public ActionResult Noficication()
         {
-           
+
             return View();
         }
 
@@ -614,7 +614,7 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult ChangePasswordvl( string currentPassword, string newPassword, string confirmPassword)
+        public ActionResult ChangePasswordvl(string currentPassword, string newPassword, string confirmPassword)
         {
             var email = Session["Mailvl"] as string; // Lấy email từ session
 
@@ -645,9 +645,50 @@ namespace TMDT.Areas.KhachHang.Controllers
             return View();
         }
 
-      
 
+        [HttpGet]
+        public ActionResult LienHe()
+        {
+            return View();
 
+        }
+
+        [HttpPost]
+        public ActionResult LienHe(Models.Mail _objModelMail)
+        {
+            if (ModelState.IsValid) {
+                MailMessage mail = new MailMessage();
+                mail.To.Add("tranmytien251202@gmail.com");
+                mail.From = new MailAddress("tranmytien251202@gmail.com");
+
+                // Lấy thông tin từ form
+                string fullName = _objModelMail.Fullname;
+                string email = _objModelMail.Email;
+                string subject = _objModelMail.Subject;
+                string content = _objModelMail.Content;
+
+                // Thiết lập nội dung email
+                mail.Subject = subject;
+                string body = $"Họ và tên: {fullName}<br/>Email: {email}<br/>Nội dung: {content}";
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential("leoleoleo247247@gmail.com", "rhph fuik oxfg daea"); // Nhập tên người gửi và mật khẩu
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+
+                // Trả về cái gì đó
+                return View("LienHe", "NguoiDung");
+            }
+            else {
+                return View();
+            }
+
+        }
     }
 }
 

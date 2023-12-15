@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TMDT.MauThietKe;
 using TMDT.Models;
 
 namespace TMDT.Areas.Admin.Controllers
@@ -13,8 +14,21 @@ namespace TMDT.Areas.Admin.Controllers
     public class AdminController : Controller
     {
         TMDTThucAnNhanhEntities database = new TMDTThucAnNhanhEntities();
+        ComboSingleton comboSingleton = ComboSingleton.instance;
         // GET: Admin/Admin
+        public AdminController() {
+            comboSingleton.Init(database);
+        }
+        //Phân Quyền
+        private bool UserIsAdmin()
+        {
+            // Lấy thông tin người dùng từ Session 
+            var searchU = new Employees();
+            searchU = (Employees)Session["user"];
+            // Kiểm tra xem user có phải Admin không
+            return searchU != null && searchU.roleUser == true;
 
+        }
 
         public ActionResult Index()
         {
@@ -64,8 +78,17 @@ namespace TMDT.Areas.Admin.Controllers
 
         public ActionResult Account()
         {
+            if (!UserIsAdmin()) {
+                return RedirectToAction("AccessDenied");
+            }
+
             var dsnv = database.Employees;
             return View(dsnv);
+        }
+
+        public ActionResult AccessDenied()
+        {
+            return View();
         }
 
         public ActionResult AddnewNV()
@@ -149,7 +172,8 @@ namespace TMDT.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult QlyKH(string searchstring = "")
         {
-            var dskh = database.User.Where(s=>s.password!=null);
+            
+            var dskh = database.User.Where(s=>s.password!="");
             var lskh = database.User.Where(s => s.numberPhone.Contains(searchstring));
             if (searchstring != null) {
 
@@ -167,7 +191,10 @@ namespace TMDT.Areas.Admin.Controllers
        
         public ActionResult EditKHang(string id)
         {
-             var em = database.User.FirstOrDefault(s => s.numberPhone == id);
+            if (!UserIsAdmin()) {
+                return RedirectToAction("AccessDenied");
+            }
+            var em = database.User.FirstOrDefault(s => s.numberPhone == id);
                 if (em == null) {
                     return HttpNotFound();
                 }
@@ -178,6 +205,10 @@ namespace TMDT.Areas.Admin.Controllers
         [HttpPost]
        public ActionResult EditKHang(User us)
         {
+            if (!UserIsAdmin()) {
+                return RedirectToAction("AccessDenied");
+            }
+
             if (ModelState.IsValid) {
                 var a = database.User.FirstOrDefault(f => f.numberPhone == us.numberPhone);
 
@@ -282,15 +313,24 @@ namespace TMDT.Areas.Admin.Controllers
             }
             Order donhang = database.Order.Find(id);
 
+            var nguoidung = database.User.FirstOrDefault(F=> F.numberPhone == donhang.numberPhone && F.password != null);
+            nguoidung.DiemTichLuy = donhang.total / 1000;
+            database.SaveChanges();
             // don hang dc tim thay
             if (donhang != null) {
                 // chinh trang thai don hang
                 donhang.conditionID = 2;
                 database.SaveChanges();
+                Employees searchU = new Employees();
                 if (donhang.employeeID == null) {
-                    var searchU = (Employees)Session["user"];
-                    donhang.employeeID = searchU.EmployeeID;
+                    searchU = (Employees)Session["user"];
+                }
 
+                if (searchU != null) {
+                    donhang.employeeID = searchU.EmployeeID;
+                }
+                else {
+                    return RedirectToAction("Login","Admin");
                 }
 
                 //lọc danh sách id sản phẩm kèm số lượng sản phẩm
@@ -376,6 +416,8 @@ namespace TMDT.Areas.Admin.Controllers
                     itemIngredient.quantity -= item.quantity;
                     database.SaveChanges();
                 }
+
+                comboSingleton.Update(database);
 
             }
 

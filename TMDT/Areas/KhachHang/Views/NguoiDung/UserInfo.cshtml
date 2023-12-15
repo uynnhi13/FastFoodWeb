@@ -4,6 +4,8 @@
 @{
     ViewBag.Title = "UserInfo";
     Layout = "~/Areas/KhachHang/Views/Shared/_LayoutPageUS.cshtml";
+
+    string giaTienFormatted = string.Format("{0:0}", Model.DiemTichLuy);
 }
 
 
@@ -52,11 +54,65 @@
 
 
                                 <div class="col-md-3">
-                                    <label class="small mb-1" for="inputEmail">Email:</label>
+                                    <label for="inputEmail">Email:</label>
                                     <input class="form-control" id="inputEmail" type="email" value="@Model.gmail" readonly>
                                     <label class="small mb-1" for="inputPhone">Phone number</label>
                                     <input class="form-control" id="inputPhone" type="text" value="@Model.numberPhone" readonly>
                                 </div>
+
+                                <div class="col-md-3">
+
+                                    <label class="small mb-1" for="inputEmail">Điểm tích lũy: </label>
+                                    @if (Model.DiemTichLuy == null || Model.DiemTichLuy == 0)
+                                    {
+                                        <input class="form-control" id="inputPhone" type="text" value="0" readonly>
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control" id="inputPhone" type="text" value="@giaTienFormatted" readonly>
+                                    }
+
+                                    <label class="small mb-1" for="inputEmail">Hạng Khách hàng: </label>
+                                    @if (Model.DiemTichLuy == null || Model.DiemTichLuy == 0)
+                                    {
+                                        <div class="row">
+                                            <p class="small mb-1"><strong> Khách hàng mới <i class="fa-solid fa-person"></i></strong> </p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        if (Model.DiemTichLuy <= 200)
+                                        {
+                                            <div class="row">
+                                                <p class="small mb-1"><strong> Khách hàng thân thiết<i class="fa-solid fa-users"></i></strong> </p>
+                                            </div>
+
+                                        }
+                                        else if (Model.DiemTichLuy <= 500)
+                                        {
+                                            <div class="row">
+                                                <p class="small mb-1"><strong> Khách hàng hạng bạc </strong> </p>
+                                                <img  src="~/Areas/KhachHang/assets/images/icon/silver.png" />
+                                            </div>
+                                        }
+                                        else if (Model.DiemTichLuy <= 700)
+                                        {
+                                            <div class="row">
+                                                <p class="small mb-1"><strong> Khách hàng hạng vàng </strong> </p>
+                                                <img src="~/Areas/KhachHang/assets/images/icon/gold.png" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row">
+                                                <p class="small mb-1"><strong> Khách hàng VIP </strong> </p>
+                                                <img src="~/Areas/KhachHang/assets/images/icon/platinum.png" />
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                            </div>
 
                             </div>
 
@@ -102,5 +158,3 @@
         margin: 0 auto; /* Để căn giữa hình ảnh trong khung */
     }
 </style>
-
-

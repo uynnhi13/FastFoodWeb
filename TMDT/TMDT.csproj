@@ -302,6 +302,7 @@
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IngredientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuyenMaiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PositionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UnitController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
@@ -361,6 +362,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\KhuyenMaiDetails.cs" />
+    <Compile Include="Models\Mail.cs" />
     <Compile Include="Models\MatHangMua.cs" />
     <Compile Include="Models\Bmessage.cs" />
     <Compile Include="Models\Model1.Context.cs">
@@ -606,6 +608,9 @@
     <Content Include="Areas\KhachHang\assets\images\icons\tab-bg-2.png" />
     <Content Include="Areas\KhachHang\assets\images\icons\tab-bg.png" />
     <Content Include="Areas\KhachHang\assets\images\icons\wooden-icon.png" />
+    <Content Include="Areas\KhachHang\assets\images\icon\gold.png" />
+    <Content Include="Areas\KhachHang\assets\images\icon\platinum.png" />
+    <Content Include="Areas\KhachHang\assets\images\icon\silver.png" />
     <Content Include="Areas\KhachHang\assets\images\logo\logochuchu.png" />
     <Content Include="Areas\KhachHang\assets\images\product-image\N1.png" />
     <Content Include="Areas\KhachHang\assets\images\product-image\N2.png" />
@@ -923,6 +928,14 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Admin\AccessDenied.cshtml" />
+    <Content Include="Areas\Admin\Views\Positions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Positions\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Positions\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Positions\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Positions\Index.cshtml" />
+    <Content Include="Areas\KhachHang\Views\NguoiDung\LienHe.cshtml" />
+    <Content Include="Areas\KhachHang\Views\Home\VeChuChungToi.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

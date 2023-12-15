@@ -1,0 +1,81 @@
+﻿
+
+@model TMDT.Models.Mail
+@{
+    ViewBag.Title = "LienHe";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<!-- Bắt đầu Liên Hệ -->
+<div class="container-fluid">
+    <br />
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">Liên Hệ</h2>
+    <div class="row px-xl-5">
+        <div class="col-lg-7 mb-5">
+            <div class="contact-form bg-light p-30">
+                <div id="success"></div>
+                <div>
+                    <p>Mọi góp ý của bạn chúng tôi đều trân trọng!</p>
+                </div>
+                <br />
+                <!--form contact-->
+                <form name="contactForm" id="contactForm" novalidate="novalidate" method="post" action="@Url.Action("LienHe", "NguoiDung")">
+                    <div class="control-group">
+                        <input type="text" class="form-control" name="Fullname" id="name" placeholder="Họ và Tên" required="required" data-validation-required-message="Vui lòng nhập họ và tên của bạn" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <br />
+                    <div class="control-group">
+                        <input type="email" class="form-control" name="Email" id="email" placeholder="Email" required="required" data-validation-required-message="Vui lòng nhập địa chỉ email của bạn" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <br />
+                    <div class="control-group">
+                        <input type="text" class="form-control" name="Subject" id="subject" placeholder="Tiêu đề" required="required" data-validation-required-message="Vui lòng nhập tiêu đề" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <br />
+                    <div class="control-group">
+                        <textarea class="form-control" rows="8" name="Content" id="content" placeholder="Nội dung" required="required" data-validation-required-message="Vui lòng nhập nội dung của bạn"></textarea>
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <br />
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">
+                            Gửi
+                        </button>
+                    </div>
+                </form>
+                <!--end form contact-->
+            </div>
+        </div>
+
+        <div class="col-lg-5 mb-5">
+            <div class="bg-light p-30 mb-30">
+                <div class="item">
+                    <div class="desc">
+
+                        <p> <i class="fa-solid fa-location-dot"></i><strong> &nbsp;Địa chỉ:</strong> Trường Đại học Ngoại ngữ - Tin học Thành phố Hồ Chí Minh (HUFLIT)</p>
+                    </div>
+                    <ul>
+                        <li>
+                            <p><i class="fa-solid fa-phone"></i><strong> &nbsp;Hotline:</strong> <a href="tel:0837183270">0837 183 270</a></p>
+                        </li>
+                        <li>
+                            <p> <i class="fa-solid fa-envelope"></i><strong>&nbsp;Email</strong> <a href="mailto:tranmytien251202@gmail.com">tranmytien251202@gmail.com</a></p>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <iframe style="width: 100%; height: 250px;"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.893688126345!2d106.66478990000002!3d10.776014700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752edb765b5c25%3A0x9a3519bdad5a85a3!2sTr%C6%B0%E1%BB%9Dng%20%C4%90%E1%BA%A1i%20h%E1%BB%8Dc%20Ngo%E1%BA%A1i%20ng%E1%BB%AF%20-%20Tin%20h%E1%BB%8Dc%20Th%C3%A0nh%20ph%E1%BB%91%20H%E1%BB%93%20Ch%C3%AD%20Minh%20%28HUFLIT%29!5e0!3m2!1svi!2sbd!4v1636529514602!5m2!1svi!2sbd"
+                        frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Kết thúc Liên Hệ -->
+
+<script src="https://kit.fontawesome.com/bd8d8a4a29.js" crossorigin="anonymous"></script>

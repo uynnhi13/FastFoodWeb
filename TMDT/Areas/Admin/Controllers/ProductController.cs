@@ -30,7 +30,7 @@ namespace TMDT.Areas.Admin.Controllers
         // GET: Admin/Product
         public ActionResult Index()
         {
-            var allProduct = comboSingleton.lsCombo;
+            var allProduct = db.Combo.ToList();
 
             var lsCombo = allProduct.Where(w => w.typeCombo == true);
             var lsProduct = allProduct.Where(w => w.typeCombo == false);
@@ -61,31 +61,7 @@ namespace TMDT.Areas.Admin.Controllers
 
         public ActionResult locCombo(int loai)
         {
-            // Lọc dữ liệu từ comboSingleton.lsCombo một lần
-            var allProduct = comboSingleton.lsCombo;
-
-            var lsCombo = allProduct.Where(w => w.typeCombo == true);
-            var lsProduct = allProduct.Where(w => w.typeCombo == false);
-            var lsComboDetail = db.ComboDetail.ToList();
-            var lsView = new List<Combo>();
-
-
-            try {
-                // tại product được lưu trong table Combo, nếu product đó có thể size up thì 1 Product = 2 Combo => lọc trường hợp trên và lấy 1 combo thôi 
-
-                lsView.AddRange(lsCombo);
-                foreach (var item in lsProduct) {
-                    if (lsComboDetail.FirstOrDefault(f => f.comboID == item.comboID && f.sizeUP == false) != null)
-                        lsView.Add(item);
-                }
-
-                log.Info("Get list in controller product");
-            }
-            catch (Exception ex) {
-                log.Error("Error: " + ex);
-                throw;
-            }
-
+            var lsView = db.Combo.ToList();
             var lsComboActive = lsView.Where(c => c.typeCombo == true && c.hiden == true).ToList();
             var lsComboInactive = lsView.Where(c => c.typeCombo == true && c.hiden == false).ToList();
             var lsComboal = lsView.Where(c => c.typeCombo= true).ToList();
@@ -95,9 +71,9 @@ namespace TMDT.Areas.Admin.Controllers
             // Chọn danh sách dựa trên biến loai
             switch (loai) {
                 case 0:
-                    if (lsCombo != null && lsComboal.Count > 0) {
+                    if (lsComboal != null && lsComboal.Count > 0) {
                         listReturn.Clear();
-                        listReturn.AddRange(lsCombo);
+                        listReturn.AddRange(lsComboal);
                     }
                     else {
                         listReturn = new List<Combo>();
@@ -244,7 +220,7 @@ namespace TMDT.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public ActionResult EditCombo([Bind(Include = "comboID,nameCombo,sale, hiden")] Combo _combo, HttpPostedFileBase HinhAnh)
+        public ActionResult EditCombo([Bind(Include = "comboID,nameCombo,sale")] Combo _combo, HttpPostedFileBase HinhAnh)
         {
             try {
                 var combo = db.Combo.FirstOrDefault(f => f.comboID == _combo.comboID);

@@ -1,0 +1,329 @@
+﻿ 
+
+@{
+    ViewBag.Title = "VeChuChungToi";
+    Layout = "~/Areas/KhachHang/Views/Shared/_LayoutVL.cshtml";
+}
+
+<style>
+    .member-slider-wrap .swiper-button-prev {
+        left: auto;
+        right: 100%;
+        margin-right: 15px;
+    }
+
+
+    .member-slider-wrap .swiper-button-next {
+        left: 100%;
+        right: auto;
+        margin-left: 15px;
+    }
+
+    .home-section-2 .item {
+        aspect-ratio: 480/360;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: center;
+        background-position: 50% !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        width: 100%;
+    }
+
+    @@media (max-width: 1024px) {
+        .home-section-2 .item.has-background-img {
+            position: relative;
+        }
+
+            .home-section-2 .item.has-background-img:after {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.4);
+                width: 100%;
+                height: 100%;
+                content: "";
+            }
+    }
+
+    @@media (min-width: 1025px) {
+        .home-section-2 .item {
+            position: relative;
+        }
+
+            .home-section-2 .item:after {
+                -webkit-transition: all 0.3s ease-in-out;
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                opacity: 0;
+                transition: all 0.3s ease-in-out;
+                background: rgba(172, 18, 28, 0.9);
+                width: 100%;
+                height: 100%;
+                content: "";
+            }
+    }
+
+    .home-section-2 .item .content {
+        position: relative;
+        z-index: 2;
+        padding: 2.08333rem 3.33333rem;
+        width: 100%;
+    }
+
+    .home-section-2 .item .brief-content {
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    @@media (min-width: 1025px) {
+        .home-section-2 .item .brief-content {
+            margin: 0 auto;
+            max-width: 18.33333rem;
+        }
+    }
+
+    @@media (max-width: 1440px) {
+        .home-section-2 .item .brief-content-inner {
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .no-gutters > [class*="col-"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+</style>
+
+<section class="section-large pb-0 home-section-2 text-white">
+    <div class="container">
+        <div class="text-center mb-lg-16 mb-8">
+            <h2 class="heading-1 text-white font-playfair mb-lg-8 mb-5">
+                Lời chào
+            </h2>
+            <div class="body-1">
+                <p>
+                    Chúng tôi xin gửi lời chào ấm áp nhất đến bạn từ đội ngũ nhân viên ChuChu. Chúng tôi xin chân thành cảm ơn sự ủng hộ và tin tưởng của bạn trong thời gian qua.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="item-list">
+        <div class="row no-gutters equal-height">
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-img no-hover">
+                    <img src="~/Areas/KhachHang/assets/images/ve/icon1.png" alt="Hình ảnh" style="width: 100%; height: 100%;" />
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 14.2px;">
+                            <div class="brief-content-inner pt-4">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-color " style="background: #d19c0e;">
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                            Giới thiệu
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 88.8px;">
+                            <div class="brief-content-inner pt-4">
+                                <p>
+                                    Website bán thức ăn nhanh
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-img no-hover">
+                    <img src="~/Areas/KhachHang/assets/images/ve/icon1.png" alt="Hình ảnh" style="width: 100%; height: 100%;" />
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 14.2px;">
+                            <div class="brief-content-inner pt-4">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-color " style="background: #c13e13;" href="#">
+
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                            Mục tiêu
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 88.8px;">
+                            <div class="brief-content-inner pt-4">
+                                <p>
+                                    Chúng tôi sẽ cố gắng phát triển thêm nhiều chi nhánh trên toàn quốc để mọi người có thể trải nghiệm tốt hơn.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-color " style="background: #00ff90;"
+                   href="#">
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                            Lời cảm ơn
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 88.8px;">
+                            <div class="brief-content-inner pt-4">
+                                <p>
+                                    Chân thành cảm ơn bạn đã đồng hành cùng Chu
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-img no-hover">
+                    <img src="~/Areas/KhachHang/assets/images/ve/icon1.png" alt="Hình ảnh" style="width: 100%; height: 100%;" />
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 14.2px;">
+                            <div class="brief-content-inner pt-4">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-color " style="background: #176291;"
+                   href="#">
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                            Lời cảm ơn
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 88.8px;">
+                            <div class="brief-content-inner pt-4">
+                                <p>
+                                    Chân thành cảm ơn bạn đã đồng hành cùng Chu
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <a class="item has-background-img no-hover">
+                    <img src="~/Areas/KhachHang/assets/images/ve/icon1.png" alt="Hình ảnh" style="width: 100%; height: 100%;" />
+                    <div class="content text-center">
+                        <div class="heading-3 font-playfair text-uppercase">
+                        </div>
+                        <div class="body-2 brief-content " style="--original-height: 14.2px;">
+                            <div class="brief-content-inner pt-4">
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+</section>
+<div class="container mt-5 relative z-20">
+    <h2 class="text-blue-500 global-text-48 font-light text-center mb-3 aos-init aos-animate" data-aos="fade-right" data-aos-duration="600">Giới Thiệu Nhân Sự</h2>
+    <div class="position-relative member-slider-wrap">
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-container member-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="item">
+                        <div class="box-img">
+                            <div class="img-src img-ratio pt-[calc(370/304*100%)]">
+                                <img style="width:250px" src="~/Areas/KhachHang/assets/images/ve/ng.png" alt="Mr. Nguyen Van A">
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <h3>Đỗ Thị Kim Anh</h3><ul>
+                                <li>20DH111913 </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="item">
+                        <div class="box-img">
+                            <div class="img-src img-ratio pt-[calc(370/304*100%)]">
+                                <img style="width:250px" src="~/Areas/KhachHang/assets/images/ve/ng.png" alt="Mr. Nguyen Van A">
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <h3>Nguyễn Anh Nhật</h3><ul>
+                                <li>20DH110477</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="item">
+                        <div class="box-img">
+                            <div class="img-src img-ratio pt-[calc(370/304*100%)]">
+                                <img style="width:250px" src="~/Areas/KhachHang/assets/images/ve/ng.png" alt="Mr. Nguyen Van A">
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <h3>Lê Uyển Nhi</h3><ul>
+                                <li>20DH112123</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="item">
+                        <div class="box-img">
+                            <div class="img-src img-ratio pt-[calc(370/304*100%)]">
+                                <img style="width:250px" src="~/Areas/KhachHang/assets/images/ve/ng.png" alt="Mr. Nguyen Van A">
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <h3>Ngô Văn Phong</h3><ul>
+                                <li>20DH112142</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="item">
+                        <div class="box-img">
+                            <div class="img-src img-ratio pt-[calc(370/304*100%)]">
+                                <img style="width:250px" src="~/Areas/KhachHang/assets/images/ve/ng.png" alt="Mr. Nguyen Van A">
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <h3>Trần Thị Mỹ Tiên</h3><ul>
+                                <li> 20DH111744</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

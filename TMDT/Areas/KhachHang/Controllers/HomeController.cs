@@ -3,18 +3,24 @@ using System.Linq;
 using System.Web.Mvc;
 using TMDT.Models;
 using PagedList;
-
+using TMDT.MauThietKe;
 
 namespace TMDT.Areas.KhachHang.Controllers
 {
     public class HomeController : Controller
     {
         TMDTThucAnNhanhEntities db = new TMDTThucAnNhanhEntities();
+        ComboSingleton comboSingleton = ComboSingleton.instance;
 
         // GET: KhachHangVangLai/Home
         public ActionResult Index()
         {
-            var lstProduct = db.Combo;
+            comboSingleton.Init(db);
+            var lstProduct = new List<Combo>();
+            for (int i = 0; i < comboSingleton.lsCombo.Count; i++) {
+                if(comboSingleton.SoldOut[i] == true)
+                    lstProduct = db.Combo.Where(f => f.hiden == true).ToList();
+            }
             return View(lstProduct);
         }
 
@@ -113,6 +119,11 @@ namespace TMDT.Areas.KhachHang.Controllers
             int pagesize = 16;
             int pagenum = (page ?? 1);
             return View(lstCombo.ToPagedList(pagenum, pagesize));
+        }
+
+        public ActionResult VeChuChungToi()
+        {
+            return View();
         }
     }
 }
