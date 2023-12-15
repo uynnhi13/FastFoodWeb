@@ -11,7 +11,6 @@ namespace TMDT.Models
 {
     using System;
     using System.Collections.Generic;
-    
     public interface KhuyenMaiPrototype
     {
         KhuyenMaiPrototype clone();

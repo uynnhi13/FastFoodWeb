@@ -28,7 +28,7 @@ namespace TMDT.Models
         public Nullable<System.DateTime> bDay { get; set; }
         public Nullable<bool> gender { get; set; }
         public Nullable<int> addressID { get; set; }
-        public bool permission { get; set; }
+        public Nullable<bool> permission { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<decimal> DiemTichLuy { get; set; }
         public string userpic { get; set; }

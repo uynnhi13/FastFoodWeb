@@ -14,9 +14,9 @@ namespace TMDT.Models
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
+    
     public partial class TMDTThucAnNhanhEntities : DbContext
     {
-
         public TMDTThucAnNhanhEntities()
             : base("name=TMDTThucAnNhanhEntities")
         {
@@ -38,7 +38,6 @@ namespace TMDT.Models
         public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         public virtual DbSet<KhuyenMai> KhuyenMai { get; set; }
-        public virtual DbSet<location> location { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Position> Position { get; set; }
@@ -97,6 +96,7 @@ namespace TMDT.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("createRecipe", productNameParameter, productPriceParameter, productPriceUpParameter, productImageParameter, productTypeIDParameter);
         }
+    
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
